@@ -1,5 +1,5 @@
 """
-Django settings for website project.
+Django settings for picknese project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.7/topics/settings/
@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '-#x(_9&u_t&uws!tvs+3f_p0@qa%!)m9&6uqy)-$2y+08tlg)5'
+SECRET_KEY = '(l3twho*_7sw4m&2w2be-)c-+rsc4qseh2dtai(!!&4w4(ufd5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -48,9 +48,9 @@ MIDDLEWARE_CLASSES = (
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'website.urls'
+ROOT_URLCONF = 'picknese.urls'
 
-WSGI_APPLICATION = 'website.wsgi.application'
+WSGI_APPLICATION = 'picknese.wsgi.application'
 
 
 # Database
