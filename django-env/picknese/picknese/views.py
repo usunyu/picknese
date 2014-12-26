@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.core.context_processors import csrf
+from forms import PickneseSignUpForm
 
 def index(request):
 	return render(request, 'index.html')
@@ -18,14 +19,22 @@ def auth_view(request):
 
 	if user is not None:
 		auth.login(request, user)
-		return HttpResponseRedirect('/home')
+		return HttpResponseRedirect('/')
 	else:
 		return HttpResponseRedirect('/accounts/login')
 
-def loggedin(request):
-	context = {'full_name': request.user.username}
-	return render(request, 'loggedin.html', context)
-
 def logout(request):
 	auth.logout(request)
-	return HttpResponseRedirect('/home')
+	return HttpResponseRedirect('/')
+
+def signup(request):
+	if request.method == 'POST':
+		form = PickneseSignUpForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('/')
+
+	context = {}
+	context.update(csrf(request))
+	context['form'] = PickneseSignUpForm()
+	return render(request, 'signup.html', context)
