@@ -1,0 +1,24 @@
+{% load staticfiles %}
+
+<!DOCTYPE <!DOCTYPE html>
+<html>
+<head>
+	<title>Pickinese{% block title %}{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'assets/css/base.css' %}" />
+</head>
+<body>
+	<div id="menu">
+		<ul>
+			<li><a href="/admin">Admin</a></li>
+			<li><a href="#">About</a></li>
+			<li><a href="/accounts/login/">Log In</a></li>
+			<li><a href="/accounts/logout/">Log Out</a></li>
+			<li><a href="#">Sign Up</a></li>
+		</ul>
+	</div>
+	<div id="content">
+		{% block content %}
+		{% endblock %}
+	</div>
+</body>
+</html>

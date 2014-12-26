@@ -1,9 +1,10 @@
 from django.db import models
 
 # Create your models here.
-class University(models):
+class University(models.Model):
 	name = models.CharField(max_length=50)
 	shorthand = models.CharField(max_length=10)
+	url = models.CharField(max_length=100)
 	system = models.CharField(max_length=50)
 	address = models.CharField(max_length=150)
 	state = models.CharField(max_length=10)
