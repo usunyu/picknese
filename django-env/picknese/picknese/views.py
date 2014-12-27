@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 from forms import PickneseSignUpForm
 
+@login_required(login_url='/accounts/login/')
 def index(request):
 	return render(request, 'index.html')
 
