@@ -5,8 +5,9 @@ class University(models.Model):
 	name = models.CharField(max_length=50)
 	shorthand = models.CharField(max_length=10)
 	url = models.CharField(max_length=100)
-	system = models.CharField(max_length=50)
-	address = models.CharField(max_length=150)
+	description = models.TextField(null=True, blank=True)
+	system = models.CharField(max_length=50, null=True, blank=True)
+	address = models.CharField(max_length=150, null=True, blank=True)
 	state = models.CharField(max_length=10)
 	country = models.CharField(max_length=10)
 
