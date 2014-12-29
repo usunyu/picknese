@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Profile</h2>
+{% for field in form %}
+	{{ field.error }}
+{% endfor %}
+
+<form action="/accounts/profile/" method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	{% if profile.avatar %}
+		<p>
+			<img border="0" alt="Profile Pic" src="/media/{{profile.avatar}}" width="200" />
+		</p>
+	{% else %}
+		<p>
+			<img border="0" alt="Profile Pic" src="/media/images/avatar/default_pic.png" width="200" />
+		</p>
+	{% endif %}
+	{{ form.as_p }}
+	<input type="submit" value="Update" />
+</form>
+
+{% endblock %}

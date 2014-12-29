@@ -8,8 +8,10 @@ class University(models.Model):
 	description = models.TextField(null=True, blank=True)
 	system = models.CharField(max_length=50, null=True, blank=True)
 	address = models.CharField(max_length=150, null=True, blank=True)
-	state = models.CharField(max_length=10)
-	country = models.CharField(max_length=10)
+	city = models.CharField(max_length=30, null=True, blank=True)
+	zip_code = models.CharField(max_length=10, null=True, blank=True)
+	state = models.CharField(max_length=10, null=True, blank=True)
+	country = models.CharField(max_length=10, null=True, blank=True)
 
 	def __str__(self):	# __unicode__ on Python 2
 		return self.name

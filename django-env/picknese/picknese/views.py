@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
-from forms import PickneseSignUpForm
+from forms import PickneseCreationForm
 
 @login_required(login_url='/accounts/login/')
 def index(request):
@@ -31,12 +31,12 @@ def logout(request):
 
 def signup(request):
 	if request.method == 'POST':
-		form = PickneseSignUpForm(request.POST)
+		form = PickneseCreationForm(request.POST)
 		if form.is_valid():
 			form.save()
 			return HttpResponseRedirect('/')
 
 	context = {}
 	context.update(csrf(request))
-	context['form'] = PickneseSignUpForm()
+	context['form'] = PickneseCreationForm()
 	return render(request, 'signup.html', context)

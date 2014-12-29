@@ -36,6 +36,7 @@ INSTALLED_APPS = (
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
+	'userprofile',
 	'story',
 	'university',
 	'pickup',
@@ -96,3 +97,12 @@ STATICFILES_DIRS = (
 
 # Customizing your project's templates
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
+
+# Custom User Profile
+AUTH_PROFILE_MODULE = 'userprofile.UserProfile'
+
+# https://docs.djangoproject.com/en/1.7/ref/settings/#media-root
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# https://docs.djangoproject.com/en/1.7/ref/settings/#media-url
+MEDIA_URL = '/media/'

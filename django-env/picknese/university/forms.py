@@ -2,6 +2,7 @@ from django import forms
 from models import University
 
 class UniversityForm(forms.ModelForm):
+	
 	class Meta:
 		model = University
 		fields = (
@@ -11,6 +12,8 @@ class UniversityForm(forms.ModelForm):
 			'description',
 			'system',
 			'address',
+			'city',
+			'zip_code',
 			'state',
 			'country',
 		)

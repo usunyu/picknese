@@ -1,5 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = patterns('',
 	# Examples:
@@ -8,7 +10,7 @@ urlpatterns = patterns('',
 
 	# home page
 	url(r'^$', 'picknese.views.index'),
-	#  admin usrls
+	# admin usrls
 	url(r'^admin/', include(admin.site.urls)),
 	# university urls
 	url(r'^universities/', include('university.urls')),
@@ -17,4 +19,6 @@ urlpatterns = patterns('',
 	url(r'^accounts/auth/$', 'picknese.views.auth_view'),
 	url(r'^accounts/logout/$', 'picknese.views.logout'),
 	url(r'^accounts/signup/$', 'picknese.views.signup'),
-)
+	# user profile urls
+	url(r'^accounts/', include('userprofile.urls')),
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

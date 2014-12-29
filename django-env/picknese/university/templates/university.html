@@ -2,7 +2,8 @@
 
 {% block content %}
 
-<h1>{{ university.name }}</h1
+<h1><a href="{{ university.url }}">{{ university.name }}</a></h1>
 <p>{{ university.description }}</p>
+<p>{{ university.address }}, {{ university.state }}, {{ university.country }}</p>
 
 {% endblock %}

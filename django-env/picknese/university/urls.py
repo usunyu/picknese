@@ -8,5 +8,5 @@ urlpatterns = patterns('',
 	url(r'^$', 'university.views.universities'),
 	url(r'^(?P<university_id>\d+)/$', 'university.views.university'),
 	url(r'^create/$', 'university.views.create'),
-	url(r'^edit/$', 'university.views.edit'),
+	url(r'^edit/(?P<university_id>\d+)/$', 'university.views.edit'),
 )
