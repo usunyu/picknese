@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load bootstrap3 %}
+
 {% block content %}
 
 <h2>Profile</h2>
@@ -18,8 +20,12 @@
 			<img border="0" alt="Profile Pic" src="/media/images/avatar/default_pic.png" width="200" />
 		</p>
 	{% endif %}
-	{{ form.as_p }}
-	<input type="submit" value="Update" />
+	{% bootstrap_form form %}
+	{% buttons %}
+		<button type="submit" class="btn btn-primary">
+			Update
+        </button>
+	{% endbuttons %}
 </form>
 
 {% endblock %}

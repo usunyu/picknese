@@ -3,24 +3,58 @@
 <!DOCTYPE <!DOCTYPE html>
 <html>
 <head>
-	<title>Pickinese{% block title %}{% endblock %}</title>
+	<title>{% block title %}{% endblock %}Pickinese</title>
+	<!-- Custom CSS -->
 	<link rel="stylesheet" type="text/css" href="{% static 'assets/css/base.css' %}" />
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 </head>
 <body>
-	<div id="menu">
-		<ul>
-			<li><a href="/">Picknese</a></li>
-			<li><a href="/universities/">University</a></li>
-			<li><a href="#">About</a></li>
-			<li><a href="/accounts/login/">Log In</a></li>
-			<li><a href="/accounts/logout/">Log Out</a></li>
-			<li><a href="/accounts/signup/">Sign Up</a></li>
-			<li><a href="/accounts/profile/">Profile</a></li>
-		</ul>
-	</div>
+	<!-- Fixed navbar -->
+	<nav class="navbar navbar-default navbar-fixed-top">
+	  <div class="container">
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		  </button>
+		  <a class="navbar-brand" href="{% url 'picknese.views.index' %}"><b>Picknese</b></a>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+		  <ul class="nav navbar-nav navbar-right">
+			<li><a href="{% url 'university.views.universities' %}">University</a></li>
+			<li class="dropdown">
+			  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">About <span class="caret"></span></a>
+			  <ul class="dropdown-menu" role="menu">
+				<li><a href="#">Action</a></li>
+				<li><a href="#">Another action</a></li>
+				<li><a href="#">Something else here</a></li>
+				<li class="divider"></li>
+				<li class="dropdown-header">Nav header</li>
+				<li><a href="#">Separated link</a></li>
+				<li><a href="#">One more separated link</a></li>
+			  </ul>
+			</li>
+			<li><a href="{% url 'picknese.views.login' %}">Log In</a></li>
+			<li><a href="{% url 'picknese.views.logout' %}">Log Out</a></li>
+			<li><a href="{% url 'picknese.views.signup' %}">Sign Up</a></li>
+			<li><a href="{% url 'userprofile.views.user_profile' %}">Profile</a></li>
+		  </ul>
+		</div><!--/.nav-collapse -->
+	  </div>
+	</nav>
+	<!-- Override with content -->
 	<div id="content">
+		<div class="container">
 		{% block content %}
 		{% endblock %}
+		</div>
 	</div>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
