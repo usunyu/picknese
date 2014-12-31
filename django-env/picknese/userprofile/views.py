@@ -13,7 +13,7 @@ from forms import UserProfileForm
 def user_profile(request):
 	user = request.user
 	profile = user.profile
-
+	# TODO: delete avatar pic after user update
 	if request.method == "POST":
 		form = UserProfileForm(
 			request.POST,
