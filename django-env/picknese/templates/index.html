@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load staticfiles%}
+
 {% block content %}
 
 <div class="jumbotron">
@@ -12,7 +14,8 @@
 <div class="row">
 {% if universities.count > 0 %}
 	{% for university in universities %}
-	<div class="col-xs-6 col-lg-4">
+	<div class="col-md-4 col-sm-6">
+		<img class="img-responsive img-portfolio img-hover" alt="" src="{% static 'images/campus/' %}{{university.shorthand}}/1.jpg" >
 		<h4>{{ university.name }}</h4>
 		<p>{{ university.description }}</p>
 		<p><a class="btn btn-default" href="/universities/{{ university.id }}" role="button">View details &raquo;</a></p>
