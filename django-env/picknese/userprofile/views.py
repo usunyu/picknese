@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from forms import UserProfileForm
 
 # Create your views here.
-@login_required
+@login_required(login_url="/accounts/login/")
 def user_profile(request):
 	user = request.user
 	profile = user.profile

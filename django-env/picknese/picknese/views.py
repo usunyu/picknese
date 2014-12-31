@@ -3,11 +3,14 @@ from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
+
+from university.models import University
 from forms import PickneseCreationForm
 
-@login_required(login_url='/accounts/login/')
 def index(request):
-	return render(request, 'index.html')
+	universities = University.objects.all()
+	context = {'universities': universities}
+	return render(request, 'index.html', context)
 
 def login(request):
 	context = {}

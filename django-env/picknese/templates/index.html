@@ -3,7 +3,23 @@
 {% block content %}
 
 <div class="jumbotron">
-	<h2>Weclome to Picknese!</h2>
+	<div class="container">
+		<h2>Weclome to Picknese!</h2>
+	</div>
+</div>
+
+<div class="container">
+<div class="row">
+{% if universities.count > 0 %}
+	{% for university in universities %}
+	<div class="col-xs-6 col-lg-4">
+		<h4>{{ university.name }}</h4>
+		<p>{{ university.description }}</p>
+		<p><a class="btn btn-default" href="/universities/{{ university.id }}" role="button">View details &raquo;</a></p>
+	</div>
+	{% endfor %}
+{% endif %}
+</div>
 </div>
 
 {% endblock %}
