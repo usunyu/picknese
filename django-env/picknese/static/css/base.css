@@ -1,3 +1,23 @@
+/*
+ * Base Element Style
+ * --------------------------------------------------
+ */
 body {
 	padding-top: 50px;
+}
+
+/*
+ * Custom Element Style
+ * --------------------------------------------------
+ */
+.box-shadow {
+	box-shadow: 0 0 5px black;
+}
+
+.text-shadow {
+	text-shadow: 0 0 0.2em black;
+}
+
+.color-white {
+	color:white;
 }

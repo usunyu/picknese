@@ -12,6 +12,11 @@ def index(request):
 	context = {'universities': universities}
 	return render(request, 'index.html', context)
 
+def home(request, university_id):
+	university = University.objects.get(id=university_id)
+	context = {'university': university}
+	return render(request, 'home.html', context)
+
 def login(request):
 	context = {}
 	context.update(csrf(request))

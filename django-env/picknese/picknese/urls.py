@@ -10,6 +10,7 @@ urlpatterns = patterns('',
 
 	# home page
 	url(r'^$', 'picknese.views.index'),
+	url(r'^home/(?P<university_id>\d+)/$', 'picknese.views.home'),
 	# admin usrls
 	url(r'^admin/', include(admin.site.urls)),
 	# university urls
