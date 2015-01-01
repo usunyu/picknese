@@ -17,7 +17,8 @@
 
 <div class="container">
 <div class="row">
-	<div class="col-xs-12 col-sm-4 col-md-3" id="sidebar">
+	<!-- Side Bar -->
+	<div class="col-xs-12 col-sm-4 col-md-3" id="sidebar" >
 		<div class="list-group">
 			<a class="list-group-item" href="{%url 'picknese.views.index' %}"><i class="glyphicon glyphicon-home"></i>&nbsp; Home</a>
 			<a class="list-group-item active" href="#"><i class="glyphicon glyphicon-plane"></i>&nbsp; Pick Up</a>
@@ -26,6 +27,22 @@
 		<div class="list-group">
 			<a id="btn-default" href="#" class="btn btn-default col-xs-12"><b>&nbsp; Provide Your Pick Up</b></a>
 		</div>
+	</div>
+	<div class="container col-xs-6 col-xs-offset-3 col-sm-7 col-sm-offset-1 col-md-8 col-md-offset-1" style="margin-top: 50px;" >
+	<!-- Picker -->
+	{% if pickers.count > 0 %}
+		{% for picker in pickers %}
+		<div class="col-xs-12 col-sm-6 col-md-4" >
+			{% if picker.profile.avatar %}
+				<img class="img-circle" src="/media/{{picker.profile.avatar.name}}" alt="Profile Pic" style="width: 130px; height: 130px;" />
+			{% else %}
+				<img class="img-circle" src="/media/images/avatar/default_pic.png" alt="Profile Pic" style="width: 130px; height: 130px;" />
+			{% endif %}
+			<h4>{{ picker.first_name }} {{ picker.last_name }}</h4>
+			<p><a class="btn btn-default" href="#" role="button">Contact &raquo;</a></p>
+		</div>
+		{% endfor %}
+	{% endif %}
 	</div>
 </div>
 </div>

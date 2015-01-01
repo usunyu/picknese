@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 
 from university.models import University
+from pickup.models import PickProvider
 from forms import PickneseCreationForm
 
 def index(request):
@@ -13,8 +14,19 @@ def index(request):
 	return render(request, 'index.html', context)
 
 def home(request, university_id):
-	university = University.objects.get(id=university_id)
-	context = {'university': university}
+	university = get_object_or_404(University, id=university_id)
+	pickers = []
+	try:
+		pick_providers = PickProvider.objects.filter(university=university)
+		for pick_provider in pick_providers:
+			pickers.append(pick_provider.picker)
+	except:
+		pickers = []
+
+	context = {
+		'university': university,
+		'pickers': pickers,
+	}
 	return render(request, 'home.html', context)
 
 def login(request):

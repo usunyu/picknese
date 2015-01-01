@@ -7,15 +7,17 @@
 <div class="jumbotron" style="background: url({% static 'images/campus/usc/2.jpg' %});">
 	<div class="container">
 	<div class="row">
+		<!-- Title -->
 		<h2 class="color-white text-shadow col-lg-12">Weclome to Picknese!</h2>
+		<!-- Search -->
 		<div class="col-lg-6">
 			<div class="input-group">
 			<input type="text" class="form-control" placeholder="What School Are You Looking For ?" style="background-color: white; border-radius: 3px 0 0 3px; padding: 0px 10px;">
 			<span class="input-group-btn">
 				<button class="btn btn-default" type="button">Go</button>
 			</span>
-			</div><!-- /input-group -->
-		</div><!-- /.col-lg-6 -->
+			</div>
+		</div>
 	</div>
 	</div>
 </div>
@@ -24,6 +26,7 @@
 <div class="row">
 {% if universities.count > 0 %}
 	{% for university in universities %}
+	<!-- University -->
 	<div class="col-sm-6 col-md-4">
 		<img class="img-responsive img-portfolio img-hover box-shadow" alt="" src="{% static 'images/campus/' %}{{university.shorthand}}/1.jpg" >
 		<h4>{{ university.name }}</h4>
