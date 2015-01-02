@@ -33,10 +33,10 @@ Pick Up |
 {% endblock %}
 
 {% block content %}
-<div class="col-xs-6 col-xs-offset-3 col-sm-7 col-sm-offset-1 col-md-8 col-md-offset-1" style="margin-top: 50px;" >
+<div class="col-xs-6 col-xs-offset-3 col-sm-7 col-sm-offset-1 col-md-8 col-md-offset-1" >
 {% if pick_providers|length > 0 %}
 	{% for pick_provider in pick_providers %}
-	<div class="col-xs-12 col-sm-6 col-md-4" >
+	<div class="col-xs-12 col-sm-6 col-md-4" style="margin-top: 30px;" >
 		{% if pick_provider.picker.profile.avatar %}
 			<img class="img-circle box-shadow" src="/media/{{pick_provider.picker.profile.avatar.name}}" alt="Profile Pic" style="width: 130px; height: 130px;" />
 		{% else %}
@@ -48,8 +48,8 @@ Pick Up |
 		<!-- TODO: add contact and profile -->
 		<!-- Split button -->
 		<div class="btn-group">
-			<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-envelope"></i>&nbsp; Contact</button>
-			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+			<button type="button" class="btn btn-default col-xs-9"><i class="glyphicon glyphicon-envelope"></i>&nbsp; Contact</button>
+			<button type="button" class="btn btn-default dropdown-toggle col-xs-3" data-toggle="dropdown" aria-expanded="false">
 				<span class="caret"></span>
 				<span class="sr-only">Toggle Dropdown</span>
 			</button>
