@@ -13,7 +13,7 @@ def index(request):
 	context = {'universities': universities}
 	return render(request, 'index.html', context)
 
-def home(request, university_id):
+def pickup(request, university_id):
 	university = get_object_or_404(University, id=university_id)
 	pickers = []
 	try:
@@ -27,7 +27,7 @@ def home(request, university_id):
 		'university': university,
 		'pickers': pickers,
 	}
-	return render(request, 'home.html', context)
+	return render(request, 'pickup.html', context)
 
 def login(request):
 	context = {}

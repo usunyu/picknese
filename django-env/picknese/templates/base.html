@@ -50,10 +50,21 @@
 		</div><!--/.nav-collapse -->
 	  </div>
 	</nav>
-	<!-- Override with content -->
-	<div id="content">
-		{% block content %}
+	<!-- Jumbotron -->
+	<div>
+		{% block jumbotron %}
 		{% endblock %}
+	</div>
+	<!-- Main -->
+	<div class="container">
+		<div class="row">
+			<!-- Sidebar -->
+			{% block sidebar %}
+			{% endblock %}
+			<!-- Content -->
+			{% block content %}
+			{% endblock %}
+		</div>
 	</div>
 	<!-- Footer -->
 	<div class="container">

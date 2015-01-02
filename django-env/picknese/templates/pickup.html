@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% load staticfiles%}
+
+{% block title %}
+Pick Up |
+{% endblock %}
+
+{% block jumbotron %}
+<div class="jumbotron" style="background: url({% static 'images/campus/' %}{{university.shorthand}}/2.jpg);">
+	<div class="container" style="overflow: hidden;">
+		<div style="float:left; margin-right:20px;">
+			<img src="{% static 'images/logo/' %}{{university.shorthand}}.jpg" alt="" class="img-thumbnail img-responsive img-center" style="width:90px;">
+		</div>
+		<div style="overflow: hidden;">
+			<h2 class="color-white text-shadow" >{{university.name}}</h2>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<div class="col-xs-12 col-sm-4 col-md-3" >
+	<div class="list-group">
+		<a class="list-group-item" href="{%url 'picknese.views.index' %}"><i class="glyphicon glyphicon-home"></i>&nbsp; Home</a>
+		<a class="list-group-item active" href="#"><i class="glyphicon glyphicon-plane"></i>&nbsp; Pick Up</a>
+		<a class="list-group-item" href="#"><i class="glyphicon glyphicon-road"></i>&nbsp; Carpool</a>
+	</div>
+	<div class="list-group">
+		<a id="btn-default" href="#" class="btn btn-default col-xs-12"><b>&nbsp; Provide Your Pick Up</b></a>
+	</div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="col-xs-6 col-xs-offset-3 col-sm-7 col-sm-offset-1 col-md-8 col-md-offset-1" style="margin-top: 50px;" >
+{% if pickers.count > 0 %}
+	{% for picker in pickers %}
+	<div class="col-xs-12 col-sm-6 col-md-4" >
+		{% if picker.profile.avatar %}
+			<img class="img-circle box-shadow" src="/media/{{picker.profile.avatar.name}}" alt="Profile Pic" style="width: 130px; height: 130px;" />
+		{% else %}
+			<img class="img-circle box-shadow" src="/media/images/avatar/default_pic.png" alt="Profile Pic" style="width: 130px; height: 130px;" />
+		{% endif %}
+		<h4>{{ picker.first_name }} {{ picker.last_name }}</h4>
+		<!-- TODO: add major for profile -->
+		<p>Computer Science</p>
+		<p><a class="btn btn-default" href="#" role="button"><i class="glyphicon glyphicon-envelope"></i>&nbsp; Contact</a></p>
+	</div>
+	{% endfor %}
+{% endif %}
+</div>
+{% endblock %}
+
