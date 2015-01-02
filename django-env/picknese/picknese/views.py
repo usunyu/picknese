@@ -4,12 +4,17 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 
+from django.contrib.auth.models import User
 from university.models import University
 from forms import PickneseCreationForm
 
 def index(request):
 	universities = University.objects.all()
-	context = {'universities': universities}
+	user_count = User.objects.count()
+	context = {
+		'universities': universities,
+		'user_count': user_count,
+	}
 	return render(request, 'index.html', context)
 
 def login(request):
