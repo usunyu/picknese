@@ -34,7 +34,7 @@ Home |
 		<img class="img-responsive img-portfolio img-hover box-shadow" alt="" src="{% static 'images/campus/' %}{{university.shorthand}}/1.jpg" >
 		<h4>{{ university.name }}</h4>
 		<p>{{ university.description }}</p>
-		<p><a class="btn btn-default" href="{% url 'picknese.views.pickup' university.id %}" role="button">View details &raquo;</a></p>
+		<p><a class="btn btn-default" href="{% url 'pickup.views.index' university.id %}" role="button">View details &raquo;</a></p>
 	</div>
 	{% endfor %}
 {% endif %}

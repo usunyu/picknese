@@ -1,37 +1,17 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 
 from university.models import University
-from pickup.models import PickProvider
 from forms import PickneseCreationForm
 
-# Index
 def index(request):
 	universities = University.objects.all()
 	context = {'universities': universities}
 	return render(request, 'index.html', context)
 
-# Pick Up
-def pickup(request, university_id):
-	university = get_object_or_404(University, id=university_id)
-	pickers = []
-	try:
-		pick_providers = PickProvider.objects.filter(university=university)
-		for pick_provider in pick_providers:
-			pickers.append(pick_provider.picker)
-	except:
-		pickers = []
-
-	context = {
-		'university': university,
-		'pickers': pickers,
-	}
-	return render(request, 'pickup.html', context)
-
-# Auth
 def login(request):
 	context = {}
 	context.update(csrf(request))

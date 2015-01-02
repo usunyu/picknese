@@ -10,8 +10,8 @@ urlpatterns = patterns('',
 
 	# home urls
 	url(r'^$', 'picknese.views.index'),
-	# picknese urls
-	url(r'^pickup/(?P<university_id>\d+)/$', 'picknese.views.pickup'),
+	# pickup urls
+	url(r'^pickup/', include('pickup.urls')),
 	# admin usrls
 	url(r'^admin/', include(admin.site.urls)),
 	# university urls
