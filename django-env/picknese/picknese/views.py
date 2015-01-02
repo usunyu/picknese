@@ -8,11 +8,13 @@ from university.models import University
 from pickup.models import PickProvider
 from forms import PickneseCreationForm
 
+# Index
 def index(request):
 	universities = University.objects.all()
 	context = {'universities': universities}
 	return render(request, 'index.html', context)
 
+# Pick Up
 def pickup(request, university_id):
 	university = get_object_or_404(University, id=university_id)
 	pickers = []
@@ -29,6 +31,7 @@ def pickup(request, university_id):
 	}
 	return render(request, 'pickup.html', context)
 
+# Auth
 def login(request):
 	context = {}
 	context.update(csrf(request))
