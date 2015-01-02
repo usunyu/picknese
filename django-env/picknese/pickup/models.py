@@ -6,7 +6,7 @@ from university.models import University
 class PickProvider(models.Model):
 	picker = models.ForeignKey(User)
 	university = models.ForeignKey(University)
-	price = models.IntegerField(default=0)
+	price = models.IntegerField(default=20)
 	description = models.TextField(null=True, blank=True)
 
 	def __str__(self):	# __unicode__ on Python 2

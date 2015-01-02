@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 
 {% load staticfiles%}
+{% load bootstrap3 %}
 
 {% block title %}
-Pick Up |
+Provide Pick Up |
 {% endblock %}
 
 {% block jumbotron %}
@@ -23,7 +24,7 @@ Pick Up |
 <div class="col-xs-12 col-sm-4 col-md-3" >
 	<div class="list-group">
 		<a class="list-group-item" href="{%url 'picknese.views.index' %}"><i class="glyphicon glyphicon-home"></i>&nbsp; Home</a>
-		<a class="list-group-item active" href="{% url 'pickup.views.index' university.id %}"><i class="glyphicon glyphicon-plane"></i>&nbsp; Pick Up</a>
+		<a class="list-group-item" href="{% url 'pickup.views.index' university.id %}"><i class="glyphicon glyphicon-plane"></i>&nbsp; Pick Up</a>
 		<a class="list-group-item" href="#"><i class="glyphicon glyphicon-road"></i>&nbsp; Carpool</a>
 	</div>
 	<div class="list-group">
@@ -34,27 +35,14 @@ Pick Up |
 
 {% block content %}
 <div class="col-xs-6 col-xs-offset-3 col-sm-7 col-sm-offset-1 col-md-8 col-md-offset-1" style="margin-top: 50px;" >
-{% if pickers|length > 0 %}
-	{% for picker in pickers %}
-	<div class="col-xs-12 col-sm-6 col-md-4" >
-		{% if picker.profile.avatar %}
-			<img class="img-circle box-shadow" src="/media/{{picker.profile.avatar.name}}" alt="Profile Pic" style="width: 130px; height: 130px;" />
-		{% else %}
-			<img class="img-circle box-shadow" src="/media/images/avatar/default_pic.png" alt="Profile Pic" style="width: 130px; height: 130px;" />
-		{% endif %}
-		<h4>{{ picker.first_name }} {{ picker.last_name }}</h4>
-		<!-- TODO: add major for profile -->
-		<p>Computer Science</p>
-		<!-- TODO: add price -->
-		<p>Tip: $20</p>
-		<p><a class="btn btn-default" href="#" role="button"><i class="glyphicon glyphicon-envelope"></i>&nbsp; Contact</a></p>
-	</div>
-	{% endfor %}
-{% else %}
-<div>
-	<h4>Oops, no picker here :(</h4>
-</div>
-{% endif %}
+	<form action="{% url 'pickup.views.provider' university.id %}" method="post">
+		{% csrf_token %}
+		{% bootstrap_form form %}
+		{% buttons %}
+			<button type="submit" class="btn btn-info">
+				Confirm
+			</button>
+		{% endbuttons %}
+	</form>
 </div>
 {% endblock %}
-

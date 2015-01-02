@@ -9,3 +9,6 @@ class PickProviderForm(forms.ModelForm):
 			'price',
 			'description',
 		)
+		widgets = {
+			'description' : forms.Textarea(attrs = {'placeholder': 'Please input informations you can provide, such as, the type of your car, how many luggages you can hold, etc.'}),
+		}
