@@ -28,17 +28,17 @@ def index(request, university_id):
 	}
 	return render(request, 'pickup/index.html', context)
 
-# create pick_provider
-def provider(request, university_id):
+# create PickProvider
+def provide_pick_provider(request, university_id):
 	user = request.user
 	university = get_object_or_404(University, id=university_id)
 	if request.POST:
 		form = PickProviderForm(request.POST)
 		if form.is_valid():
-			provider = form.save(commit=False)
-			provider.picker = user
-			provider.university = university
-			provider.save()
+			pick_provider = form.save(commit=False)
+			pick_provider.picker = user
+			pick_provider.university = university
+			pick_provider.save()
 			return HttpResponseRedirect('/pickup/home/' + university_id)
 	else:
 		form = PickProviderForm()
@@ -47,4 +47,11 @@ def provider(request, university_id):
 	context.update(csrf(request))
 	context['form'] = form
 	context['university'] = university
-	return render(request, 'pickup/provider.html', context)
+	return render(request, 'pickup/provide_pick_provider.html', context)
+
+# delete PickProvider
+def cancel_pick_provider(request, university_id):
+	user = request.user
+	university = get_object_or_404(University, id=university_id)
+	PickProvider.objects.filter(picker=user.id, university_id=university.id).delete()
+	return HttpResponseRedirect('/pickup/home/' + university_id)

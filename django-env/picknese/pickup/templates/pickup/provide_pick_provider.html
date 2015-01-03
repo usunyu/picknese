@@ -28,14 +28,14 @@ Provide Pick Up |
 		<a class="list-group-item" href="#"><i class="glyphicon glyphicon-road"></i>&nbsp; Carpool</a>
 	</div>
 	<div class="list-group">
-		<a href="{% url 'pickup.views.provider' university.id %}" class="btn btn-info col-xs-12"><b>&nbsp; Provide Your Pick Up</b></a>
+		<a href="{% url 'pickup.views.provide_pick_provider' university.id %}" class="btn btn-info col-xs-12"><b>&nbsp; Provide Your Pick Up</b></a>
 	</div>
 </div>
 {% endblock %}
 
 {% block content %}
 <div class="col-xs-6 col-xs-offset-3 col-sm-7 col-sm-offset-1 col-md-8 col-md-offset-1" style="margin-top: 50px;" >
-	<form action="{% url 'pickup.views.provider' university.id %}" method="post">
+	<form action="{% url 'pickup.views.provide_pick_provider' university.id %}" method="post">
 		{% csrf_token %}
 		{% bootstrap_form form %}
 		{% buttons %}

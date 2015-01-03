@@ -28,10 +28,10 @@ Pick Up |
 	</div>
 	{% if is_provided %}
 	<div class="list-group">
-		<a href="#" class="btn btn-info col-xs-12"><b>&nbsp; Cancel Your Pick Up</b></a>
+		<a href="{% url 'pickup.views.cancel_pick_provider' university.id %}" class="btn btn-info col-xs-12"><b>&nbsp; Cancel Your Pick Up</b></a>
 	</div>
 	{% else %}
-		<a href="{% url 'pickup.views.provider' university.id %}" class="btn btn-info col-xs-12"><b>&nbsp; Provide Your Pick Up</b></a>
+		<a href="{% url 'pickup.views.provide_pick_provider' university.id %}" class="btn btn-info col-xs-12"><b>&nbsp; Provide Your Pick Up</b></a>
 	{% endif %}
 </div>
 {% endblock %}
