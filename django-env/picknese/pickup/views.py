@@ -8,16 +8,23 @@ from forms import PickProviderForm
 
 # Create your views here.
 def index(request, university_id):
+	user = request.user
 	university = get_object_or_404(University, id=university_id)
 	pick_providers = []
+	is_provided = False
 	try:
 		pick_providers = PickProvider.objects.filter(university=university)
+		for pick_provider in pick_providers:
+			if pick_provider.picker == user:
+				is_provided = True
+				break
 	except:
 		pick_providers = []
 
 	context = {
 		'university': university,
 		'pick_providers': pick_providers,
+		'is_provided': is_provided,
 	}
 	return render(request, 'pickup/index.html', context)
 

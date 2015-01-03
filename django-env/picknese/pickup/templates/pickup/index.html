@@ -26,9 +26,13 @@ Pick Up |
 		<a class="list-group-item active" href="{% url 'pickup.views.index' university.id %}"><i class="glyphicon glyphicon-plane"></i>&nbsp; Pick Up</a>
 		<a class="list-group-item" href="#"><i class="glyphicon glyphicon-road"></i>&nbsp; Carpool</a>
 	</div>
+	{% if is_provided %}
 	<div class="list-group">
-		<a href="{% url 'pickup.views.provider' university.id %}" class="btn btn-info col-xs-12"><b>&nbsp; Provide Your Pick Up</b></a>
+		<a href="#" class="btn btn-info col-xs-12"><b>&nbsp; Cancel Your Pick Up</b></a>
 	</div>
+	{% else %}
+		<a href="{% url 'pickup.views.provider' university.id %}" class="btn btn-info col-xs-12"><b>&nbsp; Provide Your Pick Up</b></a>
+	{% endif %}
 </div>
 {% endblock %}
 
