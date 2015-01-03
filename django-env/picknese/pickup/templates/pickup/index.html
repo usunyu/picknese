@@ -7,15 +7,17 @@ Pick Up |
 {% endblock %}
 
 {% block jumbotron %}
-<div class="jumbotron" style="background: url({% static 'images/campus/' %}{{university.shorthand}}/2.jpg);">
-	<div class="container" style="overflow: hidden;">
-		<div style="float:left; margin-right:20px;">
-			<img src="{% static 'images/logo/' %}{{university.shorthand}}.jpg" alt="" class="img-thumbnail img-responsive img-center" style="width:90px;">
-		</div>
-		<div style="overflow: hidden;">
-			<h2 class="color-white text-shadow" >{{university.name}}</h2>
-		</div>
+<div class="jumbotron" style="background: url({% static 'images/campus/' %}{{university.shorthand}}/2.jpg); min-height: 200px;"></div>
+<div class="container">
+	<div class="col-md-2" style="margin-top: -90px;">
+		<img src="{% static 'images/logo/' %}{{university.shorthand}}.jpg" alt="" class="img-thumbnail img-responsive img-center" style="width:150px;">
 	</div>
+	<div class="col-md-8" style="margin-top: -10px;">
+		<h3>{{university.name}}</h3>
+	</div>
+</div>
+<div class="container">
+	<hr />
 </div>
 {% endblock %}
 
