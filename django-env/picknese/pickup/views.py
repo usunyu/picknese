@@ -7,7 +7,7 @@ from pickup.models import PickProvider
 from forms import PickProviderForm
 
 # Create your views here.
-def index(request, university_id):
+def pickup(request, university_id):
 	user = request.user
 	university = get_object_or_404(University, id=university_id)
 	pick_providers = []
@@ -27,7 +27,7 @@ def index(request, university_id):
 		'current_user': user,
 		'is_provided': is_provided,
 	}
-	return render(request, 'pickup/index.html', context)
+	return render(request, 'pickup.html', context)
 
 # create PickProvider
 def provide_pick_provider(request, university_id):
@@ -48,7 +48,7 @@ def provide_pick_provider(request, university_id):
 	context.update(csrf(request))
 	context['form'] = form
 	context['university'] = university
-	return render(request, 'pickup/provide_pick_provider.html', context)
+	return render(request, 'provide_pick_provider.html', context)
 
 # delete PickProvider
 def cancel_pick_provider(request, university_id):
