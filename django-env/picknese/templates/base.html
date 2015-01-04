@@ -6,13 +6,10 @@
 	<title>{% block title %}{% endblock %}Pickinese</title>
 	<!-- Custom CSS -->
 	<link rel="stylesheet" type="text/css" href="{% static 'assets/css/base.css' %}" />
-	<!-- Latest compiled and minified CSS -->
-	<!-- TODO: download bootstrap to local -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-	<!-- Bootswatch Paper Style -->
-	<!-- TODO: separate bootstrap-glyphicons.css reduce load -->
-	<link rel="stylesheet" href="http://bootswatch.com/paper/bootstrap.css">
-	<link rel="stylesheet" href="http://bootswatch.com/assets/css/bootswatch.min.css">
+	<!-- Latest compiled and minified CSS, Paper Style -->
+	<link rel="stylesheet" href="{% static 'assets/css/bootstrap.paper.min.css' %}" media="screen"/>
+	<!-- http://bootswatch.com/paper/ -->
+	<link rel="stylesheet" href="{% static 'assets/css/bootswatch.min.css' %}"/>
 </head>
 <body>
 	<!-- Fixed navbar -->
@@ -72,10 +69,11 @@
 			<p>&copy; 2015 Picknese Inc. All rights reserved.</p>
 		</footer>
 	</div>
-	<!-- TODO: download js file to local -->
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="{% static 'assets/js/jquery.min.js' %}"></script>
 	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+	<!-- http://bootswatch.com/paper/ -->
+	<script src="{% static 'assets/js/bootswatch.js' %}"></script>
 </body>
 </html>
