@@ -43,8 +43,8 @@ Pick Up |
 <div style="margin-top: 20px;">
 	<ul class="nav nav-tabs">
 		<li role="presentation"><a href="#">Home</a></li>
-		<li role="presentation"><a href="#">University</a></li>
-		<li role="presentation" class="active"><a href="#">Pick Up</a></li>
+		<li role="presentation"><a href="{%url 'university.views.university' university.id %}">University</a></li>
+		<li role="presentation" class="active"><a href="{% url 'pickup.views.pickup' university.id %}">Pick Up</a></li>
 		<li role="presentation"><a href="#">Carpool</a></li>
 	</ul>
 </div>
@@ -70,9 +70,15 @@ Pick Up |
 			<div class="btn-group">
 				{% if current_user == pick_provider.picker %}
 				<button type="button" class="btn btn-default col-xs-9"><i class="glyphicon glyphicon-edit"></i>&nbsp; Update</button>
+				<button type="button" class="btn btn-default dropdown-toggle col-xs-3" data-toggle="dropdown" aria-expanded="false">
+					<span class="caret"></span>
+					<span class="sr-only">Toggle Dropdown</span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="{% url 'pickup.views.cancel_pick_provider' university.id %}"><i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel Your Pick Up</a></li>
+				</ul>
 				{% else %}
 				<button type="button" class="btn btn-default col-xs-9"><i class="glyphicon glyphicon-envelope"></i>&nbsp; Contact</button>
-				{% endif %}
 				<button type="button" class="btn btn-default dropdown-toggle col-xs-3" data-toggle="dropdown" aria-expanded="false">
 					<span class="caret"></span>
 					<span class="sr-only">Toggle Dropdown</span>
@@ -82,6 +88,7 @@ Pick Up |
 					<li class="divider"></li>
 					<li><a href="#">Other</a></li>
 				</ul>
+				{% endif %}
 			</div>
 		</div>
 	</div>
