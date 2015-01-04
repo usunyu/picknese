@@ -54,7 +54,11 @@ Pick Up |
 		<!-- TODO: add contact and profile -->
 		<!-- Split button -->
 		<div class="btn-group">
+			{% if current_user == pick_provider.picker %}
+			<button type="button" class="btn btn-default col-xs-9"><i class="glyphicon glyphicon-edit"></i>&nbsp; Update</button>
+			{% else %}
 			<button type="button" class="btn btn-default col-xs-9"><i class="glyphicon glyphicon-envelope"></i>&nbsp; Contact</button>
+			{% endif %}
 			<button type="button" class="btn btn-default dropdown-toggle col-xs-3" data-toggle="dropdown" aria-expanded="false">
 				<span class="caret"></span>
 				<span class="sr-only">Toggle Dropdown</span>

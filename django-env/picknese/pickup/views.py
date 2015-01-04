@@ -24,6 +24,7 @@ def index(request, university_id):
 	context = {
 		'university': university,
 		'pick_providers': pick_providers,
+		'current_user': user,
 		'is_provided': is_provided,
 	}
 	return render(request, 'pickup/index.html', context)
