@@ -8,21 +8,20 @@ Pick Up |
 
 {% block jumbotron %}
 <div class="jumbotron" style="background: url({% static 'images/campus/' %}{{university.shorthand}}/2.jpg); min-height: 200px;"></div>
-<div class="container">
-	<div class="col-md-2" style="margin-top: -90px;">
-		<img src="{% static 'images/logo/' %}{{university.shorthand}}.jpg" alt="" class="img-thumbnail img-responsive img-center" style="width:150px;">
+<div class="container" style="margin-top: -120px;">
+	<div class="row">
+		<div class="col-md-2">
+			<img src="{% static 'images/logo/' %}{{university.shorthand}}.jpg" alt="" class="img-thumbnail img-responsive img-center" style="width:150px;">
+		</div>
+		<div class="col-md-10">
+			<h3 class="color-white text-shadow">{{university.name}}</h3>
+		</div>
 	</div>
-	<div class="col-md-8" style="margin-top: -10px;">
-		<h3>{{university.name}}</h3>
-	</div>
-</div>
-<div class="container">
-	<hr />
 </div>
 {% endblock %}
 
 {% block sidebar %}
-<div class="col-xs-12 col-sm-4 col-md-3" >
+<!-- <div class="col-xs-12 col-sm-4 col-md-3" >
 	<div class="list-group">
 		<a class="list-group-item" href="{%url 'picknese.views.index' %}"><i class="glyphicon glyphicon-home"></i>&nbsp; Home</a>
 		<a class="list-group-item" href="{%url 'university.views.university' university.id %}"><i class="glyphicon glyphicon-book"></i>&nbsp; University</a>
@@ -36,47 +35,61 @@ Pick Up |
 		<a href="{% url 'pickup.views.provide_pick_provider' university.id %}" class="btn btn-info col-xs-12"><b>&nbsp; Provide Your Pick Up</b></a>
 	{% endif %}
 	</div>
+</div> -->
+{% endblock %}
+
+
+{% block tabs %}
+<div style="margin-top: 20px;">
+	<ul class="nav nav-tabs">
+		<li role="presentation"><a href="#">Home</a></li>
+		<li role="presentation"><a href="#">University</a></li>
+		<li role="presentation" class="active"><a href="#">Pick Up</a></li>
+		<li role="presentation"><a href="#">Carpool</a></li>
+	</ul>
 </div>
 {% endblock %}
 
 {% block content %}
-<div class="col-xs-6 col-xs-offset-3 col-sm-7 col-sm-offset-1 col-md-8 col-md-offset-1" >
 {% if pick_providers|length > 0 %}
 	{% for pick_provider in pick_providers %}
-	<div class="col-xs-12 col-sm-6 col-md-4" style="margin-top: 30px;" >
+	<div class="container col-xs-12 col-sm-6 col-md-4" style="margin-top: 30px;">
+		<div class="col-xs-5 col-sm-5 col-md-5">
 		{% if pick_provider.picker.profile.avatar %}
 			<img class="img-circle box-shadow" src="/media/{{pick_provider.picker.profile.avatar.name}}" alt="Profile Pic" style="width: 130px; height: 130px;" />
 		{% else %}
 			<img class="img-circle box-shadow" src="/media/images/avatar/default_pic.png" alt="Profile Pic" style="width: 130px; height: 130px;" />
 		{% endif %}
-		<h4>{{ pick_provider.picker.first_name }} {{ pick_provider.picker.last_name }}</h4>
-		<p>Tip: ${{pick_provider.price}}</p>
-		<p>{{pick_provider.description}}</p>
-		<!-- TODO: add contact and profile -->
-		<!-- Split button -->
-		<div class="btn-group">
-			{% if current_user == pick_provider.picker %}
-			<button type="button" class="btn btn-default col-xs-9"><i class="glyphicon glyphicon-edit"></i>&nbsp; Update</button>
-			{% else %}
-			<button type="button" class="btn btn-default col-xs-9"><i class="glyphicon glyphicon-envelope"></i>&nbsp; Contact</button>
-			{% endif %}
-			<button type="button" class="btn btn-default dropdown-toggle col-xs-3" data-toggle="dropdown" aria-expanded="false">
-				<span class="caret"></span>
-				<span class="sr-only">Toggle Dropdown</span>
-			</button>
-			<ul class="dropdown-menu" role="menu">
-				<li><a href="#"><i class="glyphicon glyphicon-user"></i>&nbsp; Profile</a></li>
-				<li class="divider"></li>
-				<li><a href="#">Other</a></li>
-			</ul>
+		</div>
+		<div class="col-xs-7 col-sm-7 col-md-7">
+			<h4>{{ pick_provider.picker.first_name }} {{ pick_provider.picker.last_name }}</h4>
+			<p>Tip: ${{pick_provider.price}}</p>
+			<p>{{pick_provider.description}}</p>
+			<!-- TODO: add contact and profile -->
+			<!-- Split button -->
+			<div class="btn-group">
+				{% if current_user == pick_provider.picker %}
+				<button type="button" class="btn btn-default col-xs-9"><i class="glyphicon glyphicon-edit"></i>&nbsp; Update</button>
+				{% else %}
+				<button type="button" class="btn btn-default col-xs-9"><i class="glyphicon glyphicon-envelope"></i>&nbsp; Contact</button>
+				{% endif %}
+				<button type="button" class="btn btn-default dropdown-toggle col-xs-3" data-toggle="dropdown" aria-expanded="false">
+					<span class="caret"></span>
+					<span class="sr-only">Toggle Dropdown</span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="#"><i class="glyphicon glyphicon-user"></i>&nbsp; Profile</a></li>
+					<li class="divider"></li>
+					<li><a href="#">Other</a></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 	{% endfor %}
 {% else %}
 <div>
-	<h4>Oops, no picker here :(</h4>
+	<h4 align="center">Oops, no picker here :(</h4>
 </div>
 {% endif %}
-</div>
 {% endblock %}
 
