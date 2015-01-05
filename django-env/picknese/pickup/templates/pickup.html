@@ -34,7 +34,7 @@ Pick Up |
 {% block content %}
 {% if pick_providers|length > 0 %}
 	{% for pick_provider in pick_providers %}
-	<div class="container col-xs-12 col-sm-6 col-md-4" style="margin-top: 30px;">
+	<div class="container col-xs-12 col-sm-6 col-md-4" style="margin-top: 30px; min-height: 220px;">
 		<div class="col-xs-5 col-sm-5 col-md-5">
 		{% if pick_provider.picker.profile.avatar %}
 			<img class="img-circle box-shadow" src="/media/{{pick_provider.picker.profile.avatar.name}}" alt="Profile Pic" style="width: 130px; height: 130px;" />
