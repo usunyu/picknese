@@ -8,6 +8,7 @@ class PickProvider(models.Model):
 	university = models.ForeignKey(University)
 	price = models.IntegerField(default=20)
 	description = models.TextField(null=True, blank=True)
+	listed = models.BooleanField(default=True)
 
 	class Meta:
 		unique_together = (("picker", "university"),)
