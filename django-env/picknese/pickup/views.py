@@ -30,24 +30,22 @@ def pickup(request, university_id):
 	return render(request, 'pickup.html', context)
 
 # create PickProvider
-def provide_pick_provider(request, university_id):
+def provide_pick_provider(request):
 	user = request.user
-	university = get_object_or_404(University, id=university_id)
 	if request.POST:
 		form = PickProviderForm(request.POST)
 		if form.is_valid():
+			university = form.cleaned_data['university']
 			pick_provider = form.save(commit=False)
 			pick_provider.picker = user
-			pick_provider.university = university
 			pick_provider.save()
-			return HttpResponseRedirect('/pickup/home/' + university_id)
+			return HttpResponseRedirect('/pickup/home/' + str(university.id))
 	else:
 		form = PickProviderForm()
 
 	context = {}
 	context.update(csrf(request))
 	context['form'] = form
-	context['university'] = university
 	return render(request, 'provide_pick_provider.html', context)
 
 # delete PickProvider

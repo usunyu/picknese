@@ -6,6 +6,7 @@ class PickProviderForm(forms.ModelForm):
 	class Meta:
 		model = PickProvider
 		fields = (
+			'university',
 			'price',
 			'description',
 		)
