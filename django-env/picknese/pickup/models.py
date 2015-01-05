@@ -9,6 +9,9 @@ class PickProvider(models.Model):
 	price = models.IntegerField(default=20)
 	description = models.TextField(null=True, blank=True)
 
+	class Meta:
+		unique_together = (("picker", "university"),)
+
 	def __str__(self):	# __unicode__ on Python 2
 		return self.picker.username + ' : ' + self.university.name
 

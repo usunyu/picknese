@@ -35,11 +35,16 @@ def provide_pick_provider(request):
 	if request.POST:
 		form = PickProviderForm(request.POST)
 		if form.is_valid():
-			university = form.cleaned_data['university']
-			pick_provider = form.save(commit=False)
-			pick_provider.picker = user
-			pick_provider.save()
-			return HttpResponseRedirect('/pickup/home/' + str(university.id))
+			try:
+				university = form.cleaned_data['university']
+				pick_provider = form.save(commit=False)
+				pick_provider.picker = user
+				pick_provider.save()
+				return HttpResponseRedirect('/pickup/home/' + str(university.id))
+			except:
+				# TODO: show error message
+				university = form.cleaned_data['university']
+				return HttpResponseRedirect('/pickup/home/' + str(university.id))
 	else:
 		form = PickProviderForm()
 
