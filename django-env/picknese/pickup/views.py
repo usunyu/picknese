@@ -10,8 +10,10 @@ from forms import PickProviderForm
 def request_pickup(request, picker_id, pickee_id):
 	pass
 
-# show PickProvider
-# pickup.views.pick_provider_list university_id => pickup/provider/1/
+"""
+show PickProvider
+pickup.views.pick_provider_list university_id => pickup/provider/1/
+"""
 def pick_provider_list(request, university_id):
 	user = request.user
 	university = get_object_or_404(University, id=university_id)
@@ -34,8 +36,10 @@ def pick_provider_list(request, university_id):
 	}
 	return render(request, 'pick_provider_list.html', context)
 
-# create PickProvider
-# pickup.views.provide_pick_provider => pickup/provider/create/
+"""
+create PickProvider
+pickup.views.provide_pick_provider => pickup/provider/create/
+"""
 def provide_pick_provider(request):
 	user = request.user
 	if request.POST:
@@ -59,8 +63,10 @@ def provide_pick_provider(request):
 	context['form'] = form
 	return render(request, 'provide_pick_provider.html', context)
 
-# delete PickProvider from provider list view
-# pickup.views.cancel_pick_provider university_id => pickup/provider/delete/1
+"""
+delete PickProvider from provider list view
+pickup.views.cancel_pick_provider university_id => pickup/provider/delete/1
+"""
 def cancel_pick_provider(request, university_id):
 	user = request.user
 	university = get_object_or_404(University, id=university_id)
