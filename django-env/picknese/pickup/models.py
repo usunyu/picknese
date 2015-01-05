@@ -2,12 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from university.models import University
 
-# Create your models here.
 class PickProvider(models.Model):
 	picker = models.ForeignKey(User)
 	university = models.ForeignKey(University)
 	price = models.IntegerField(default=20)
 	description = models.TextField(null=True, blank=True)
+	# TODO: check listed, user can unlist
 	listed = models.BooleanField(default=True)
 
 	class Meta:
@@ -21,6 +21,9 @@ class PickUp(models.Model):
 	pickee = models.ForeignKey(User, related_name='pickup_pickee')
 	flight = models.CharField(max_length=20)
 	confirmed = models.BooleanField(default=False)
+
+	class Meta:
+		unique_together = (("picker", "pickee", "flight"),)
 
 	def __str__(self):	# __unicode__ on Python 2
 		return self.picker.username + ' : ' + self.pickee.username
