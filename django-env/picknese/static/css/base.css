@@ -29,3 +29,7 @@ a:hover {
 .color-yellow {
 	color: yellow;
 }
+
+.text-center {
+	text-align: center;
+}
