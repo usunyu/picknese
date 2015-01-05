@@ -3,7 +3,6 @@ from django.http import HttpResponseRedirect
 from django.core.context_processors import csrf
 
 from university.models import University
-from forms import UniversityForm
 
 # Show University
 # university.views.university => universities/1
