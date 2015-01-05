@@ -33,8 +33,8 @@ Social application for student studying abroad to help each other
           'default': {
                'ENGINE': 'django.db.backends.mysql',
                'NAME': 'picknese',
-               'USER': 'root',
-               'PASSWORD': 'Your Password here',
+               'USER': 'Your Username Here',
+               'PASSWORD': 'Your Password Here',
                'HOST': 'localhost',
                'PORT': '3306',
           }
