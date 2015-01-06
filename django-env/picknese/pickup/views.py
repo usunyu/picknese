@@ -24,13 +24,8 @@ def pick_provider_list(request, university_id):
 	user = request.user
 	university = get_object_or_404(University, id=university_id)
 	pick_providers = []
-	is_provided = False
 	try:
 		pick_providers = PickProvider.objects.filter(university=university)
-		for pick_provider in pick_providers:
-			if pick_provider.picker == user:
-				is_provided = True
-				break
 	except:
 		pick_providers = []
 
@@ -38,7 +33,6 @@ def pick_provider_list(request, university_id):
 		'university': university,
 		'pick_providers': pick_providers,
 		'current_user': user,
-		'is_provided': is_provided,
 	}
 	return render(request, 'pick_provider_list.html', context)
 
