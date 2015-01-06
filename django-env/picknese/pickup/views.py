@@ -4,11 +4,17 @@ from django.core.context_processors import csrf
 
 from university.models import University
 from pickup.models import PickProvider
-from forms import PickProviderForm
+from forms import PickProviderForm, PickUpForm
 
 
-def request_pickup(request, picker_id, pickee_id):
-	pass
+def request_pickup(request, picker_id):
+	pickee_id = request.user.id
+	form = PickUpForm(initial={'picker': picker_id, 'pickee': pickee_id})
+
+	context = {}
+	context.update(csrf(request))
+	context['form'] = form
+	return render(request, 'request_pickup_popup.html', context)
 
 """
 show PickProvider

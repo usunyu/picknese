@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load staticfiles%}
+{% load bootstrap3 %}
 
 {% block title %}
 Pick Up |
@@ -59,7 +60,29 @@ Pick Up |
 					<li><a href="{% url 'pickup.views.cancel_pick_provider' university.id %}"><i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel Your Pick Up</a></li>
 				</ul>
 				{% else %}
-				<button type="button" class="btn btn-default col-xs-9"><i class="glyphicon glyphicon-envelope"></i>&nbsp; Request</button>
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-default col-xs-9" data-toggle="modal" data-target="#pickupRequest{{pick_provider.id}}">
+					<i class="glyphicon glyphicon-envelope"></i>&nbsp; Request
+				</button>
+				<!-- Modal -->
+				<div class="modal fade" id="pickupRequest{{pick_provider.id}}" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" id="modalLabel">Request Pickup from {{ pick_provider.picker.first_name }} {{ pick_provider.picker.last_name }}</h4>
+							</div>
+							<div class="modal-body">
+								<!-- {% csrf_token %} -->
+								<!-- {{ form.as_table }} -->
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+								<button type="submit" class="btn btn-primary">Submit</button>
+							</div>
+						</div>
+					</div>
+				</div>
 				<button type="button" class="btn btn-default dropdown-toggle col-xs-3" data-toggle="dropdown" aria-expanded="false">
 					<span class="caret"></span>
 					<span class="sr-only">Toggle Dropdown</span>
@@ -80,4 +103,3 @@ Pick Up |
 </div>
 {% endif %}
 {% endblock %}
-
