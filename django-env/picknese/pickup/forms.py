@@ -36,12 +36,13 @@ class PickUpForm(forms.ModelForm):
 			'university': forms.HiddenInput(),
 			'flight': forms.TextInput(
 				attrs = {
-					'placeholder': 'Please input the correct Flight Number.',
+					'placeholder': 'Please input the correct flight number.',
 				}
 			),
 			'description': forms.Textarea(
 				attrs = {
-					'placeholder': 'Please leave the messages to the Pickup Provider.'
+					'placeholder': 'Please leave the messages to the picker, such as your ' + 
+						'contact information, let him/her easy to pick you up :)'
 				}
 			),
 		}
