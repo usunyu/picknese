@@ -55,7 +55,7 @@
 			  </ul>
 			</li>
 		  </ul>
-		</div><!--/.nav-collapse -->
+		</div>
 	  </div>
 	</nav>
 	<!-- Jumbotron -->
@@ -66,6 +66,10 @@
 	<!-- Main -->
 	<div class="container">
 		<div class="row">
+			<!-- Errors -->
+			{% block errors %}
+			<!-- TODO: add error message -->
+			{% endblock %}
 			<!-- Tabs -->
 			{% block tabs %}
 			{% endblock %}

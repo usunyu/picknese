@@ -20,6 +20,7 @@ class PickProvider(models.Model):
 class PickUp(models.Model):
 	picker = models.ForeignKey(User, related_name='pickup_picker')
 	pickee = models.ForeignKey(User, related_name='pickup_pickee')
+	university = models.ForeignKey(University)
 	flight = models.CharField(max_length=20)
 	# requester description
 	description = models.TextField(null=True, blank=True)
@@ -29,4 +30,4 @@ class PickUp(models.Model):
 		unique_together = (("picker", "pickee", "flight"),)
 
 	def __str__(self):	# __unicode__ on Python 2
-		return self.picker.username + ' : ' + self.pickee.username
+		return '%s : %s' % (self.picker.username, self.pickee.username)

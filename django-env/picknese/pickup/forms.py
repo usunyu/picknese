@@ -11,7 +11,12 @@ class PickProviderForm(forms.ModelForm):
 			'description',
 		)
 		widgets = {
-			'description' : forms.Textarea(attrs = {'placeholder': 'Please input informations you can provide, such as, the type of your car, how many luggages you can hold, etc.'}),
+			'description': forms.Textarea(
+				attrs = {
+					'placeholder': 'Please input informations you can provide, ' +
+						'such as, the type of your car, how many luggages you can hold, etc.'
+				}
+			),
 		}
 
 class PickUpForm(forms.ModelForm):
@@ -19,5 +24,24 @@ class PickUpForm(forms.ModelForm):
 	class Meta:
 		model = PickUp
 		fields = (
+			'picker',
+			'pickee',
+			'university',
 			'flight',
+			'description',
 		)
+		widgets = {
+			'picker': forms.HiddenInput(),
+			'pickee': forms.HiddenInput(),
+			'university': forms.HiddenInput(),
+			'flight': forms.TextInput(
+				attrs = {
+					'placeholder': 'Please input the correct Flight Number.',
+				}
+			),
+			'description': forms.Textarea(
+				attrs = {
+					'placeholder': 'Please leave the messages to the Pickup Provider.'
+				}
+			),
+		}

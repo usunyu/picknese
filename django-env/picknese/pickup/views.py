@@ -6,15 +6,27 @@ from university.models import University
 from pickup.models import PickProvider
 from forms import PickProviderForm, PickUpForm
 
-
-def request_pickup(request, picker_id):
-	pickee_id = request.user.id
-	form = PickUpForm(initial={'picker': picker_id, 'pickee': pickee_id})
-
-	context = {}
-	context.update(csrf(request))
-	context['form'] = form
-	return render(request, 'request_pickup_popup.html', context)
+"""
+create PickUp
+pickup.views.request_pickup university_id => provider/create/1/
+"""
+def request_pickup(request, university_id):
+	print request.POST
+	if request.POST:
+		form = PickUpForm(request.POST)
+		print form
+		if form.is_valid():
+			university = form.cleaned_data['university']
+			try:
+				pick_provider = form.save()
+				# TODO: show success message
+				return HttpResponseRedirect('/pickup/provider/' + str(university_id))
+			except Exception as e:
+				# TODO: logging
+				# print '%s (%s)' % (e.message, type(e))
+				pass
+	# TODO: show error message
+	return HttpResponseRedirect('/pickup/provider/' + str(university_id))
 
 """
 show PickProvider
@@ -24,16 +36,29 @@ def pick_provider_list(request, university_id):
 	user = request.user
 	university = get_object_or_404(University, id=university_id)
 	pick_providers = []
+	forms = {}
 	try:
 		pick_providers = PickProvider.objects.filter(university=university)
-	except:
-		pick_providers = []
+		# mapping the form, TODO: AJAX gen form as needed
+		for pick_provider in pick_providers:
+			forms[pick_provider.picker.id] = PickUpForm(
+				initial = {
+					'picker': pick_provider.picker.id,
+					'pickee': user.id,
+					'university': university_id,
+				}
+			)
+	except Exception as e:
+		# TODO: logging
+		# print '%s (%s)' % (e.message, type(e))
+		pass
 
-	context = {
-		'university': university,
-		'pick_providers': pick_providers,
-		'current_user': user,
-	}
+	context = {}
+	context.update(csrf(request))
+	context['university'] = university
+	context['pick_providers'] = pick_providers
+	context['current_user'] = user
+	context['forms'] = forms
 	return render(request, 'pick_provider_list.html', context)
 
 """
@@ -45,15 +70,16 @@ def provide_pick_provider(request):
 	if request.POST:
 		form = PickProviderForm(request.POST)
 		if form.is_valid():
+			university = form.cleaned_data['university']
 			try:
-				university = form.cleaned_data['university']
 				pick_provider = form.save(commit=False)
 				pick_provider.picker = user
 				pick_provider.save()
 				return HttpResponseRedirect('/pickup/provider/' + str(university.id))
-			except:
+			except Exception as e:
+				# TODO: logging
+				# print '%s (%s)' % (e.message, type(e))
 				# TODO: show error message
-				university = form.cleaned_data['university']
 				return HttpResponseRedirect('/pickup/provider/' + str(university.id))
 	else:
 		form = PickProviderForm()
