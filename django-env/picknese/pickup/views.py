@@ -31,12 +31,11 @@ def request_pickup(request, university_id):
 class to assemble the data pass to template
 """
 class ProviderInfo(object):
-	pick_provider = None
-	form = None
 
-	def __init__(self, pick_provider, form):
+	def __init__(self, pick_provider, form, pickup):
 		self.pick_provider = pick_provider
 		self.form = form
+		self.pickup = pickup
 
 """
 show PickProvider
@@ -48,6 +47,8 @@ def pick_provider_list(request, university_id):
 	provider_info_list = []
 	try:
 		pick_providers = PickProvider.objects.filter(university=university)
+		pickups = PickUp.objects.filter(pickee=user, university=university)
+		pickup_dict = dict([ (pickup.picker.id, pickup) for pickup in pickups ])
 		# mapping the form, TODO: AJAX gen form as needed
 		for pick_provider in pick_providers:
 			form = PickUpForm(
@@ -57,7 +58,13 @@ def pick_provider_list(request, university_id):
 					'university': university_id,
 				}
 			)
-			provider_info_list.append(ProviderInfo(pick_provider, form))
+			provider_info = ProviderInfo(
+				pick_provider,
+				form,
+				pickup_dict.get(pick_provider.picker.id)
+			)
+			provider_info_list.append(provider_info)
+
 	except Exception as e:
 		# TODO: logging
 		# print '%s (%s)' % (e.message, type(e))
