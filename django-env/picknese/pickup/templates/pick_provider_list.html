@@ -79,7 +79,7 @@ Pick Up |
 							</div>
 							<div class="modal-body">
 								<p><b>Please be patient, maybe your picker was sleeping _(:3 」∠ )_</b></p>
-								<img src="{% static 'images/pusheen/giphy.gif' %}">
+								<img class="col-md-12" src="{% static 'images/pusheen/giphy.gif' %}" style="margin-bottom: 10px;">
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -149,9 +149,7 @@ Pick Up |
 
 	{% endfor %}
 {% else %}
-<div align="center">
-	<h4>Oops, seems our pickers are sleeping _(:3 」∠ )_</h4>
-	<img src="{% static 'images/pusheen/giphy.gif' %}">
-</div>
+<h4 align="center">Oops, seems our pickers are sleeping _(:3 」∠ )_</h4>
+<img class="col-xs-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" src="{% static 'images/pusheen/giphy.gif' %}">
 {% endif %}
 {% endblock %}
