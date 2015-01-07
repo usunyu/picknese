@@ -97,8 +97,9 @@ Pick Up |
 					<span class="sr-only">Toggle Dropdown</span>
 				</button>
 				<ul class="dropdown-menu" role="menu">
-					<li><a href="#"><i class="glyphicon glyphicon-user"></i>&nbsp; Profile</a></li>
+					<li><a href="#"><i class="glyphicon glyphicon-comment"></i>&nbsp; Message</a></li>
 					<li class="divider"></li>
+					<li><a href="#"><i class="glyphicon glyphicon-user"></i>&nbsp; Profile</a></li>
 					<li><a href="#"><i class="glyphicon glyphicon-cog"></i>&nbsp; Other</a></li>
 				</ul>
 				{% endif %}
@@ -107,8 +108,9 @@ Pick Up |
 	</div>
 	{% endfor %}
 {% else %}
-<div>
-	<h4 align="center">Oops, no picker here :(</h4>
+<div align="center">
+	<h4>Oops, seems our pickers are sleeping _(:3 」∠ )_</h4>
+	<img src="{% static 'images/pusheen/giphy.gif' %}">
 </div>
 {% endif %}
 {% endblock %}
