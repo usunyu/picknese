@@ -3,6 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Social application for student studying abroad to help each other">
+	<meta name="author" content="Yu Sun">
 	<title>{% block title %}{% endblock %}Pickinese</title>
 	<!-- Custom CSS -->
 	<link rel="stylesheet" type="text/css" href="{% static 'assets/css/base.css' %}" />
@@ -50,7 +55,7 @@
 			  </ul>
 			</li>
 		  </ul>
-		</div><!--/.nav-collapse -->
+		</div>
 	  </div>
 	</nav>
 	<!-- Jumbotron -->
@@ -61,6 +66,10 @@
 	<!-- Main -->
 	<div class="container">
 		<div class="row">
+			<!-- Errors -->
+			{% block errors %}
+			<!-- TODO: add error message -->
+			{% endblock %}
 			<!-- Tabs -->
 			{% block tabs %}
 			{% endblock %}
@@ -82,5 +91,7 @@
 	<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
 	<!-- http://bootswatch.com/paper/ -->
 	<script src="{% static 'assets/js/bootswatch.js' %}"></script>
+	{% block extrajs %}
+	{% endblock %}
 </body>
 </html>
