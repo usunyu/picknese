@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% load staticfiles %}
-{% load pickup_extras %}
 {% load bootstrap3 %}
 
 {% block title %}
@@ -34,24 +33,27 @@ Pick Up |
 {% endblock %}
 
 {% block content %}
-{% if pick_providers|length > 0 %}
-	{% for pick_provider in pick_providers %}
-	<div class="container col-xs-12 col-sm-6 col-md-4" style="margin-top: 30px; min-height: 220px;">
+{% if provider_info_list|length > 0 %}
+	{% for provider_info in provider_info_list %}
+	{% with pick_provider=provider_info.pick_provider form=provider_info.form %}
+	{% with picker=pick_provider.picker price=pick_provider.price description=pick_provider.description %}
+
+	<div class="container col-xs-12 col-sm-6 col-md-5" style="margin-top: 30px; min-height: 220px;">
 		<div class="col-xs-5 col-sm-5 col-md-5">
-		{% if pick_provider.picker.profile.avatar %}
-			<img class="img-circle box-shadow" src="/media/{{pick_provider.picker.profile.avatar.name}}" alt="Profile Pic" style="width: 130px; height: 130px;" />
+		{% if picker.profile.avatar %}
+			<img class="img-circle box-shadow" src="/media/{{picker.profile.avatar.name}}" alt="Profile Pic" style="width: 130px; height: 130px;" />
 		{% else %}
 			<img class="img-circle box-shadow" src="/media/images/avatar/default_pic.png" alt="Profile Pic" style="width: 130px; height: 130px;" />
 		{% endif %}
 		</div>
 		<div class="col-xs-7 col-sm-7 col-md-7">
-			<h4>{{ pick_provider.picker.first_name }} {{ pick_provider.picker.last_name }}</h4>
-			<p>Tip: ${{pick_provider.price}}</p>
-			<p>{{pick_provider.description}}</p>
+			<h4>{{picker.first_name}} {{picker.last_name}}</h4>
+			<p>Tip: ${{price}}</p>
+			<p>{{description}}</p>
 			<!-- TODO: add contact and profile -->
 			<!-- Split button -->
 			<div class="btn-group">
-				{% if current_user == pick_provider.picker %}
+				{% if current_user == picker %}
 				<button type="button" class="btn btn-default col-xs-9"><i class="glyphicon glyphicon-edit"></i>&nbsp; Update</button>
 				<button type="button" class="btn btn-default dropdown-toggle col-xs-3" data-toggle="dropdown" aria-expanded="false">
 					<span class="caret"></span>
@@ -77,12 +79,10 @@ Pick Up |
 							</div>
 							<form action="{% url 'pickup.views.request_pickup' university.id %}" method="post">
 								<div class="modal-body">
-									<p><b>{{ pick_provider.picker.first_name }} {{ pick_provider.picker.last_name }}</b></p>
-									<p><b>{{ university.name }}</b></p>
+									<p><b>{{picker.first_name}} {{picker.last_name}}</b></p>
+									<p><b>{{university.name}}</b></p>
 									{% csrf_token %}
-									{% with form=forms|get_value:pick_provider.picker.id %}
-										{% bootstrap_form form %}
-									{% endwith %}
+									{% bootstrap_form form %}
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -106,6 +106,10 @@ Pick Up |
 			</div>
 		</div>
 	</div>
+
+	{% endwith %}
+	{% endwith %}
+
 	{% endfor %}
 {% else %}
 <div align="center">
