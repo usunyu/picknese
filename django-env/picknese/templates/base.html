@@ -43,9 +43,19 @@
 						<span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="{% url 'userprofile.views.user_profile' %}">Profile</a></li>
+							<li><a href="{% url 'userprofile.views.user_profile' %}">
+								<i class="glyphicon glyphicon-user"></i>&nbsp; Profile</a>
+							</li>
+							<li><a href="#">
+								<i class="glyphicon glyphicon-heart-empty"></i>&nbsp; Your Offering</a>
+							</li>
+							<li><a href="#">
+								<i class="glyphicon glyphicon-paperclip"></i>&nbsp; Your Reservations</a>
+							</li>
 							<li class="divider"></li>
-							<li><a href="{% url 'picknese.views.logout' %}">Log Out</a></li>
+							<li><a href="{% url 'picknese.views.logout' %}">
+								<i class="glyphicon glyphicon-log-out"></i>&nbsp; Log Out</a>
+							</li>
 						</ul>
 					</li>
 					<!-- if user is not logged in -->
@@ -56,8 +66,12 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Offer Your Services<span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="{% url 'pickup.views.provide_pick_provider' %}">Pick Up</a></li>
-							<li><a href="#">Carpool</a></li>
+							<li><a href="{% url 'pickup.views.provide_pick_provider' %}">
+								<i class="glyphicon glyphicon-plane"></i>&nbsp; Pick Up</a>
+							</li>
+							<li><a href="#">
+								<i class="glyphicon glyphicon-road"></i>&nbsp; Carpool</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
