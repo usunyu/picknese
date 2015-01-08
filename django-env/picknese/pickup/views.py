@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.core.context_processors import csrf
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 
 from university.models import University
 from pickup.models import PickProvider, PickUp
@@ -11,6 +12,7 @@ from forms import PickProviderForm, PickUpForm
 create PickUp
 pickup.views.request_pickup university_id => provider/create/1/
 """
+@login_required
 def request_pickup(request, university_id):
 	if request.POST:
 		form = PickUpForm(request.POST)
@@ -41,6 +43,7 @@ class ProviderInfo(object):
 show PickProvider
 pickup.views.pick_provider_list university_id => pickup/providers/1/
 """
+@login_required
 def pick_provider_list(request, university_id):
 	user = request.user
 	university = get_object_or_404(University, id=university_id)
@@ -81,6 +84,7 @@ def pick_provider_list(request, university_id):
 create PickProvider
 pickup.views.provide_pick_provider => pickup/provider/create/
 """
+@login_required
 def provide_pick_provider(request):
 	user = request.user
 	if request.POST:
