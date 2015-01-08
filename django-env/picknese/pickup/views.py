@@ -77,7 +77,6 @@ def pick_provider_list(request, university_id):
 	context.update(csrf(request))
 	context['university'] = university
 	context['provider_info_list'] = provider_info_list
-	context['current_user'] = user
 	return render(request, 'pick_provider_list.html', context)
 
 """

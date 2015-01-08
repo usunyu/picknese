@@ -19,44 +19,50 @@
 <body>
 	<!-- Fixed navbar -->
 	<nav class="navbar navbar-default navbar-fixed-top">
-	  <div class="container">
-		<div class="navbar-header">
-		  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-			<span class="sr-only">Toggle navigation</span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-		  </button>
-		  <a class="navbar-brand" href="{% url 'picknese.views.index' %}"><b>Picknese</b></a>
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="{% url 'picknese.views.index' %}"><b>Picknese</b></a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<!-- if user is logged in -->
+					{% if user.is_authenticated %}
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						{% if user.first_name %}
+							{{user.first_name}}
+						{% else %}
+							{{user.username}}
+						{% endif %}
+						<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="{% url 'userprofile.views.user_profile' %}">Profile</a></li>
+							<li class="divider"></li>
+							<li><a href="{% url 'picknese.views.logout' %}">Log Out</a></li>
+						</ul>
+					</li>
+					<!-- if user is not logged in -->
+					{% else %}
+					<li><a href="{% url 'picknese.views.login' %}">Log In</a></li>
+					<li><a href="{% url 'picknese.views.signup' %}">Sign Up</a></li>
+					{% endif %}
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Offer Your Services<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="{% url 'pickup.views.provide_pick_provider' %}">Pick Up</a></li>
+							<li><a href="#">Carpool</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
 		</div>
-		<div id="navbar" class="navbar-collapse collapse">
-		  <ul class="nav navbar-nav navbar-right">
-			<li class="dropdown">
-			  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">About <span class="caret"></span></a>
-			  <ul class="dropdown-menu" role="menu">
-				<li><a href="#">Action</a></li>
-				<li><a href="#">Another action</a></li>
-				<li><a href="#">Something else here</a></li>
-				<li class="divider"></li>
-				<li class="dropdown-header">Nav header</li>
-				<li><a href="#">Separated link</a></li>
-				<li><a href="#">One more separated link</a></li>
-			  </ul>
-			</li>
-			<li><a href="{% url 'picknese.views.login' %}">Log In</a></li>
-			<li><a href="{% url 'picknese.views.logout' %}">Log Out</a></li>
-			<li><a href="{% url 'picknese.views.signup' %}">Sign Up</a></li>
-			<li><a href="{% url 'userprofile.views.user_profile' %}">Profile</a></li>
-			<li class="dropdown">
-			  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><b>Offer Your Services</b><span class="caret"></span></a>
-			  <ul class="dropdown-menu" role="menu">
-				<li><a href="{% url 'pickup.views.provide_pick_provider' %}">Pick Up</a></li>
-				<li><a href="#">Carpool</a></li>
-			  </ul>
-			</li>
-		  </ul>
-		</div>
-	  </div>
 	</nav>
 	<!-- Jumbotron -->
 	<div>
