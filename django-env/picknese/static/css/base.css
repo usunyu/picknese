@@ -33,3 +33,11 @@ a:hover {
 .text-center {
 	text-align: center;
 }
+
+#alert-messages {
+	position: fixed;
+	top: 63px;
+	opacity: 1.0;
+	z-index: 100;
+	width: 80%;
+}

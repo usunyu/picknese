@@ -35,6 +35,13 @@
 					{% if user.is_authenticated %}
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						{% if user.profile.avatar %}
+						<img class="img-circle" src="/media/{{user.profile.avatar.name}}" 
+							style="width: 40px; height: 40px; margin-top: -10px; margin-bottom: -10px; margin-right: 5px;" />
+						{% else %}
+						<img class="img-circle" src="/media/images/avatar/default_pic.png"
+							style="width: 40px; height: 40px; margin-top: -10px; margin-bottom: -10px; margin-right: 5px;" />
+						{% endif %}
 						{% if user.first_name %}
 							{{user.first_name}}
 						{% else %}
@@ -78,6 +85,34 @@
 			</div>
 		</div>
 	</nav>
+	<!-- Messages -->
+	<div class="container">
+		<div id="alert-messages" class="col-sm-12">
+		{% if messages %}
+			{% for message in messages %}
+				<p
+				{% if message.tags == "info" %} 
+					class="alert alert-info alert-dismissible"
+				{% endif %}
+				{% if message.tags == "success" %} 
+					class="alert alert-success alert-dismissible"
+				{% endif %}
+				{% if message.tags == "warning" %} 
+					class="alert alert-warning alert-dismissible"
+				{% endif %}
+				{% if message.tags == "error" %} 
+					class="alert alert-danger alert-dismissible"
+				{% endif %}
+				role="alert" >
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				{{ message }}
+				</p>
+			{% endfor %}
+		{% endif %}
+		</div>
+	</div>
 	<!-- Jumbotron -->
 	<div>
 		{% block jumbotron %}
@@ -86,10 +121,6 @@
 	<!-- Main -->
 	<div class="container">
 		<div class="row">
-			<!-- Errors -->
-			{% block errors %}
-			<!-- TODO: add error message -->
-			{% endblock %}
 			<!-- Tabs -->
 			{% block tabs %}
 			{% endblock %}
