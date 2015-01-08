@@ -24,10 +24,10 @@ Pick Up |
 {% block tabs %}
 <div style="margin-top: 20px;">
 	<ul class="nav nav-tabs">
-		<li role="presentation"><a href="#">Feed</a></li>
-		<li role="presentation"><a href="{%url 'university.views.university' university.id %}">University</a></li>
+		<li role="presentation"><a href="#">Me</a></li>
 		<li role="presentation" class="active"><a href="{% url 'pickup.views.pick_provider_list' university.id %}">Pick Up</a></li>
 		<li role="presentation"><a href="#">Carpool</a></li>
+		<li role="presentation"><a href="{%url 'university.views.university' university.id %}">About</a></li>
 	</ul>
 </div>
 {% endblock %}
