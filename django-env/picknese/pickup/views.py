@@ -41,9 +41,22 @@ class ProviderInfo(object):
 		self.pickup = pickup
 
 """
+show PickRequester
+pickup.views.pick_requester_list => pickup/requesters/1/
+"""
+def pick_requester_list(request, university_id):
+	university = get_object_or_404(University, id=university_id)
+
+	context = {}
+	# context.update(csrf(request))
+	context['university'] = university
+	return render(request, 'pick_requester_list.html', context)
+
+"""
 show PickProvider
 pickup.views.pick_provider_list university_id => pickup/providers/1/
 """
+# TODO: delete
 @login_required
 def pick_provider_list(request, university_id):
 	user = request.user

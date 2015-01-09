@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block title %}
+Pick Up |
+{% endblock %}
+
+{% block jumbotron %}
+<div class="jumbotron" style="background: url({% static 'images/campus/' %}{{university.shorthand}}/2.jpg); min-height: 200px;"></div>
+<div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3" style="margin-top: -130px;">
+	<div class="row">
+		<div>
+			<img src="{% static 'images/logo/' %}{{university.shorthand}}.jpg" alt="" class="img-thumbnail img-responsive img-center" style="width:150px;">
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block tabs %}
+<div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+	<ul class="nav nav-tabs">
+		<li role="presentation"><a href="{%url 'university.views.university' university.id %}">{{university.shorthand|upper}}</a></li>
+		<li role="presentation"><a href="#">Me</a></li>
+		<li role="presentation" class="active"><a href="{% url 'pickup.views.pick_provider_list' university.id %}">Pick Up</a></li>
+		<li role="presentation"><a href="#">Carpool</a></li>
+	</ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2" >
+<div class="media" style="margin-top: 30px;">
+  <a class="media-left media-middle" href="#">
+    <img class="img-circle box-shadow" src="/media/{{user.profile.avatar.name}}" alt="Profile Pic" style="width: 100px; height: 100px;" >
+  </a>
+  <div class="media-body">
+    <h4 class="media-heading">Google的统治结束了？</h4>
+    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+  </div>
+</div>
+<hr/ >
+<div class="media" style="margin-top: 30px;">
+  <a class="media-left media-middle" href="#">
+    <img class="img-circle box-shadow" src="/media/{{user.profile.avatar.name}}" alt="Profile Pic" style="width: 100px; height: 100px;" >
+  </a>
+  <div class="media-body">
+    <h4 class="media-heading">Google的统治结束了？</h4>
+    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+  </div>
+</div>
+<hr/ >
+<div class="media" style="margin-top: 30px;">
+  <a class="media-left media-middle" href="#">
+    <img class="img-circle box-shadow" src="/media/{{user.profile.avatar.name}}" alt="Profile Pic" style="width: 100px; height: 100px;" >
+  </a>
+  <div class="media-body">
+    <h4 class="media-heading">Google的统治结束了？</h4>
+    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+  </div>
+</div>
+</div>
+{% endblock %}
