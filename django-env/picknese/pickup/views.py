@@ -95,12 +95,12 @@ def provide_pick_provider(request):
 				pick_provider = form.save(commit=False)
 				pick_provider.picker = user
 				pick_provider.save()
-				return HttpResponseRedirect(reverse('pickup.views.pick_provider_list', args=(university_id,)))
+				return HttpResponseRedirect(reverse('pickup.views.pick_provider_list', args=(university.id,)))
 			except Exception as e:
 				# TODO: logging
 				# print '%s (%s)' % (e.message, type(e))
 				# TODO: show error message
-				return HttpResponseRedirect(reverse('pickup.views.pick_provider_list', args=(university_id,)))
+				return HttpResponseRedirect(reverse('pickup.views.pick_provider_list', args=(university.id,)))
 	else:
 		form = PickProviderForm()
 

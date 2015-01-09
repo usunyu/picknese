@@ -14,9 +14,6 @@ Pick Up |
 		<div class="col-md-2">
 			<img src="{% static 'images/logo/' %}{{university.shorthand}}.jpg" alt="" class="img-thumbnail img-responsive img-center" style="width:150px;">
 		</div>
-		<div class="hidden-xs hidden-sm col-md-10">
-			<h3 class="color-white text-shadow">{{university.name}}</h3>
-		</div>
 	</div>
 </div>
 {% endblock %}
@@ -24,10 +21,10 @@ Pick Up |
 {% block tabs %}
 <div style="margin-top: 20px;">
 	<ul class="nav nav-tabs">
+		<li role="presentation"><a href="{%url 'university.views.university' university.id %}">{{university.shorthand|upper}}</a></li>
 		<li role="presentation"><a href="#">Me</a></li>
 		<li role="presentation" class="active"><a href="{% url 'pickup.views.pick_provider_list' university.id %}">Pick Up</a></li>
 		<li role="presentation"><a href="#">Carpool</a></li>
-		<li role="presentation"><a href="{%url 'university.views.university' university.id %}">About</a></li>
 	</ul>
 </div>
 {% endblock %}
