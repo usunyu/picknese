@@ -28,6 +28,7 @@ class PickRequester(models.Model):
 	pick_type = models.IntegerField(choices=type_choices, default=1)
 	price = models.IntegerField(default=20)
 	flight = models.CharField(max_length=20, null=True, blank=True)
+	destination = models.CharField(max_length=200, default='Near Campus')
 	confirmed = models.BooleanField(default=False)
 	description = models.TextField(null=True, blank=True)
 

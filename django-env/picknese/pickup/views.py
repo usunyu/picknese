@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from university.models import University
-from pickup.models import PickProvider, PickUp
+from pickup.models import PickProvider, PickRequester, PickUp
 from forms import PickProviderForm, PickRequesterForm, PickUpForm
 
 """
@@ -61,13 +61,13 @@ pickup.views.pick_requester_list => pickup/requesters/1/
 def pick_requester_list(request, university_id):
 	university = get_object_or_404(University, id=university_id)
 	form = PickRequesterForm()
-	requester_info_list = []
+	pick_requesters = PickRequester.objects.filter(university=university)
 
 	context = {}
 	context.update(csrf(request))
 	context['university'] = university
 	context['form'] = form
-	context['requester_info_list'] = requester_info_list
+	context['pick_requesters'] = pick_requesters
 	context['requester_page'] = True
 	return render(request, 'pick_requester_list.html', context)
 
