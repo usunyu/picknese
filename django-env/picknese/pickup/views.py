@@ -7,7 +7,7 @@ from django.contrib import messages
 
 from university.models import University
 from pickup.models import PickProvider, PickUp
-from forms import PickProviderForm, PickUpForm
+from forms import PickProviderForm, PickRequesterForm, PickUpForm
 
 """
 create PickUp
@@ -31,6 +31,48 @@ def request_pickup(request, university_id):
 	return HttpResponseRedirect(reverse('pickup.views.pick_provider_list', args=(university_id,)))
 
 """
+create PickRequester
+pickup.views.create_pick_requester university_id => requester/create/1
+"""
+def create_pick_requester(request, university_id):
+	user = request.user
+	university = get_object_or_404(University, id=university_id)
+	if request.POST:
+		form = PickRequesterForm(request.POST)
+		if form.is_valid():
+			try:
+				pick_requester = form.save(commit=False)
+				pick_requester.university = university
+				pick_requester.requester = user
+				pick_requester.save()
+				# TODO: show success message
+				return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university_id,)))
+			except Exception as e:
+				# TODO: logging
+				# print '%s (%s)' % (e.message, type(e))
+				pass
+	# TODO: show error message
+	return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university_id,)))
+
+"""
+show PickRequester
+pickup.views.pick_requester_list => pickup/requesters/1/
+"""
+def pick_requester_list(request, university_id):
+	university = get_object_or_404(University, id=university_id)
+	form = PickRequesterForm()
+	requester_info_list = []
+
+	context = {}
+	context.update(csrf(request))
+	context['university'] = university
+	context['form'] = form
+	context['requester_info_list'] = requester_info_list
+	context['requester_page'] = True
+	return render(request, 'pick_requester_list.html', context)
+
+
+"""
 class to assemble the data pass to template
 """
 class ProviderInfo(object):
@@ -40,17 +82,6 @@ class ProviderInfo(object):
 		self.form = form
 		self.pickup = pickup
 
-"""
-show PickRequester
-pickup.views.pick_requester_list => pickup/requesters/1/
-"""
-def pick_requester_list(request, university_id):
-	university = get_object_or_404(University, id=university_id)
-
-	context = {}
-	# context.update(csrf(request))
-	context['university'] = university
-	return render(request, 'pick_requester_list.html', context)
 
 """
 show PickProvider

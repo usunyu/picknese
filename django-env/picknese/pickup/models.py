@@ -21,7 +21,12 @@ class PickProvider(models.Model):
 class PickRequester(models.Model):
 	requester = models.ForeignKey(User)
 	university = models.ForeignKey(University)
-	pick_type = models.IntegerField()
+	type_choices = (
+		(1, 'Flight'),
+		(2, 'General'),
+	)
+	pick_type = models.IntegerField(choices=type_choices, default=1)
+	price = models.IntegerField(default=20)
 	flight = models.CharField(max_length=20, null=True, blank=True)
 	confirmed = models.BooleanField(default=False)
 	description = models.TextField(null=True, blank=True)

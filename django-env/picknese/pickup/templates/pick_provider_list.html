@@ -9,9 +9,9 @@ Pick Up |
 
 {% block jumbotron %}
 <div class="jumbotron" style="background: url({% static 'images/campus/' %}{{university.shorthand}}/2.jpg); min-height: 200px;"></div>
-<div class="container" style="margin-top: -120px;">
+<div class="container">
 	<div class="row">
-		<div class="col-md-2">
+		<div class="col-md-4" style="margin-top: -130px;">
 			<img src="{% static 'images/logo/' %}{{university.shorthand}}.jpg" alt="" class="img-thumbnail img-responsive img-center" style="width:150px;">
 		</div>
 	</div>
@@ -19,7 +19,7 @@ Pick Up |
 {% endblock %}
 
 {% block tabs %}
-<div style="margin-top: -44px; margin-left: 188px;">
+<div class="col-md-12">
 	<ul class="nav nav-tabs">
 		<li role="presentation"><a href="{%url 'university.views.university' university.id %}">{{university.shorthand|upper}}</a></li>
 		<li role="presentation"><a href="#">Me</a></li>
