@@ -150,16 +150,21 @@
 	</div>
 	<!-- Main -->
 	<div class="container">
-		<div class="row">
-			<!-- Tabs -->
-			{% block tabs %}
-			{% endblock %}
-			<!-- Content -->
-			{% block content %}
-			{% endblock %}
-			{% block sidebar %}
-			{% endblock %}
-		</div>
+		<div class="row row-offcanvas row-offcanvas-right">
+			<div class="col-xs-12 col-sm-9">
+				<!-- Tabs -->
+				{% block tabs %}
+				{% endblock %}
+				<!-- Content -->
+				{% block content %}
+				{% endblock %}
+			</div><!--/.col-xs-12.col-sm-9-->
+			<div class="hidden-xs col-sm-3 sidebar-offcanvas">
+				<!-- Sidebar -->
+				{% block sidebar %}
+				{% endblock %}
+        	</div><!--/.sidebar-offcanvas-->
+		</div><!--/row-->
 	</div>
 	<!-- Footer -->
 	<div class="container">
