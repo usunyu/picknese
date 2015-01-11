@@ -65,6 +65,11 @@ Pick Up |
 <div class="row">
 {% if requester_info_list|length > 0 %}
 	{% for requester_info in requester_info_list %}
+	{% if forloop.counter0|divisibleby:3 %}
+		<div class="clearfix visible-md-block visible-lg-block"></div>
+	{% elif forloop.counter0|divisibleby:2 %}
+		<div class="clearfix visible-sm-block"></div>
+	{% endif %}
 	{% with pick_requester=requester_info.pick_requester form=requester_info.form %}
 	<div class="col-sm-6 col-md-4">
 		<div class="panel panel-default">
