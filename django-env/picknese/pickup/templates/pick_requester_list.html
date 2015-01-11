@@ -72,7 +72,7 @@ Pick Up |
 					<b>{{pick_requester.requester.first_name}} {{pick_requester.requester.last_name}}</b>
 					is requesting
 					{% if pick_requester.pick_type == 1 %}
-						<span class="label label-info">Flight</span>
+						<span class="label label-success">Flight</span>
 					{% else %}
 						<span class="label label-primary">General</span>
 					{% endif %}
@@ -84,17 +84,6 @@ Pick Up |
 					<p><i class="glyphicon glyphicon-plane"></i>&nbsp; {{pick_requester.flight}}</p>
 				{% endif %}
 				<p><i class="glyphicon glyphicon-comment"></i>&nbsp; {{pick_requester.description}}</p>
-				<i class="glyphicon glyphicon-tag"></i>&nbsp; 
-				{% if pick_requester.pick_type == 1 %}
-					<span class="label label-info">Flight</span>
-				{% else %}
-					<span class="label label-primary">General</span>
-				{% endif %}
-				{% if pick_requester.confirmed == True %}
-					<span class="label label-success">Confirmed</span>
-				{% else %}
-					<span class="label label-warning">Not Confirmed</span>
-				{% endif %}
 				{% if pick_requester.confirmed == False %}
 				<hr />
 				{% if user == pick_requester.requester %}
@@ -149,5 +138,18 @@ Pick Up |
 {% endblock %}
 
 {% block sidebar %}
-
+<!-- TODO: update real time -->
+<ol class="activity-feed">
+	{% if pick_ups|length > 0 %}
+	{% for pick_up in pick_ups %}
+	<li class="feed-item">
+		<time class="date" datetime="9-22">Sep 22</time>
+		<span class="text" >
+			<a href="#">{{pick_up.picker.first_name}} {{pick_up.picker.last_name}}</a> will pick up
+			<a href="#">{{pick_up.pickee.first_name}} {{pick_up.pickee.last_name}}</a>
+		</span>
+	</li>
+	{% endfor %}
+	{% endif %}
+</ol>
 {% endblock %}
