@@ -39,10 +39,16 @@ class PickUp(models.Model):
 	picker = models.ForeignKey(User, related_name='pickup_picker')
 	pickee = models.ForeignKey(User, related_name='pickup_pickee')
 	university = models.ForeignKey(University)
-	flight = models.CharField(max_length=20)
+	type_choices = (
+		(1, 'Flight'),
+		(2, 'General'),
+	)
+	pick_type = models.IntegerField(choices=type_choices, default=1)
+	flight = models.CharField(max_length=20, null=True, blank=True)
+	price = models.IntegerField(default=20)
+	destination = models.CharField(max_length=200, default='Near Campus')
 	# requester description
-	description = models.TextField(null=True, blank=True)
-	confirmed = models.BooleanField(default=False)
+	description = models.TextField('Message', null=True, blank=True)
 
 	class Meta:
 		unique_together = (("picker", "pickee", "flight"),)

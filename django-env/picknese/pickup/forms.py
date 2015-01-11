@@ -43,26 +43,24 @@ class PickUpForm(forms.ModelForm):
 
 	class Meta:
 		model = PickUp
-		fields = (
-			'picker',
-			'pickee',
-			'university',
-			'flight',
-			'description',
-		)
+		# fields = (
+		# 	'picker',
+		# 	'pickee',
+		# 	'university',
+		# 	'flight',
+		# 	'description',
+		# )
 		widgets = {
 			'picker': forms.HiddenInput(),
 			'pickee': forms.HiddenInput(),
 			'university': forms.HiddenInput(),
-			'flight': forms.TextInput(
-				attrs = {
-					'placeholder': 'Please input the correct flight number.',
-				}
-			),
+			'pick_type': forms.HiddenInput(),
+			'price': forms.HiddenInput(),
+			'flight': forms.HiddenInput(),
+			'destination': forms.HiddenInput(),
 			'description': forms.Textarea(
 				attrs = {
-					'placeholder': 'Please leave the messages to the picker, such as your ' + 
-						'contact information, let him/her easy to pick you up :)'
+					'placeholder': 'Thank you for your kindnese, leave messages!'
 				}
 			),
 		}

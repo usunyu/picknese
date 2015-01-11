@@ -10,7 +10,7 @@ University |
 <div class="jumbotron" style="background: url({% static 'images/campus/' %}{{university.shorthand}}/2.jpg); min-height: 200px;"></div>
 <div class="container">
 	<div class="row">
-		<div class="col-md-4 col-sm-offset-1 col-md-offset-2" style="margin-top: -130px;">
+		<div class="col-md-4" style="margin-top: -130px;">
 			<img src="{% static 'images/logo/' %}{{university.shorthand}}.jpg" alt="" class="img-thumbnail img-responsive img-center" style="width:150px;">
 		</div>
 	</div>
@@ -18,21 +18,17 @@ University |
 {% endblock %}
 
 {% block tabs %}
-<div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-	<ul class="nav nav-tabs">
-		<li role="presentation" class="active"><a href="{%url 'university.views.university' university.id %}">{{university.shorthand|upper}}</a></li>
-		<li role="presentation"><a href="#">Me</a></li>
-		<li role="presentation"><a href="{% url 'pickup.views.pick_provider_list' university.id %}">Pick Up</a></li>
-		<li role="presentation"><a href="#">Carpool</a></li>
-	</ul>
-</div>
+<ul class="nav nav-tabs">
+	<li role="presentation" class="active"><a href="{%url 'university.views.university' university.id %}">{{university.shorthand|upper}}</a></li>
+	<li role="presentation"><a href="#">Me</a></li>
+	<li role="presentation"><a href="{% url 'pickup.views.pick_requester_list' university.id %}">Pick Up</a></li>
+	<li role="presentation"><a href="#">Carpool</a></li>
+</ul>
 {% endblock %}
 
 {% block content %}
-<div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2" style="margin-top: 30px;" >
-	<p><b>Description:</b> {{ university.description }}</p>
-	<p><b>Address:</b> {{ university.address }}</p>
-	<p><b>State:</b> {{ university.state }}</p>
-	<p><b>Country:</b> {{ university.country }}</p>
-</div>
+<p><b>Description:</b> {{ university.description }}</p>
+<p><b>Address:</b> {{ university.address }}</p>
+<p><b>State:</b> {{ university.state }}</p>
+<p><b>Country:</b> {{ university.country }}</p>
 {% endblock %}

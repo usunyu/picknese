@@ -10,6 +10,10 @@ a:hover {
 	text-decoration: none !important;
 }
 
+textarea {
+	resize: vertical;
+}
+
 /*
  * Custom Element Style
  * --------------------------------------------------
