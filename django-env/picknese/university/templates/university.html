@@ -18,17 +18,21 @@ University |
 {% endblock %}
 
 {% block tabs %}
+<div class="col-xs-12 col-sm-9">
 <ul class="nav nav-tabs">
 	<li role="presentation" class="active"><a href="{%url 'university.views.university' university.id %}">{{university.shorthand|upper}}</a></li>
 	<li role="presentation"><a href="#">Me</a></li>
 	<li role="presentation"><a href="{% url 'pickup.views.pick_requester_list' university.id %}">Pick Up</a></li>
 	<li role="presentation"><a href="#">Carpool</a></li>
 </ul>
+</div>
 {% endblock %}
 
 {% block content %}
-<p><b>Description:</b> {{ university.description }}</p>
-<p><b>Address:</b> {{ university.address }}</p>
-<p><b>State:</b> {{ university.state }}</p>
-<p><b>Country:</b> {{ university.country }}</p>
+<div class="col-xs-12 col-sm-9">
+	<p><b>Description:</b> {{ university.description }}</p>
+	<p><b>Address:</b> {{ university.address }}</p>
+	<p><b>State:</b> {{ university.state }}</p>
+	<p><b>Country:</b> {{ university.country }}</p>
+</div>
 {% endblock %}
