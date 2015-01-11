@@ -32,6 +32,7 @@ Pick Up |
 {% block content %}
 <div class="col-xs-12 col-sm-9">
 {% if user.is_authenticated %}
+<!-- Show Post Your Request button when xs -->
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary navbar-btn visible-xs" data-toggle="modal" data-target="#xsPickRequesterForm">Post Your Request</button>
 <!-- Modal -->
@@ -60,17 +61,18 @@ Pick Up |
 {% else %}
 <a href="{% url 'picknese.views.login' %}" class="btn btn-primary navbar-btn visible-xs">Post Your Request</a>
 {% endif %}
-
+<!-- All unconfirmed requesters' list -->
 <div class="row">
 {% if requester_info_list|length > 0 %}
 	{% for requester_info in requester_info_list %}
 	{% with pick_requester=requester_info.pick_requester form=requester_info.form %}
 	<div class="col-sm-6 col-md-4">
-		<div class="thumbnail">
-			<img class="img-circle box-shadow" src="/media/{{pick_requester.requester.profile.avatar.name}}" alt="Profile Pic" style="width: 100px; height: 100px; margin-left: 10px; margin-top: 10px;">
-			<hr />
-			<div class="caption">
-				<p>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<img class="img-circle box-shadow" src="/media/{{pick_requester.requester.profile.avatar.name}}" alt="Profile Pic" style="width: 100px; height: 100px;">
+			</div>
+			<div class="panel-body">
+		    	<p>
 					<i class="glyphicon glyphicon-user"></i>&nbsp; 
 					<b>{{pick_requester.requester.first_name}} {{pick_requester.requester.last_name}}</b>
 					is requesting
@@ -131,7 +133,7 @@ Pick Up |
 					</div>
 				{% endif %}
 				{% endif %}
-			</div>
+		  </div>
 		</div>
   	</div>
   	{% endwith %}
@@ -142,6 +144,7 @@ Pick Up |
 {% endblock %}
 
 {% block sidebar %}
+<!-- Pick Up list record -->
 <div class="hidden-xs col-sm-3 sidebar-offcanvas">
 <!-- TODO: update real time -->
 <ol class="activity-feed">
