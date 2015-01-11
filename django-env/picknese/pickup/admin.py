@@ -1,6 +1,6 @@
 from django.contrib import admin
-from pickup.models import PickUp, PickProvider
+from pickup.models import PickUp, PickProvider, PickRequester
 
-# Register your models here.
 admin.site.register(PickUp)
 admin.site.register(PickProvider)
+admin.site.register(PickRequester)

@@ -1,5 +1,5 @@
 from django import forms
-from models import PickProvider, PickUp
+from models import PickProvider, PickRequester, PickUp
 
 class PickProviderForm(forms.ModelForm):
 	
@@ -15,6 +15,26 @@ class PickProviderForm(forms.ModelForm):
 				attrs = {
 					'placeholder': 'Please input informations you can provide, ' +
 						'such as, the type of your car, how many luggages you can hold, etc.'
+				}
+			),
+		}
+
+class PickRequesterForm(forms.ModelForm):
+	# TODO: dynamic form
+	class Meta:
+		model = PickRequester
+		fields = (
+			'pick_type',
+			'flight',
+			'price',
+			'description',
+		)
+		widgets = {
+			'description': forms.Textarea(
+				attrs = {
+					'placeholder': 'Please input informations you can provide, ' +
+						'such as, the type of your car, how many luggages you have, etc. ' +
+						'And we encourge pay for the driver who pick you up.'
 				}
 			),
 		}

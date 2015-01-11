@@ -29,7 +29,13 @@ def auth_view(request):
 
 	if user is not None:
 		auth.login(request, user)
-		return HttpResponseRedirect('/')
+		url = request.META['HTTP_REFERER']
+		# manually parse the next page
+		url_parts = url.split('next=')
+		next_url = '/'
+		if len(url_parts) == 2:
+			next_url = url_parts[1]
+		return HttpResponseRedirect(next_url)
 	else:
 		return HttpResponseRedirect('/accounts/login')
 

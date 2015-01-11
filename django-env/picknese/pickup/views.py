@@ -1,53 +1,118 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.core.context_processors import csrf
+from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from university.models import University
-from pickup.models import PickProvider
-from forms import PickProviderForm, PickUpForm
+from pickup.models import PickProvider, PickRequester, PickUp
+from forms import PickProviderForm, PickRequesterForm, PickUpForm
 
 """
 create PickUp
 pickup.views.request_pickup university_id => provider/create/1/
 """
+@login_required
 def request_pickup(request, university_id):
-	print request.POST
 	if request.POST:
 		form = PickUpForm(request.POST)
-		print form
 		if form.is_valid():
 			university = form.cleaned_data['university']
 			try:
 				pick_provider = form.save()
 				# TODO: show success message
-				return HttpResponseRedirect('/pickup/provider/' + str(university_id))
+				return HttpResponseRedirect(reverse('pickup.views.pick_provider_list', args=(university_id,)))
 			except Exception as e:
 				# TODO: logging
 				# print '%s (%s)' % (e.message, type(e))
 				pass
 	# TODO: show error message
-	return HttpResponseRedirect('/pickup/provider/' + str(university_id))
+	return HttpResponseRedirect(reverse('pickup.views.pick_provider_list', args=(university_id,)))
+
+"""
+create PickRequester
+pickup.views.create_pick_requester university_id => requester/create/1
+"""
+def create_pick_requester(request, university_id):
+	user = request.user
+	university = get_object_or_404(University, id=university_id)
+	if request.POST:
+		form = PickRequesterForm(request.POST)
+		if form.is_valid():
+			try:
+				pick_requester = form.save(commit=False)
+				pick_requester.university = university
+				pick_requester.requester = user
+				pick_requester.save()
+				# TODO: show success message
+				return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university_id,)))
+			except Exception as e:
+				# TODO: logging
+				# print '%s (%s)' % (e.message, type(e))
+				pass
+	# TODO: show error message
+	return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university_id,)))
+
+"""
+show PickRequester
+pickup.views.pick_requester_list => pickup/requesters/1/
+"""
+def pick_requester_list(request, university_id):
+	university = get_object_or_404(University, id=university_id)
+	form = PickRequesterForm()
+	pick_requesters = PickRequester.objects.filter(university=university)
+
+	context = {}
+	context.update(csrf(request))
+	context['university'] = university
+	context['form'] = form
+	context['pick_requesters'] = pick_requesters
+	context['requester_page'] = True
+	return render(request, 'pick_requester_list.html', context)
+
+
+"""
+class to assemble the data pass to template
+"""
+class ProviderInfo(object):
+
+	def __init__(self, pick_provider, form, pickup):
+		self.pick_provider = pick_provider
+		self.form = form
+		self.pickup = pickup
+
 
 """
 show PickProvider
-pickup.views.pick_provider_list university_id => pickup/provider/1/
+pickup.views.pick_provider_list university_id => pickup/providers/1/
 """
+# TODO: delete
+@login_required
 def pick_provider_list(request, university_id):
 	user = request.user
 	university = get_object_or_404(University, id=university_id)
-	pick_providers = []
-	forms = {}
+	provider_info_list = []
 	try:
 		pick_providers = PickProvider.objects.filter(university=university)
+		pickups = PickUp.objects.filter(pickee=user, university=university)
+		pickup_dict = dict([ (pickup.picker.id, pickup) for pickup in pickups ])
 		# mapping the form, TODO: AJAX gen form as needed
 		for pick_provider in pick_providers:
-			forms[pick_provider.picker.id] = PickUpForm(
+			form = PickUpForm(
 				initial = {
 					'picker': pick_provider.picker.id,
 					'pickee': user.id,
 					'university': university_id,
 				}
 			)
+			provider_info = ProviderInfo(
+				pick_provider,
+				form,
+				pickup_dict.get(pick_provider.picker.id)
+			)
+			provider_info_list.append(provider_info)
+
 	except Exception as e:
 		# TODO: logging
 		# print '%s (%s)' % (e.message, type(e))
@@ -56,15 +121,14 @@ def pick_provider_list(request, university_id):
 	context = {}
 	context.update(csrf(request))
 	context['university'] = university
-	context['pick_providers'] = pick_providers
-	context['current_user'] = user
-	context['forms'] = forms
+	context['provider_info_list'] = provider_info_list
 	return render(request, 'pick_provider_list.html', context)
 
 """
 create PickProvider
 pickup.views.provide_pick_provider => pickup/provider/create/
 """
+@login_required
 def provide_pick_provider(request):
 	user = request.user
 	if request.POST:
@@ -75,12 +139,12 @@ def provide_pick_provider(request):
 				pick_provider = form.save(commit=False)
 				pick_provider.picker = user
 				pick_provider.save()
-				return HttpResponseRedirect('/pickup/provider/' + str(university.id))
+				return HttpResponseRedirect(reverse('pickup.views.pick_provider_list', args=(university.id,)))
 			except Exception as e:
 				# TODO: logging
 				# print '%s (%s)' % (e.message, type(e))
 				# TODO: show error message
-				return HttpResponseRedirect('/pickup/provider/' + str(university.id))
+				return HttpResponseRedirect(reverse('pickup.views.pick_provider_list', args=(university.id,)))
 	else:
 		form = PickProviderForm()
 
@@ -97,4 +161,4 @@ def cancel_pick_provider(request, university_id):
 	user = request.user
 	university = get_object_or_404(University, id=university_id)
 	PickProvider.objects.filter(picker=user.id, university_id=university.id).delete()
-	return HttpResponseRedirect('/pickup/provider/' + university_id)
+	return HttpResponseRedirect(reverse('pickup.views.pick_provider_list', args=(university_id,)))

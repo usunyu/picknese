@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block title %}
+Pick Up |
+{% endblock %}
+
+{% block jumbotron %}
+<div class="jumbotron" style="background: url({% static 'images/campus/' %}{{university.shorthand}}/2.jpg); min-height: 200px;"></div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-4" style="margin-top: -130px;">
+			<img src="{% static 'images/logo/' %}{{university.shorthand}}.jpg" alt="" class="img-thumbnail img-responsive img-center" style="width:150px;">
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block tabs %}
+<div class="col-md-12">
+	<ul class="nav nav-tabs">
+		<li role="presentation"><a href="{%url 'university.views.university' university.id %}">{{university.shorthand|upper}}</a></li>
+		<li role="presentation"><a href="#">Me</a></li>
+		<li role="presentation" class="active"><a href="{% url 'pickup.views.pick_provider_list' university.id %}">Pick Up</a></li>
+		<li role="presentation"><a href="#">Carpool</a></li>
+	</ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="col-xs-12 col-sm-9 col-md-8" >
+{% if pick_requesters|length > 0 %}
+	{% for pick_requester in pick_requesters %}
+	{% if forloop.counter != 1 %}
+	<hr />
+	{% endif %}
+	<div class="media" style="margin-top: 30px;">
+		<a class="media-left" href="#">
+			<img class="img-circle box-shadow" src="/media/{{pick_requester.requester.profile.avatar.name}}" alt="Profile Pic" style="margin-right: 30px; width: 100px; height: 100px;" >
+		</a>
+		<div class="media-body">
+			<div class="col-xs-12 col-md-9">
+				<p class="media-heading">
+					<b>{{pick_requester.requester.first_name}} {{pick_requester.requester.last_name}}</b>
+					is requesting
+					{% if pick_requester.pick_type == 1 %}
+						<span class="label label-info">Flight</span>
+					{% else %}
+						<span class="label label-primary">General</span>
+					{% endif %}
+					pick up
+				</p>
+				<p><i class="glyphicon glyphicon-map-marker"></i>&nbsp; {{pick_requester.destination}}</p>
+				<p><i class="glyphicon glyphicon-credit-card"></i>&nbsp; ${{pick_requester.price}}</p>
+				{% if pick_requester.pick_type == 1 %}
+					<p><i class="glyphicon glyphicon-plane"></i>&nbsp; {{pick_requester.flight}}</p>
+				{% endif %}
+				<p><i class="glyphicon glyphicon-comment"></i>&nbsp; {{pick_requester.description}}</p>
+				<i class="glyphicon glyphicon-tag"></i>&nbsp; 
+				<span class="label label-warning">Not Confirmed</span>
+			</div>
+			<div class="col-xs-10 col-md-2">
+				<button type="button" class="btn btn-success" style="margin-top: 20px;">
+					Offer Your Pickup
+				</button>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+{% endif %}
+</div>
+{% endblock %}

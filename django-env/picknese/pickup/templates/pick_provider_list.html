@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% load staticfiles %}
-{% load pickup_extras %}
 {% load bootstrap3 %}
 
 {% block title %}
@@ -10,23 +9,20 @@ Pick Up |
 
 {% block jumbotron %}
 <div class="jumbotron" style="background: url({% static 'images/campus/' %}{{university.shorthand}}/2.jpg); min-height: 200px;"></div>
-<div class="container" style="margin-top: -120px;">
+<div class="container">
 	<div class="row">
-		<div class="col-md-2">
+		<div class="col-md-4" style="margin-top: -130px;">
 			<img src="{% static 'images/logo/' %}{{university.shorthand}}.jpg" alt="" class="img-thumbnail img-responsive img-center" style="width:150px;">
-		</div>
-		<div class="hidden-xs hidden-sm col-md-10">
-			<h3 class="color-white text-shadow">{{university.name}}</h3>
 		</div>
 	</div>
 </div>
 {% endblock %}
 
 {% block tabs %}
-<div style="margin-top: 20px;">
+<div class="col-md-12">
 	<ul class="nav nav-tabs">
-		<li role="presentation"><a href="#">Home</a></li>
-		<li role="presentation"><a href="{%url 'university.views.university' university.id %}">University</a></li>
+		<li role="presentation"><a href="{%url 'university.views.university' university.id %}">{{university.shorthand|upper}}</a></li>
+		<li role="presentation"><a href="#">Me</a></li>
 		<li role="presentation" class="active"><a href="{% url 'pickup.views.pick_provider_list' university.id %}">Pick Up</a></li>
 		<li role="presentation"><a href="#">Carpool</a></li>
 	</ul>
@@ -34,24 +30,27 @@ Pick Up |
 {% endblock %}
 
 {% block content %}
-{% if pick_providers|length > 0 %}
-	{% for pick_provider in pick_providers %}
-	<div class="container col-xs-12 col-sm-6 col-md-4" style="margin-top: 30px; min-height: 220px;">
+{% if provider_info_list|length > 0 %}
+	{% for provider_info in provider_info_list %}
+	{% with pick_provider=provider_info.pick_provider form=provider_info.form pickup=provider_info.pickup %}
+	{% with picker=pick_provider.picker price=pick_provider.price description=pick_provider.description %}
+
+	<div class="container col-xs-12 col-sm-6 col-md-5" style="margin-top: 30px; min-height: 220px;">
 		<div class="col-xs-5 col-sm-5 col-md-5">
-		{% if pick_provider.picker.profile.avatar %}
-			<img class="img-circle box-shadow" src="/media/{{pick_provider.picker.profile.avatar.name}}" alt="Profile Pic" style="width: 130px; height: 130px;" />
+		{% if picker.profile.avatar %}
+			<img class="img-circle box-shadow" src="/media/{{picker.profile.avatar.name}}" alt="Profile Pic" style="width: 130px; height: 130px;" />
 		{% else %}
 			<img class="img-circle box-shadow" src="/media/images/avatar/default_pic.png" alt="Profile Pic" style="width: 130px; height: 130px;" />
 		{% endif %}
 		</div>
 		<div class="col-xs-7 col-sm-7 col-md-7">
-			<h4>{{ pick_provider.picker.first_name }} {{ pick_provider.picker.last_name }}</h4>
-			<p>Tip: ${{pick_provider.price}}</p>
-			<p>{{pick_provider.description}}</p>
+			<h4>{{picker.first_name}} {{picker.last_name}}</h4>
+			<p>Tip: ${{price}}</p>
+			<p>{{description}}</p>
 			<!-- TODO: add contact and profile -->
 			<!-- Split button -->
 			<div class="btn-group">
-				{% if current_user == pick_provider.picker %}
+				{% if user == picker %}
 				<button type="button" class="btn btn-default col-xs-9"><i class="glyphicon glyphicon-edit"></i>&nbsp; Update</button>
 				<button type="button" class="btn btn-default dropdown-toggle col-xs-3" data-toggle="dropdown" aria-expanded="false">
 					<span class="caret"></span>
@@ -59,6 +58,42 @@ Pick Up |
 				</button>
 				<ul class="dropdown-menu" role="menu">
 					<li><a href="{% url 'pickup.views.cancel_pick_provider' university.id %}"><i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel Your Pick Up</a></li>
+				</ul>
+				{% elif pickup %}
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-warning col-xs-9" data-toggle="modal" data-target="#pickupRequest{{pick_provider.id}}">
+					<i class="glyphicon glyphicon-refresh"></i>&nbsp; Pending
+				</button>
+				<!-- Modal -->
+				<div class="modal fade" id="pickupRequest{{pick_provider.id}}" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h5 class="modal-title" id="modalLabel">
+									Pickup Requested
+								</h5>
+							</div>
+							<div class="modal-body">
+								<p><b>Please be patient, maybe your picker was sleeping _(:3 」∠ )_</b></p>
+								<img class="col-md-12" src="{% static 'images/pusheen/giphy.gif' %}" style="margin-bottom: 10px;">
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<button type="button" class="btn btn-warning dropdown-toggle col-xs-3" data-toggle="dropdown" aria-expanded="false">
+					<span class="caret"></span>
+					<span class="sr-only">Toggle Dropdown</span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="#"><i class="glyphicon glyphicon-comment"></i>&nbsp; Message</a></li>
+					<li><a href="#"><i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel Request</a></li>
+					<li class="divider"></li>
+					<li><a href="#"><i class="glyphicon glyphicon-user"></i>&nbsp; Profile</a></li>
+					<li><a href="#"><i class="glyphicon glyphicon-cog"></i>&nbsp; Other</a></li>
 				</ul>
 				{% else %}
 				<!-- Button trigger modal -->
@@ -77,12 +112,10 @@ Pick Up |
 							</div>
 							<form action="{% url 'pickup.views.request_pickup' university.id %}" method="post">
 								<div class="modal-body">
-									<p><b>{{ pick_provider.picker.first_name }} {{ pick_provider.picker.last_name }}</b></p>
-									<p><b>{{ university.name }}</b></p>
+									<p><b>{{picker.first_name}} {{picker.last_name}}</b></p>
+									<p><b>{{university.name}}</b></p>
 									{% csrf_token %}
-									{% with form=forms|get_value:pick_provider.picker.id %}
-										{% bootstrap_form form %}
-									{% endwith %}
+									{% bootstrap_form form %}
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -97,18 +130,23 @@ Pick Up |
 					<span class="sr-only">Toggle Dropdown</span>
 				</button>
 				<ul class="dropdown-menu" role="menu">
-					<li><a href="#"><i class="glyphicon glyphicon-user"></i>&nbsp; Profile</a></li>
+					<li><a href="#"><i class="glyphicon glyphicon-comment"></i>&nbsp; Message</a></li>
 					<li class="divider"></li>
+					<li><a href="#"><i class="glyphicon glyphicon-user"></i>&nbsp; Profile</a></li>
 					<li><a href="#"><i class="glyphicon glyphicon-cog"></i>&nbsp; Other</a></li>
 				</ul>
+
 				{% endif %}
 			</div>
 		</div>
 	</div>
+
+	{% endwith %}
+	{% endwith %}
+
 	{% endfor %}
 {% else %}
-<div>
-	<h4 align="center">Oops, no picker here :(</h4>
-</div>
+<h4 align="center">Oops, seems our pickers are sleeping _(:3 」∠ )_</h4>
+<img class="col-xs-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" src="{% static 'images/pusheen/giphy.gif' %}">
 {% endif %}
 {% endblock %}
