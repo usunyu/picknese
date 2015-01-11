@@ -37,6 +37,7 @@ def create_pickup(request, request_id):
 create PickUp
 pickup.views.request_pickup university_id => pickup/create/1/
 """
+# TODO: delete
 @login_required
 def request_pickup(request, university_id):
 	if request.POST:
@@ -130,6 +131,7 @@ def pick_requester_list(request, university_id):
 """
 class to assemble the data pass to template
 """
+# TODO: delete
 class ProviderInfo(object):
 
 	def __init__(self, pick_provider, form, pickup):
