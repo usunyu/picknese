@@ -6,5 +6,6 @@ urlpatterns = patterns('',
 	url(r'^provider/create/$', 'pickup.views.provide_pick_provider'),
 	url(r'^requester/create/(?P<university_id>\d+)/$', 'pickup.views.create_pick_requester'),
 	url(r'^provider/delete/(?P<university_id>\d+)/$', 'pickup.views.cancel_pick_provider'),
-	url(r'^create/(?P<university_id>\d+)/$', 'pickup.views.request_pickup'),
+	url(r'^create/(?P<request_id>\d+)/$', 'pickup.views.create_pickup'),
+	# url(r'^create/(?P<university_id>\d+)/$', 'pickup.views.request_pickup'),
 )

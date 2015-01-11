@@ -11,8 +11,33 @@ from forms import PickProviderForm, PickRequesterForm, PickUpForm
 
 """
 create PickUp
-pickup.views.request_pickup university_id => provider/create/1/
+pickup.views.create_pickup request_id => pickup/create/1
 """
+@login_required
+def create_pickup(request, request_id):
+	pickup_request = get_object_or_404(PickRequester, id=request_id)
+	if request.POST:
+		form = PickUpForm(request.POST)
+		if form.is_valid():
+			university = form.cleaned_data['university']
+			try:
+				form.save()
+				pickup_request.confirmed = True
+				pickup_request.save()
+				# TODO: show success message
+				return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university.id,)))
+			except Exception as e:
+				# TODO: logging
+				# print '%s (%s)' % (e.message, type(e))
+				pass
+	# TODO: show error message
+	return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university.id,)))
+
+"""
+create PickUp
+pickup.views.request_pickup university_id => pickup/create/1/
+"""
+# TODO: delete
 @login_required
 def request_pickup(request, university_id):
 	if request.POST:
@@ -32,7 +57,7 @@ def request_pickup(request, university_id):
 
 """
 create PickRequester
-pickup.views.create_pick_requester university_id => requester/create/1
+pickup.views.create_pick_requester university_id => pickup/requester/create/1
 """
 def create_pick_requester(request, university_id):
 	user = request.user
@@ -55,19 +80,50 @@ def create_pick_requester(request, university_id):
 	return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university_id,)))
 
 """
+class to assemble the data pass to template
+"""
+class RequesterInfo(object):
+
+	def __init__(self, pick_requester, form):
+		self.pick_requester = pick_requester
+		self.form = form
+
+"""
 show PickRequester
 pickup.views.pick_requester_list => pickup/requesters/1/
 """
 def pick_requester_list(request, university_id):
+	user = request.user
 	university = get_object_or_404(University, id=university_id)
-	form = PickRequesterForm()
-	pick_requesters = PickRequester.objects.filter(university=university)
+	requester_form = PickRequesterForm()
+	pick_requesters = PickRequester.objects.filter(university=university, confirmed=False)
+	pick_ups = PickUp.objects.filter(university=university)
+	requester_info_list = []
+	# create form for every requester
+	for pick_requester in pick_requesters:
+		form = PickUpForm(
+			initial = {
+				'picker': user.id,
+				'pickee': pick_requester.requester.id,
+				'university': university_id,
+				'pick_type': pick_requester.pick_type,
+				'flight': pick_requester.flight,
+				'price': pick_requester.price,
+				'destination': pick_requester.destination,
+			}
+		)
+		requester_info = RequesterInfo(
+			pick_requester,
+			form,
+		)
+		requester_info_list.append(requester_info)
 
 	context = {}
 	context.update(csrf(request))
 	context['university'] = university
-	context['form'] = form
-	context['pick_requesters'] = pick_requesters
+	context['requester_form'] = requester_form
+	context['requester_info_list'] = requester_info_list
+	context['pick_ups'] = pick_ups
 	context['requester_page'] = True
 	return render(request, 'pick_requester_list.html', context)
 
@@ -75,6 +131,7 @@ def pick_requester_list(request, university_id):
 """
 class to assemble the data pass to template
 """
+# TODO: delete
 class ProviderInfo(object):
 
 	def __init__(self, pick_provider, form, pickup):

@@ -19,34 +19,63 @@ Pick Up |
 {% endblock %}
 
 {% block tabs %}
-<div class="col-md-12">
-	<ul class="nav nav-tabs">
-		<li role="presentation"><a href="{%url 'university.views.university' university.id %}">{{university.shorthand|upper}}</a></li>
-		<li role="presentation"><a href="#">Me</a></li>
-		<li role="presentation" class="active"><a href="{% url 'pickup.views.pick_provider_list' university.id %}">Pick Up</a></li>
-		<li role="presentation"><a href="#">Carpool</a></li>
-	</ul>
+<div class="col-xs-12 col-sm-9">
+<ul class="nav nav-tabs">
+	<li role="presentation"><a href="{%url 'university.views.university' university.id %}">{{university.shorthand|upper}}</a></li>
+	<li role="presentation"><a href="#">Me</a></li>
+	<li role="presentation" class="active"><a href="{% url 'pickup.views.pick_requester_list' university.id %}">Pick Up</a></li>
+	<li role="presentation"><a href="#">Carpool</a></li>
+</ul>
 </div>
 {% endblock %}
 
 {% block content %}
-<div class="col-xs-12 col-sm-9 col-md-8" >
-{% if pick_requesters|length > 0 %}
-	{% for pick_requester in pick_requesters %}
-	{% if forloop.counter != 1 %}
-	<hr />
-	{% endif %}
-	<div class="media" style="margin-top: 30px;">
-		<a class="media-left" href="#">
-			<img class="img-circle box-shadow" src="/media/{{pick_requester.requester.profile.avatar.name}}" alt="Profile Pic" style="margin-right: 30px; width: 100px; height: 100px;" >
-		</a>
-		<div class="media-body">
-			<div class="col-xs-12 col-md-9">
-				<p class="media-heading">
+<div class="col-xs-12 col-sm-9">
+{% if user.is_authenticated %}
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary navbar-btn visible-xs" data-toggle="modal" data-target="#xsPickRequesterForm">Post Your Request</button>
+<!-- Modal -->
+<div class="modal fade" id="xsPickRequesterForm" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h5 class="modal-title" id="modalLabel">
+					Post Your Request
+				</h5>
+			</div>
+			<form action="{% url 'pickup.views.create_pick_requester' university.id %}" method="post">
+				<div class="modal-body">
+				{% csrf_token %}
+				{% bootstrap_form requester_form %}
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% else %}
+<a href="{% url 'picknese.views.login' %}" class="btn btn-primary navbar-btn visible-xs">Post Your Request</a>
+{% endif %}
+
+<div class="row">
+{% if requester_info_list|length > 0 %}
+	{% for requester_info in requester_info_list %}
+	{% with pick_requester=requester_info.pick_requester form=requester_info.form %}
+	<div class="col-sm-6 col-md-4">
+		<div class="thumbnail">
+			<img class="img-circle box-shadow" src="/media/{{pick_requester.requester.profile.avatar.name}}" alt="Profile Pic" style="width: 100px; height: 100px; margin-left: 10px; margin-top: 10px;">
+			<hr />
+			<div class="caption">
+				<p>
+					<i class="glyphicon glyphicon-user"></i>&nbsp; 
 					<b>{{pick_requester.requester.first_name}} {{pick_requester.requester.last_name}}</b>
 					is requesting
 					{% if pick_requester.pick_type == 1 %}
-						<span class="label label-info">Flight</span>
+						<span class="label label-success">Flight</span>
 					{% else %}
 						<span class="label label-primary">General</span>
 					{% endif %}
@@ -58,17 +87,75 @@ Pick Up |
 					<p><i class="glyphicon glyphicon-plane"></i>&nbsp; {{pick_requester.flight}}</p>
 				{% endif %}
 				<p><i class="glyphicon glyphicon-comment"></i>&nbsp; {{pick_requester.description}}</p>
-				<i class="glyphicon glyphicon-tag"></i>&nbsp; 
-				<span class="label label-warning">Not Confirmed</span>
-			</div>
-			<div class="col-xs-10 col-md-2">
-				<button type="button" class="btn btn-success" style="margin-top: 20px;">
-					Offer Your Pickup
-				</button>
+				{% if pick_requester.confirmed == False %}
+				<hr />
+				{% if user == pick_requester.requester %}
+					<p>
+						<a href="#" class="btn btn-default" role="button">Update</a>
+						<a href="#" class="btn btn-default" role="button">Cancel</a>
+					</p>
+				{% else %}
+					<!-- Button trigger modal -->
+					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#pickupRequest{{pick_requester.id}}">Offer Your Pick Up</button>
+					<!-- Modal -->
+					<div class="modal fade" id="pickupRequest{{pick_requester.id}}" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<h5 class="modal-title" id="modalLabel">
+										Offer Pick Up
+									</h5>
+								</div>
+								<form action="{% url 'pickup.views.create_pickup' pick_requester.id %}" method="post">
+									<div class="modal-body">
+										<p><b>Name: {{pick_requester.requester.first_name}} {{pick_requester.requester.last_name}}</b></p>
+										<p><b>Tip: ${{pick_requester.price}}</b></p>
+										<p><b>Destination: {{pick_requester.destination}}</b></p>
+										{% if pick_requester.pick_type == 1 %}
+										<p><b>Type: Flight Pick Up</b></p>
+										<p><b>Flight#: {{pick_requester.flight}}</b></p>
+										{% else %}
+										<p><b>Type: General Pick Up</b></p>
+										{% endif %}
+										{% csrf_token %}
+										{% bootstrap_form form %}
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+										<button type="submit" class="btn btn-primary">Confirm</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+				{% endif %}
 			</div>
 		</div>
-	</div>
+  	</div>
+  	{% endwith %}
 	{% endfor %}
 {% endif %}
+</div>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<div class="hidden-xs col-sm-3 sidebar-offcanvas">
+<!-- TODO: update real time -->
+<ol class="activity-feed">
+	{% if pick_ups|length > 0 %}
+	{% for pick_up in pick_ups %}
+	<li class="feed-item">
+		<time class="date" datetime="9-22">Sep 22</time>
+		<span class="text" >
+			<a href="#">{{pick_up.picker.first_name}} {{pick_up.picker.last_name}}</a> will pick up
+			<a href="#">{{pick_up.pickee.first_name}} {{pick_up.pickee.last_name}}</a>
+		</span>
+	</li>
+	{% endfor %}
+	{% endif %}
+</ol>
 </div>
 {% endblock %}

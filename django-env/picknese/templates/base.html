@@ -84,8 +84,9 @@
 					</li>
 					{% if requester_page %}
 					<li>
+						{% if user.is_authenticated %}
 						<!-- Button trigger modal -->
-						<button type="button" class="btn btn-primary navbar-btn" data-toggle="modal" data-target="#PickRequesterForm">Post Your Request</button>
+						<button type="button" class="btn btn-primary navbar-btn hidden-xs" data-toggle="modal" data-target="#PickRequesterForm">Post Your Request</button>
 						<!-- Modal -->
 						<div class="modal fade" id="PickRequesterForm" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 							<div class="modal-dialog">
@@ -99,7 +100,7 @@
 									<form action="{% url 'pickup.views.create_pick_requester' university.id %}" method="post">
 										<div class="modal-body">
 										{% csrf_token %}
-										{% bootstrap_form form %}
+										{% bootstrap_form requester_form %}
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -109,6 +110,9 @@
 								</div>
 							</div>
 						</div>
+						{% else %}
+						<a href="{% url 'picknese.views.login' %}" class="btn btn-primary navbar-btn visible-xs">Post Your Request</a>
+						{% endif %}
 					</li>
 					{% endif %}
 				</ul>
@@ -157,9 +161,10 @@
 			<!-- Content -->
 			{% block content %}
 			{% endblock %}
+			<!-- Sidebar -->
 			{% block sidebar %}
 			{% endblock %}
-		</div>
+		</div><!--/row-->
 	</div>
 	<!-- Footer -->
 	<div class="container">
