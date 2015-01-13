@@ -74,8 +74,16 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Offer Your Help<span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="{% url 'pickup.views.provide_pick_provider' %}">
+							<li>
+							<!-- with associated university -->
+							{% if university %}
+								<a href="{% url 'pickup.views.provide_pick_provider' university.id %}">
 								<i class="glyphicon glyphicon-plane"></i>&nbsp; Pick Up</a>
+							<!-- if not in pick up requesters page, need select university first -->
+							{% else %}
+								<a href="{% url 'pickup.views.provide_pick_provider' %}">
+								<i class="glyphicon glyphicon-plane"></i>&nbsp; Pick Up</a>
+							{% endif %}
 							</li>
 							<li><a href="#">
 								<i class="glyphicon glyphicon-road"></i>&nbsp; Carpool</a>
