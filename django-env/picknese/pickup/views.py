@@ -9,8 +9,15 @@ from university.models import University
 from pickup.models import PickProvider, PickRequester, PickUp
 from forms import PickProviderForm, PickRequesterForm, PickUpForm
 
+# PickProvider message
 CREATE_PICK_PROVIDER_SUCCESS_MESSAGE = 'Congratulation! You successful register as pick up provider, we will inform you when someone need help.'
-CREATE_PICK_PROVIDER_FAIL_MESSAGE = 'Sorry! Register pick up provider failed, please try again.'
+CREATE_PICK_PROVIDER_ERROR_MESSAGE = 'Sorry! Register pick up provider failed, please try again later.'
+# PickRequester message
+CREATE_PICK_REQUESTER_SUCCESS_MESSAGE = 'Congratulation! You successful post your request, we will inform you if someone help you.'
+CREATE_PICK_REQUESTER_ERROR_MESSAGE = 'Sorry! Post your request failed, please try again later.'
+# PickUp message
+CREATE_PICK_UP_SUCCESS_MESSAGE = 'Thank you so much for your help!'
+CREATE_PICK_UP_ERROR_MESSAGE = 'Sorry! Offer your help failed, please try again later.'
 
 """
 create PickUp
@@ -27,13 +34,13 @@ def create_pickup(request, request_id):
 				form.save()
 				pickup_request.confirmed = True
 				pickup_request.save()
-				# TODO: show success message
+				messages.success(request, CREATE_PICK_UP_SUCCESS_MESSAGE)
 				return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university.id,)))
 			except Exception as e:
 				# TODO: logging
 				# print '%s (%s)' % (e.message, type(e))
 				pass
-	# TODO: show error message
+	messages.error(request, CREATE_PICK_UP_ERROR_MESSAGE)
 	return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university.id,)))
 
 """
@@ -51,13 +58,13 @@ def create_pick_requester(request, university_id):
 				pick_requester.university = university
 				pick_requester.requester = user
 				pick_requester.save()
-				# TODO: show success message
+				messages.success(request, CREATE_PICK_REQUESTER_SUCCESS_MESSAGE)
 				return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university_id,)))
 			except Exception as e:
 				# TODO: logging
 				# print '%s (%s)' % (e.message, type(e))
 				pass
-	# TODO: show error message
+	messages.error(request, CREATE_PICK_REQUESTER_ERROR_MESSAGE)
 	return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university_id,)))
 
 """
@@ -137,7 +144,7 @@ def provide_pick_provider(request, university_id=0):
 				except Exception as e:
 					# TODO: logging
 					# print '%s (%s)' % (e.message, type(e))
-					messages.error(request, CREATE_PICK_PROVIDER_FAIL_MESSAGE)
+					messages.error(request, CREATE_PICK_PROVIDER_ERROR_MESSAGE)
 					return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university.id,)))
 			else:
 				print "Form is not valid"
