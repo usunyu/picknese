@@ -9,6 +9,9 @@ from university.models import University
 from pickup.models import PickProvider, PickRequester, PickUp
 from forms import PickProviderForm, PickRequesterForm, PickUpForm
 
+CREATE_PICK_PROVIDER_SUCCESS_MESSAGE = 'Congratulation! You successful register as pick up provider, we will inform you when someone need help.'
+CREATE_PICK_PROVIDER_FAIL_MESSAGE = 'Sorry! Register pick up provider failed, please try again.'
+
 """
 create PickUp
 pickup.views.create_pickup request_id => pickup/create/1
@@ -117,6 +120,7 @@ def provide_pick_provider(request, university_id=0):
 		university = get_object_or_404(University, id=university_id)
 		pick_provider = PickProvider(picker=user, university=university, listed=True)
 		pick_provider.save()
+		messages.success(request, CREATE_PICK_PROVIDER_SUCCESS_MESSAGE)
 		return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university_id,)))
 	# create pick up provider in other page which has not associated university
 	else:
@@ -128,11 +132,12 @@ def provide_pick_provider(request, university_id=0):
 					pick_provider = form.save(commit=False)
 					pick_provider.picker = user
 					pick_provider.save()
+					messages.success(request, CREATE_PICK_PROVIDER_SUCCESS_MESSAGE)
 					return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university.id,)))
 				except Exception as e:
 					# TODO: logging
 					# print '%s (%s)' % (e.message, type(e))
-					# TODO: show error message
+					messages.error(request, CREATE_PICK_PROVIDER_FAIL_MESSAGE)
 					return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university.id,)))
 			else:
 				print "Form is not valid"
