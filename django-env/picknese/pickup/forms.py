@@ -14,12 +14,15 @@ class PickRequesterForm(forms.ModelForm):
 	class Meta:
 		model = PickRequester
 		fields = (
+			'requester',
+			'university',
 			'pick_type',
 			'flight',
 			'price',
 			'description',
 		)
 		widgets = {
+			'requester': forms.HiddenInput(),
 			'description': forms.Textarea(
 				attrs = {
 					'placeholder': 'Please input informations you can provide, ' +

@@ -54,10 +54,11 @@ def create_pick_requester(request, university_id):
 		form = PickRequesterForm(request.POST)
 		if form.is_valid():
 			try:
-				pick_requester = form.save(commit=False)
-				pick_requester.university = university
-				pick_requester.requester = user
-				pick_requester.save()
+				print form
+				form.save()
+				# pick_requester.university = university
+				# pick_requester.requester = user
+				# pick_requester.save()
 				messages.success(request, CREATE_PICK_REQUESTER_SUCCESS_MESSAGE)
 				return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university_id,)))
 			except Exception as e:
@@ -83,7 +84,12 @@ pickup.views.pick_requester_list => pickup/requesters/1/
 def pick_requester_list(request, university_id):
 	user = request.user
 	university = get_object_or_404(University, id=university_id)
-	requester_form = PickRequesterForm()
+	requester_form = PickRequesterForm(
+		initial = {
+			'requester': user.id,
+			'university': university_id,
+		}
+	)
 	pick_requesters = PickRequester.objects.filter(university=university, confirmed=False)
 	pick_ups = PickUp.objects.filter(university=university)
 	requester_info_list = []
@@ -112,7 +118,6 @@ def pick_requester_list(request, university_id):
 	context['requester_form'] = requester_form
 	context['requester_info_list'] = requester_info_list
 	context['pick_ups'] = pick_ups
-	context['requester_page'] = True
 	return render(request, 'pick_requester_list.html', context)
 
 """
@@ -146,8 +151,6 @@ def provide_pick_provider(request, university_id=0):
 					# print '%s (%s)' % (e.message, type(e))
 					messages.error(request, CREATE_PICK_PROVIDER_ERROR_MESSAGE)
 					return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university.id,)))
-			else:
-				print "Form is not valid"
 		else:
 			form = PickProviderForm()
 
