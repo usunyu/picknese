@@ -127,37 +127,30 @@ pickup.views.provide_pick_provider university_id => pickup/provider/create/1
 @login_required
 def provide_pick_provider(request, university_id=0):
 	user = request.user
-	# create pick up provider in requesters page
-	if university_id:
-		university = get_object_or_404(University, id=university_id)
-		pick_provider = PickProvider(picker=user, university=university, listed=True)
-		pick_provider.save()
-		messages.success(request, CREATE_PICK_PROVIDER_SUCCESS_MESSAGE)
-		return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university_id,)))
-	# create pick up provider in other page which has not associated university
+	if request.POST:
+		form = PickProviderForm(request.POST)
+		if form.is_valid():
+			university = form.cleaned_data['university']
+			try:
+				pick_provider = form.save(commit=False)
+				pick_provider.picker = user
+				pick_provider.save()
+				messages.success(request, CREATE_PICK_PROVIDER_SUCCESS_MESSAGE)
+				return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university.id,)))
+			except Exception as e:
+				# TODO: logging
+				# print '%s (%s)' % (e.message, type(e))
+				messages.error(request, CREATE_PICK_PROVIDER_ERROR_MESSAGE)
+				return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university.id,)))
+	elif university_id:
+		form = PickProviderForm(initial={'university': university_id})
 	else:
-		if request.POST:
-			form = PickProviderForm(request.POST)
-			if form.is_valid():
-				university = form.cleaned_data['university']
-				try:
-					pick_provider = form.save(commit=False)
-					pick_provider.picker = user
-					pick_provider.save()
-					messages.success(request, CREATE_PICK_PROVIDER_SUCCESS_MESSAGE)
-					return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university.id,)))
-				except Exception as e:
-					# TODO: logging
-					# print '%s (%s)' % (e.message, type(e))
-					messages.error(request, CREATE_PICK_PROVIDER_ERROR_MESSAGE)
-					return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university.id,)))
-		else:
-			form = PickProviderForm()
+		form = PickProviderForm()
 
-		context = {}
-		context.update(csrf(request))
-		context['form'] = form
-		return render(request, 'provide_pick_provider.html', context)
+	context = {}
+	context.update(csrf(request))
+	context['form'] = form
+	return render(request, 'provide_pick_provider.html', context)
 
 """
 delete PickProvider from provider list view
