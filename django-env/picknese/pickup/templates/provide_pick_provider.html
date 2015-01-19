@@ -4,13 +4,13 @@
 {% load bootstrap3 %}
 
 {% block title %}
-Provide Pick Up |
+Provider Register |
 {% endblock %}
 
 {% block jumbotron %}
 <div class="jumbotron">
 	<div class="container text-center">
-		<h2>Offer Your Pick Up</h2>
+		<h3>Offer Your Pick Up Help</h3>
 		<p>Picknese let you make money while you provide your pick up service.</p>
 	</div>
 </div>
@@ -22,7 +22,7 @@ Provide Pick Up |
 		{% csrf_token %}
 		{% bootstrap_form form %}
 		{% buttons %}
-			<button type="submit" class="btn btn-info">
+			<button type="submit" class="btn btn-default">
 				Confirm
 			</button>
 		{% endbuttons %}

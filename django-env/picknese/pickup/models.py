@@ -5,10 +5,6 @@ from university.models import University
 class PickProvider(models.Model):
 	picker = models.ForeignKey(User)
 	university = models.ForeignKey(University)
-	# TODO: delete
-	price = models.IntegerField(default=20)
-	# TODO: delete
-	description = models.TextField(null=True, blank=True)
 	# TODO: check listed, user can unlist, when listed, notify
 	listed = models.BooleanField(default=True)
 
