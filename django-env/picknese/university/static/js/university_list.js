@@ -1,8 +1,8 @@
-var Comment = React.createClass({
+var University = React.createClass({
     render: function() {
         return (
-            <div className="comment">
-                <h4 className="commentAuthor">
+            <div className="university">
+                <h4 className="universityName">
                     {this.props.name}
                 </h4>
                 {this.props.children}
@@ -11,24 +11,29 @@ var Comment = React.createClass({
     }
 });
 
-var CommentList = React.createClass({
+var UniversityList = React.createClass({
     render: function() {
-        var commentNodes = this.props.data.map(function (comment) {
+        var filterText = this.props.filterText;
+        var universities = this.props.data.map(function (university) {
+            if (university.name.indexOf(filterText) === -1) {
+                return;
+            }
             return (
-                <Comment name={comment.name}>
-                    {comment.description}
-                </Comment>
+                <University name={university.name}>
+                    <p>{university.url}</p>
+                    <p>{university.description}</p>
+                </University>
             );
         });
         return (
-            <div className="commentList">
-                {commentNodes}
+            <div className="universityList">
+                {universities}
             </div>
         );
     }
 });
 
-var CommentForm = React.createClass({
+var UniversityForm = React.createClass({
     handleSubmit: function(e) {
         e.preventDefault();
         var name = this.refs.name.getDOMNode().value.trim();
@@ -37,7 +42,7 @@ var CommentForm = React.createClass({
         if (!name || !shorthand || !url) {
             return;
         }
-        this.props.onCommentSubmit({
+        this.props.onUniversitySubmit({
             name: name,
             shorthand: shorthand,
             url: url,
@@ -59,8 +64,26 @@ var CommentForm = React.createClass({
     }
 });
 
-var CommentBox = React.createClass({
-    loadCommentsFromServer: function() {
+var UniversitySearch = React.createClass({
+    handleChange: function() {
+        this.props.onUserInput(
+            this.refs.filterTextInput.getDOMNode().value
+        );
+    },
+    render: function() {
+        return (
+            <form>
+                <input type="text" placeholder="Search..." 
+                       value={this.props.filterText}
+                       ref="filterTextInput"
+                       onChange={this.handleChange} />
+            </form>
+        );
+    }
+});
+
+var UniversityPanel = React.createClass({
+    loadUniversitiesFromServer: function() {
         $.ajax({
             url: this.props.url,
             dataType: 'json',
@@ -72,16 +95,16 @@ var CommentBox = React.createClass({
             }.bind(this)
         });
     },
-    handleCommentSubmit: function(comment) {
+    handleUniversitySubmit: function(university) {
         $.ajax({
             url: this.props.url,
             dataType: 'json',
             type: 'POST',
-            data: comment,
+            data: university,
             success: function(data) {
-                comments = this.state.data;
-                comments.push(data);
-                this.setState({data: comments});
+                universities = this.state.data;
+                universities.push(data);
+                this.setState({data: universities});
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -89,24 +112,31 @@ var CommentBox = React.createClass({
         });
     },
     getInitialState: function() {
-        return {data: []};
+        return {
+            data: [],
+            filterText: ''
+        };
     },
     componentDidMount: function() {
-        this.loadCommentsFromServer();
-        setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+        this.loadUniversitiesFromServer();
+        setInterval(this.loadUniversitiesFromServer, this.props.pollInterval);
+    },
+    handleUserInput: function(filterText) {
+        this.setState({filterText: filterText});
     },
     render: function() {
         return (
-            <div className="commentBox">
+            <div className="universityPanel">
                 <h3>Universities</h3>
-                <CommentList data={this.state.data} />
-                <CommentForm onCommentSubmit={this.handleCommentSubmit} />
+                <UniversitySearch filterText={this.state.filterText} onUserInput={this.handleUserInput} />
+                <UniversityList filterText={this.state.filterText} data={this.state.data} />
+                <UniversityForm onUniversitySubmit={this.handleUniversitySubmit} />
             </div>
         );
     }
 });
 
 React.render(
-    <CommentBox url="api/" pollInterval={20000}/>,
+    <UniversityPanel url="api/" pollInterval={20000}/>,
     document.getElementById('content')
 );
