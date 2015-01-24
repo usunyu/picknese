@@ -20,6 +20,7 @@ var UniversityList = React.createClass({
             }
             return (
                 <University name={university.name}>
+                    <p>{university.shorthand}</p>
                     <p>{university.url}</p>
                     <p>{university.description}</p>
                 </University>
@@ -127,7 +128,6 @@ var UniversityPanel = React.createClass({
     render: function() {
         return (
             <div className="universityPanel">
-                <h3>Universities</h3>
                 <UniversitySearch filterText={this.state.filterText} onUserInput={this.handleUserInput} />
                 <UniversityList filterText={this.state.filterText} data={this.state.data} />
                 <UniversityForm onUniversitySubmit={this.handleUniversitySubmit} />
