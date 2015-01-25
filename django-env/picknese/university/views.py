@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
-
-from rest_framework import generics, viewsets
+from rest_framework import generics
 
 from pickup.forms import PickRequesterForm
 from university.models import University
@@ -28,8 +27,7 @@ def university(request, university_id):
     return render(request, 'university.html', context)
 
 def university_list(request):
-    context = {}
-    return render(request, 'university_list.html', context)
+    return render(request, 'university_list.html', {})
 
 class UniversityList(generics.ListCreateAPIView):
     queryset = University.objects.all()

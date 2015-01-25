@@ -4,10 +4,12 @@ from django.core.context_processors import csrf
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from rest_framework import generics, permissions
 
 from university.models import University
 from pickup.models import PickProvider, PickRequester, PickUp
 from forms import PickProviderForm, PickRequesterForm, PickUpForm
+from pickup.serializers import PickRequesterSerializer
 
 # PickProvider message
 CREATE_PICK_PROVIDER_SUCCESS_MESSAGE = 'Congratulation! You successful register as pick up provider, we will inform you when someone need help.'
@@ -121,6 +123,26 @@ def pick_requester_list(request, university_id):
 	return render(request, 'pick_requester_list.html', context)
 
 """
+Test for React
+pickup.views.pick_requester_list => pickup/requesters/1/
+"""
+def pick_requester_list2(request, university_id):
+    return render(request, 'pick_requester_list2.html', {})
+
+"""
+PickRequesterList ListCreateAPIView
+Retrieve or Create pick requesters based on University ID
+PickRequesterList.as_view() => pickup/requesters/api/1/
+"""
+class PickRequesterList(generics.ListCreateAPIView):
+    serializer_class = PickRequesterSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def get_queryset(self):
+        university_id = self.kwargs['university_id']
+        return PickRequester.objects.filter(university=university_id)
+
+"""
 create PickProvider
 pickup.views.provide_pick_provider university_id => pickup/provider/create/1
 """
@@ -161,3 +183,6 @@ def cancel_pick_provider(request, university_id):
 	university = get_object_or_404(University, id=university_id)
 	PickProvider.objects.filter(picker=user.id, university_id=university.id).delete()
 	return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university_id,)))
+
+
+
