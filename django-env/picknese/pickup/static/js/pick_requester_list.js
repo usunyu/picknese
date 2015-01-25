@@ -1,11 +1,24 @@
 var PickRequester = React.createClass({
     render: function() {
         return (
-            <div className="pickRequester">
-                <h4 className="pickRequesterName">
-                    {this.props.name}
-                </h4>
-                {this.props.children}
+            <div className="col-sm-6 col-md-4">
+                <div className="panel panel-default">
+                    <div className="panel-heading">
+                        <img 
+                            className="img-circle box-shadow"
+                            src={this.props.avatar}
+                            style={{width: '100px', height: '100px'}} />
+                    </div>
+                    <div className="panel-body">
+                        <p>
+                            <i className="glyphicon glyphicon-user"></i> 
+                            <b>{this.props.first_name} {this.props.last_name}</b> is requesting pick up
+                        </p>
+                        <p><i className="glyphicon glyphicon-map-marker"></i> {this.props.destination}</p>
+                        <p><i className="glyphicon glyphicon-credit-card"></i> ${this.props.price}</p>
+                        <p><i className="glyphicon glyphicon-comment"></i> {this.props.description}</p>
+                    </div>
+                </div>
             </div>
         );
     }
@@ -13,26 +26,25 @@ var PickRequester = React.createClass({
 
 var PickRequesterList = React.createClass({
     render: function() {
-        var imgStyle = {
-            width: '100px',
-            height: '100px'
-        };
-        var requesters = this.props.requesters.map(function (requester) {
+        var pickRequesters = this.props.requesters.map(function (pickRequester) {
             return (
-                <PickRequester name={requester.name}>
-                    <p>{requester.requester.first_name}</p>
-                    <p>{requester.requester.last_name}</p>
-                    <img src={requester.requester.profile.avatar} style={imgStyle} />
-                    <p>{requester.pick_type}</p>
-                    <p>{requester.price}</p>
-                    <p>{requester.flight}</p>
-                    <p>{requester.destination}</p>
-                </PickRequester>
+                <PickRequester
+                    username={pickRequester.requester.username}
+                    first_name={pickRequester.requester.first_name}
+                    last_name={pickRequester.requester.last_name}
+                    email={pickRequester.requester.email}
+                    avatar={pickRequester.requester.profile.avatar}
+                    pick_type={pickRequester.pick_type}
+                    price={pickRequester.price}
+                    flight={pickRequester.flight}
+                    destination={pickRequester.destination}
+                    confirmed={pickRequester.confirmed}
+                    description={pickRequester.description} />
             );
         });
         return (
-            <div className="pickRequesterList">
-                {requesters}
+            <div className="row">
+                {pickRequesters}
             </div>
         );
     }
@@ -62,8 +74,10 @@ var PickRequesterPanel = React.createClass({
     },
     render: function() {
         return (
-            <div className="pickRequesterPanel">
-                <PickRequesterList requesters={this.state.requesters} />
+            <div className="col-xs-12 col-md-9">
+                <PickRequesterList
+                    className="col-xs-12 col-md-9"
+                    requesters={this.state.requesters} />
             </div>
         );
     }
