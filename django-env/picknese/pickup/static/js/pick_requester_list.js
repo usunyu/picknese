@@ -26,8 +26,20 @@ var PickRequester = React.createClass({
 
 var PickRequesterList = React.createClass({
     render: function() {
-        var pickRequesters = this.props.requesters.map(function (pickRequester) {
-            return (
+        var pickRequesters = [];
+        for (var i = 0; i < this.props.requesters.length; i++) {
+            var pickRequester = this.props.requesters[i];
+
+            if (i % 3 == 0) {
+                pickRequesters.push(
+                    <div className="clearfix visible-md-block visible-lg-block"></div>
+                );
+            } else if (i % 2 == 0) {
+                pickRequesters.push(
+                    <div className="clearfix visible-sm-block"></div>
+                );
+            }
+            pickRequesters.push(
                 <PickRequester
                     username={pickRequester.requester.username}
                     first_name={pickRequester.requester.first_name}
@@ -41,7 +53,7 @@ var PickRequesterList = React.createClass({
                     confirmed={pickRequester.confirmed}
                     description={pickRequester.description} />
             );
-        });
+        }
         return (
             <div className="row">
                 {pickRequesters}
@@ -74,10 +86,13 @@ var PickRequesterPanel = React.createClass({
     },
     render: function() {
         return (
-            <div className="col-xs-12 col-md-9">
-                <PickRequesterList
-                    className="col-xs-12 col-md-9"
-                    requesters={this.state.requesters} />
+            <div>
+                <div className="col-xs-12 col-md-9">
+                    <PickRequesterList
+                        requesters={this.state.requesters} />
+                </div>
+                <div className="hidden-xs col-md-3 sidebar-offcanvas">
+                </div>
             </div>
         );
     }
