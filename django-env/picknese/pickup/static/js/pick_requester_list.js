@@ -11,12 +11,22 @@ var PickRequester = React.createClass({
                     </div>
                     <div className="panel-body">
                         <p>
-                            <i className="glyphicon glyphicon-user"></i> 
-                            <b>{this.props.first_name} {this.props.last_name}</b> is requesting pick up
+                            <i className="glyphicon glyphicon-user"></i>
+                            <b> {this.props.first_name} {this.props.last_name}</b> needs a&nbsp;
+                            {this.props.pick_type == 1 ? <span className="label label-success">Flight</span> :
+                            <span className="label label-primary">General</span>} pick up
                         </p>
                         <p><i className="glyphicon glyphicon-map-marker"></i> {this.props.destination}</p>
                         <p><i className="glyphicon glyphicon-credit-card"></i> ${this.props.price}</p>
                         <p><i className="glyphicon glyphicon-comment"></i> {this.props.description}</p>
+                        <hr />
+                        <button
+                            type="button"
+                            className="btn btn-default"
+                            data-toggle="modal"
+                            data-target="#">
+                            Offer Your Pick Up
+                        </button>
                     </div>
                 </div>
             </div>
@@ -87,11 +97,11 @@ var PickRequesterPanel = React.createClass({
     render: function() {
         return (
             <div>
-                <div className="col-xs-12 col-md-9">
+                <div className="col-xs-12 col-sm-9">
                     <PickRequesterList
                         requesters={this.state.requesters} />
                 </div>
-                <div className="hidden-xs col-md-3 sidebar-offcanvas">
+                <div className="hidden-xs col-sm-3 sidebar-offcanvas">
                 </div>
             </div>
         );
