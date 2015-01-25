@@ -2,10 +2,10 @@ var PickRequester = React.createClass({
     render: function() {
         return (
             <div className="pickRequester">
-            //     <h4 className="universityName">
-            //         {this.props.name}
-            //     </h4>
-            //     {this.props.children}
+                <h4 className="pickRequesterName">
+                    {this.props.name}
+                </h4>
+                {this.props.children}
             </div>
         );
     }
@@ -13,12 +13,20 @@ var PickRequester = React.createClass({
 
 var PickRequesterList = React.createClass({
     render: function() {
+        var imgStyle = {
+            width: '100px',
+            height: '100px'
+        };
         var requesters = this.props.requesters.map(function (requester) {
             return (
                 <PickRequester name={requester.name}>
-                    // <p>{university.shorthand}</p>
-                    // <p>{university.url}</p>
-                    // <p>{university.description}</p>
+                    <p>{requester.requester.first_name}</p>
+                    <p>{requester.requester.last_name}</p>
+                    <img src={requester.requester.profile.avatar} style={imgStyle} />
+                    <p>{requester.pick_type}</p>
+                    <p>{requester.price}</p>
+                    <p>{requester.flight}</p>
+                    <p>{requester.destination}</p>
                 </PickRequester>
             );
         });
@@ -43,22 +51,6 @@ var PickRequesterPanel = React.createClass({
             }.bind(this)
         });
     },
-    // handlePickRequesterSubmit: function(university) {
-    //     $.ajax({
-    //         url: this.props.url,
-    //         dataType: 'json',
-    //         type: 'POST',
-    //         data: university,
-    //         success: function(data) {
-    //             universities = this.state.data;
-    //             universities.push(data);
-    //             this.setState({data: universities});
-    //         }.bind(this),
-    //         error: function(xhr, status, err) {
-    //             console.error(this.props.url, status, err.toString());
-    //         }.bind(this)
-    //     });
-    // },
     getInitialState: function() {
         return {
             requesters: [],
@@ -78,6 +70,6 @@ var PickRequesterPanel = React.createClass({
 });
 
 React.render(
-    <PickRequesterPanel url="api/" pollInterval={20000}/>,
+    <PickRequesterPanel url="api/" pollInterval={2000}/>,
     document.getElementById('content')
 );

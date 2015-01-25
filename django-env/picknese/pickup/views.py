@@ -123,14 +123,7 @@ def pick_requester_list(request, university_id):
 	return render(request, 'pick_requester_list.html', context)
 
 """
-Test for React
-pickup.views.pick_requester_list => pickup/requesters/1/
-"""
-def pick_requester_list2(request, university_id):
-    return render(request, 'pick_requester_list2.html', {})
-
-"""
-PickRequesterList ListCreateAPIView
+API PickRequesterList ListCreateAPIView
 Retrieve or Create pick requesters based on University ID
 PickRequesterList.as_view() => pickup/requesters/api/1/
 """
@@ -141,6 +134,13 @@ class PickRequesterList(generics.ListCreateAPIView):
     def get_queryset(self):
         university_id = self.kwargs['university_id']
         return PickRequester.objects.filter(university=university_id)
+
+"""
+Test for React
+pickup.views.pick_requester_list => pickup/requesters/1/
+"""
+def pick_requester_list2(request, university_id):
+    return render(request, 'pick_requester_list2.html', {})
 
 """
 create PickProvider
