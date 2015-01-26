@@ -4,7 +4,7 @@ var PickRequester = React.createClass({
             <div className="col-sm-6 col-md-4">
                 <div className="panel panel-default">
                     <div className="panel-heading">
-                        <img 
+                        <img
                             className="img-circle box-shadow"
                             src={this.props.avatar}
                             style={{width: '100px', height: '100px'}} />
@@ -24,9 +24,27 @@ var PickRequester = React.createClass({
                             type="button"
                             className="btn btn-default"
                             data-toggle="modal"
-                            data-target="#">
+                            data-target="#test_XXX">
                             Offer Your Pick Up
                         </button>
+                        <div
+                            className="modal fade" id="test_XXX" tabIndex="-1"
+                            role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                            <div className="modal-dialog">
+                                <div className="modal-content">
+                                    <div className="modal-header">
+                                        <button
+                                            type="button" className="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h5 className="modal-title" id="modalLabel">
+                                            Offer Pick Up
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -109,6 +127,6 @@ var PickRequesterPanel = React.createClass({
 });
 
 React.render(
-    <PickRequesterPanel url="api/" pollInterval={2000}/>,
+    <PickRequesterPanel url="api/" pollInterval={20000}/>,
     document.getElementById('content')
 );
