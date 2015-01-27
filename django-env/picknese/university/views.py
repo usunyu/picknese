@@ -33,6 +33,6 @@ class UniversityList(generics.ListCreateAPIView):
     queryset = University.objects.all()
     serializer_class = UniversitySerializer
 
-# class UniversityList(generics.ListAPIView):
-#     queryset = University.objects.all()
-#     serializer_class = UniversitySerializer
+class UniversityDetail(generics.RetrieveAPIView):
+    queryset = University.objects.all()
+    serializer_class = UniversitySerializer

@@ -7,7 +7,23 @@
 Pick Up |
 {% endblock %}
 
+{% block jumbotron %}
+    <div id="jumbotron" />
+    <script type="text/jsx" src="{% static 'js/pickup_jumbotron.js' %}"></script>
+{% endblock %}
+
+{% block tabs %}
+<div class="col-xs-12 col-sm-9">
+<ul class="nav nav-tabs">
+  <li role="presentation"><a href="#">USC</a></li>
+  <li role="presentation"><a href="#">Me</a></li>
+  <li role="presentation" class="active"><a href="#">Pick Up</a></li>
+  <li role="presentation"><a href="#">Carpool</a></li>
+</ul>
+</div>
+{% endblock %}
+
 {% block content %}
-  <div id="content" />
-  <script type="text/jsx" src="{% static 'js/pick_requester_list.js' %}"></script>
+    <div id="content" />
+    <script type="text/jsx" src="{% static 'js/pickup_requester_list.js' %}"></script>
 {% endblock %}
