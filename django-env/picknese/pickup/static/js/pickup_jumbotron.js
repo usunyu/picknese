@@ -1,13 +1,16 @@
 var JumbotronPanel = React.createClass({
     loadUniversityFromServer: function() {
+        university_url = this.props.url;
+        university_id = document.getElementById('jumbotron').getAttribute('university_id');
+        university_url += university_id;
         $.ajax({
-            url: this.props.url,
+            url: university_url,
             dataType: 'json',
             success: function(data) {
                 this.setState({university: data});
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
+                console.error(university_url, status, err.toString());
             }.bind(this)
         });
     },
@@ -21,17 +24,23 @@ var JumbotronPanel = React.createClass({
     },
     render: function() {
         university = this.state.university;
-
-        console.log(university);
+        if (university.length == 0) {
+            return (<div />);
+        }
+        backgroundImg = 'url(/static/images/campus/' + university.shorthand + '/2.jpg)';
+        logoImg = '/static/images/logo/' + university.shorthand + '.jpg';
         return (
             <div>
                 <div
                     className="jumbotron"
-                    style={{background: 'url(/static/images/campus/usc/2.jpg)', minHeight: '150px'}} />
+                    style={{background: backgroundImg, minHeight: '150px'}} />
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-4" style={{marginTop: '-130px'}}>
-                            <img src="/static/images/logo/usc.jpg" alt="" className="img-thumbnail img-responsive img-center" style={{width: '150px'}} />
+                        <div className="col-md-2" style={{marginTop: '-130px'}}>
+                            <img
+                                src={logoImg}
+                                className="img-thumbnail img-responsive img-center"
+                                style={{width: '150px'}} />
                         </div>
                     </div>
                 </div>
@@ -40,8 +49,7 @@ var JumbotronPanel = React.createClass({
     }
 });
 
-
 React.render(
-    <JumbotronPanel url="/universities/api/1/"/>,
+    <JumbotronPanel url="/universities/api/"/>,
     document.getElementById('jumbotron')
 );

@@ -140,7 +140,7 @@ Test for React
 pickup.views.pick_requester_list => pickup/requesters/1/
 """
 def pick_requester_list2(request, university_id):
-    return render(request, 'pick_requester_list2.html', {})
+    return render(request, 'pick_requester_list2.html', {'university_id': university_id})
 
 """
 create PickProvider
