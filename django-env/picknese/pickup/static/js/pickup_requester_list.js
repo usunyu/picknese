@@ -8,7 +8,7 @@ var PickRequester = React.createClass({
                         <img
                             className="img-circle box-shadow"
                             src={this.props.avatar}
-                            style={{width: '120px', height: '120px', marginBottom: '15px'}} />
+                            style={{width: '100px', height: '100px', marginBottom: '15px'}} />
                     </div>
                     <div className="col-xs-12 col-sm-9 col-md-10 col-lg-10">
                         <p>
@@ -88,10 +88,46 @@ var PickRequesterList = React.createClass({
     }
 });
 
+var PickRecord = React.createClass({
+    render: function() {
+        return (
+            <li className="feed-item">
+                <time className="date" datetime="9-22">Sep 22</time>
+                <span className="text" >
+                    <a href="#">{this.props.picker.first_name} {this.props.picker.last_name}</a>
+                    &nbsp;will pick up&nbsp;
+                    <a href="#">{this.props.pickee.first_name} {this.props.pickee.last_name}</a>
+                </span>
+            </li>
+        );
+    }
+});
+
+var PickRecordList = React.createClass({
+    render: function() {
+        var pickRecords = [];
+        for (var i = 0; i < this.props.pickups.length; i++) {
+            var pickup = this.props.pickups[i];
+            pickRecords.push(
+                <PickRecord
+                    pickee={pickup.pickee}
+                    picker={pickup.picker}
+                    // TODO: add real time in model
+                    time={""} />
+            );
+        }
+        return (
+            <ol className="activity-feed">
+                {pickRecords}
+            </ol>
+        );
+    }
+});
+
 var PickRequesterPanel = React.createClass({
-    loadPickRequestersFromServer: function() {
+    loadPickRequestersFromServer: function(url) {
         $.ajax({
-            url: this.props.url,
+            url: url,
             dataType: 'json',
             success: function(data) {
                 this.setState({requesters: data});
@@ -101,14 +137,30 @@ var PickRequesterPanel = React.createClass({
             }.bind(this)
         });
     },
+    loadPickUpsFromServer: function(url) {
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            success: function(data) {
+                this.setState({pickups: data});
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
+    },
     getInitialState: function() {
         return {
             requesters: [],
+            pickups: [],
         };
     },
     componentDidMount: function() {
-        this.loadPickRequestersFromServer();
+        var universityID = document.getElementById('content').getAttribute('university_id');
+        this.loadPickRequestersFromServer(this.props.requestersUrl + universityID);
+        this.loadPickUpsFromServer(this.props.pickupsUrl + universityID);
         setInterval(this.loadPickRequestersFromServer, this.props.pollInterval);
+        setInterval(this.loadPickUpsFromServer, this.props.pollInterval);
     },
     render: function() {
         return (
@@ -118,6 +170,8 @@ var PickRequesterPanel = React.createClass({
                         requesters={this.state.requesters} />
                 </div>
                 <div className="hidden-xs col-sm-3 sidebar-offcanvas">
+                    <PickRecordList
+                        pickups={this.state.pickups} />
                 </div>
             </div>
         );
@@ -125,6 +179,9 @@ var PickRequesterPanel = React.createClass({
 });
 
 React.render(
-    <PickRequesterPanel url="api/" pollInterval={20000}/>,
+    <PickRequesterPanel
+        requestersUrl="/pickup/api/requesters2/"
+        pickupsUrl="/pickup/api/"
+        pollInterval={20000}/>,
     document.getElementById('content')
 );
