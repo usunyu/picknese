@@ -64,20 +64,21 @@ var PickRequesterList = React.createClass({
         var pickRequesters = [];
         for (var i = 0; i < this.props.requesters.length; i++) {
             var pickRequester = this.props.requesters[i];
-            pickRequesters.push(
-                <PickRequester
-                    username={pickRequester.requester.username}
-                    first_name={pickRequester.requester.first_name}
-                    last_name={pickRequester.requester.last_name}
-                    email={pickRequester.requester.email}
-                    avatar={pickRequester.requester.profile.avatar}
-                    pick_type={pickRequester.pick_type}
-                    price={pickRequester.price}
-                    flight={pickRequester.flight}
-                    destination={pickRequester.destination}
-                    confirmed={pickRequester.confirmed}
-                    description={pickRequester.description} />
-            );
+            if (!pickRequester.confirmed) {
+                pickRequesters.push(
+                    <PickRequester
+                        username={pickRequester.requester.username}
+                        first_name={pickRequester.requester.first_name}
+                        last_name={pickRequester.requester.last_name}
+                        email={pickRequester.requester.email}
+                        avatar={pickRequester.requester.profile.avatar}
+                        pick_type={pickRequester.pick_type}
+                        price={pickRequester.price}
+                        flight={pickRequester.flight}
+                        destination={pickRequester.destination}
+                        description={pickRequester.description} />
+                );
+            }
         }
         return (
             <div className="row">
