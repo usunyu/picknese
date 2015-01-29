@@ -126,6 +126,29 @@ var PickRecordList = React.createClass({
     }
 });
 
+var CurrentUserPanel = React.createClass({
+    render: function() {
+        if (!this.props.currentUser) {
+            return (
+                <div></div>
+            );        
+        }
+        return (
+            <div className="panel panel-default">
+                <div className="panel-body">
+                    <img
+                        className="img-circle box-shadow"
+                        src={this.props.currentUser.profile.avatar}
+                        style={{width: '100px', height: '100px'}} />
+                    <hr />
+                    <p>Hello World</p>
+                </div>
+                <hr />
+            </div>
+        );
+    }
+});
+
 var PickRequesterPanel = React.createClass({
     loadPickRequestersFromServer: function(url) {
         $.ajax({
@@ -135,7 +158,7 @@ var PickRequesterPanel = React.createClass({
                 this.setState({requesters: data});
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(this.url, status, err.toString());
+                // console.error(url, status, err.toString());
             }.bind(this)
         });
     },
@@ -147,7 +170,19 @@ var PickRequesterPanel = React.createClass({
                 this.setState({pickups: data});
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(this.url, status, err.toString());
+                // console.error(url, status, err.toString());
+            }.bind(this)
+        });
+    },
+    loadCurrentUserFromServer: function(url) {
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            success: function(data) {
+                this.setState({currentUser: data});
+            }.bind(this),
+            error: function(xhr, status, err) {
+                // console.error(url, status, err.toString());
             }.bind(this)
         });
     },
@@ -155,21 +190,23 @@ var PickRequesterPanel = React.createClass({
         return {
             requesters: [],
             pickups: [],
+            currentUser: null,
         };
     },
     componentDidMount: function() {
         var universityID = document.getElementById('content').getAttribute('university_id');
         this.loadPickRequestersFromServer(this.props.requestersUrl + universityID);
-        this.loadPickUpsFromServer(this.props.pickupsUrl + universityID);
         setInterval(this.loadPickRequestersFromServer, this.props.pollInterval);
+        this.loadPickUpsFromServer(this.props.pickupsUrl + universityID);
         setInterval(this.loadPickUpsFromServer, this.props.pollInterval);
+        this.loadCurrentUserFromServer(this.props.currentUserUrl);
     },
     render: function() {
         return (
-            <div className="row">
-                <div className="col-xs-12 col-sm-3 sidebar-offcanvas">
-                    <PickRecordList
-                        pickups={this.state.pickups} />
+            <div className="row col-md-12">
+                <div className="col-xs-12 col-sm-3">
+                    <CurrentUserPanel
+                        currentUser={this.state.currentUser} />
                 </div>
                 <div className="col-xs-12 col-sm-7">
                     <PickRequesterList
@@ -188,6 +225,7 @@ React.render(
     <PickRequesterPanel
         requestersUrl="/pickup/api/requesters2/"
         pickupsUrl="/pickup/api/"
+        currentUserUrl="/accounts/api/me/"
         pollInterval={20000}/>,
     document.getElementById('content')
 );

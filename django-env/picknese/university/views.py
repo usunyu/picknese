@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from rest_framework import generics
-
 from pickup.forms import PickRequesterForm
 from university.models import University
 from university.serializers import UniversitySerializer
