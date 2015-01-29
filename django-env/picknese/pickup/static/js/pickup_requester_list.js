@@ -2,58 +2,60 @@ var PickRequester = React.createClass({
     render: function() {
         return (
             <div className="col-md-12">
-            <div className="panel panel-default">
-                <div className="panel-body">
-                    <div className="col-xs-12 col-sm-3 col-md-2 col-lg-2">
-                        <img
-                            className="img-circle box-shadow"
-                            src={this.props.avatar}
-                            style={{width: '100px', height: '100px', marginBottom: '15px'}} />
+                <div className="panel panel-default">
+                    <div className="panel-heading">
+                        <h3 className="panel-title">Panel title</h3>
                     </div>
-                    <div className="col-xs-12 col-sm-9 col-md-10 col-lg-10">
-                        <p>
-                            <i className="glyphicon glyphicon-user"></i>
-                            <b> {this.props.first_name} {this.props.last_name}</b>
-                            &nbsp;needs a&nbsp;
-                            {this.props.pick_type == 1 ?
-                                <span className="label label-success">Flight</span> :
-                                <span className="label label-primary">General</span>}
-                            &nbsp;pick up
-                        </p>
-                        <p><i className="glyphicon glyphicon-map-marker"></i> {this.props.destination}</p>
-                        <p><i className="glyphicon glyphicon-credit-card"></i> ${this.props.price}</p>
-                        <p><i className="glyphicon glyphicon-comment"></i> {this.props.description}</p>
-                        <hr />
+                    <div className="panel-body">
+                        <div className="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+                            <img
+                                className="img-circle box-shadow"
+                                src={this.props.avatar}
+                                style={{width: '80px', height: '80px', marginBottom: '15px'}} />
+                        </div>
+                        <div className="col-xs-12 col-sm-9 col-md-10 col-lg-10">
+                            <p>
+                                <i className="glyphicon glyphicon-user"></i>
+                                <b> {this.props.first_name} {this.props.last_name}</b>
+                                &nbsp;needs a&nbsp;
+                                {this.props.pick_type == 1 ?
+                                    <span className="label label-success">Flight</span> :
+                                    <span className="label label-primary">General</span>}
+                                &nbsp;pick up
+                            </p>
+                            <p><i className="glyphicon glyphicon-map-marker"></i> {this.props.destination}</p>
+                            <p><i className="glyphicon glyphicon-credit-card"></i> ${this.props.price}</p>
+                            <p><i className="glyphicon glyphicon-comment"></i> {this.props.description}</p>
+                        </div>
                     </div>
-
-                    <button
-                        type="button"
-                        className="btn btn-default"
-                        data-toggle="modal"
-                        data-target="#test_XXX"
-                        style={{float: 'right'}}>
-                        Offer Your Pick Up
-                    </button>
-                    <div
-                        className="modal fade" id="test_XXX" tabIndex="-1"
-                        role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-                        <div className="modal-dialog">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <button
-                                        type="button" className="close" data-dismiss="modal"
-                                        aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    <h5 className="modal-title" id="modalLabel">
-                                        Offer Pick Up
-                                    </h5>
+                    <div className="panel-footer">
+                        <button
+                            type="button"
+                            className="btn btn-default"
+                            data-toggle="modal"
+                            data-target="#test_XXX">
+                            Offer Your Pick Up
+                        </button>
+                        <div
+                            className="modal fade" id="test_XXX" tabIndex="-1"
+                            role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                            <div className="modal-dialog">
+                                <div className="modal-content">
+                                    <div className="modal-header">
+                                        <button
+                                            type="button" className="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h5 className="modal-title" id="modalLabel">
+                                            Offer Pick Up
+                                        </h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
         );
     }
@@ -92,7 +94,7 @@ var PickRecord = React.createClass({
     render: function() {
         return (
             <li className="feed-item">
-                <time className="date" datetime="9-22">Sep 22</time>
+                <time className="date" dateTime="9-22">Sep 22</time>
                 <span className="text" >
                     <a href="#">{this.props.picker.first_name} {this.props.picker.last_name}</a>
                     &nbsp;will pick up&nbsp;
@@ -133,7 +135,7 @@ var PickRequesterPanel = React.createClass({
                 this.setState({requesters: data});
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
+                console.error(this.url, status, err.toString());
             }.bind(this)
         });
     },
@@ -145,7 +147,7 @@ var PickRequesterPanel = React.createClass({
                 this.setState({pickups: data});
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
+                console.error(this.url, status, err.toString());
             }.bind(this)
         });
     },
@@ -164,12 +166,16 @@ var PickRequesterPanel = React.createClass({
     },
     render: function() {
         return (
-            <div>
-                <div className="col-xs-12 col-sm-9">
+            <div className="row">
+                <div className="col-xs-12 col-sm-3 sidebar-offcanvas">
+                    <PickRecordList
+                        pickups={this.state.pickups} />
+                </div>
+                <div className="col-xs-12 col-sm-7">
                     <PickRequesterList
                         requesters={this.state.requesters} />
                 </div>
-                <div className="hidden-xs col-sm-3 sidebar-offcanvas">
+                <div className="col-xs-12 col-sm-2 sidebar-offcanvas">
                     <PickRecordList
                         pickups={this.state.pickups} />
                 </div>

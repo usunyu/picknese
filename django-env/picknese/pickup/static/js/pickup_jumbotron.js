@@ -33,14 +33,27 @@ var JumbotronPanel = React.createClass({
             <div>
                 <div
                     className="jumbotron"
-                    style={{background: backgroundImg, minHeight: '150px'}} />
-                <div className="container">
+                    style={{background: backgroundImg, minHeight: '160px'}} >
+                </div>
+
+                <div className="container" style={{marginTop: '-140px'}} >
                     <div className="row">
-                        <div className="col-md-2" style={{marginTop: '-130px'}}>
+                        <div className="col-md-2">
                             <img
                                 src={logoImg}
                                 className="img-thumbnail img-responsive img-center"
                                 style={{width: '150px'}} />
+                        </div>
+                        <div className="col-md-10 hidden-xs hidden-sm" style={{marginTop: '38px'}}>
+                            <h3 className="color-white text-shadow">{university.name}</h3>
+                        </div>
+                        <div className="col-md-10">
+                            <ul className="nav nav-tabs">
+                              <li role="presentation"><a href="#">USC</a></li>
+                              <li role="presentation"><a href="#">Me</a></li>
+                              <li role="presentation" className="active"><a href="#">Pick Up</a></li>
+                              <li role="presentation"><a href="#">Carpool</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
