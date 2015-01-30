@@ -1,5 +1,35 @@
+var PickupForm = React.createClass({
+    handleSubmit: function(e) {
+        e.preventDefault();
+        var message = this.refs.message.getDOMNode().value.trim();
+        return;
+    },
+    render: function() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <img
+                    className="img-circle box-shadow"
+                    src={this.props.avatar}
+                    style={{width: '90px', height: '90px', marginBottom: '15px'}} />
+                <p><b>{this.props.first_name} {this.props.last_name}</b></p>
+                <div className="form-group">
+                    <label>Message</label>
+                    <textarea
+                        className="form-control"
+                        rows="3"
+                        placeholder="Thanks for your kindndess, please leve a message."
+                        ref="message">
+                    </textarea>
+                </div>
+                <button type="submit" className="btn btn-default">Submit</button>
+            </form>
+        );
+    }
+});
+
 var PickRequester = React.createClass({
     render: function() {
+        var modalID = "requester-" + this.props.id;
         return (
             <div>
                 <hr />
@@ -27,11 +57,11 @@ var PickRequester = React.createClass({
                     type="button"
                     className="btn btn-default"
                     data-toggle="modal"
-                    data-target="#test_XXX">
+                    data-target={"#" + modalID}>
                     Offer Your Pick Up
                 </button>
                 <div
-                    className="modal fade" id="test_XXX" tabIndex="-1"
+                    className="modal fade" id={modalID} tabIndex="-1"
                     role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
@@ -44,6 +74,11 @@ var PickRequester = React.createClass({
                                 <h5 className="modal-title" id="modalLabel">
                                     Offer Pick Up
                                 </h5>
+                                <PickupForm 
+                                    avatar={this.props.avatar} 
+                                    first_name={this.props.first_name}
+                                    last_name={this.props.last_name}
+                                />
                             </div>
                         </div>
                     </div>
@@ -61,6 +96,7 @@ var PickRequesterList = React.createClass({
             if (!pickRequester.confirmed) {
                 pickRequesters.push(
                     <PickRequester
+                        id={pickRequester.id}
                         username={pickRequester.requester.username}
                         first_name={pickRequester.requester.first_name}
                         last_name={pickRequester.requester.last_name}
