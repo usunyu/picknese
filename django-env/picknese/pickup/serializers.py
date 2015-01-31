@@ -16,9 +16,6 @@ class PickRequesterSerializer(serializers.ModelSerializer):
         model = PickRequester
 
 class PickUpSerializer(serializers.ModelSerializer):
-    picker = UserSerializer(read_only=True)
-    pickee = UserSerializer(read_only=True)
-    university = UniversitySerializer(read_only=True)
 
     class Meta:
         model = PickUp

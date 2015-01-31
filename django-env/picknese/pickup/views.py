@@ -149,7 +149,8 @@ PickUpList.as_view() => pickup/api/1/
 """
 class PickUpList(generics.ListCreateAPIView):
     serializer_class = PickUpSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.AllowAny,)
 
     def get_queryset(self):
         university_id = self.kwargs['university_id']
