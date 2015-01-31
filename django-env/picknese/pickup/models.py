@@ -40,7 +40,7 @@ class PickUp(models.Model):
 		(2, 'General'),
 	)
 	pick_type = models.IntegerField(choices=type_choices, default=1)
-	flight = models.CharField('Flight#', max_length=20, null=True, blank=True)
+	flight = models.CharField('Flight#', max_length=20, default="N\A", blank=True)
 	price = models.IntegerField(default=20)
 	destination = models.CharField(max_length=200, default='Near Campus')
 	# requester description

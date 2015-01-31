@@ -41,31 +41,19 @@ var PickRequester = React.createClass({
     handlePickupSubmit: function(pickup) {
         $.ajax({
             url: this.props.pickupUrl,
-            contentType: 'application/json',
             dataType: 'json',
             type: 'POST',
-            data: JSON.stringify(pickup),
+            data: pickup,
             success: function(data) {
-                current_pickups = this.state.pickups;
-                current_pickups.push(data);
-                this.setState({pickups: current_pickups});
+                // current_pickups = this.state.pickups;
+                // current_pickups.push(data);
+                this.setState({pickups: data});
+                console.log(this.state);
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(this.props.pickupUrl, status, err.toString());
             }.bind(this)
         });
-        // var university = {};
-        // $.ajax({
-        //     url: '/universities/api/',
-        //     dataType: 'json',
-        //     type: 'POST',
-        //     data: university,
-        //     success: function(data) {
-        //     }.bind(this),
-        //     error: function(xhr, status, err) {
-        //         console.error('/universities/api/', status, err.toString());
-        //     }.bind(this)
-        // });
     },
     render: function() {
         var modalID = "requester-" + this.props.pick_requester_id;
@@ -223,39 +211,41 @@ var CurrentUserPanel = React.createClass({
 });
 
 var PickRequesterPanel = React.createClass({
-    loadPickRequestersFromServer: function(url) {
+    loadPickRequestersFromServer: function() {
+        var requestersUrl = this.props.requestersUrl + this.props.universityID + "/";
         $.ajax({
-            url: url,
+            url: requestersUrl,
             dataType: 'json',
             success: function(data) {
                 this.setState({requesters: data});
             }.bind(this),
             error: function(xhr, status, err) {
-                // console.error(url, status, err.toString());
+                console.error(requestersUrl, status, err.toString());
             }.bind(this)
         });
     },
-    loadPickUpsFromServer: function(url) {
+    loadPickUpsFromServer: function() {
+        var pickupsUrl = this.props.pickupsUrl + this.props.universityID + "/";
         $.ajax({
-            url: url,
+            url: pickupsUrl,
             dataType: 'json',
             success: function(data) {
                 this.setState({pickups: data});
             }.bind(this),
             error: function(xhr, status, err) {
-                // console.error(url, status, err.toString());
+                console.error(pickupsUrl, status, err.toString());
             }.bind(this)
         });
     },
-    loadCurrentUserFromServer: function(url) {
+    loadCurrentUserFromServer: function() {
         $.ajax({
-            url: url,
+            url: this.props.currentUserUrl,
             dataType: 'json',
             success: function(data) {
                 this.setState({currentUser: data});
             }.bind(this),
             error: function(xhr, status, err) {
-                // console.error(url, status, err.toString());
+                console.error(this.props.currentUserUrl, status, err.toString());
             }.bind(this)
         });
     },
@@ -267,15 +257,16 @@ var PickRequesterPanel = React.createClass({
         };
     },
     componentDidMount: function() {
-        var universityID = document.getElementById('content').getAttribute('university_id');
-        this.loadPickRequestersFromServer(this.props.requestersUrl + universityID);
+        this.loadPickRequestersFromServer();
         setInterval(this.loadPickRequestersFromServer, this.props.pollInterval);
-        this.loadPickUpsFromServer(this.props.pickupsUrl + universityID);
+
+        this.loadPickUpsFromServer();
         setInterval(this.loadPickUpsFromServer, this.props.pollInterval);
-        this.loadCurrentUserFromServer(this.props.currentUserUrl);
+
+        this.loadCurrentUserFromServer();
     },
     render: function() {
-        var universityID = document.getElementById('content').getAttribute('university_id');
+        var pickupsUrl = this.props.pickupsUrl + this.props.universityID + "/";
         return (
             <div className="row col-md-12">
                 <div className="col-xs-12 col-sm-3">
@@ -285,7 +276,7 @@ var PickRequesterPanel = React.createClass({
                 <div className="col-xs-12 col-sm-7">
                     <PickRequesterList
                         currentUser={this.state.currentUser}
-                        pickupUrl={this.props.pickupsUrl + universityID}
+                        pickupUrl={pickupsUrl}
                         requesters={this.state.requesters} />
                 </div>
                 <div className="col-xs-12 col-sm-2 sidebar-offcanvas">
@@ -302,6 +293,7 @@ React.render(
         requestersUrl="/pickup/api/requesters2/"
         pickupsUrl="/pickup/api/"
         currentUserUrl="/accounts/api/me/"
+        universityID={document.getElementById('content').getAttribute('university_id')}
         pollInterval={20000}/>,
     document.getElementById('content')
 );

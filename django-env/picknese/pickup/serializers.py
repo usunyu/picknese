@@ -9,13 +9,16 @@ class PickProviderSerializer(serializers.ModelSerializer):
         model = PickProvider
 
 class PickRequesterSerializer(serializers.ModelSerializer):
-    requester = UserSerializer(read_only=True)
-    university = UniversitySerializer(read_only=True)
+    requester = UserSerializer()
+    university = UniversitySerializer()
 
     class Meta:
         model = PickRequester
 
 class PickUpSerializer(serializers.ModelSerializer):
+    # picker = UserSerializer()
+    # pickee = UserSerializer()
+    # university = UniversitySerializer()
 
     class Meta:
         model = PickUp
