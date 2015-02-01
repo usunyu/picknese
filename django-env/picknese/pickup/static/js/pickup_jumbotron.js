@@ -32,7 +32,7 @@ var JumbotronPanel = React.createClass({
         return (
             <div>
                 <div
-                    className="jumbotron"
+                    className="jumbotron box-shadow"
                     style={{background: backgroundImg, minHeight: '160px'}} >
                 </div>
 
@@ -41,7 +41,7 @@ var JumbotronPanel = React.createClass({
                         <div className="col-xs-5 col-sm-3 col-md-3 col-lg-2">
                             <img
                                 src={logoImg}
-                                className="img-thumbnail img-responsive img-center"
+                                className="img-thumbnail img-responsive img-center box-shadow-light"
                                 style={{width: '150px'}} />
                         </div>
                         <div className="col-sm-9 col-md-9 col-lg-9 hidden-xs" style={{marginTop: '38px'}}>

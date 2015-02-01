@@ -5,7 +5,8 @@
 body {
 	padding-top: 50px;
 	/*background-color: #f0eeeb;*/
-	background-color: #fbfaf9;
+	background-color: #fafaf9;
+	/*background-color: #e5ded8;*/
 	/*background-color: #f1edea;*/
 	/*background-color: #d9edf7;*/
 	/*background-color: #c4e3f3;*/
@@ -44,6 +45,10 @@ textarea {
  */
 .box-shadow {
 	box-shadow: 0 0 5px black;
+}
+
+.box-shadow-light {
+	box-shadow: 0 0 2px grey;
 }
 
 .text-shadow {

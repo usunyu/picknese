@@ -41,8 +41,8 @@ var PickRequester = React.createClass({
     render: function() {
         var modalID = "requester-" + this.props.pick_requester_id;
         return (
-            <div>
-                <hr />
+            <div className="panel panel-default">
+                <div className="panel-body">
                 <div className="col-xs-12 col-sm-3 col-md-2 col-lg-2">
                     <img
                         className="img-circle box-shadow"
@@ -62,6 +62,9 @@ var PickRequester = React.createClass({
                     <p><i className="glyphicon glyphicon-map-marker"></i> {this.props.destination}</p>
                     <p><i className="glyphicon glyphicon-credit-card"></i> ${this.props.price}</p>
                     <p><i className="glyphicon glyphicon-comment"></i> {this.props.description}</p>
+                </div>
+                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <hr />
                 </div>
                 <button
                     type="button"
@@ -98,6 +101,7 @@ var PickRequester = React.createClass({
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
         );
     }
@@ -125,11 +129,7 @@ var PickRequesterList = React.createClass({
             }
         }
         return (
-            <div className="panel panel-default">
-                <div className="panel-body">
-                    {pickRequesters}
-                </div>
-            </div>
+            <div>{pickRequesters}</div>
         );
     }
 });
@@ -188,6 +188,17 @@ var CurrentUserPanel = React.createClass({
                     <p>Hello World</p>
                 </div>
                 <hr />
+            </div>
+        );
+    }
+});
+
+var CalendarPanel = React.createClass({
+    render: function() {
+        return (
+            <div className="wrapper">
+                <div id="calendar"></div>
+                <div id="calendar_data"></div>
             </div>
         );
     }
@@ -270,6 +281,8 @@ var PickRequesterPanel = React.createClass({
             <div className="row col-md-12">
                 <div className="col-xs-12 col-sm-3">
                     <CurrentUserPanel
+                        currentUser={this.state.currentUser} />
+                    <CalendarPanel
                         currentUser={this.state.currentUser} />
                 </div>
                 <div className="col-xs-12 col-sm-7">
