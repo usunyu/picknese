@@ -33,7 +33,7 @@ var JumbotronPanel = React.createClass({
             <div>
                 <div
                     className="jumbotron box-shadow"
-                    style={{background: backgroundImg, minHeight: '160px'}} >
+                    style={{background: backgroundImg, minHeight: '200px'}} >
                 </div>
 
                 <div className="container" style={{marginTop: '-140px'}} >
@@ -48,7 +48,7 @@ var JumbotronPanel = React.createClass({
                             <h3 className="color-white text-shadow">{university.name}</h3>
                         </div>
                         <div className="col-xs-6 visible-xs" style={{marginTop: '38px'}}>
-                            <p className="color-white text-shadow"><b>{university.name}</b></p>
+                            <h6 className="color-white text-shadow">{university.name}</h6>
                         </div>
                         <div className="col-xs-12 col-md-10">
                             <ul className="nav nav-tabs">

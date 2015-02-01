@@ -9,7 +9,7 @@ from rest_framework import generics, permissions
 from university.models import University
 from pickup.models import PickProvider, PickRequester, PickUp
 from forms import PickProviderForm, PickRequesterForm, PickUpForm
-from pickup.serializers import PickRequesterSerializer, PickUpSerializer
+from pickup.serializers import PickRequesterSerializer, PickUpListSerializer, PickUpCreateSerializer
 
 # PickProvider message
 CREATE_PICK_PROVIDER_SUCCESS_MESSAGE = 'Congratulation! You successful register as pick up provider, we will inform you when someone need help.'
@@ -143,18 +143,27 @@ def pick_requester_list2(request, university_id):
     return render(request, 'pick_requester_list2.html', {'university_id': university_id})
 
 """
-API PickUpList ListCreateAPIView
-Retrieve or Create pick pickups based on University ID
+API PickUpList ListAPIView
+Retrieve pickups based on University ID
 PickUpList.as_view() => pickup/api/1/
 """
-class PickUpList(generics.ListCreateAPIView):
-    serializer_class = PickUpSerializer
+class PickUpList(generics.ListAPIView):
+    serializer_class = PickUpListSerializer
     # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     permission_classes = (permissions.AllowAny,)
 
     def get_queryset(self):
         university_id = self.kwargs['university_id']
         return PickUp.objects.filter(university=university_id)
+
+"""
+API PickCreateList CreateAPIView
+Create pickup based on University ID
+PickUpList.as_view() => pickup/api/create/1/
+"""
+class PickUpCreate(generics.CreateAPIView):
+    serializer_class = PickUpCreateSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 """
 create PickProvider

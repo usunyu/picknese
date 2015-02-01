@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from pickup.views import PickRequesterList, PickUpList
+from pickup.views import PickRequesterList, PickUpList, PickUpCreate
 
 urlpatterns = patterns('',
 	# Requester
@@ -16,4 +16,5 @@ urlpatterns = patterns('',
 	# Pick Up
 	url(r'^create/(?P<request_id>\d+)/$', 'pickup.views.create_pickup'),
 	url(r'^api/(?P<university_id>\d+)/$', PickUpList.as_view()),
+	url(r'^api/create/$', PickUpCreate.as_view()),
 )

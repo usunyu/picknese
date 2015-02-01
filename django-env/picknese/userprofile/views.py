@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import generics
 from userprofile.models import User
 from userprofile.serializers import UserSerializer
 from forms import UserProfileForm
@@ -41,3 +42,7 @@ class CurrentUserView(APIView):
     def get(self, request):
         serializer = UserSerializer(request.user)
         return Response(serializer.data)
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
