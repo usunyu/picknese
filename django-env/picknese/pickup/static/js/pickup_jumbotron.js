@@ -38,16 +38,19 @@ var JumbotronPanel = React.createClass({
 
                 <div className="container" style={{marginTop: '-140px'}} >
                     <div className="row">
-                        <div className="col-md-2">
+                        <div className="col-xs-5 col-sm-3 col-md-3 col-lg-2">
                             <img
                                 src={logoImg}
                                 className="img-thumbnail img-responsive img-center"
                                 style={{width: '150px'}} />
                         </div>
-                        <div className="col-md-10 hidden-xs hidden-sm" style={{marginTop: '38px'}}>
+                        <div className="col-sm-9 col-md-9 col-lg-9 hidden-xs" style={{marginTop: '38px'}}>
                             <h3 className="color-white text-shadow">{university.name}</h3>
                         </div>
-                        <div className="col-md-10">
+                        <div className="col-xs-6 visible-xs" style={{marginTop: '38px'}}>
+                            <p className="color-white text-shadow"><b>{university.name}</b></p>
+                        </div>
+                        <div className="col-xs-12 col-md-10">
                             <ul className="nav nav-tabs">
                               <li role="presentation"><a href="#">USC</a></li>
                               <li role="presentation"><a href="#">Me</a></li>
