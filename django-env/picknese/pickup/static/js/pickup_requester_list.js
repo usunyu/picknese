@@ -12,7 +12,7 @@ var PickupForm = React.createClass({
             destination : this.props.destination,
             description : message,
         });
-        return;
+        $('#' + this.props.modalID).modal('hide')
     },
     render: function() {
         return (
@@ -31,7 +31,19 @@ var PickupForm = React.createClass({
                         ref="message">
                     </textarea>
                 </div>
-                <button type="submit" className="btn btn-primary">Confirm</button>
+                <div className="modal-footer">
+                    <button
+                        type="button"
+                        className="btn btn-default"
+                        data-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button
+                        type="submit"
+                        className="btn btn-primary">
+                        Confirm
+                    </button>
+                </div>
             </form>
         );
     }
@@ -69,9 +81,18 @@ var PickRequester = React.createClass({
                 <button
                     type="button"
                     className="btn btn-default"
+                    style={{float: 'right'}}
                     data-toggle="modal"
                     data-target={"#" + modalID}>
+                    <i className="glyphicon glyphicon-heart"></i>&nbsp;
                     Offer Your Pick Up
+                </button>
+                <button
+                    type="button"
+                    className="btn btn-default"
+                    style={{float: 'right', marginRight: '10px'}} >
+                    <i className="glyphicon glyphicon-envelope"></i>&nbsp;
+                    Message
                 </button>
                 <div
                     className="modal fade" id={modalID} tabIndex="-1"
@@ -96,6 +117,7 @@ var PickRequester = React.createClass({
                                     flight={this.props.flight}
                                     destination={this.props.destination}
                                     onPickupSubmit={this.props.handlePickupSubmit}
+                                    modalID={modalID}
                                 />
                             </div>
                         </div>
