@@ -75,58 +75,6 @@ def create_pick_requester(request, university_id):
     return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university_id,)))
 
 """
-class to assemble the data pass to template
-"""
-class RequesterInfo(object):
-
-    def __init__(self, pick_requester, form):
-        self.pick_requester = pick_requester
-        self.form = form
-
-"""
-show PickRequester
-pickup.views.pick_requester_list => pickup/requesters/1/
-"""
-def pick_requester_list(request, university_id):
-    user = request.user
-    university = get_object_or_404(University, id=university_id)
-    requester_form = PickRequesterForm(
-        initial = {
-            'requester': user.id,
-            'university': university_id,
-        }
-    )
-    pick_requesters = PickRequester.objects.filter(university=university, confirmed=False)
-    pick_ups = PickUp.objects.filter(university=university)
-    requester_info_list = []
-    # create form for every requester
-    for pick_requester in pick_requesters:
-        form = PickUpForm(
-            initial = {
-                'picker': user.id,
-                'pickee': pick_requester.requester.id,
-                'university': university_id,
-                'pick_type': pick_requester.pick_type,
-                'flight': pick_requester.flight,
-                'price': pick_requester.price,
-                'destination': pick_requester.destination,
-            }
-        )
-        requester_info = RequesterInfo(
-            pick_requester,
-            form,
-        )
-        requester_info_list.append(requester_info)
-
-    context = {}
-    context.update(csrf(request))
-    context['university'] = university
-    context['requester_form'] = requester_form
-    context['requester_info_list'] = requester_info_list
-    context['pick_ups'] = pick_ups
-    return render(request, 'pick_requester_list.html', context)
-
-"""
 API PickRequesterList ListCreateAPIView
 Retrieve or Create pick requesters based on University ID
 PickRequesterList.as_view() => pickup/requesters/api/1/
@@ -150,11 +98,11 @@ class PickRequesterMutate(RetrieveUpdateDestroyAPIView):
     queryset = PickRequester.objects.all()
 
 """
-Test for React, TODO: change pick_requester_list2 => pick_requester_list
+Show PickRequester List
 pickup.views.pick_requester_list => pickup/requesters/1/
 """
-def pick_requester_list2(request, university_id):
-    return render(request, 'pick_requester_list2.html', {'university_id': university_id})
+def pick_requester_list(request, university_id):
+    return render(request, 'pick_requester_list.html', {'university_id': university_id})
 
 """
 API PickUpList ListAPIView

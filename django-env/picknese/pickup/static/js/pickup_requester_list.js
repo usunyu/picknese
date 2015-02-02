@@ -346,8 +346,8 @@ var PickRequesterPanel = React.createClass({
 
 React.render(
     <PickRequesterPanel
-        requestersListURL="/pickup/api/requesters2/"
-        requestersMutateURL="/pickup/api/requesters2/mutate/"
+        requestersListURL="/pickup/api/requesters/"
+        requestersMutateURL="/pickup/api/requesters/mutate/"
         pickupListURL="/pickup/api/"
         pickupCreateURL="/pickup/api/create/"
         currentUserURL="/accounts/api/me/"
