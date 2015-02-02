@@ -1,27 +1,27 @@
 var PickupForm = React.createClass({
     handleSubmit: function(e) {
         e.preventDefault();
-        var message = this.refs.message.getDOMNode().value.trim();
         this.props.onPickupSubmit({
             picker : this.props.picker,
-            pickee : this.props.requester,
-            university : this.props.university,
-            pick_type : this.props.pick_type,
-            flight : this.props.flight,
-            price : this.props.price,
-            destination : this.props.destination,
-            description : message,
-        });
+            pickee : this.props.pickRequester.requester,
+            university : this.props.pickRequester.university,
+            pickType : this.props.pickRequester.pick_type,
+            flight : this.props.pickRequester.flight,
+            price : this.props.pickRequester.price,
+            destination : this.props.pickRequester.destination,
+            description : this.refs.message.getDOMNode().value.trim(),
+        }, this.props.pickRequester);
         $('#' + this.props.modalID).modal('hide')
     },
     render: function() {
+        var requester = this.props.pickRequester.requester;
         return (
             <form onSubmit={this.handleSubmit}>
                 <img
                     className="img-circle box-shadow"
-                    src={this.props.requester.profile.avatar}
+                    src={requester.profile.avatar}
                     style={{width: '90px', height: '90px', marginBottom: '15px'}} />
-                <p><b>{this.props.requester.first_name} {this.props.requester.last_name}</b></p>
+                <p><b>{requester.first_name} {requester.last_name}</b></p>
                 <div className="form-group">
                     <label>Message</label>
                     <textarea
@@ -51,29 +51,34 @@ var PickupForm = React.createClass({
 
 var PickRequester = React.createClass({
     render: function() {
-        var modalID = "requester-" + this.props.pick_requester_id;
+        var modalID = "requester-" + this.props.pickRequester.id;
+        var requester = this.props.pickRequester.requester;
+        var pickType = this.props.pickRequester.pick_type;
+        var destination = this.props.pickRequester.destination;
+        var price = this.props.pickRequester.price;
+        var description = this.props.pickRequester.description;
         return (
             <div className="panel panel-default">
                 <div className="panel-body">
                 <div className="col-xs-12 col-sm-3 col-md-2 col-lg-2">
                     <img
                         className="img-circle box-shadow"
-                        src={this.props.requester.profile.avatar}
+                        src={requester.profile.avatar}
                         style={{width: '80px', height: '80px', marginBottom: '15px'}} />
                 </div>
                 <div className="col-xs-12 col-sm-9 col-md-10 col-lg-10">
                     <p>
                         <i className="glyphicon glyphicon-user"></i>
-                        <b> {this.props.requester.first_name} {this.props.requester.last_name}</b>
+                        <b> {requester.first_name} {requester.last_name}</b>
                         &nbsp;needs a&nbsp;
-                        {this.props.pick_type == 1 ?
+                        {pickType == 1 ?
                             <span className="label label-success">Flight</span> :
                             <span className="label label-primary">General</span>}
                         &nbsp;pick up
                     </p>
-                    <p><i className="glyphicon glyphicon-map-marker"></i> {this.props.destination}</p>
-                    <p><i className="glyphicon glyphicon-credit-card"></i> ${this.props.price}</p>
-                    <p><i className="glyphicon glyphicon-comment"></i> {this.props.description}</p>
+                    <p><i className="glyphicon glyphicon-map-marker"></i> {destination}</p>
+                    <p><i className="glyphicon glyphicon-credit-card"></i> ${price}</p>
+                    <p><i className="glyphicon glyphicon-comment"></i> {description}</p>
                 </div>
                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <hr />
@@ -109,13 +114,8 @@ var PickRequester = React.createClass({
                                     Offer Pick Up
                                 </h5>
                                 <PickupForm 
-                                    requester={this.props.requester}
+                                    pickRequester={this.props.pickRequester}
                                     picker={this.props.picker}
-                                    university={this.props.university}
-                                    pick_type={this.props.pick_type}
-                                    price={this.props.price}
-                                    flight={this.props.flight}
-                                    destination={this.props.destination}
                                     onPickupSubmit={this.props.handlePickupSubmit}
                                     modalID={modalID}
                                 />
@@ -137,15 +137,8 @@ var PickRequesterList = React.createClass({
             if (!pickRequester.confirmed) {
                 pickRequesters.push(
                     <PickRequester
-                        pick_requester_id={pickRequester.id}
+                        pickRequester={pickRequester}
                         picker={this.props.currentUser}
-                        requester={pickRequester.requester}
-                        pick_type={pickRequester.pick_type}
-                        price={pickRequester.price}
-                        flight={pickRequester.flight}
-                        university={pickRequester.university}
-                        destination={pickRequester.destination}
-                        description={pickRequester.description} 
                         handlePickupSubmit={this.props.handlePickupSubmit} />
                 );
             }
@@ -217,15 +210,15 @@ var CurrentUserPanel = React.createClass({
 
 var PickRequesterPanel = React.createClass({
     loadPickRequestersFromServer: function() {
-        var requestersURL = this.props.requestersURL + this.props.universityID + "/";
+        var requestersListURL = this.props.requestersListURL + this.props.universityID + "/";
         $.ajax({
-            url: requestersURL,
+            url: requestersListURL,
             dataType: 'json',
             success: function(data) {
                 this.setState({requesters: data});
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(requestersURL, status, err.toString());
+                console.error(requestersListURL, status, err.toString());
             }.bind(this)
         });
     },
@@ -254,29 +247,62 @@ var PickRequesterPanel = React.createClass({
             }.bind(this)
         });
     },
-    handlePickupSubmit: function(pickup) {
-        var valid_data = {
+    handlePickupSubmit: function(pickup, pickRequester) {
+        // Create PickUp
+        var pickupData = {
             picker : pickup.picker.id,
             pickee : pickup.pickee.id,
             university : pickup.university.id,
-            pick_type : pickup.pick_type,
+            pickType : pickup.pickType,
             flight : pickup.flight,
             price : pickup.price,
             destination : pickup.destination,
-            description : pickup.message,
+            description : pickup.description,
         };
         $.ajax({
             url: this.props.pickupCreateURL,
             dataType: 'json',
             type: 'POST',
-            data: valid_data,
+            data: pickupData,
             success: function(data) {
-                current_pickups = this.state.pickups;
-                current_pickups.push(pickup);
-                this.setState({pickups: current_pickups});
+                var currentPickups = this.state.pickups;
+                currentPickups.push(pickup);
+                this.setState({pickups: currentPickups});
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(this.props.pickupURL, status, err.toString());
+                console.error(this.props.pickupCreateURL, status, err.toString());
+            }.bind(this)
+        });
+        // Update PickRequester confirmed field
+        var pickRequesterData = {
+            id : pickRequester.id,
+            pick_type : pickRequester.pick_type,
+            price : pickRequester.price,
+            flight : pickRequester.flight,
+            destination : pickRequester.destination,
+            confirmed : true,
+            description : pickRequester.description,
+            requester : pickRequester.requester.id,
+            university : pickRequester.university.id,
+        };
+        var requestersMutateURL = this.props.requestersMutateURL + pickRequester.id + "/";
+        $.ajax({
+            url: requestersMutateURL,
+            dataType: 'json',
+            type: 'PUT',
+            data: pickRequesterData,
+            success: function(data) {
+                var currentRequesters = this.state.requesters;
+                for (var i = 0; i < currentRequesters.length; i++) {
+                    requester = currentRequesters[i];
+                    if (requester.id == pickRequester.id) {
+                        currentRequesters[i].confirmed = true;
+                    }
+                }
+                this.setState({requesters: currentRequesters});
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(requestersMutateURL, status, err.toString());
             }.bind(this)
         });
     },
@@ -320,7 +346,8 @@ var PickRequesterPanel = React.createClass({
 
 React.render(
     <PickRequesterPanel
-        requestersURL="/pickup/api/requesters2/"
+        requestersListURL="/pickup/api/requesters2/"
+        requestersMutateURL="/pickup/api/requesters2/mutate/"
         pickupListURL="/pickup/api/"
         pickupCreateURL="/pickup/api/create/"
         currentUserURL="/accounts/api/me/"

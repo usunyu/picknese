@@ -1,14 +1,18 @@
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 from userprofile.serializers import UserSerializer
 from university.serializers import UniversitySerializer
 from pickup.models import PickProvider, PickRequester, PickUp
 
-class PickProviderSerializer(serializers.ModelSerializer):
+class PickProviderSerializer(ModelSerializer):
 
     class Meta:
         model = PickProvider
 
-class PickRequesterSerializer(serializers.ModelSerializer):
+"""
+Read Only Endpoint for PickRequester
+Support nested Serializer
+"""
+class PickRequesterListSerializer(ModelSerializer):
     requester = UserSerializer(read_only=True)
     university = UniversitySerializer(read_only=True)
 
@@ -16,9 +20,19 @@ class PickRequesterSerializer(serializers.ModelSerializer):
         model = PickRequester
 
 """
-Read Only Endpoint for PickUp, support nested Serializer
+Create, Update, Delete Endpoint for PickRequester
+Flat Serializer
 """
-class PickUpListSerializer(serializers.ModelSerializer):
+class PickRequesterMutateSerializer(ModelSerializer):
+
+    class Meta:
+        model = PickRequester
+
+"""
+Read Only Endpoint for PickUp
+Support nested Serializer
+"""
+class PickUpListSerializer(ModelSerializer):
     picker = UserSerializer(read_only=True)
     pickee = UserSerializer(read_only=True)
     university = UniversitySerializer(read_only=True)
@@ -27,9 +41,10 @@ class PickUpListSerializer(serializers.ModelSerializer):
         model = PickUp
 
 """
-Create Endpoint for PickUp, flat Serializer
+Create, Update, Delete Endpoint for PickUp
+Flat Serializer
 """
-class PickUpCreateSerializer(serializers.ModelSerializer):
+class PickUpMutateSerializer(ModelSerializer):
 
     class Meta:
         model = PickUp
