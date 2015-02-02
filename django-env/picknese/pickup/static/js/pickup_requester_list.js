@@ -137,6 +137,7 @@ var PickRequesterList = React.createClass({
             if (!pickRequester.confirmed) {
                 pickRequesters.push(
                     <PickRequester
+                        key={pickRequester.id}
                         pickRequester={pickRequester}
                         picker={this.props.currentUser}
                         handlePickupSubmit={this.props.handlePickupSubmit} />
@@ -171,6 +172,7 @@ var PickRecordList = React.createClass({
             var pickup = this.props.pickups[i];
             pickRecords.push(
                 <PickRecord
+                    key={pickup.id}
                     pickee={pickup.pickee}
                     picker={pickup.picker}
                     // TODO: add real time in model
