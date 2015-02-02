@@ -1,14 +1,17 @@
 import os
 from PIL import Image as PImage
-
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.context_processors import csrf
 from django.contrib.auth.decorators import login_required
-
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import generics
+from userprofile.models import User
+from userprofile.serializers import UserSerializer
 from forms import UserProfileForm
 
-# Create your views here.
 @login_required(login_url="/accounts/login/")
 def user_profile(request):
 	user = request.user
@@ -31,3 +34,15 @@ def user_profile(request):
 	context['form'] = form
 	context['profile'] = profile
 	return render(request, 'profile.html', context)
+	
+
+class CurrentUserView(APIView):
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
