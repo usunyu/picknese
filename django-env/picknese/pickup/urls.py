@@ -7,6 +7,8 @@ urlpatterns = patterns('',
     url(r'^requesters/(?P<university_id>\d+)/$', 'pickup.views.pick_requester_list'),
     url(r'^api/requesters/(?P<university_id>\d+)/$', PickRequesterList.as_view()),
     url(r'^api/requesters/mutate/(?P<pk>\d+)/$', PickRequesterMutate.as_view()),
+    # Legacy Requester
+    url(r'^api/requesters/create/(?P<pk>\d+)/$', 'pickup.views.create_pick_requester'),
     # Provider
     url(r'^provider/create/$', 'pickup.views.provide_pick_provider'),
     url(r'^provider/create/(?P<university_id>\d+)/$', 'pickup.views.provide_pick_provider'),
