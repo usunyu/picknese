@@ -3,121 +3,134 @@
 
 <!-- Fixed navbar -->
 <nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" 
-              aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="{% url 'picknese.views.index' %}"><b>Picknese</b></a>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-right">
-        <!-- if user is logged in -->
-        {% if user.is_authenticated %}
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-          {% if user.profile.avatar %}
-          <img class="img-circle" src="/media/{{user.profile.avatar.name}}" 
-               style="width: 40px; height: 40px; margin-top: -10px; margin-bottom: -10px; margin-right: 5px;" />
-          {% else %}
-          <img class="img-circle" src="/media/images/avatar/default_pic.png"
-               style="width: 40px; height: 40px; margin-top: -10px; margin-bottom: -10px; margin-right: 5px;" />
-          {% endif %}
-          {% if user.first_name %}
-            {{ user.first_name }}
-          {% else %}
-            {{ user.username }}
-          {% endif %}
-          <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="{% url 'userprofile.views.user_profile' %}">
-              <i class="glyphicon glyphicon-user"></i>&nbsp; Profile</a>
-            </li>
-            <li><a href="#">
-              <i class="glyphicon glyphicon-heart-empty"></i>&nbsp; Your Offering</a>
-            </li>
-            <li><a href="#">
-              <i class="glyphicon glyphicon-paperclip"></i>&nbsp; Your Reservations</a>
-            </li>
-            <li class="divider"></li>
-            <li><a href="{% url 'picknese.views.logout' %}">
-              <i class="glyphicon glyphicon-log-out"></i>&nbsp; Log Out</a>
-            </li>
-          </ul>
-        </li>
-        <!-- if user is not logged in -->
-        {% else %}
-        <li><a href="{% url 'picknese.views.login' %}">Log In</a></li>
-        <li><a href="{% url 'picknese.views.signup' %}">Sign Up</a></li>
-        {% endif %}
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-            Offer Your Help<span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li>
-            <!-- with associated university -->
-            {% if university %}
-              <a href="{% url 'pickup.views.provide_pick_provider' university.id %}">
-              <i class="glyphicon glyphicon-plane"></i>&nbsp; Pick Up</a>
-            <!-- if not in pick up requesters page, need select university first -->
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" 
+                    data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'picknese.views.index' %}"><b>Picknese</b></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+            <!-- if user is logged in -->
+            {% if user.is_authenticated %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                    {% if user.profile.avatar %}
+                    <img class="img-circle" src="/media/{{user.profile.avatar.name}}" 
+                         style="width: 40px; height: 40px; margin-top: -10px; margin-bottom: -10px; margin-right: 5px;" />
+                    {% else %}
+                    <img class="img-circle" src="/media/images/avatar/default_pic.png"
+                         style="width: 40px; height: 40px; margin-top: -10px; margin-bottom: -10px; margin-right: 5px;" />
+                    {% endif %}
+                    {% if user.first_name %}
+                        {{ user.first_name }}
+                    {% else %}
+                        {{ user.username }}
+                    {% endif %}
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="{% url 'userprofile.views.user_profile' %}">
+                                <i class="glyphicon glyphicon-user"></i>&nbsp; Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="glyphicon glyphicon-heart-empty"></i>&nbsp; Your Offering
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="glyphicon glyphicon-paperclip"></i>&nbsp; Your Reservations
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="{% url 'picknese.views.logout' %}">
+                                <i class="glyphicon glyphicon-log-out"></i>&nbsp; Log Out
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            <!-- if user is not logged in -->
             {% else %}
-              <a href="{% url 'pickup.views.provide_pick_provider' %}">
-              <i class="glyphicon glyphicon-plane"></i>&nbsp; Pick Up</a>
+                <li><a href="{% url 'picknese.views.login' %}">Log In</a></li>
+                <li><a href="{% url 'picknese.views.signup' %}">Sign Up</a></li>
             {% endif %}
-            </li>
-            <li><a href="#">
-              <i class="glyphicon glyphicon-road"></i>&nbsp; Carpool</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          {% if user.is_authenticated %}
-            {% if university %}
-              <!-- Button trigger modal -->
-              <button type="button" class="btn btn-primary navbar-btn hidden-xs" data-toggle="modal" data-target="#PickRequesterForm">
-                Post Your Request
-              </button>
-              <!-- Modal -->
-              <div class="modal fade" id="PickRequesterForm" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                      <h5 class="modal-title" id="modalLabel">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        Offer Your Help<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                        <!-- with associated university -->
+                        {% if university %}
+                            <a href="{% url 'pickup.views.provide_pick_provider' university.id %}">
+                            <i class="glyphicon glyphicon-plane"></i>&nbsp; Pick Up</a>
+                        <!-- if not in pick up requesters page, need select university first -->
+                        {% else %}
+                            <a href="{% url 'pickup.views.provide_pick_provider' %}">
+                                <i class="glyphicon glyphicon-plane"></i>&nbsp; Pick Up
+                            </a>
+                        {% endif %}
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="glyphicon glyphicon-road"></i>&nbsp; Carpool
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                {% if user.is_authenticated %}
+                {% if university %}
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary navbar-btn" data-toggle="modal" 
+                            data-target="#PickRequesterForm">
                         Post Your Request
-                      </h5>
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="PickRequesterForm" tabindex="-1" role="dialog" 
+                         aria-labelledby="modalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h5 class="modal-title" id="modalLabel">
+                                        Post Your Request
+                                    </h5>
+                                </div>
+                                <form action="{% url 'pickup.views.create_pick_requester' university.id %}" method="post">
+                                    <div class="modal-body">
+                                    {% csrf_token %}
+                                    {% bootstrap_form requester_form %}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <form action="{% url 'pickup.views.create_pick_requester' university.id %}" method="post">
-                      <div class="modal-body">
-                      {% csrf_token %}
-                      {% bootstrap_form requester_form %}
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            {% else %}
-              <button type="button" class="btn btn-primary navbar-btn hidden-xs" data-toggle="modal" data-target="#PickRequesterForm">
-                Post Your Request
-              </button>
-            {% endif %}
-          {% else %}
-            <a href="{% url 'picknese.views.login' %}" class="btn btn-primary navbar-btn visible-xs">Post Your Request</a>
-          {% endif %}
-        </li>
-      </ul>
+                {% else %}
+                    <button type="button" class="btn btn-primary navbar-btn hidden-xs" data-toggle="modal" data-target="#PickRequesterForm">
+                        Post Your Request
+                    </button>
+                {% endif %}<!-- end if university -->
+                {% else %}
+                    <a href="{% url 'picknese.views.login' %}" class="btn btn-primary navbar-btn visible-xs">Post Your Request</a>
+                {% endif %}<!-- end if user.is_authenticated -->
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>

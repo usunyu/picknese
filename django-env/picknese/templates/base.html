@@ -3,71 +3,71 @@
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Social application for student studying abroad to help each other">
-    <meta name="author" content="Yu Sun">
-    <title>{% block title %}{% endblock %}Pickinese</title>
-    <!-- Latest compiled and minified CSS, Paper Style -->
-    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.paper.min.css' %}" media="screen"/>
-    <!-- http://bootswatch.com/paper/ -->
-    <link rel="stylesheet" href="{% static 'assets/css/bootswatch.min.css' %}"/>
-    <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/base.css' %}" />
-  </head>
-  <body>
-    <!-- Navbar -->
-    {% include 'navbar.html' %}
-    <!-- Messages -->
-    <div id="alert-messages" class="text-center">
-    {% if messages %}
-    {% for message in messages %}
-      <div
-      {% if message.tags == "info" %} class="alert alert-info alert-dismissible" {% endif %}
-      {% if message.tags == "success" %} class="alert alert-success alert-dismissible" {% endif %}
-      {% if message.tags == "warning" %} class="alert alert-warning alert-dismissible" {% endif %}
-      {% if message.tags == "error" %} class="alert alert-danger alert-dismissible" {% endif %}
-      role="alert" >
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      {{ message }}
-      </div>
-    {% endfor %}
-    {% endif %}
-    </div>
-    <!-- Jumbotron -->
-    <div>
-    {% block jumbotron %}
-    {% endblock %}
-    </div>
-    <!-- Main -->
-    <div class="container">
-      <div class="row">
-      <!-- Content -->
-      {% block content %}
-      {% endblock %}
-      </div><!--/row-->
-    </div>
-    <!-- Footer -->
-    <div class="container">
-      <hr />
-      <footer>
-        <p>&copy; 2015 Picknese Inc. All rights reserved.</p>
-      </footer>
-    </div>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script type="text/javascript" src="{% static 'assets/js/jquery.min.js' %}"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script type="text/javascript" src="{% static 'assets/js/bootstrap.min.js' %}"></script>
-    <!-- http://bootswatch.com/paper/ -->
-    <script type="text/javascript" src="{% static 'assets/js/bootswatch.js' %}"></script>
-    <!-- http://facebook.github.io/react/ -->
-    <script type="text/javascript" src="{% static 'assets/js/react.js' %}"></script>
-    <script type="text/javascript" src="{% static 'assets/js/JSXTransformer.js' %}"></script>
-    <!-- Provide CSRF protection -->
-    <script type="text/javascript" src="{% static 'assets/js/csrf.js' %}"></script>
-  </body>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Social application for student studying abroad to help each other">
+        <meta name="author" content="Yu Sun">
+        <title>{% block title %}{% endblock %}Pickinese</title>
+        <!-- Latest compiled and minified CSS, Paper Style -->
+        <link rel="stylesheet" href="{% static 'assets/css/bootstrap.paper.min.css' %}" media="screen"/>
+        <!-- http://bootswatch.com/paper/ -->
+        <link rel="stylesheet" href="{% static 'assets/css/bootswatch.min.css' %}"/>
+        <!-- Custom CSS -->
+        <link rel="stylesheet" type="text/css" href="{% static 'assets/css/base.css' %}" />
+    </head>
+    <body>
+        <!-- Navbar -->
+        {% include 'navbar.html' %}
+        <!-- Messages -->
+        <div id="alert-messages" class="text-center">
+        {% if messages %}
+        {% for message in messages %}
+            <div
+            {% if message.tags == "info" %} class="alert alert-info alert-dismissible" {% endif %}
+            {% if message.tags == "success" %} class="alert alert-success alert-dismissible" {% endif %}
+            {% if message.tags == "warning" %} class="alert alert-warning alert-dismissible" {% endif %}
+            {% if message.tags == "error" %} class="alert alert-danger alert-dismissible" {% endif %}
+                role="alert" >
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% endif %}
+        </div>
+        <!-- Jumbotron -->
+        <div>
+        {% block jumbotron %}
+        {% endblock %}
+        </div>
+        <!-- Main -->
+        <div class="container">
+            <div class="row">
+            <!-- Content -->
+            {% block content %}
+            {% endblock %}
+            </div><!--/row-->
+        </div>
+        <!-- Footer -->
+        <div class="container">
+            <hr />
+            <footer>
+                <p>&copy; 2015 Picknese Inc. All rights reserved.</p>
+            </footer>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script type="text/javascript" src="{% static 'assets/js/jquery.min.js' %}"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script type="text/javascript" src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+        <!-- http://bootswatch.com/paper/ -->
+        <script type="text/javascript" src="{% static 'assets/js/bootswatch.js' %}"></script>
+        <!-- http://facebook.github.io/react/ -->
+        <script type="text/javascript" src="{% static 'assets/js/react.js' %}"></script>
+        <script type="text/javascript" src="{% static 'assets/js/JSXTransformer.js' %}"></script>
+        <!-- Provide CSRF protection -->
+        <script type="text/javascript" src="{% static 'assets/js/csrf.js' %}"></script>
+    </body>
 </html>
