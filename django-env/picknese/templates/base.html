@@ -18,8 +18,13 @@
         <link rel="stylesheet" type="text/css" href="{% static 'assets/css/base.css' %}" />
     </head>
     <body>
+        <!-- Hidden Parameters -->
+        <div>
+        {% block hidden %}
+        {% endblock %}
+        </div>
         <!-- Navbar -->
-        {% include 'navbar.html' %}
+        <div><div id="fixed-navbar" /></div>
         <!-- Messages -->
         <div id="alert-messages" class="text-center">
         {% if messages %}
@@ -69,5 +74,7 @@
         <script type="text/javascript" src="{% static 'assets/js/JSXTransformer.js' %}"></script>
         <!-- Provide CSRF protection -->
         <script type="text/javascript" src="{% static 'assets/js/csrf.js' %}"></script>
+        <!-- Fixed Navbar -->
+        <script type="text/jsx" src="{% static 'assets/js/navbar.js' %}"></script>
     </body>
 </html>

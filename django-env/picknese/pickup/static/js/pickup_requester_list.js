@@ -353,7 +353,7 @@ React.render(
         pickupListURL="/pickup/api/"
         pickupCreateURL="/pickup/api/create/"
         currentUserURL="/accounts/api/me/"
-        universityID={document.getElementById('content').getAttribute('university_id')}
+        universityID={document.getElementById('hiddenParam').getAttribute('universityID')}
         pollInterval={20000}/>,
     document.getElementById('content')
 );

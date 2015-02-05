@@ -1,8 +1,6 @@
 var JumbotronPanel = React.createClass({
     loadUniversityFromServer: function() {
-        var universityAPI = this.props.universityAPI;
-        var universityID = document.getElementById('jumbotron').getAttribute('university_id');
-        universityAPI += universityID;
+        var universityAPI = this.props.universityAPI + this.props.universityID + "/";
         $.ajax({
             url: universityAPI,
             dataType: 'json',
@@ -81,6 +79,7 @@ var JumbotronPanel = React.createClass({
 });
 
 React.render(
-    <JumbotronPanel universityAPI="/universities/api/"/>,
+    <JumbotronPanel universityAPI="/universities/api/"
+                    universityID={document.getElementById('hiddenParam').getAttribute('universityID')}/>,
     document.getElementById('jumbotron')
 );

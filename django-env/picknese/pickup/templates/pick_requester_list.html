@@ -7,8 +7,12 @@
 Pick Up |
 {% endblock %}
 
+{% block hidden %}
+<div id="hiddenParam" universityID="{{university_id}}" />
+{% endblock %}
+
 {% block jumbotron %}
-<div id="jumbotron" university_id="{{university_id}}" />
+<div id="jumbotron" />
 <script type="text/jsx" src="{% static 'js/pickup_jumbotron.js' %}"></script>
 {% endblock %}
 
