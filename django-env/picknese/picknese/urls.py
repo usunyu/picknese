@@ -4,6 +4,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
+from rest_framework.authtoken import views
 
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -43,4 +44,5 @@ urlpatterns = patterns('',
 	# rest framework urls
 	url(r'^', include(router.urls)),
 	url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api-token-auth/', views.obtain_auth_token),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
