@@ -15,7 +15,7 @@ class PickProvider(models.Model):
 		return 'Picker: %s, University: %s' % (self.picker.username, self.university)
 
 class PickRequester(models.Model):
-	requester = models.ForeignKey(User)
+	requester = models.ForeignKey(User, related_name='pick_pequester')
 	university = models.ForeignKey(University)
 	type_choices = (
 		(1, 'Flight'),
