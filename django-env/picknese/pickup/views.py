@@ -77,7 +77,7 @@ def create_pick_requester(request, university_id):
 """
 API PickRequesterList ListCreateAPIView
 Retrieve or Create pick requesters based on University ID
-PickRequesterList.as_view() => pickup/requesters/api/1/
+PickRequesterList.as_view() => pickup/api/requesters/1/
 """
 class PickRequesterList(ListCreateAPIView):
     serializer_class = PickRequesterListSerializer
@@ -87,10 +87,13 @@ class PickRequesterList(ListCreateAPIView):
         university_id = self.kwargs['university_id']
         return PickRequester.objects.filter(university=university_id)
 
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
 """
 API PickRequesterMutate RetrieveUpdateDestroyAPIView
 Retrieve, Update, Delete PickRequester
-PickRequesterList.as_view() => pickup/requesters/api/1/
+PickRequesterList.as_view() => pickup/api/requesters/1/
 """
 class PickRequesterMutate(RetrieveUpdateDestroyAPIView):
     serializer_class = PickRequesterMutateSerializer
