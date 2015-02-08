@@ -40,6 +40,22 @@ textarea {
 }
 
 /*
+ * Fade In Effect
+ * --------------------------------------------------
+ */
+.fadein-effect {
+    -webkit-animation: fadi 01s 1;
+}
+@-webkit-keyframes fadi {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+}
+@-moz-keyframes fadi {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/*
  * Custom Element Style
  * --------------------------------------------------
  */
