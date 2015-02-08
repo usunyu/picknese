@@ -12,16 +12,14 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.generics import CreateAPIView, RetrieveAPIView, ListAPIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-
-# Provider OAuth2
-from provider.oauth2.models import Client
 
 # userprofile app
 from userprofile.models import User
 from userprofile.serializers import UserSerializer
-from forms import UserProfileForm
+from userprofile.permissions import IsAuthenticatedOrCreate
+from userprofile.forms import UserProfileForm
 
 @login_required(login_url="/accounts/login/")
 def user_profile(request):

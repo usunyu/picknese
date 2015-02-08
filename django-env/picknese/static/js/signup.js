@@ -12,11 +12,11 @@ var SignupForm = React.createClass({
         this.props.onSignupSubmit({
             username : this.refs.username.getDOMNode().value.trim(),
             email : this.refs.email.getDOMNode().value.trim(),
-            first_name : this.refs.firstname.getDOMNode().value.trim(),
-            last_name : this.refs.lastname.getDOMNode().value.trim(),
-            password : this.refs.passwd.getDOMNode().value.trim(),
-            description : this.refs.message.getDOMNode().value.trim(),
-        }, this.props.pickRequester);
+            first_name : this.refs.first_name.getDOMNode().value.trim(),
+            last_name : this.refs.last_name.getDOMNode().value.trim(),
+            password : this.refs.password.getDOMNode().value.trim(),
+        });
+        window.location.replace("/");
     },
     render: function() {
         return (
@@ -34,26 +34,26 @@ var SignupForm = React.createClass({
                     </div>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="firstname" className="col-md-3 control-label">First Name</label>
+                    <label htmlFor="first_name" className="col-md-3 control-label">First Name</label>
                     <div className="col-md-9">
-                        <input type="text" className="form-control" name="firstname" placeholder="First Name" ref="firstname" />
+                        <input type="text" className="form-control" name="first_name" placeholder="First Name" ref="first_name" />
                     </div>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="lastname" className="col-md-3 control-label">Last Name</label>
+                    <label htmlFor="last_name" className="col-md-3 control-label">Last Name</label>
                     <div className="col-md-9">
-                        <input type="text" className="form-control" name="lastname" placeholder="Last Name" ref="lastname" />
+                        <input type="text" className="form-control" name="last_name" placeholder="Last Name" ref="last_name" />
                     </div>
                 </div>
                 <div className="form-group">
                     <label htmlFor="password" className="col-md-3 control-label">Password</label>
                     <div className="col-md-9">
-                        <input type="password" className="form-control" name="passwd" placeholder="Password" ref="passwd" />
+                        <input type="password" className="form-control" name="password" placeholder="Password" ref="password" />
                     </div>
                 </div>
                 <div className="form-group">
                     <div className="col-md-offset-3 col-md-9">
-                        <button type="button" className="btn btn-success"><i className="icon-hand-right"></i> Sign Up</button>
+                        <button type="submit" className="btn btn-success"><i className="icon-hand-right"></i> Sign Up</button>
                         <span style={{marginLeft: '8px'}}>or</span>  
                     </div>
                 </div>
@@ -91,8 +91,21 @@ var SignupPanel = React.createClass({
     getInitialState: function() {
         return {};
     },
-    handleSignupSubmit: function(regiser) {
-
+    handleSignupSubmit: function(signupData) {
+        $.ajax({
+            url: this.props.signupURL,
+            dataType: 'json',
+            type: 'POST',
+            data: signupData,
+            success: function(data) {
+                // TODO
+                console.log('success');
+                console.log(data);
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props.signupURL, status, err.toString());
+            }.bind(this)
+        });
     },
     render: function() {
         return (
@@ -103,7 +116,7 @@ var SignupPanel = React.createClass({
                 </div>
                 <div className="col-md-6">
                     <SignupBoxPanel 
-                        handlePickupSubmit={this.handleSignupSubmit} />
+                        handleSignupSubmit={this.handleSignupSubmit} />
                 </div>
             </div>
         );
@@ -111,6 +124,8 @@ var SignupPanel = React.createClass({
 });
 
 React.render(
-    <SignupPanel />,
+    <SignupPanel 
+        signupURL="/accounts/api/signup/"
+        tokenURL="/o/token/" />,
     document.getElementById('content')
 );

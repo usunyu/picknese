@@ -27,5 +27,4 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('userprofile.urls')),
     # rest framework urls
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api-token-auth/', views.obtain_auth_token),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
