@@ -192,14 +192,15 @@ var CurrentUserPanel = React.createClass({
         if (!this.props.currentUser) {
             return (
                 <div></div>
-            );        
+            );
         }
+        var avatar = this.props.currentUser.profile.avatar;
         return (
             <div className="panel panel-default">
                 <div className="panel-body">
                     <img
                         className="img-circle box-shadow"
-                        src={this.props.currentUser.profile.avatar}
+                        src={avatar ? avatar : '/media/images/avatar/default_pic.png'}
                         style={{width: '100px', height: '100px'}} />
                     <hr />
                     <p>Hello World</p>

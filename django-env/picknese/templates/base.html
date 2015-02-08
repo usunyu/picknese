@@ -24,7 +24,7 @@
         {% endblock %}
         </div>
         <!-- Navbar -->
-        <div><div id="fixed-navbar" /></div>
+        {% include 'navbar.html' %}
         <!-- Messages -->
         <div id="alert-messages" class="text-center">
         {% if messages %}
@@ -74,7 +74,5 @@
         <script type="text/javascript" src="{% static 'global/js/react/JSXTransformer.js' %}"></script>
         <!-- Provide CSRF protection -->
         <script type="text/javascript" src="{% static 'global/js/csrf.js' %}"></script>
-        <!-- Fixed Navbar -->
-        <script type="text/jsx" src="{% static 'global/js/navbar.js' %}"></script>
     </body>
 </html>
