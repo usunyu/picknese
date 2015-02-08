@@ -11,7 +11,7 @@ var PickupForm = React.createClass({
             destination : this.props.pickRequester.destination,
             description : this.refs.message.getDOMNode().value.trim(),
         }, this.props.pickRequester);
-        $('#' + this.props.modalID).modal('hide')
+        $('#' + this.props.modalID).modal('hide');
     },
     render: function() {
         var requester = this.props.pickRequester.requester;
@@ -326,7 +326,8 @@ var PickRequesterPanel = React.createClass({
     },
     render: function() {
         return (
-            <div className="row col-md-12">
+            <div className="row col-md-12"
+                 style={{marginTop: '10px'}}>
                 <div className="col-xs-12 col-sm-3">
                     <CurrentUserPanel
                         currentUser={this.state.currentUser} />

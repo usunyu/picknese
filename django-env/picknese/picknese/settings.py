@@ -96,7 +96,7 @@ STATIC_URL = '/static/'
 
 # Satic assets that aren't tied to a particular app
 STATICFILES_DIRS = (
-    ('assets', os.path.join(BASE_DIR, "static")),
+    ('global', os.path.join(BASE_DIR, "static")),
 )
 
 # Customizing your project's templates

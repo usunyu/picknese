@@ -38,7 +38,7 @@ var JumbotronPanel = React.createClass({
         }
 
         return (
-            <div>
+            <div style={{marginTop: '10px'}}>
                 <div
                     className="jumbotron box-shadow"
                     style={{background: backgroundImg, minHeight: '200px'}} >
