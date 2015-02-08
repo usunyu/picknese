@@ -23,6 +23,8 @@ var NavbarPanel = React.createClass({
                         <ul className="nav navbar-nav navbar-right">
                             {/* if user is logged in */}
                             {/* if user is not logged in */}
+                            <li><a href="/accounts/login/">Log In</a></li>
+                            <li><a href="/accounts/signup/">Sign Up</a></li>
                         </ul>
                     </div>
                 </div>
