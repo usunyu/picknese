@@ -7,8 +7,8 @@
 Pick Up |
 {% endblock %}
 
-{% block hidden %}
-<div id="hiddenParam" universityID="{{university_id}}" />
+{% block extra_head_js %}
+<script type="text/jsx" src="{% static 'global/js/component/current_user_panel.js' %}"></script>
 {% endblock %}
 
 {% block jumbotron %}

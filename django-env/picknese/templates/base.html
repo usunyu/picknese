@@ -16,13 +16,12 @@
         <link rel="stylesheet" href="{% static 'global/css/bootstrap/bootswatch.min.css' %}"/>
         <!-- Custom CSS -->
         <link rel="stylesheet" type="text/css" href="{% static 'global/css/base.css' %}" />
+        <!-- Used for load common React component -->
+        {% block extra_head_js %}
+        {% endblock %}
+        <!-- seperate -->
     </head>
     <body>
-        <!-- Hidden Parameters -->
-        <div>
-        {% block hidden %}
-        {% endblock %}
-        </div>
         <!-- Navbar -->
         {% include 'navbar.html' %}
         <!-- Messages -->
@@ -74,5 +73,7 @@
         <script type="text/javascript" src="{% static 'global/js/react/JSXTransformer.js' %}"></script>
         <!-- Provide CSRF protection -->
         <script type="text/javascript" src="{% static 'global/js/csrf.js' %}"></script>
+        <!-- Common Utilities -->
+        <script type="text/javascript" src="{% static 'global/js/utils.js' %}"></script>
     </body>
 </html>

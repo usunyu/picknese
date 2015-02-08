@@ -1,6 +1,7 @@
 var JumbotronPanel = React.createClass({
     loadUniversityFromServer: function() {
-        var universityAPI = this.props.universityAPI + this.props.universityID + "/";
+        var universityID = parseLastNumberInURLPath();
+        var universityAPI = this.props.universityAPI + universityID + "/";
         $.ajax({
             url: universityAPI,
             dataType: 'json',
@@ -28,6 +29,7 @@ var JumbotronPanel = React.createClass({
         var backgroundImg = 'url(/static/images/campus/' + university.shorthand + '/2.jpg)';
         var logoImg = '/static/images/logo/' + university.shorthand + '.jpg';
         var universityURL = "/universities/" + university.id + "/";
+        var requestersURL = "/pickup/requesters/" + university.id + "/";
         var pathname = window.location.pathname;
         var pickupTabActive = false;
         var universityTabActive = false;
@@ -64,7 +66,7 @@ var JumbotronPanel = React.createClass({
                                     <a href={universityURL}>{university.shorthand.toUpperCase()}</a>
                                 </li>
                                 <li role="presentation" className={pickupTabActive ? "active" : null}>
-                                    <a href="#">Pick Up</a>
+                                    <a href={requestersURL}>Pick Up</a>
                                 </li>
                                 <li role="presentation">
                                     <a href="#">Carpool</a>
@@ -79,7 +81,6 @@ var JumbotronPanel = React.createClass({
 });
 
 React.render(
-    <JumbotronPanel universityAPI="/universities/api/"
-                    universityID={document.getElementById('hiddenParam').getAttribute('universityID')}/>,
+    <JumbotronPanel universityAPI="/universities/api/"/>,
     document.getElementById('jumbotron')
 );
