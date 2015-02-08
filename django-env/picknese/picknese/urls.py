@@ -28,6 +28,4 @@ urlpatterns = patterns('',
     # rest framework urls
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api-token-auth/', views.obtain_auth_token),
-    # oauth2 urls
-    url(r'^oauth2/', include('provider.oauth2.urls', namespace = 'oauth2')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
