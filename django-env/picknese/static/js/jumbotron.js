@@ -1,36 +1,30 @@
 var JumbotronPanel = React.createClass({
-    loadUniversityFromServer: function() {
-        university_url = this.props.url;
-        university_id = document.getElementById('jumbotron').getAttribute('university_id');
-        university_url += university_id;
-        $.ajax({
-            url: university_url,
-            dataType: 'json',
-            success: function(data) {
-                this.setState({university: data});
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(university_url, status, err.toString());
-            }.bind(this)
-        });
-    },
+    mixins: [LoadUniversityMixin],
     getInitialState: function() {
         return {
-            university: [],
+            university: null,
         };
     },
-    componentDidMount: function() {
-        this.loadUniversityFromServer();
-    },
     render: function() {
-        university = this.state.university;
-        if (university.length == 0) {
+        var university = this.state.university;
+        if (!university) {
             return (<div />);
         }
-        backgroundImg = 'url(/static/images/campus/' + university.shorthand + '/2.jpg)';
-        logoImg = '/static/images/logo/' + university.shorthand + '.jpg';
+        var backgroundImg = 'url(/static/images/campus/' + university.shorthand + '/2.jpg)';
+        var logoImg = '/static/images/logo/' + university.shorthand + '.jpg';
+        var universityURL = "/universities/" + university.id + "/";
+        var requestersURL = "/pickup/requesters/" + university.id + "/";
+        var pathname = window.location.pathname;
+        var pickupTabActive = false;
+        var universityTabActive = false;
+        if (pathname.search('/pickup/requesters/') != -1) {
+            pickupTabActive = true;
+        } else if (pathname.search('/universities/') != -1) {
+            universityTabActive = true;
+        }
+
         return (
-            <div>
+            <div style={{marginTop: '10px'}}>
                 <div
                     className="jumbotron box-shadow"
                     style={{background: backgroundImg, minHeight: '200px'}} >
@@ -52,10 +46,15 @@ var JumbotronPanel = React.createClass({
                         </div>
                         <div className="col-xs-12 col-md-10">
                             <ul className="nav nav-tabs">
-                              <li role="presentation"><a href="#">USC</a></li>
-                              <li role="presentation"><a href="#">Me</a></li>
-                              <li role="presentation" className="active"><a href="#">Pick Up</a></li>
-                              <li role="presentation"><a href="#">Carpool</a></li>
+                                <li role="presentation" className={universityTabActive ? "active" : null}>
+                                    <a href={universityURL}>{university.shorthand.toUpperCase()}</a>
+                                </li>
+                                <li role="presentation" className={pickupTabActive ? "active" : null}>
+                                    <a href={requestersURL}>Pick Up</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#">Carpool</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -66,6 +65,6 @@ var JumbotronPanel = React.createClass({
 });
 
 React.render(
-    <JumbotronPanel url="/universities/api/"/>,
+    <JumbotronPanel />,
     document.getElementById('jumbotron')
 );

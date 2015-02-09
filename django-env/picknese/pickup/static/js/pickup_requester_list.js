@@ -11,7 +11,7 @@ var PickupForm = React.createClass({
             destination : this.props.pickRequester.destination,
             description : this.refs.message.getDOMNode().value.trim(),
         }, this.props.pickRequester);
-        $('#' + this.props.modalID).modal('hide')
+        $('#' + this.props.modalID).modal('hide');
     },
     render: function() {
         var requester = this.props.pickRequester.requester;
@@ -58,71 +58,73 @@ var PickRequester = React.createClass({
         var price = this.props.pickRequester.price;
         var description = this.props.pickRequester.description;
         return (
-            <div className="panel panel-default">
-                <div className="panel-body">
-                <div className="col-xs-12 col-sm-3 col-md-2 col-lg-2">
-                    <img
-                        className="img-circle box-shadow"
-                        src={requester.profile.avatar}
-                        style={{width: '80px', height: '80px', marginBottom: '15px'}} />
-                </div>
-                <div className="col-xs-12 col-sm-9 col-md-10 col-lg-10">
-                    <p>
-                        <i className="glyphicon glyphicon-user"></i>
-                        <b> {requester.first_name} {requester.last_name}</b>
-                        &nbsp;needs a&nbsp;
-                        {pickType == 1 ?
-                            <span className="label label-success">Flight</span> :
-                            <span className="label label-primary">General</span>}
-                        &nbsp;pick up
-                    </p>
-                    <p><i className="glyphicon glyphicon-map-marker"></i> {destination}</p>
-                    <p><i className="glyphicon glyphicon-credit-card"></i> ${price}</p>
-                    <p><i className="glyphicon glyphicon-comment"></i> {description}</p>
-                </div>
-                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <hr />
-                </div>
-                <button
-                    type="button"
-                    className="btn btn-default"
-                    style={{float: 'right'}}
-                    data-toggle="modal"
-                    data-target={"#" + modalID}>
-                    <i className="glyphicon glyphicon-heart"></i>&nbsp;
-                    Offer Your Pick Up
-                </button>
-                <button
-                    type="button"
-                    className="btn btn-default"
-                    style={{float: 'right', marginRight: '10px'}} >
-                    <i className="glyphicon glyphicon-envelope"></i>&nbsp;
-                    Message
-                </button>
-                <div
-                    className="modal fade" id={modalID} tabIndex="-1"
-                    role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <button
-                                    type="button" className="close" data-dismiss="modal"
-                                    aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <h5 className="modal-title" id="modalLabel">
-                                    Offer Pick Up
-                                </h5>
-                                <PickupForm 
-                                    pickRequester={this.props.pickRequester}
-                                    picker={this.props.picker}
-                                    onPickupSubmit={this.props.handlePickupSubmit}
-                                    modalID={modalID}
-                                />
+            <div className="panel panel-default fadein-effect">
+                    <div className="panel-body">
+                    <div className="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+                        <img
+                            className="img-circle box-shadow"
+                            src={requester.profile.avatar}
+                            style={{width: '80px', height: '80px', marginBottom: '15px'}} />
+                    </div>
+                    <div className="col-xs-12 col-sm-9 col-md-10 col-lg-10">
+                        <p>
+                            <i className="glyphicon glyphicon-user"></i>
+                            <b> {requester.first_name} {requester.last_name}</b>
+                            &nbsp;needs a&nbsp;
+                            {pickType == 1 ?
+                                <span className="label label-success">Flight</span> :
+                                <span className="label label-primary">General</span>}
+                            &nbsp;pick up
+                        </p>
+                        <p><i className="glyphicon glyphicon-map-marker"></i> {destination}</p>
+                        <p><i className="glyphicon glyphicon-credit-card"></i> ${price}</p>
+                        <p><i className="glyphicon glyphicon-comment"></i> {description}</p>
+                    </div>
+                    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <hr />
+                    </div>
+                    <button
+                        type="button"
+                        className="btn btn-default"
+                        style={{float: 'right'}}
+                        data-toggle="modal"
+                        data-target={"#" + modalID}>
+                        <i className="glyphicon glyphicon-heart"></i>&nbsp;
+                        Offer Your Pick Up
+                    </button>
+                    <button
+                        type="button"
+                        className="btn btn-default"
+                        style={{float: 'right', marginRight: '10px'}} >
+                        <i className="glyphicon glyphicon-envelope"></i>&nbsp;
+                        Message
+                    </button>
+                    <div
+                        className="modal fade" id={modalID} tabIndex="-1"
+                        role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                        <div className="modal-dialog">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <button
+                                        type="button" className="close" data-dismiss="modal"
+                                        aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h5 className="modal-title" id="modalLabel">
+                                        Offer Pick Up
+                                    </h5>
+                                </div>
+                                <hr style={{marginTop: "-10px"}}/>
+                                <div className="modal-body">
+                                    <PickupForm 
+                                        pickRequester={this.props.pickRequester}
+                                        picker={this.props.picker}
+                                        onPickupSubmit={this.props.handlePickupSubmit}
+                                        modalID={modalID}/>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
         );
@@ -137,6 +139,7 @@ var PickRequesterList = React.createClass({
             if (!pickRequester.confirmed) {
                 pickRequesters.push(
                     <PickRequester
+                        key={pickRequester.id}
                         pickRequester={pickRequester}
                         picker={this.props.currentUser}
                         handlePickupSubmit={this.props.handlePickupSubmit} />
@@ -171,6 +174,7 @@ var PickRecordList = React.createClass({
             var pickup = this.props.pickups[i];
             pickRecords.push(
                 <PickRecord
+                    key={pickup.id}
                     pickee={pickup.pickee}
                     picker={pickup.picker}
                     // TODO: add real time in model
@@ -185,22 +189,184 @@ var PickRecordList = React.createClass({
     }
 });
 
+var PickRequesterForm = React.createClass({
+    handleSubmit: function(e) {
+        e.preventDefault();
+        var requester = this.props.currentUser;
+        var university = this.props.university;
+        this.props.onPickRequesterSubmit({
+            pick_type : this.refs.pickupType.getDOMNode().value.trim(),
+            price : this.refs.price.getDOMNode().value.trim(),
+            flight : this.refs.flight.getDOMNode().value.trim(),
+            destination : this.refs.destination.getDOMNode().value.trim(),
+            description : this.refs.description.getDOMNode().value.trim(),
+        }, requester, university);
+        // $('#' + this.props.modalID).modal('hide');
+    },
+    render: function() {
+        var requester = this.props.currentUser;
+        var university = this.props.university;
+        if (!university) {
+            return <div></div>;
+        }
+        var universityLogo = '/static/images/logo/' + university.shorthand + '.jpg';
+        return (
+            <form className="form-horizontal" onSubmit={this.handleSubmit}>
+                <div className="col-md-12">
+                    <div className="col-xs-5 col-sm-5 col-md-5 text-center">
+                        <img
+                            className="img-circle box-shadow"
+                            src={requester.profile.avatar}
+                            style={{width: '90px', height: '90px', marginBottom: '15px'}} />
+                    </div>
+                    <div className="col-xs-2 col-sm-2 col-md-2 text-center">
+                        <i className="glyphicon glyphicon-send" style={{fontSize: "2em", marginTop: "20px"}}></i>
+                    </div>
+                    <div className="col-xs-5 col-sm-5 col-md-5 text-center">
+                        <img
+                            src={universityLogo}
+                            className="img-thumbnail img-responsive img-center box-shadow-light"
+                            style={{width: '90px'}} />
+                    </div>
+                </div>
+                <div className="form-group">
+                    <label className="col-sm-3 control-label">Pick Up Type</label>
+                    <div className="col-sm-9">
+                        <select className="form-control"
+                                ref="pickupType">
+                            <option value='1'>Flight</option>
+                            <option value='2'>General</option>
+                        </select>
+                    </div>
+                </div>
+                <div className="form-group">
+                    <label className="col-sm-3 control-label">Tips</label>
+                    <div className="col-sm-9">
+                        <input type="number"
+                               className="form-control" 
+                               placeholder="Provide tips to your picker"
+                               defaultValue="20"
+                               ref="price" />
+                    </div>
+                </div>
+                <div className="form-group">
+                    <label className="col-sm-3 control-label">Flight#</label>
+                    <div className="col-sm-9">
+                        <input type="text"
+                               className="form-control" 
+                               placeholder="Flight Number"
+                               ref="flight" />
+                    </div>
+                </div>
+                <div className="form-group">
+                    <label className="col-sm-3 control-label">Destination</label>
+                    <div className="col-sm-9">
+                        <input type="text"
+                               className="form-control" 
+                               placeholder="Where you want to go?"
+                               defaultValue="Near Campus"
+                               ref="destination" />
+                    </div>
+                </div>
+                <div className="form-group">
+                    <label className="col-sm-3 control-label">Message</label>
+                    <div className="col-sm-9">
+                        <textarea
+                            className="form-control"
+                            rows="3"
+                            placeholder="Any thing you want to mention?"
+                            ref="description">
+                        </textarea>
+                    </div>
+                </div>
+                <div className="modal-footer">
+                    <button
+                        type="button"
+                        className="btn btn-default"
+                        data-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button
+                        type="submit"
+                        className="btn btn-primary">
+                        Confirm
+                    </button>
+                </div>
+            </form>
+        );
+    }
+});
+
 var CurrentUserPanel = React.createClass({
     render: function() {
-        if (!this.props.currentUser) {
+        if (!this.props.currentUser || !this.props.currentUser.id) {
             return (
-                <div></div>
-            );        
+                <div className="panel panel-default">
+                    <div className="panel-body">
+                        <hr />
+                        <p>Hello World, please login :)</p>
+                    </div>
+                    <hr />
+                </div>
+            );
         }
+
+        var currentUser = this.props.currentUser;
+        var avatar = currentUser.profile.avatar;
         return (
             <div className="panel panel-default">
                 <div className="panel-body">
-                    <img
-                        className="img-circle box-shadow"
-                        src={this.props.currentUser.profile.avatar}
-                        style={{width: '100px', height: '100px'}} />
+                    <div className="row">
+                        <div className="col-xs-6 col-sm-6 col-md-6">
+                            <img
+                                className="img-circle box-shadow"
+                                src={avatar ? avatar : '/media/images/avatar/default_pic.png'}
+                                style={{width: '100px', height: '100px'}} />
+                        </div>
+                        <div className="col-xs-6 col-sm-6 col-md-6">
+                            <p style={{marginTop: '10px', marginBottom: '-10px'}}>
+                                <b>{currentUser.first_name} {currentUser.last_name}</b>
+                            </p>
+                            <hr />
+                            <p style={{marginTop: '-10px'}}>
+                                <a href="/accounts/profile/">Edit Profile</a>
+                            </p>
+                        </div>
+                    </div>
                     <hr />
-                    <p>Hello World</p>
+                    <button
+                        type="button"
+                        className="btn btn-primary col-xs-12 col-sm-12 col-md-12"
+                        data-toggle="modal"
+                        data-target={"#currentUserRequestPost"}>
+                        <i className="glyphicon glyphicon-send"></i>&nbsp;
+                        Post Your Request
+                    </button>
+                    <div
+                        className="modal fade" id="currentUserRequestPost" tabIndex="-1"
+                        role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                        <div className="modal-dialog">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <button
+                                        type="button" className="close" data-dismiss="modal"
+                                        aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h5 className="modal-title" id="modalLabel">
+                                        Ask for Pick Up
+                                    </h5>
+                                </div>
+                                <hr style={{marginTop: "-10px"}}/>
+                                <div className="modal-body">
+                                    <PickRequesterForm
+                                        currentUser={this.props.currentUser}
+                                        university={this.props.university}
+                                        onPickRequesterSubmit={this.props.handlePickRequesterSubmit} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <hr />
             </div>
@@ -209,8 +375,11 @@ var CurrentUserPanel = React.createClass({
 });
 
 var PickRequesterPanel = React.createClass({
+    mixins: [LoadCurrentUserMixin, 
+             LoadUniversityMixin],
     loadPickRequestersFromServer: function() {
-        var requestersListURL = this.props.requestersListURL + this.props.universityID + "/";
+        var universityID = parseLastNumberInURLPath();
+        var requestersListURL = this.props.requestersListURL + universityID + "/";
         $.ajax({
             url: requestersListURL,
             dataType: 'json',
@@ -223,7 +392,8 @@ var PickRequesterPanel = React.createClass({
         });
     },
     loadPickUpsFromServer: function() {
-        var pickupListURL = this.props.pickupListURL + this.props.universityID + "/";
+        var universityID = parseLastNumberInURLPath();
+        var pickupListURL = this.props.pickupListURL + universityID + "/";
         $.ajax({
             url: pickupListURL,
             dataType: 'json',
@@ -235,19 +405,7 @@ var PickRequesterPanel = React.createClass({
             }.bind(this)
         });
     },
-    loadCurrentUserFromServer: function() {
-        $.ajax({
-            url: this.props.currentUserURL,
-            dataType: 'json',
-            success: function(data) {
-                this.setState({currentUser: data});
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props.currentUserURL, status, err.toString());
-            }.bind(this)
-        });
-    },
-    handlePickupSubmit: function(pickup, pickRequester) {
+    handlePickupSubmit: function(pickup, requester) {
         // Create PickUp
         var pickupData = {
             picker : pickup.picker.id,
@@ -275,17 +433,17 @@ var PickRequesterPanel = React.createClass({
         });
         // Update PickRequester confirmed field
         var pickRequesterData = {
-            id : pickRequester.id,
-            pick_type : pickRequester.pick_type,
-            price : pickRequester.price,
-            flight : pickRequester.flight,
-            destination : pickRequester.destination,
+            id : requester.id,
+            pick_type : requester.pick_type,
+            price : requester.price,
+            flight : requester.flight,
+            destination : requester.destination,
             confirmed : true,
-            description : pickRequester.description,
-            requester : pickRequester.requester.id,
-            university : pickRequester.university.id,
+            description : requester.description,
+            requester : requester.requester.id,
+            university : requester.university.id,
         };
-        var requestersMutateURL = this.props.requestersMutateURL + pickRequester.id + "/";
+        var requestersMutateURL = this.props.requestersMutateURL + requester.id + "/";
         $.ajax({
             url: requestersMutateURL,
             dataType: 'json',
@@ -295,7 +453,7 @@ var PickRequesterPanel = React.createClass({
                 var currentRequesters = this.state.requesters;
                 for (var i = 0; i < currentRequesters.length; i++) {
                     requester = currentRequesters[i];
-                    if (requester.id == pickRequester.id) {
+                    if (requester.id == requester.id) {
                         currentRequesters[i].confirmed = true;
                     }
                 }
@@ -306,11 +464,54 @@ var PickRequesterPanel = React.createClass({
             }.bind(this)
         });
     },
+    handlePickRequesterSubmit: function(form, requester, university) {
+        // Create Pick Requester
+        var destination = form.destination;
+        if (!destination) {
+            return;
+        }
+        var requesterData = {
+            requester : requester.id,
+            university : university.id,
+            pick_type : form.pick_type,
+            price : form.price,
+            confirmed: false,
+            flight : form.flight,
+            destination : form.destination,
+            description : form.description,
+        }
+        var pickRequester = {
+            requester : requester,
+            university : university,
+            pick_type : form.pick_type,
+            price : form.price,
+            confirmed: false,
+            flight : form.flight,
+            destination : form.destination,
+            description : form.description,
+        }
+        $.ajax({
+            url: this.props.requestersCreateURL,
+            dataType: 'json',
+            type: 'POST',
+            data: requesterData,
+            success: function(data) {
+                var currentRequesters = this.state.requesters;
+                currentRequesters.push(pickRequester);
+                this.setState({requesters: currentRequesters});
+                $('#currentUserRequestPost').modal('hide');
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props.requestersCreateURL, status, err.toString());
+            }.bind(this)
+        });
+    },
     getInitialState: function() {
         return {
             requesters: [],
             pickups: [],
             currentUser: null,
+            university: null,
         };
     },
     componentDidMount: function() {
@@ -319,23 +520,24 @@ var PickRequesterPanel = React.createClass({
 
         this.loadPickUpsFromServer();
         setInterval(this.loadPickUpsFromServer, this.props.pollInterval);
-
-        this.loadCurrentUserFromServer();
     },
     render: function() {
         return (
-            <div className="row col-md-12">
-                <div className="col-xs-12 col-sm-3">
+            <div className="row col-md-12"
+                 style={{marginTop: '10px'}}>
+                <div className="col-xs-12 col-sm-4 col-md-3 fadein-effect">
                     <CurrentUserPanel
-                        currentUser={this.state.currentUser} />
+                        currentUser={this.state.currentUser}
+                        university={this.state.university}
+                        handlePickRequesterSubmit={this.handlePickRequesterSubmit} />
                 </div>
-                <div className="col-xs-12 col-sm-7">
+                <div className="col-xs-12 col-sm-8 col-md-7">
                     <PickRequesterList
                         currentUser={this.state.currentUser}
                         requesters={this.state.requesters}
                         handlePickupSubmit={this.handlePickupSubmit} />
                 </div>
-                <div className="col-xs-12 col-sm-2 sidebar-offcanvas">
+                <div className="col-xs-12 col-sm-6 col-md-2 sidebar-offcanvas fadein-effect">
                     <PickRecordList
                         pickups={this.state.pickups} />
                 </div>
@@ -346,12 +548,11 @@ var PickRequesterPanel = React.createClass({
 
 React.render(
     <PickRequesterPanel
-        requestersListURL="/pickup/api/requesters2/"
-        requestersMutateURL="/pickup/api/requesters2/mutate/"
+        requestersListURL="/pickup/api/requesters/"
+        requestersMutateURL="/pickup/api/requesters/mutate/"
+        requestersCreateURL="/pickup/api/requesters/create/"
         pickupListURL="/pickup/api/"
         pickupCreateURL="/pickup/api/create/"
-        currentUserURL="/accounts/api/me/"
-        universityID={document.getElementById('content').getAttribute('university_id')}
         pollInterval={20000}/>,
     document.getElementById('content')
 );

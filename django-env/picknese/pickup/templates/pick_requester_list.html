@@ -1,169 +1,22 @@
 {% extends "base.html" %}
 
 {% load staticfiles %}
-{% load bootstrap3 %}
 
 {% block title %}
 Pick Up |
 {% endblock %}
 
-{% block jumbotron %}
-<div class="jumbotron" style="background: url({% static 'images/campus/' %}{{university.shorthand}}/2.jpg); min-height: 200px;"></div>
-<div class="container">
-  <div class="row">
-    <div class="col-md-4" style="margin-top: -130px;">
-      <img src="{% static 'images/logo/' %}{{university.shorthand}}.jpg" alt="" class="img-thumbnail img-responsive img-center" style="width:150px;">
-    </div>
-  </div>
-</div>
+{% block extra_head_js %}
+<script type="text/jsx" src="{% static 'global/js/mixin/LoadCurrentUserMixin.js' %}"></script>
+<script type="text/jsx" src="{% static 'global/js/mixin/LoadUniversityMixin.js' %}"></script>
 {% endblock %}
 
-{% block tabs %}
-<div class="col-xs-12 col-sm-9">
-<ul class="nav nav-tabs">
-  <li role="presentation"><a href="{%url 'university.views.university' university.id %}">{{university.shorthand|upper}}</a></li>
-  <li role="presentation"><a href="#">Me</a></li>
-  <li role="presentation" class="active"><a href="{% url 'pickup.views.pick_requester_list' university.id %}">Pick Up</a></li>
-  <li role="presentation"><a href="#">Carpool</a></li>
-</ul>
-</div>
+{% block jumbotron %}
+<div id="jumbotron" />
+<script type="text/jsx" src="{% static 'global/js/jumbotron.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-<div class="col-xs-12 col-sm-9">
-{% if user.is_authenticated %}
-<!-- Show Post Your Request button when xs -->
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary navbar-btn visible-xs" data-toggle="modal" data-target="#xsPickRequesterForm">Post Your Request</button>
-<!-- Modal -->
-<div class="modal fade" id="xsPickRequesterForm" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h5 class="modal-title" id="modalLabel">
-          Post Your Request
-        </h5>
-      </div>
-      <form action="{% url 'pickup.views.create_pick_requester' university.id %}" method="post">
-        <div class="modal-body">
-        {% csrf_token %}
-        {% bootstrap_form requester_form %}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-{% else %}
-<a href="{% url 'picknese.views.login' %}" class="btn btn-primary navbar-btn visible-xs">Post Your Request</a>
-{% endif %}
-<!-- All unconfirmed requesters' list -->
-<div class="row">
-{% if requester_info_list|length > 0 %}
-  {% for requester_info in requester_info_list %}
-  {% if forloop.counter0|divisibleby:3 %}
-    <div class="clearfix visible-md-block visible-lg-block"></div>
-  {% elif forloop.counter0|divisibleby:2 %}
-    <div class="clearfix visible-sm-block"></div>
-  {% endif %}
-  {% with pick_requester=requester_info.pick_requester form=requester_info.form %}
-  <div class="col-sm-6 col-md-4">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <img class="img-circle box-shadow" src="/media/{{pick_requester.requester.profile.avatar.name}}" alt="Profile Pic" style="width: 100px; height: 100px;">
-      </div>
-      <div class="panel-body">
-        <p>
-          <i class="glyphicon glyphicon-user"></i>&nbsp; 
-          <b>{{pick_requester.requester.first_name}} {{pick_requester.requester.last_name}}</b>
-          is requesting
-          {% if pick_requester.pick_type == 1 %}
-            <span class="label label-success">Flight</span>
-          {% else %}
-            <span class="label label-primary">General</span>
-          {% endif %}
-          pick up
-        </p>
-        <p><i class="glyphicon glyphicon-map-marker"></i>&nbsp; {{pick_requester.destination}}</p>
-        <p><i class="glyphicon glyphicon-credit-card"></i>&nbsp; ${{pick_requester.price}}</p>
-        {% if pick_requester.pick_type == 1 %}
-          <p><i class="glyphicon glyphicon-plane"></i>&nbsp; {{pick_requester.flight}}</p>
-        {% endif %}
-        <p><i class="glyphicon glyphicon-comment"></i>&nbsp; {{pick_requester.description}}</p>
-        {% if pick_requester.confirmed == False %}
-        <hr />
-        {% if user == pick_requester.requester %}
-          <p>
-            <a href="#" class="btn btn-default" role="button">Update</a>
-            <a href="#" class="btn btn-default" role="button">Cancel</a>
-          </p>
-        {% else %}
-          <!-- Button trigger modal -->
-          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#pickupRequest{{pick_requester.id}}">Offer Your Pick Up</button>
-          <!-- Modal -->
-          <div class="modal fade" id="pickupRequest{{pick_requester.id}}" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h5 class="modal-title" id="modalLabel">
-                    Offer Pick Up
-                  </h5>
-                </div>
-                <form action="{% url 'pickup.views.create_pickup' pick_requester.id %}" method="post">
-                  <div class="modal-body">
-                    <p><b>Name: {{pick_requester.requester.first_name}} {{pick_requester.requester.last_name}}</b></p>
-                    <p><b>Tip: ${{pick_requester.price}}</b></p>
-                    <p><b>Destination: {{pick_requester.destination}}</b></p>
-                    {% if pick_requester.pick_type == 1 %}
-                    <p><b>Type: Flight Pick Up</b></p>
-                    <p><b>Flight#: {{pick_requester.flight}}</b></p>
-                    {% else %}
-                    <p><b>Type: General Pick Up</b></p>
-                    {% endif %}
-                    {% csrf_token %}
-                    {% bootstrap_form form %}
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Confirm</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        {% endif %}
-        {% endif %}
-      </div>
-    </div>
-  </div>
-  {% endwith %}
-  {% endfor %}
-{% endif %}
-</div>
-</div>
-{% endblock %}
-
-{% block sidebar %}
-<!-- Pick Up list record -->
-<div class="hidden-xs col-sm-3 sidebar-offcanvas">
-<!-- TODO: update real time -->
-<ol class="activity-feed">
-  {% if pick_ups|length > 0 %}
-  {% for pick_up in pick_ups %}
-  <li class="feed-item">
-    <time class="date" datetime="9-22">Sep 22</time>
-    <span class="text" >
-      <a href="#">{{pick_up.picker.first_name}} {{pick_up.picker.last_name}}</a> will pick up
-      <a href="#">{{pick_up.pickee.first_name}} {{pick_up.pickee.last_name}}</a>
-    </span>
-  </li>
-  {% endfor %}
-  {% endif %}
-</ol>
-</div>
+<div id="content" />
+<script type="text/jsx" src="{% static 'js/pickup_requester_list.js' %}"></script>
 {% endblock %}
