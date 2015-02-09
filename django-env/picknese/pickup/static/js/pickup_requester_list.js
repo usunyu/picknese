@@ -90,7 +90,7 @@ var PickRequester = React.createClass({
                         data-toggle="modal"
                         data-target={"#" + modalID}>
                         <i className="glyphicon glyphicon-heart"></i>&nbsp;
-                        Offer Your Pick Up
+                        Offer Help
                     </button>
                     <button
                         type="button"

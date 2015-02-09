@@ -32,7 +32,7 @@ var JumbotronPanel = React.createClass({
 
                 <div className="container" style={{marginTop: '-140px'}} >
                     <div className="row">
-                        <div className="col-xs-5 col-sm-3 col-md-3 col-lg-2">
+                        <div className="col-xs-6 col-sm-3 col-md-3 col-lg-2">
                             <img
                                 src={logoImg}
                                 className="img-thumbnail img-responsive img-center box-shadow-light"

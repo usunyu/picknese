@@ -18,7 +18,6 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 # userprofile app
 from userprofile.models import User
 from userprofile.serializers import UserSerializer
-from userprofile.permissions import IsAuthenticatedOrCreate
 from userprofile.forms import UserProfileForm
 
 @login_required(login_url="/accounts/login/")
