@@ -1,29 +1,13 @@
 var JumbotronPanel = React.createClass({
-    loadUniversityFromServer: function() {
-        var universityID = parseLastNumberInURLPath();
-        var universityAPI = this.props.universityAPI + universityID + "/";
-        $.ajax({
-            url: universityAPI,
-            dataType: 'json',
-            success: function(data) {
-                this.setState({university: data});
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(universityAPI, status, err.toString());
-            }.bind(this)
-        });
-    },
+    mixins: [LoadUniversityMixin],
     getInitialState: function() {
         return {
-            university: [],
+            university: null,
         };
-    },
-    componentDidMount: function() {
-        this.loadUniversityFromServer();
     },
     render: function() {
         var university = this.state.university;
-        if (university.length == 0) {
+        if (!university) {
             return (<div />);
         }
         var backgroundImg = 'url(/static/images/campus/' + university.shorthand + '/2.jpg)';
@@ -81,6 +65,6 @@ var JumbotronPanel = React.createClass({
 });
 
 React.render(
-    <JumbotronPanel universityAPI="/universities/api/"/>,
+    <JumbotronPanel />,
     document.getElementById('jumbotron')
 );

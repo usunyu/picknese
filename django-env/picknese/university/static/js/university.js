@@ -42,45 +42,17 @@ var CurrentUserPanel = React.createClass({
 });
 
 var UniversityPanel = React.createClass({
-    loadUniversityFromServer: function() {
-        var universityID = parseLastNumberInURLPath();
-        var universityAPI = this.props.universityAPI + universityID + "/";
-        $.ajax({
-            url: universityAPI,
-            dataType: 'json',
-            success: function(data) {
-                this.setState({university: data});
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(universityAPI, status, err.toString());
-            }.bind(this)
-        });
-    },
-    loadCurrentUserFromServer: function() {
-        $.ajax({
-            url: this.props.currentUserURL,
-            dataType: 'json',
-            success: function(data) {
-                this.setState({currentUser: data});
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props.currentUserURL, status, err.toString());
-            }.bind(this)
-        });
-    },
+    mixins: [LoadCurrentUserMixin, 
+             LoadUniversityMixin],
     getInitialState: function() {
         return {
-            university: [],
+            university: null,
             currentUser: null,
         };
     },
-    componentDidMount: function() {
-        this.loadUniversityFromServer();
-        this.loadCurrentUserFromServer();
-    },
     render: function() {
         var university = this.state.university;
-        if (university.length == 0) {
+        if (!university) {
             return (<div />);
         }
         return (
@@ -90,20 +62,21 @@ var UniversityPanel = React.createClass({
                     <CurrentUserPanel
                         currentUser={this.state.currentUser} />
                 </div>
-                <div className="col-xs-12 col-sm-8 col-md-7 fadein-effect">
+                <div className="col-xs-12 col-sm-12 col-md-9 fadein-effect">
+                    <p><b>University:</b> &nbsp;{university.name}</p>
                     <p><b>Description:</b> &nbsp;{university.description}</p>
                     <p><b>Address:</b> &nbsp;{university.address}</p>
                     <p><b>State:</b> &nbsp;{university.state}</p>
                     <p><b>Country:</b> &nbsp;{university.country}</p>
+                    <hr className="col-xs-12 col-sm-12 col-md-12" />
                 </div>
+                <div id="map-canvas"></div>
             </div>
         );
     }
 });
 
 React.render(
-    <UniversityPanel 
-        universityAPI="/universities/api/"
-        currentUserURL="/accounts/api/me/" />,
+    <UniversityPanel />,
     document.getElementById('content')
 );

@@ -75,20 +75,29 @@ def create_pick_requester(request, university_id):
     return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university_id,)))
 
 """
-API PickRequesterList ListCreateAPIView
-Retrieve or Create pick requesters based on University ID
+API PickRequesterList ListAPIView
+Retrieve PickRequesters based on University ID
 PickRequesterList.as_view() => pickup/api/requesters/1/
 """
-class PickRequesterList(ListCreateAPIView):
+class PickRequesterList(ListAPIView):
     serializer_class = PickRequesterListSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (AllowAny,)
 
     def get_queryset(self):
         university_id = self.kwargs['university_id']
         return PickRequester.objects.filter(university=university_id)
 
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+"""
+API PickRequesterCreate CreateAPIView
+Create PickRequester
+PickRequesterCreate.as_view() => pickup/api/requesters/create/
+"""
+class PickRequesterCreate(CreateAPIView):
+    serializer_class = PickRequesterMutateSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+    # def perform_create(self, serializer):
+    #     serializer.save(owner=self.request.user)
 
 """
 API PickRequesterMutate RetrieveUpdateDestroyAPIView
@@ -105,7 +114,8 @@ Show PickRequester List
 pickup.views.pick_requester_list => pickup/requesters/1/
 """
 def pick_requester_list(request, university_id):
-    return render(request, 'pick_requester_list.html', {'university_id': university_id})
+    university = get_object_or_404(University, id=university_id)
+    return render(request, 'pick_requester_list.html', {})
 
 """
 API PickUpList ListAPIView
