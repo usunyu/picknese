@@ -1,4 +1,4 @@
-Django==1.7.1
+Django==1.7.4
 Markdown==2.5.2
 MySQL-python==1.2.5
 Pillow==2.6.1
@@ -10,11 +10,7 @@ dj-static==0.0.6
 django-bootstrap3==5.0.3
 django-braces==1.4.0
 django-filter==0.9.1
-django-oauth-toolkit==0.7.2
-django-oauth2-provider==0.2.6.1
-django-rest-auth==0.3.4
 djangorestframework==3.0.3
-djoser==0.1.0
 httpie==0.8.0
 httplib2==0.9
 oauth2==1.5.211
@@ -24,3 +20,6 @@ shortuuid==0.4.2
 six==1.9.0
 static3==0.5.1
 wsgiref==0.1.2
+gunicorn==19.1.1
+psycopg2==2.5.1
+static==0.4
