@@ -55,3 +55,4 @@ target/
 
 # Media
 media/
+!media/avatar/default_pic.png
