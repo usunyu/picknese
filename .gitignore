@@ -54,4 +54,4 @@ docs/_build/
 target/
 
 # Media
-media/
+django-env/picknese/media/
