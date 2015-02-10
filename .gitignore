@@ -54,5 +54,5 @@ docs/_build/
 target/
 
 # Media
-**/images/avatar/*
+**/media/images/*
 !default_pic.png

@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 def get_upload_file_name(instance, filename):
-	return "images/avatar/%s_%s" % (str(time()).replace('.','_'), filename)
+	return "images/%s_%s" % (str(time()).replace('.','_'), filename)
 
 # Create your models here.
 class UserProfile(models.Model):
@@ -20,7 +20,7 @@ class UserProfile(models.Model):
 	)
 	# https://docs.djangoproject.com/en/1.7/topics/files/
 	avatar = models.ImageField(
-		'Profile Pic',
+		'Profile Photo',
 		upload_to=get_upload_file_name,
 		null=True,
 		blank=True
