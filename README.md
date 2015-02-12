@@ -63,5 +63,6 @@ Social application for student studying abroad to help each other
 
 8. Specify dependencies with Pip:
 
-     $ pip freeze > requirements.txt
-     $ pip install -r requirements.txt
+     ```$ pip freeze > requirements.txt```
+     
+     ```$ pip install -r requirements.txt```
