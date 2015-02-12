@@ -48,6 +48,10 @@ def signup(request):
 		form = PickneseCreationForm(request.POST)
 		if form.is_valid():
 			form.save()
+			username = form.cleaned_data.get('username')
+			password = form.cleaned_data.get('password2')
+			user = auth.authenticate(username=username, password=password)
+			auth.login(request, user)
 			return HttpResponseRedirect('/')
 
 	context = {}

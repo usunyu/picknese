@@ -60,3 +60,8 @@ Social application for student studying abroad to help each other
 7. Srart the Server:
 
      ```$ python manage.py runserver```
+
+8. Specify dependencies with Pip:
+
+     $ pip freeze > requirements.txt
+     $ pip install -r requirements.txt
