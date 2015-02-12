@@ -4,7 +4,7 @@ Picknese
 Social application for student studying abroad to help each other
 
 ##### Setup:
-1. [Setup Django Environments:](http://usunyu.com/blog/2014/12/06/setup-django/)
+1. [Setup Django Environments:](http://usunyu.com/note/2014/12/06/setup-django/)
 
      ```$ sudo easy_install pip```
      
@@ -30,7 +30,7 @@ Social application for student studying abroad to help each other
 
      ```$ pip install django-filter```
      
-4. [Create Picknese Database:](http://usunyu.com/blog/2014/12/07/mysql-tips/)
+4. [Create Picknese Database:](http://usunyu.com/note/2014/12/07/mysql-tips/)
 
      ```mysql> CREATE DATABASE picknese;```
 
