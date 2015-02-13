@@ -25,15 +25,13 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECRET_KEY = '(l3twho*_7sw4m&2w2be-)c-+rsc4qseh2dtai(!!&4w4(ufd5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# Set True to deploy to S3
-# python manage.py collectstatic
 DEBUG = False
 
-TEMPLATE_DEBUG = False
-
-# Set True to deploy static files to S3
+# Set True to deploy static to S3
 # python manage.py collectstatic
-S3_DEPLOYMENT = False
+DEPLOY_S3 = False
+
+TEMPLATE_DEBUG = False
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
@@ -92,7 +90,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
-STATIC_ROOT = os.path.join(PROJECT_DIRECTORY, 'static/')
+STATIC_ROOT = ''
 
 # STATIC_URL = '/static/'
 
@@ -142,9 +140,10 @@ AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 AWS_PRELOAD_METADATA = True
 
 #Storage on S3 settings are stored as os.environs to keep settings.py clean
-if not DEBUG:
+if not DEBUG or DEPLOY_S3:
     STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
     S3_URL = 'https://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
     STATIC_URL = S3_URL
     MEDIA_URL = S3_URL + 'media/'
+
