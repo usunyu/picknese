@@ -78,3 +78,8 @@ alias pydoc="python -m pydoc"
 if [ -n "$BASH" -o -n "$ZSH_VERSION" ] ; then
     hash -r 2>/dev/null
 fi
+
+# added for S3 deployment
+export AWS_STORAGE_BUCKET_NAME=picknese-s3
+export AWS_ACCESS_KEY_ID=AKIAJNBXYYIFXWZGFHOQ
+export AWS_SECRET_ACCESS_KEY=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

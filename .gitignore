@@ -56,6 +56,3 @@ target/
 # Media
 **/media/*
 !default_pic.png
-
-# Settings
-local_settings.py

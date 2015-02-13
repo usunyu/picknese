@@ -10,7 +10,10 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import dj_database_url
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+PROJECT_DIRECTORY = os.getcwd()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -22,9 +25,15 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECRET_KEY = '(l3twho*_7sw4m&2w2be-)c-+rsc4qseh2dtai(!!&4w4(ufd5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# Set True to deploy to S3
+# python manage.py collectstatic
 DEBUG = False
 
 TEMPLATE_DEBUG = False
+
+# Set True to deploy static files to S3
+# python manage.py collectstatic
+S3_DEPLOYMENT = False
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
@@ -39,6 +48,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'storages',
     'bootstrap3',
     'userprofile',
     'story',
@@ -61,7 +71,7 @@ ROOT_URLCONF = 'picknese.urls'
 WSGI_APPLICATION = 'picknese.wsgi.application'
 
 # Parse database configuration from $DATABASE_URL
-import dj_database_url
+# https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 DATABASES = {
     'default': dj_database_url.config()
 }
@@ -82,13 +92,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
-STATIC_ROOT = 'staticfiles'
+STATIC_ROOT = os.path.join(PROJECT_DIRECTORY, 'static/')
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 
 # Satic assets that aren't tied to a particular app
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(PROJECT_DIRECTORY, 'static/'),
 )
 
 # Customizing your project's templates
@@ -97,11 +107,14 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 # Custom User Profile
 AUTH_PROFILE_MODULE = 'userprofile.UserProfile'
 
+# Uploaded file destination
+UPLOAD_FILE_PATTERN = "media/uploaded_files/%s_%s"
+
 # https://docs.djangoproject.com/en/1.7/ref/settings/#media-root
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = ''
 
 # https://docs.djangoproject.com/en/1.7/ref/settings/#media-url
-MEDIA_URL = '/media/'
+# MEDIA_URL = '/media/'
 
 # http://www.django-rest-framework.org/
 REST_FRAMEWORK = {
@@ -123,3 +136,15 @@ try:
 except ImportError as e:
     print "Loading production settings..."
 
+AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_PRELOAD_METADATA = True
+
+#Storage on S3 settings are stored as os.environs to keep settings.py clean
+if not DEBUG:
+    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    S3_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+    STATIC_URL = S3_URL
+    MEDIA_URL = S3_URL + 'media/'

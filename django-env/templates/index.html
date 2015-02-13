@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load staticfiles%}
+{% load static %}
 
 {% block title %}
 Welcome |
@@ -38,7 +39,8 @@ Welcome |
 	{% endif %}
 	<!-- University -->
 	<div class="col-sm-6 col-md-4">
-		<img class="img-responsive img-portfolio img-hover box-shadow" alt="" src="{% static 'images/campus/' %}{{university.shorthand}}/1.jpg" >
+		<!-- <img class="img-responsive img-portfolio img-hover box-shadow" alt="" src="{% static 'images/campus/' %}{{university.shorthand}}/1.jpg" > -->
+		<img class="img-responsive img-portfolio img-hover box-shadow" alt="" src="{% get_static_prefix %}images/campus/{{university.shorthand}}/1.jpg" >
 		<h4>{{ university.name }}</h4>
 		<p>{{ university.description }}</p>
 		<p>

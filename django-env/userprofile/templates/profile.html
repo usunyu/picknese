@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load bootstrap3 %}
+{% load static %}
 
 {% block content %}
 
@@ -13,11 +14,11 @@
 	{% csrf_token %}
 	{% if profile.avatar %}
 		<p>
-			<img border="0" alt="Profile Pic" src="/media/{{profile.avatar}}" width="200" />
+			<img border="0" alt="Profile Pic" src="{% get_media_prefix %}{{profile.get_avatar}}" width="200" />
 		</p>
 	{% else %}
 		<p>
-			<img border="0" alt="Profile Pic" src="/media/default_pic.png" width="200" />
+			<img border="0" alt="Profile Pic" src="{% get_media_prefix %}default_pic.png" width="200" />
 		</p>
 	{% endif %}
 	{% bootstrap_form form %}

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from picknese import settings
 from picknese.utils import get_upload_file_name
 
 # Create your models here.
@@ -26,6 +27,12 @@ class UserProfile(models.Model):
 
 	def __str__(self):	# __unicode__ on Python 2
 		return 'Profile of user: %s' % self.user.username
+
+	def get_avatar(self):
+		avatar = str(self.avatar)
+		if not settings.DEBUG:
+			avatar = avatar.replace('media/', '')
+		return avatar
 
 # Create User Profile as needed
 User.profile = property(
