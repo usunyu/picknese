@@ -1,3 +1,7 @@
+function getStaticURL() {
+	return 'https://picknese-s3.s3.amazonaws.com/';
+}
+
 function isInt(n) {
 	if((parseFloat(n) == parseInt(n)) && !isNaN(n)){
 		return true;
