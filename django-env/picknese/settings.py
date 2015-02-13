@@ -29,7 +29,7 @@ DEBUG = False
 
 # Set True to deploy static to S3
 # python manage.py collectstatic
-DEPLOY_S3 = False
+DEPLOY_S3 = True
 
 TEMPLATE_DEBUG = False
 
@@ -129,8 +129,11 @@ REST_FRAMEWORK = {
 
 # Try load local sttings
 try:
-    from local_settings import *
-    print "Loading local settings..."
+    if not DEPLOY_S3:
+        from local_settings import *
+        print "Loading local settings..."
+    else:
+        print "Ready to deploy to S3..."
 except ImportError as e:
     print "Loading production settings..."
 

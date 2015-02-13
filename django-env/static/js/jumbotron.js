@@ -10,6 +10,7 @@ var JumbotronPanel = React.createClass({
         if (!university) {
             return (<div />);
         }
+        
         var staticURL = getStaticURL();
         var backgroundImg = 'url(' + staticURL + 'images/campus/' + university.shorthand + '/2.jpg)';
         var logoImg = staticURL + 'images/logo/' + university.shorthand + '.jpg';
