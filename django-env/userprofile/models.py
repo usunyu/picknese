@@ -1,9 +1,7 @@
-from time import time
 from django.db import models
 from django.contrib.auth.models import User
 
-def get_upload_file_name(instance, filename):
-	return "images/%s_%s" % (str(time()).replace('.','_'), filename)
+from picknese.utils import get_upload_file_name
 
 # Create your models here.
 class UserProfile(models.Model):

@@ -320,7 +320,7 @@ var CurrentUserPanel = React.createClass({
                         <div className="col-xs-6 col-sm-6 col-md-6">
                             <img
                                 className="img-circle box-shadow"
-                                src={avatar ? avatar : '/media/images/default_pic.png'}
+                                src={avatar ? avatar : '/media/default_pic.png'}
                                 style={{width: '100px', height: '100px'}} />
                         </div>
                         <div className="col-xs-6 col-sm-6 col-md-6">

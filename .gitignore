@@ -54,7 +54,7 @@ docs/_build/
 target/
 
 # Media
-**/media/images/*
+**/media/*
 !default_pic.png
 
 # Settings
