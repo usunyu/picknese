@@ -29,7 +29,7 @@ DEBUG = False
 
 # Set True to deploy static to S3
 # python manage.py collectstatic
-DEPLOY_S3 = True
+DEPLOY_S3 = False
 
 TEMPLATE_DEBUG = False
 
