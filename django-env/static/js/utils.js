@@ -1,5 +1,7 @@
 function getStaticURL() {
-	return 'https://picknese-s3.s3.amazonaws.com/';
+	// set for local development
+	return '/static/';
+	// return 'https://picknese-s3.s3.amazonaws.com/';
 }
 
 function isInt(n) {
