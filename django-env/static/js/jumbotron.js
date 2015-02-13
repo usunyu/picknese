@@ -11,12 +11,6 @@ var JumbotronPanel = React.createClass({
             return (<div />);
         }
 
-        var staticURL = getStaticURL();
-        var imagePath = staticURL + 'images/campus/' + university.shorthand + "/";
-        var backgroundImg = 'url(' + imagePath + 'wide.jpg)';
-        var logoImg = imagePath + 'logo.jpg';
-        var universityURL = "/universities/" + university.id + "/";
-        var requestersURL = "/pickup/requesters/" + university.id + "/";
         var pathname = window.location.pathname;
         var pickupTabActive = false;
         var universityTabActive = false;
@@ -30,14 +24,14 @@ var JumbotronPanel = React.createClass({
             <div style={{marginTop: '10px'}}>
                 <div
                     className="jumbotron box-shadow"
-                    style={{background: backgroundImg, minHeight: '200px'}} >
+                    style={{background: 'url(' + getUniversityWide(university.shorthand) + ')', minHeight: '200px'}} >
                 </div>
 
                 <div className="container" style={{marginTop: '-140px'}} >
                     <div className="row">
                         <div className="col-xs-6 col-sm-3 col-md-3 col-lg-2">
                             <img
-                                src={logoImg}
+                                src={getUniversityLogo(university.shorthand)}
                                 className="img-thumbnail img-responsive img-center box-shadow-light"
                                 style={{width: '150px'}} />
                         </div>
@@ -50,10 +44,10 @@ var JumbotronPanel = React.createClass({
                         <div className="col-xs-12 col-md-10">
                             <ul className="nav nav-tabs">
                                 <li role="presentation" className={universityTabActive ? "active" : null}>
-                                    <a href={universityURL}>{university.shorthand.toUpperCase()}</a>
+                                    <a href={getUniversityURL(university.id)}>{university.shorthand.toUpperCase()}</a>
                                 </li>
                                 <li role="presentation" className={pickupTabActive ? "active" : null}>
-                                    <a href={requestersURL}>Pick Up</a>
+                                    <a href={getPickupURL(university.id)}>Pick Up</a>
                                 </li>
                                 <li role="presentation">
                                     <a href="#">Carpool</a>

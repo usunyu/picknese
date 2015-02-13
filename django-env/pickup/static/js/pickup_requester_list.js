@@ -63,7 +63,7 @@ var PickRequester = React.createClass({
                     <div className="col-xs-12 col-sm-3 col-md-2 col-lg-2">
                         <img
                             className="img-circle box-shadow"
-                            src={requester.profile.avatar}
+                            src={requester.profile.avatar ? requester.profile.avatar : getMediaURL() + "media/default_pic.png"}
                             style={{width: '80px', height: '80px', marginBottom: '15px'}} />
                     </div>
                     <div className="col-xs-12 col-sm-9 col-md-10 col-lg-10">
@@ -209,7 +209,6 @@ var PickRequesterForm = React.createClass({
         if (!university) {
             return <div></div>;
         }
-        var universityLogo = '/static/images/logo/' + university.shorthand + '.jpg';
         return (
             <form className="form-horizontal" onSubmit={this.handleSubmit}>
                 <div className="col-md-12">
@@ -220,11 +219,11 @@ var PickRequesterForm = React.createClass({
                             style={{width: '90px', height: '90px', marginBottom: '15px'}} />
                     </div>
                     <div className="col-xs-2 col-sm-2 col-md-2 text-center">
-                        <i className="glyphicon glyphicon-send" style={{fontSize: "2em", marginTop: "20px"}}></i>
+                        <i className="glyphicon glyphicon-arrow-right" style={{fontSize: "2em", marginTop: "30px"}}></i>
                     </div>
                     <div className="col-xs-5 col-sm-5 col-md-5 text-center">
                         <img
-                            src={universityLogo}
+                            src={getUniversityLogo(university.shorthand)}
                             className="img-thumbnail img-responsive img-center box-shadow-light"
                             style={{width: '90px'}} />
                     </div>
@@ -320,7 +319,7 @@ var CurrentUserPanel = React.createClass({
                         <div className="col-xs-6 col-sm-6 col-md-6">
                             <img
                                 className="img-circle box-shadow"
-                                src={avatar ? avatar : '/media/default_pic.png'}
+                                src={avatar ? avatar : getMediaURL() + 'media/default_pic.png'}
                                 style={{width: '100px', height: '100px'}} />
                         </div>
                         <div className="col-xs-6 col-sm-6 col-md-6">

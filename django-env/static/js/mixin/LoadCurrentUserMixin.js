@@ -1,14 +1,13 @@
 var LoadCurrentUserMixin = {
 	loadCurrentUserFromServer: function() {
-        var currentUserURL="/accounts/api/me/";
         $.ajax({
-            url: currentUserURL,
+            url: getCurrentUserAPI(),
             dataType: 'json',
             success: function(data) {
                 this.setState({currentUser: data});
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(currentUserURL, status, err.toString());
+                console.error(getCurrentUserAPI(), status, err.toString());
             }.bind(this)
         });
     },
