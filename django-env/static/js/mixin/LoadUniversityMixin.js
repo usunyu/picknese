@@ -1,15 +1,14 @@
 var LoadUniversityMixin = {
 	loadUniversityFromServer: function() {
         var universityID = parseLastNumberInURLPath();
-        var universityURL = "/universities/api/" + universityID + "/";
         $.ajax({
-            url: universityURL,
+            url: getUniversityAPI(universityID),
             dataType: 'json',
             success: function(data) {
                 this.setState({university: data});
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(universityURL, status, err.toString());
+                console.error(getUniversityAPI(universityID), status, err.toString());
             }.bind(this)
         });
     },

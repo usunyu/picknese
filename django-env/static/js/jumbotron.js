@@ -5,21 +5,21 @@ var JumbotronPanel = React.createClass({
             university: null,
         };
     },
+
     render: function() {
         var university = this.state.university;
         if (!university) {
             return (<div />);
         }
-
+        // check current active tab
         var pathname = window.location.pathname;
-        var pickupTabActive = false;
-        var universityTabActive = false;
+        var pickupTabActive = null;
+        var universityTabActive = null;
         if (pathname.search('/pickup/requesters/') != -1) {
-            pickupTabActive = true;
+            pickupTabActive = 'active';
         } else if (pathname.search('/universities/') != -1) {
-            universityTabActive = true;
+            universityTabActive = 'active';
         }
-
         return (
             <div style={{marginTop: '10px'}}>
                 <div
@@ -43,10 +43,10 @@ var JumbotronPanel = React.createClass({
                         </div>
                         <div className="col-xs-12 col-md-10">
                             <ul className="nav nav-tabs">
-                                <li role="presentation" className={universityTabActive ? "active" : null}>
+                                <li role="presentation" className={universityTabActive}>
                                     <a href={getUniversityURL(university.id)}>{university.shorthand.toUpperCase()}</a>
                                 </li>
-                                <li role="presentation" className={pickupTabActive ? "active" : null}>
+                                <li role="presentation" className={pickupTabActive}>
                                     <a href={getPickupURL(university.id)}>Pick Up</a>
                                 </li>
                                 <li role="presentation">

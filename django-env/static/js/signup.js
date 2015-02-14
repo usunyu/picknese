@@ -125,7 +125,6 @@ var SignupPanel = React.createClass({
 
 React.render(
     <SignupPanel 
-        signupURL="/accounts/api/signup/"
-        tokenURL="/o/token/" />,
+        signupURL="/accounts/api/signup/"/>,
     document.getElementById('content')
 );

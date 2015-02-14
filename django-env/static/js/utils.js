@@ -62,3 +62,27 @@ function getPickupURL(u_id) {
 function getCurrentUserAPI() {
 	return "/accounts/api/me/";
 }
+
+function getPickRequesterListAPI(u_id) {
+	return "/pickup/api/requesters/" + u_id + "/";
+}
+
+function getPickRequesterCreateAPI() {
+	return "/pickup/api/requesters/create/";
+}
+
+function getPickRequesterMutateAPI(r_id) {
+	return "/pickup/api/requesters/mutate/" + r_id + "/";
+}
+
+function getPickUpListAPI(u_id) {
+	return "/pickup/api/" + u_id + "/";
+}
+
+function getPickUpCreateAPI() {
+	return "/pickup/api/create/";
+}
+
+function getUniversityAPI(u_id) {
+	return "/universities/api/" + u_id + "/";
+}

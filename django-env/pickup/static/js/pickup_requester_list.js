@@ -378,29 +378,27 @@ var PickRequesterPanel = React.createClass({
              LoadUniversityMixin],
     loadPickRequestersFromServer: function() {
         var universityID = parseLastNumberInURLPath();
-        var requestersListURL = this.props.requestersListURL + universityID + "/";
         $.ajax({
-            url: requestersListURL,
+            url: getPickRequesterListAPI(universityID),
             dataType: 'json',
             success: function(data) {
                 this.setState({requesters: data});
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(requestersListURL, status, err.toString());
+                console.error(getPickRequesterListAPI(universityID), status, err.toString());
             }.bind(this)
         });
     },
     loadPickUpsFromServer: function() {
         var universityID = parseLastNumberInURLPath();
-        var pickupListURL = this.props.pickupListURL + universityID + "/";
         $.ajax({
-            url: pickupListURL,
+            url: getPickUpListAPI(universityID),
             dataType: 'json',
             success: function(data) {
                 this.setState({pickups: data});
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(pickupListURL, status, err.toString());
+                console.error(getPickUpListAPI(universityID), status, err.toString());
             }.bind(this)
         });
     },
@@ -417,7 +415,7 @@ var PickRequesterPanel = React.createClass({
             description : pickup.description,
         };
         $.ajax({
-            url: this.props.pickupCreateURL,
+            url: getPickUpCreateAPI(),
             dataType: 'json',
             type: 'POST',
             data: pickupData,
@@ -427,7 +425,7 @@ var PickRequesterPanel = React.createClass({
                 this.setState({pickups: currentPickups});
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(this.props.pickupCreateURL, status, err.toString());
+                console.error(getPickUpCreateAPI(), status, err.toString());
             }.bind(this)
         });
         // Update PickRequester confirmed field
@@ -442,9 +440,8 @@ var PickRequesterPanel = React.createClass({
             requester : requester.requester.id,
             university : requester.university.id,
         };
-        var requestersMutateURL = this.props.requestersMutateURL + requester.id + "/";
         $.ajax({
-            url: requestersMutateURL,
+            url: getPickRequesterMutateAPI(requester.id),
             dataType: 'json',
             type: 'PUT',
             data: pickRequesterData,
@@ -459,7 +456,7 @@ var PickRequesterPanel = React.createClass({
                 this.setState({requesters: currentRequesters});
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(requestersMutateURL, status, err.toString());
+                console.error(getPickRequesterMutateAPI(requester.id), status, err.toString());
             }.bind(this)
         });
     },
@@ -467,6 +464,7 @@ var PickRequesterPanel = React.createClass({
         // Create Pick Requester
         var destination = form.destination;
         if (!destination) {
+            // TODO, show error message
             return;
         }
         var requesterData = {
@@ -490,7 +488,7 @@ var PickRequesterPanel = React.createClass({
             description : form.description,
         }
         $.ajax({
-            url: this.props.requestersCreateURL,
+            url: getPickRequesterCreateAPI(),
             dataType: 'json',
             type: 'POST',
             data: requesterData,
@@ -501,7 +499,7 @@ var PickRequesterPanel = React.createClass({
                 $('#currentUserRequestPost').modal('hide');
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(this.props.requestersCreateURL, status, err.toString());
+                console.error(getPickRequesterCreateAPI(), status, err.toString());
             }.bind(this)
         });
     },
@@ -547,10 +545,6 @@ var PickRequesterPanel = React.createClass({
 
 React.render(
     <PickRequesterPanel
-        requestersListURL="/pickup/api/requesters/"
-        requestersMutateURL="/pickup/api/requesters/mutate/"
-        requestersCreateURL="/pickup/api/requesters/create/"
-        pickupListURL="/pickup/api/"
         pickupCreateURL="/pickup/api/create/"
         pollInterval={20000}/>,
     document.getElementById('content')
