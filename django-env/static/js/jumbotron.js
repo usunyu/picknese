@@ -24,7 +24,7 @@ var JumbotronPanel = React.createClass({
             <div style={{marginTop: '10px'}}>
                 <div
                     className="jumbotron box-shadow"
-                    style={{background: 'url(' + getUniversityWide(university.shorthand) + ')', minHeight: '200px'}} >
+                    style={{background: 'url(' + getUniversityWide(university.shorthand) + ') center', minHeight: '200px'}} >
                 </div>
 
                 <div className="container" style={{marginTop: '-140px'}} >
@@ -43,14 +43,14 @@ var JumbotronPanel = React.createClass({
                         </div>
                         <div className="col-xs-12 col-md-10">
                             <ul className="nav nav-tabs">
-                                <li role="presentation" className={universityTabActive}>
-                                    <a href={getUniversityURL(university.id)}>{university.shorthand.toUpperCase()}</a>
-                                </li>
                                 <li role="presentation" className={pickupTabActive}>
                                     <a href={getPickupURL(university.id)}>Pick Up</a>
                                 </li>
                                 <li role="presentation">
                                     <a href="#">Carpool</a>
+                                </li>
+                                <li role="presentation" className={universityTabActive}>
+                                    <a href={getUniversityURL(university.id)}>About</a>
                                 </li>
                             </ul>
                         </div>
