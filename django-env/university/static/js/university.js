@@ -65,9 +65,7 @@ var UniversityPanel = React.createClass({
                 <div className="col-xs-12 col-sm-12 col-md-9 fadein-effect">
                     <p><b>University:</b> &nbsp;{university.name}</p>
                     <p><b>Description:</b> &nbsp;{university.description}</p>
-                    <p><b>Address:</b> &nbsp;{university.address}</p>
-                    <p><b>State:</b> &nbsp;{university.state}</p>
-                    <p><b>Country:</b> &nbsp;{university.country}</p>
+                    <p><b>Address:</b> &nbsp;{university.address}, &nbsp;{university.state}, &nbsp;{university.country}</p>
                     <hr className="col-xs-12 col-sm-12 col-md-12" />
                 </div>
                 <div id="map-canvas"></div>
