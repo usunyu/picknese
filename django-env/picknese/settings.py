@@ -28,6 +28,7 @@ SECRET_KEY = '(l3twho*_7sw4m&2w2be-)c-+rsc4qseh2dtai(!!&4w4(ufd5'
 DEBUG = False
 
 # Set True to deploy static to S3
+# Don't forget to set correct static & media url of front end
 # python manage.py collectstatic
 DEPLOY_S3 = False
 
