@@ -67,7 +67,7 @@ var PickRequester = React.createClass({
                         type="button"
                         className="btn btn-primary"
                         style={{float: 'right', marginRight: '10px'}} >
-                        <i className="glyphicon glyphicon-pencil"></i>&nbsp;
+                        <i className="glyphicon glyphicon-edit"></i>&nbsp;
                         Update
                     </button>
                 </div>
@@ -165,6 +165,123 @@ var PickRequester = React.createClass({
     }
 });
 
+var PickRequesterForm = React.createClass({
+    handleFlightSubmit: function(e) {
+        e.preventDefault();
+        var requester = this.props.currentUser;
+        var university = this.props.university;
+        // TODO: auto set price according distance
+        this.props.onPickRequesterSubmit({
+            pick_type : 1,
+            price : 20,
+            flight : this.refs.flight1.getDOMNode().value.trim(),
+            destination : this.refs.destination1.getDOMNode().value.trim(),
+            description : this.refs.description1.getDOMNode().value.trim(),
+        }, requester, university);
+        this.refs.flight1.getDOMNode().value = '';
+        this.refs.destination1.getDOMNode().value = '';
+        this.refs.description1.getDOMNode().value = '';
+    },
+    render: function() {
+        var requester = this.props.currentUser;
+        var university = this.props.university;
+        if (!university) {
+            return <div></div>;
+        }        
+        return (
+            <div className="panel panel-primary">
+                <div className="panel-heading clearfix">
+                    <ul className="inline-list col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" style={{marginBottom: "0px"}}>
+                        <li className="active col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <i className="glyphicon glyphicon-plane"></i>&nbsp;
+                            <a href="#tab_flight" data-toggle="tab">Flight</a>
+                        </li>
+                        <li className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <i className="glyphicon glyphicon-globe"></i>&nbsp;
+                            <a href="#tab_general" data-toggle="tab">General</a>
+                        </li>
+                    </ul>
+                </div>
+                <div className="tab-content">
+                    <div className="tab-pane fadein-effect active" id="tab_flight">
+                        <form className="form-horizontal" onSubmit={this.handleFlightSubmit}>
+                            <div className="panel-body">
+                                <div className="form-group">
+                                    <div className="col-sm-6">
+                                        <input type="text"
+                                               className="form-control" 
+                                               placeholder="Your flight number?"
+                                               ref="flight1" />
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <input type="text"
+                                               className="form-control" 
+                                               placeholder="Where you want to go?"
+                                               ref="destination1" />
+                                    </div>
+                                    <div className="col-sm-12">
+                                        <textarea
+                                            className="form-control"
+                                            rows="2"
+                                            placeholder="Any thing you want to mention?"
+                                            ref="description1">
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="panel-footer clearfix">
+                                <button
+                                    type="submit"
+                                    style={{float: 'right'}}
+                                    className="btn btn-primary">
+                                    Post Your Request
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div className="tab-pane fadein-effect" id="tab_general">
+                        <form className="form-horizontal" onSubmit={this.handleGeneralSubmit}>
+                            <div className="panel-body">
+                                <div className="form-group">
+                                    <div className="col-sm-6">
+                                        <input type="text"
+                                               className="form-control" 
+                                               placeholder="Where to pick up you?"
+                                               ref="start2" />
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <input type="text"
+                                               className="form-control" 
+                                               placeholder="Where you want to go?"
+                                               ref="destination2" />
+                                    </div>
+                                    <div className="col-sm-12">
+                                        <textarea
+                                            className="form-control"
+                                            rows="2"
+                                            placeholder="Any thing you want to mention?"
+                                            ref="description2">
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="panel-footer clearfix">
+                                <button
+                                    type="submit"
+                                    style={{float: 'right'}}
+                                    className="btn btn-primary">
+                                    Post Your Request
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        );
+    }
+});
+
 var PickRequesterList = React.createClass({
     render: function() {
         var pickRequesters = [];
@@ -182,7 +299,10 @@ var PickRequesterList = React.createClass({
         }
         return (
             <div>
-                <PickRequestPostPanel />
+                <PickRequesterForm 
+                    currentUser={this.props.currentUser}
+                    university={this.props.university}
+                    onPickRequesterSubmit={this.props.handlePickRequesterSubmit} />
                 {pickRequesters}
             </div>
         );
@@ -222,129 +342,6 @@ var PickRecordList = React.createClass({
             <ol className="activity-feed">
                 {pickRecords}
             </ol>
-        );
-    }
-});
-
-var PickRequesterForm = React.createClass({
-    handleSubmit: function(e) {
-        e.preventDefault();
-        var requester = this.props.currentUser;
-        var university = this.props.university;
-        this.props.onPickRequesterSubmit({
-            pick_type : this.refs.pickupType.getDOMNode().value.trim(),
-            price : this.refs.price.getDOMNode().value.trim(),
-            flight : this.refs.flight.getDOMNode().value.trim(),
-            destination : this.refs.destination.getDOMNode().value.trim(),
-            description : this.refs.description.getDOMNode().value.trim(),
-        }, requester, university);
-        // $('#' + this.props.modalID).modal('hide');
-    },
-    render: function() {
-        var requester = this.props.currentUser;
-        var university = this.props.university;
-        if (!university) {
-            return <div></div>;
-        }
-        return (
-            <form className="form-horizontal" onSubmit={this.handleSubmit}>
-                <div className="col-md-12">
-                    <div className="col-xs-5 col-sm-5 col-md-5 text-center">
-                        <img
-                            className="img-circle box-shadow"
-                            src={requester.profile.avatar}
-                            style={{width: '90px', height: '90px', marginBottom: '15px'}} />
-                    </div>
-                    <div className="col-xs-2 col-sm-2 col-md-2 text-center">
-                        <i className="glyphicon glyphicon-arrow-right" style={{fontSize: "2em", marginTop: "30px"}}></i>
-                    </div>
-                    <div className="col-xs-5 col-sm-5 col-md-5 text-center">
-                        <img
-                            src={getUniversityLogo(university.shorthand)}
-                            className="img-thumbnail img-responsive img-center box-shadow-light"
-                            style={{width: '90px'}} />
-                    </div>
-                </div>
-                <div className="form-group">
-                    <label className="col-sm-3 control-label">Pick Up Type</label>
-                    <div className="col-sm-9">
-                        <select className="form-control"
-                                ref="pickupType">
-                            <option value='1'>Flight</option>
-                            <option value='2'>General</option>
-                        </select>
-                    </div>
-                </div>
-                <div className="form-group">
-                    <label className="col-sm-3 control-label">Tips</label>
-                    <div className="col-sm-9">
-                        <input type="number"
-                               className="form-control" 
-                               placeholder="Provide tips to your picker"
-                               defaultValue="20"
-                               ref="price" />
-                    </div>
-                </div>
-                <div className="form-group">
-                    <label className="col-sm-3 control-label">Flight#</label>
-                    <div className="col-sm-9">
-                        <input type="text"
-                               className="form-control" 
-                               placeholder="Flight Number"
-                               ref="flight" />
-                    </div>
-                </div>
-                <div className="form-group">
-                    <label className="col-sm-3 control-label">Destination</label>
-                    <div className="col-sm-9">
-                        <input type="text"
-                               className="form-control" 
-                               placeholder="Where you want to go?"
-                               defaultValue="Near Campus"
-                               ref="destination" />
-                    </div>
-                </div>
-                <div className="form-group">
-                    <label className="col-sm-3 control-label">Message</label>
-                    <div className="col-sm-9">
-                        <textarea
-                            className="form-control"
-                            rows="3"
-                            placeholder="Any thing you want to mention?"
-                            ref="description">
-                        </textarea>
-                    </div>
-                </div>
-                <div className="modal-footer">
-                    <button
-                        type="button"
-                        className="btn btn-default"
-                        data-dismiss="modal">
-                        Cancel
-                    </button>
-                    <button
-                        type="submit"
-                        className="btn btn-primary">
-                        Confirm
-                    </button>
-                </div>
-            </form>
-        );
-    }
-});
-
-var PickRequestPostPanel = React.createClass({
-    render: function() {
-        return (
-            <div className="panel panel-default">
-                <div className="panel-heading">
-                    <h4 className="panel-title">Panel title</h4>
-                </div>
-                <div className="panel-body">
-                    Panel content
-                </div>
-                <div className="panel-footer">Panel footer</div>
-            </div>
         );
     }
 });
@@ -441,6 +438,7 @@ var PickRequesterPanel = React.createClass({
         var destination = form.destination;
         if (!destination) {
             // TODO, show error message
+            alert('Please input destination');
             return;
         }
         var requesterData = {
@@ -501,14 +499,15 @@ var PickRequesterPanel = React.createClass({
                 <div className="col-xs-12 col-sm-4 col-md-3 fadein-effect">
                     <CurrentUserPanel
                         currentUser={this.state.currentUser}
-                        university={this.state.university}
-                        handlePickRequesterSubmit={this.handlePickRequesterSubmit} />
+                        university={this.state.university} />
                 </div>
                 <div className="col-xs-12 col-sm-8 col-md-7">
                     <PickRequesterList
                         currentUser={this.state.currentUser}
                         requesters={this.state.requesters}
-                        handlePickupSubmit={this.handlePickupSubmit} />
+                        university={this.state.university}
+                        handlePickupSubmit={this.handlePickupSubmit}
+                        handlePickRequesterSubmit={this.handlePickRequesterSubmit} />
                 </div>
                 <div className="col-xs-12 col-sm-6 col-md-2 sidebar-offcanvas fadein-effect">
                     <PickRecordList

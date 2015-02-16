@@ -3,40 +3,40 @@
  * --------------------------------------------------
  */
 body {
-	padding-top: 50px;
-	/*background-color: #f0eeeb;*/
-	background-color: #fafaf9;
-	/*background-color: #e5ded8;*/
-	/*background-color: #f1edea;*/
-	/*background-color: #d9edf7;*/
-	/*background-color: #c4e3f3;*/
-	/*background-color: #faf2cc;*/
-	/*background-color: #f2dede;*/
-	/*background-color: #ebcccc;*/
-	/*background-color: #dff0d8;*/
-	/*background-color: #fcf8e3;*/
-	/*background-color: #d8d4c9;*/
-	/*background-color: #c3bcab;*/
-	/*background-color: #4e9b59;*/
-	/*background-color: #558aa0;*/
-	/*background-color: #ad9e57;*/
-	/*background-color: #8b4845;*/
-	/*background-color: #ac5b57;*/
-	/*background-color: #e5e5e5;*/
-	/*background-color: #dcdbd7;*/
-	/*background-color: #91aa5f;*/
-	/*background-color: #655f54;*/
-	/*background-color: #888;*/
-	/*background-color: #4c483f;*/
-	/*background-color: #827e75;*/
+    padding-top: 50px;
+    /*background-color: #f0eeeb;*/
+    background-color: #fafaf9;
+    /*background-color: #e5ded8;*/
+    /*background-color: #f1edea;*/
+    /*background-color: #d9edf7;*/
+    /*background-color: #c4e3f3;*/
+    /*background-color: #faf2cc;*/
+    /*background-color: #f2dede;*/
+    /*background-color: #ebcccc;*/
+    /*background-color: #dff0d8;*/
+    /*background-color: #fcf8e3;*/
+    /*background-color: #d8d4c9;*/
+    /*background-color: #c3bcab;*/
+    /*background-color: #4e9b59;*/
+    /*background-color: #558aa0;*/
+    /*background-color: #ad9e57;*/
+    /*background-color: #8b4845;*/
+    /*background-color: #ac5b57;*/
+    /*background-color: #e5e5e5;*/
+    /*background-color: #dcdbd7;*/
+    /*background-color: #91aa5f;*/
+    /*background-color: #655f54;*/
+    /*background-color: #888;*/
+    /*background-color: #4c483f;*/
+    /*background-color: #827e75;*/
 }
 
 a:hover {
-	text-decoration: none !important;
+    text-decoration: none !important;
 }
 
 textarea {
-	resize: vertical;
+    resize: vertical;
 }
 
 /*
@@ -60,35 +60,78 @@ textarea {
  * --------------------------------------------------
  */
 .box-shadow {
-	box-shadow: 0 0 5px black;
+    box-shadow: 0 0 5px black;
 }
 
 .box-shadow-light {
-	box-shadow: 0 0 2px grey;
+    box-shadow: 0 0 2px grey;
 }
 
 .text-shadow {
-	text-shadow: 0 0 0.2em black;
+    text-shadow: 0 0 0.2em black;
 }
 
 .color-white {
-	color: white;
+    color: white;
 }
 
 .color-yellow {
-	color: yellow;
+    color: yellow;
 }
 
 .text-center {
-	text-align: center;
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.margin-right-10px {
+    margin-right: 10px;
 }
 
 #alert-messages {
-	position: fixed;
-	top: 63px;
-	opacity: 1.0;
-	z-index: 100;
-	width: 100%;
+    position: fixed;
+    top: 63px;
+    opacity: 1.0;
+    z-index: 100;
+    width: 100%;
+}
+
+/*
+ * Inline List Style
+ * --------------------------------------------------
+ */
+ul.inline-list {
+    overflow: auto;
+    list-style-type: none;
+}
+
+ul.inline-list li {
+    float: left;
+    margin-right: 0px;
+    border-right: 1px solid #D0D0D0;
+    padding: 0 20px;
+}
+
+ul.inline-list li:last-child {
+    border-right: none;
+}
+
+ul.inline-list li a {
+  color: white;
+  text-transform: uppercase;
+ 
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+ul.inline-list li.active a {
+    font-weight: bold;
 }
 
 /*
@@ -96,40 +139,40 @@ textarea {
  * --------------------------------------------------
  */
 .activity-feed {
-	padding: 15px;
-	list-style: none;
+    padding: 15px;
+    list-style: none;
 }
 .activity-feed .feed-item {
-	position: relative;
-	padding-bottom: 20px;
-	padding-left: 30px;
-	border-left: 2px solid #e4e8eb;
+    position: relative;
+    padding-bottom: 20px;
+    padding-left: 30px;
+    border-left: 2px solid #e4e8eb;
 }
 .activity-feed .feed-item:last-child {
-	border-color: transparent;
+    border-color: transparent;
 }
 .activity-feed .feed-item::after {
-	content: "";
-	display: block;
-	position: absolute;
-	top: 0;
-	left: -6px;
-	width: 10px;
-	height: 10px;
-	border-radius: 6px;
-	background: #fff;
-	border: 1px solid #f37167;
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: -6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 6px;
+    background: #fff;
+    border: 1px solid #f37167;
 }
 .activity-feed .feed-item .date {
-	display: block;
-	position: relative;
-	top: -5px;
-	color: #8c96a3;
-	text-transform: uppercase;
-	font-size: 13px;
+    display: block;
+    position: relative;
+    top: -5px;
+    color: #8c96a3;
+    text-transform: uppercase;
+    font-size: 13px;
 }
 .activity-feed .feed-item .text {
-	position: relative;
-	top: -3px;
+    position: relative;
+    top: -3px;
 }
 
