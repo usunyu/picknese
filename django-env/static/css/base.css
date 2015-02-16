@@ -87,10 +87,6 @@ textarea {
     text-align: right;
 }
 
-.margin-right-10px {
-    margin-right: 10px;
-}
-
 #alert-messages {
     position: fixed;
     top: 63px;

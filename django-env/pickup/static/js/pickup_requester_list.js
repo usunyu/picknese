@@ -10,8 +10,7 @@ var PickupForm = React.createClass({
             price : this.props.pickRequester.price,
             destination : this.props.pickRequester.destination,
             description : this.refs.message.getDOMNode().value.trim(),
-        }, this.props.pickRequester);
-        $('#' + this.props.modalID).modal('hide');
+        }, this.props.pickRequester, this.props.modalID);
     },
     render: function() {
         var requester = this.props.pickRequester.requester;
@@ -50,8 +49,12 @@ var PickupForm = React.createClass({
 });
 
 var PickRequester = React.createClass({
-    getActionButton: function(picker, requester, pickRequester, handlePickupSubmit, modalID) {
-        if (picker.id == requester.id) {
+    handleCancel: function(id, modalID) {
+        this.props.onPickRequesterCancel(id, modalID);
+    },
+    getActionButton: function() {
+        var modalID = "requester-" + this.props.pickRequester.id;
+        if (this.props.picker.id == this.props.pickRequester.requester.id) {
             return (
                 <div>
                     <button
@@ -63,6 +66,32 @@ var PickRequester = React.createClass({
                         <i className="glyphicon glyphicon-remove"></i>&nbsp;
                         Cancel
                     </button>
+                    <div
+                        className="modal fade" id={modalID} tabIndex="-1"
+                        role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                        <div className="modal-dialog modal-sm">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <button
+                                        type="button" className="close" data-dismiss="modal"
+                                        aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h5 className="modal-title" id="modalLabel">
+                                        Cancel Confirmation
+                                    </h5>
+                                </div>
+                                <hr style={{marginTop: "-10px"}}/>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    <button type="button" className="btn btn-primary" 
+                                            onClick={this.handleCancel.bind(this, this.props.pickRequester.id, modalID)}>
+                                        Confirm
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <button
                         type="button"
                         className="btn btn-primary"
@@ -78,7 +107,7 @@ var PickRequester = React.createClass({
                 <div>
                     <button
                         type="button"
-                        className="btn btn-default"
+                        className="btn btn-success"
                         style={{float: 'right'}}
                         data-toggle="modal"
                         data-target={"#" + modalID}>
@@ -103,9 +132,9 @@ var PickRequester = React.createClass({
                                 <hr style={{marginTop: "-10px"}}/>
                                 <div className="modal-body">
                                     <PickupForm 
-                                        pickRequester={pickRequester}
-                                        picker={picker}
-                                        onPickupSubmit={handlePickupSubmit}
+                                        pickRequester={this.props.pickRequester}
+                                        picker={this.props.picker}
+                                        onPickupSubmit={this.props.handlePickupSubmit}
                                         modalID={modalID}/>
                                 </div>
                             </div>
@@ -123,7 +152,6 @@ var PickRequester = React.createClass({
         }
     },
     render: function() {
-        var modalID = "requester-" + this.props.pickRequester.id;
         var requester = this.props.pickRequester.requester;
         var pickType = this.props.pickRequester.pick_type;
         return (
@@ -152,13 +180,7 @@ var PickRequester = React.createClass({
                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <hr />
                     </div>
-                    {this.getActionButton(
-                        this.props.picker,
-                        requester,
-                        this.props.pickRequester,
-                        this.props.handlePickupSubmit,
-                        modalID
-                    )}
+                    {this.getActionButton()}
                 </div>
             </div>
         );
@@ -187,7 +209,7 @@ var PickRequesterForm = React.createClass({
         var university = this.props.university;
         if (!university) {
             return <div></div>;
-        }        
+        }
         return (
             <div className="panel panel-primary">
                 <div className="panel-heading clearfix">
@@ -293,7 +315,8 @@ var PickRequesterList = React.createClass({
                         key={pickRequester.id}
                         pickRequester={pickRequester}
                         picker={this.props.currentUser}
-                        handlePickupSubmit={this.props.handlePickupSubmit} />
+                        handlePickupSubmit={this.props.handlePickupSubmit}
+                        onPickRequesterCancel={this.props.handlePickRequesterCancel} />
                 );
             }
         }
@@ -375,7 +398,7 @@ var PickRequesterPanel = React.createClass({
             }.bind(this)
         });
     },
-    handlePickupSubmit: function(pickup, requester) {
+    handlePickupSubmit: function(pickup, requester, modalID) {
         // Create PickUp
         var pickupData = {
             picker : pickup.picker.id,
@@ -395,7 +418,7 @@ var PickRequesterPanel = React.createClass({
             success: function(data) {
                 var currentPickups = this.state.pickups;
                 currentPickups.push(pickup);
-                this.setState({pickups: currentPickups});
+                // this.setState({pickups: currentPickups});
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(getPickUpCreateAPI(), status, err.toString());
@@ -426,7 +449,9 @@ var PickRequesterPanel = React.createClass({
                         currentRequesters[i].confirmed = true;
                     }
                 }
-                this.setState({requesters: currentRequesters});
+                // this.setState({requesters: currentRequesters});
+                // close dialog on success
+                $('#' + modalID).modal('hide');
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(getPickRequesterMutateAPI(requester.id), status, err.toString());
@@ -470,10 +495,38 @@ var PickRequesterPanel = React.createClass({
                 var currentRequesters = this.state.requesters;
                 currentRequesters.push(pickRequester);
                 this.setState({requesters: currentRequesters});
-                $('#currentUserRequestPost').modal('hide');
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(getPickRequesterCreateAPI(), status, err.toString());
+            }.bind(this)
+        });
+    },
+    handlePickRequesterCancel: function(requestID, modalID) {
+
+        // var index = indexOfElemInArray(this.state.requesters, 'id', requestID);
+        // var currentRequesters = this.state.requesters;
+        // currentRequesters.splice(index, 1);
+        // console.log(currentRequesters);
+        // this.setState({requesters: []});
+        // $('#' + modalID).modal('hide');
+        // return;
+        $.ajax({
+            url: getPickRequesterMutateAPI(requestID),
+            type: 'DELETE',
+            success: function(data) {
+                // var currentRequesters = this.state.requesters;
+                // var pickRequesters = [];
+                // for (var i = 0; i < currentRequesters.length; i++) {
+                //     var pickRequester = currentRequesters[i];
+                //     if (pickRequester.id != requestID) {
+                //         pickRequesters.push(pickRequester);
+                //     }
+                // }
+                // this.setState({requesters: pickRequesters});
+                $('#' + modalID).modal('hide');
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(getPickRequesterMutateAPI(requestID), status, err.toString());
             }.bind(this)
         });
     },
@@ -507,7 +560,8 @@ var PickRequesterPanel = React.createClass({
                         requesters={this.state.requesters}
                         university={this.state.university}
                         handlePickupSubmit={this.handlePickupSubmit}
-                        handlePickRequesterSubmit={this.handlePickRequesterSubmit} />
+                        handlePickRequesterSubmit={this.handlePickRequesterSubmit}
+                        handlePickRequesterCancel={this.handlePickRequesterCancel} />
                 </div>
                 <div className="col-xs-12 col-sm-6 col-md-2 sidebar-offcanvas fadein-effect">
                     <PickRecordList
@@ -521,6 +575,6 @@ var PickRequesterPanel = React.createClass({
 React.render(
     <PickRequesterPanel
         pickupCreateURL="/pickup/api/create/"
-        pollInterval={20000}/>,
+        pollInterval={10000}/>,
     document.getElementById('content')
 );

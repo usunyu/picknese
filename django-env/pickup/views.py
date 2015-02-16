@@ -102,7 +102,7 @@ class PickRequesterCreate(CreateAPIView):
 """
 API PickRequesterMutate RetrieveUpdateDestroyAPIView
 Retrieve, Update, Delete PickRequester
-PickRequesterList.as_view() => pickup/api/requesters/1/
+PickRequesterMutate.as_view() => pickup/api/requesters/mutate/1/
 """
 class PickRequesterMutate(RetrieveUpdateDestroyAPIView):
     serializer_class = PickRequesterMutateSerializer
