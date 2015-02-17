@@ -418,10 +418,8 @@ var PickRequesterPanel = React.createClass({
             type: 'POST',
             data: pickupData,
             success: function(data) {
-                var currentPickups = this.state.pickups;
-                console.log(data);
-                currentPickups.push(data);
-                this.setState({pickups: currentPickups});
+                // reload data
+                this.loadPickUpsFromServer();
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(getPickUpCreateAPI(), status, err.toString());
@@ -445,20 +443,10 @@ var PickRequesterPanel = React.createClass({
             type: 'PUT',
             data: pickRequesterData,
             success: function(data) {
-                // console.log(data);
-                var currentRequesters = this.state.requesters;
-                // console.log(currentRequesters);
-                for (var i = 0; i < currentRequesters.length; i++) {
-                    requester = currentRequesters[i];
-                    if (requester.id == requester.id) {
-                        currentRequesters[i].confirmed = true;
-                        break;
-                    }
-                }
-                // console.log(currentRequesters);
-                this.setState({requesters: currentRequesters});
                 // close dialog on success
                 $('#' + modalID).modal('hide');
+                // reload data
+                this.loadPickRequestersFromServer();
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(getPickRequesterMutateAPI(requester.id), status, err.toString());
@@ -499,9 +487,8 @@ var PickRequesterPanel = React.createClass({
             type: 'POST',
             data: requesterData,
             success: function(data) {
-                var currentRequesters = this.state.requesters;
-                currentRequesters.push(pickRequester);
-                this.setState({requesters: currentRequesters});
+                // reload data
+                this.loadPickRequestersFromServer();
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(getPickRequesterCreateAPI(), status, err.toString());
@@ -509,28 +496,14 @@ var PickRequesterPanel = React.createClass({
         });
     },
     handlePickRequesterCancel: function(requestID, modalID) {
-
-        // var index = indexOfElemInArray(this.state.requesters, 'id', requestID);
-        // var currentRequesters = this.state.requesters;
-        // currentRequesters.splice(index, 1);
-        // console.log(currentRequesters);
-        // this.setState({requesters: []});
-        // $('#' + modalID).modal('hide');
-        // return;
         $.ajax({
             url: getPickRequesterMutateAPI(requestID),
             type: 'DELETE',
             success: function(data) {
-                var currentRequesters = this.state.requesters;
-                var pickRequesters = [];
-                for (var i = 0; i < currentRequesters.length; i++) {
-                    var pickRequester = currentRequesters[i];
-                    if (pickRequester.id != requestID) {
-                        pickRequesters.push(pickRequester);
-                    }
-                }
-                this.setState({requesters: pickRequesters});
+                // close dialog on success
                 $('#' + modalID).modal('hide');
+                // reload data
+                this.loadPickRequestersFromServer();
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(getPickRequesterMutateAPI(requestID), status, err.toString());
@@ -582,6 +555,6 @@ var PickRequesterPanel = React.createClass({
 React.render(
     <PickRequesterPanel
         pickupCreateURL="/pickup/api/create/"
-        pollInterval={10000}/>,
+        pollInterval={20000}/>,
     document.getElementById('content')
 );

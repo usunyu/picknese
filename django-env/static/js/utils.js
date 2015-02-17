@@ -21,16 +21,6 @@ function parseLastNumberInURLPath() {
 	return null;
 }
 
-function indexOfElemInArray(objects, key, value) {
-	for (var i = 0; i < objects.length; i++) {
-		var object = objects[i];
-		if (object[key] == value) {
-			return i;
-		}
-	}
-	return null;
-}
-
 /*
  * Static, Media, URL helper
  * --------------------------------------------------
