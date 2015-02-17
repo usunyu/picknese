@@ -11,7 +11,6 @@ var PickupForm = React.createClass({
             destination : this.props.pickRequester.destination,
             description : this.refs.message.getDOMNode().value.trim(),
         }, this.props.pickRequester, this.props.modalID);
-        return;
     },
     render: function() {
         var requester = this.props.pickRequester.requester;
@@ -52,7 +51,6 @@ var PickupForm = React.createClass({
 var PickRequester = React.createClass({
     handleCancel: function(id, modalID) {
         this.props.onPickRequesterCancel(id, modalID);
-        return;
     },
     getActionButton: function() {
         var modalID = "requester-" + this.props.pickRequester.id;
@@ -159,29 +157,35 @@ var PickRequester = React.createClass({
         return (
             <div className="panel panel-default fadein-effect">
                 <div className="panel-body">
-                    <div className="col-xs-12 col-sm-3 col-md-2 col-lg-2">
-                        <img
-                            className="img-circle box-shadow"
-                            src={requester.profile.avatar ? requester.profile.avatar : getMediaURL() + "media/default_pic.png"}
-                            style={{width: '80px', height: '80px', marginBottom: '15px'}} />
+                    <div className="media">
+                        <div className="media-left">
+                            <a href="#">
+                                <img className="img-circle box-shadow"
+                                     src={requester.profile.avatar ? requester.profile.avatar : getMediaURL() + "media/default_pic.png"}
+                                     style={{width: '80px', height: '80px'}} />
+                            </a>
+                        </div>
+                        <div className="media-body">
+                            <p className="media-heading">
+                                <i className="glyphicon glyphicon-user"></i>
+                                <b> {requester.first_name} {requester.last_name}</b> 
+                                &nbsp;needs a&nbsp;
+                                {pickType == 1 ?
+                                    <span className="label label-success">Flight</span> :
+                                    <span className="label label-primary">General</span>}
+                                &nbsp;pick up
+                            </p>
+                                {pickType == 1 ?
+                                    <div><i className="glyphicon glyphicon-plane"></i> {this.props.pickRequester.flight}</div> :
+                                    <div><i className="glyphicon glyphicon-globe"></i> {this.props.pickRequester.start}</div>}
+                            <p>
+                            </p>
+                            <p><i className="glyphicon glyphicon-map-marker"></i> {this.props.pickRequester.destination}</p>
+                            <p><i className="glyphicon glyphicon-credit-card"></i> ${this.props.pickRequester.price}</p>
+                            <p><i className="glyphicon glyphicon-comment"></i> {this.props.pickRequester.description}</p>
+                        </div>
                     </div>
-                    <div className="col-xs-12 col-sm-9 col-md-10 col-lg-10">
-                        <p>
-                            <i className="glyphicon glyphicon-user"></i>
-                            <b> {requester.first_name} {requester.last_name}</b>
-                            &nbsp;needs a&nbsp;
-                            {pickType == 1 ?
-                                <span className="label label-success">Flight</span> :
-                                <span className="label label-primary">General</span>}
-                            &nbsp;pick up
-                        </p>
-                        <p><i className="glyphicon glyphicon-map-marker"></i> {this.props.pickRequester.destination}</p>
-                        <p><i className="glyphicon glyphicon-credit-card"></i> ${this.props.pickRequester.price}</p>
-                        <p><i className="glyphicon glyphicon-comment"></i> {this.props.pickRequester.description}</p>
-                    </div>
-                    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <hr />
-                    </div>
+                    <hr style={{marginTop: '5px', marginBottom: '15px'}} />
                     {this.getActionButton()}
                 </div>
             </div>
@@ -205,6 +209,22 @@ var PickRequesterForm = React.createClass({
         this.refs.flight1.getDOMNode().value = '';
         this.refs.destination1.getDOMNode().value = '';
         this.refs.description1.getDOMNode().value = '';
+    },
+    handleGeneralSubmit: function(e) {
+        e.preventDefault();
+        var requester = this.props.currentUser;
+        var university = this.props.university;
+        // TODO: auto set price according distance
+        this.props.onPickRequesterSubmit({
+            pick_type : 2,
+            price : 20,
+            start : this.refs.start2.getDOMNode().value.trim(),
+            destination : this.refs.destination2.getDOMNode().value.trim(),
+            description : this.refs.description2.getDOMNode().value.trim(),
+        }, requester, university);
+        this.refs.start2.getDOMNode().value = '';
+        this.refs.destination2.getDOMNode().value = '';
+        this.refs.description2.getDOMNode().value = '';
     },
     render: function() {
         var requester = this.props.currentUser;
@@ -468,6 +488,7 @@ var PickRequesterPanel = React.createClass({
             price : form.price,
             confirmed: false,
             flight : form.flight,
+            start : form.start,
             destination : form.destination,
             description : form.description,
         }
