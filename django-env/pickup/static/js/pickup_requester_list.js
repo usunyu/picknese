@@ -11,6 +11,7 @@ var PickupForm = React.createClass({
             destination : this.props.pickRequester.destination,
             description : this.refs.message.getDOMNode().value.trim(),
         }, this.props.pickRequester, this.props.modalID);
+        return;
     },
     render: function() {
         var requester = this.props.pickRequester.requester;
@@ -51,6 +52,7 @@ var PickupForm = React.createClass({
 var PickRequester = React.createClass({
     handleCancel: function(id, modalID) {
         this.props.onPickRequesterCancel(id, modalID);
+        return;
     },
     getActionButton: function() {
         var modalID = "requester-" + this.props.pickRequester.id;
@@ -417,8 +419,9 @@ var PickRequesterPanel = React.createClass({
             data: pickupData,
             success: function(data) {
                 var currentPickups = this.state.pickups;
-                currentPickups.push(pickup);
-                // this.setState({pickups: currentPickups});
+                console.log(data);
+                currentPickups.push(data);
+                this.setState({pickups: currentPickups});
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(getPickUpCreateAPI(), status, err.toString());
@@ -442,14 +445,18 @@ var PickRequesterPanel = React.createClass({
             type: 'PUT',
             data: pickRequesterData,
             success: function(data) {
+                // console.log(data);
                 var currentRequesters = this.state.requesters;
+                // console.log(currentRequesters);
                 for (var i = 0; i < currentRequesters.length; i++) {
                     requester = currentRequesters[i];
                     if (requester.id == requester.id) {
                         currentRequesters[i].confirmed = true;
+                        break;
                     }
                 }
-                // this.setState({requesters: currentRequesters});
+                // console.log(currentRequesters);
+                this.setState({requesters: currentRequesters});
                 // close dialog on success
                 $('#' + modalID).modal('hide');
             }.bind(this),
@@ -514,15 +521,15 @@ var PickRequesterPanel = React.createClass({
             url: getPickRequesterMutateAPI(requestID),
             type: 'DELETE',
             success: function(data) {
-                // var currentRequesters = this.state.requesters;
-                // var pickRequesters = [];
-                // for (var i = 0; i < currentRequesters.length; i++) {
-                //     var pickRequester = currentRequesters[i];
-                //     if (pickRequester.id != requestID) {
-                //         pickRequesters.push(pickRequester);
-                //     }
-                // }
-                // this.setState({requesters: pickRequesters});
+                var currentRequesters = this.state.requesters;
+                var pickRequesters = [];
+                for (var i = 0; i < currentRequesters.length; i++) {
+                    var pickRequester = currentRequesters[i];
+                    if (pickRequester.id != requestID) {
+                        pickRequesters.push(pickRequester);
+                    }
+                }
+                this.setState({requesters: pickRequesters});
                 $('#' + modalID).modal('hide');
             }.bind(this),
             error: function(xhr, status, err) {

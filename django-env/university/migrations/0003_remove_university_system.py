@@ -7,12 +7,12 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pickup', '0004_auto_20150104_0612'),
+        ('university', '0002_auto_20150217_0551'),
     ]
 
     operations = [
-        migrations.AlterUniqueTogether(
-            name='pickprovider',
-            unique_together=set([('picker', 'university')]),
+        migrations.RemoveField(
+            model_name='university',
+            name='system',
         ),
     ]

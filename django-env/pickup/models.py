@@ -34,7 +34,7 @@ class PickRequester(models.Model):
 class PickUp(models.Model):
 	picker = models.ForeignKey(User, related_name='pickup_picker')
 	pickee = models.ForeignKey(User, related_name='pickup_pickee')
-	university = models.ForeignKey(University)
+	university = models.ForeignKey(University, null=True, blank=True)
 	type_choices = (
 		(1, 'Flight'),
 		(2, 'General'),
@@ -45,9 +45,6 @@ class PickUp(models.Model):
 	destination = models.CharField(max_length=200, default='Near Campus')
 	# requester description
 	description = models.TextField('Message', null=True, blank=True)
-
-	class Meta:
-		unique_together = (("picker", "pickee", "flight"),)
 
 	def __str__(self):	# __unicode__ on Python 2
 		return 'Picker: %s, Pickee: %s' % (self.picker.username, self.pickee.username)

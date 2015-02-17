@@ -7,14 +7,14 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pickup', '0007_auto_20150105_0656'),
+        ('pickup', '0002_auto_20150217_0551'),
     ]
 
     operations = [
-        migrations.AddField(
+        migrations.AlterField(
             model_name='pickup',
-            name='description',
-            field=models.TextField(null=True, blank=True),
+            name='university',
+            field=models.ForeignKey(blank=True, to='university.University', null=True),
             preserve_default=True,
         ),
     ]
