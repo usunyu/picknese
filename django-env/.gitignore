@@ -57,8 +57,5 @@ target/
 **/media/*
 !default_pic.png
 
-# Static
-**/static/*
-
 # Settings
 local_settings.py
