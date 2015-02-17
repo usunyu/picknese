@@ -175,10 +175,10 @@ var PickRequester = React.createClass({
                                     <span className="label label-primary">General</span>}
                                 &nbsp;pick up
                             </p>
+                            <p>
                                 {pickType == 1 ?
                                     <div><i className="glyphicon glyphicon-plane"></i> {this.props.pickRequester.flight}</div> :
                                     <div><i className="glyphicon glyphicon-globe"></i> {this.props.pickRequester.start}</div>}
-                            <p>
                             </p>
                             <p><i className="glyphicon glyphicon-map-marker"></i> {this.props.pickRequester.destination}</p>
                             <p><i className="glyphicon glyphicon-credit-card"></i> ${this.props.pickRequester.price}</p>

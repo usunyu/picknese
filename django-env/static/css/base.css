@@ -118,6 +118,7 @@ ul.inline-list li:last-child {
 ul.inline-list li a {
   color: white;
   text-transform: uppercase;
+  font-size: 90%;
  
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
@@ -127,7 +128,7 @@ ul.inline-list li a {
 }
 
 ul.inline-list li.active a {
-    font-size: 110%;
+    font-size: 100%;
     font-weight: bold;
 }
 
