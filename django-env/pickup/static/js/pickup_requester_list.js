@@ -427,6 +427,7 @@ var PickRequesterPanel = React.createClass({
             pickee : pickup.pickee.id,
             university : pickup.university.id,
             pickType : pickup.pickType,
+            start : pickup.start,
             flight : pickup.flight,
             price : pickup.price,
             destination : pickup.destination,
