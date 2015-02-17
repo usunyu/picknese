@@ -127,6 +127,7 @@ ul.inline-list li a {
 }
 
 ul.inline-list li.active a {
+    font-size: 110%;
     font-weight: bold;
 }
 
