@@ -1,13 +1,5 @@
 from django import forms
-from models import PickProvider, PickRequester, PickUp
-
-class PickProviderForm(forms.ModelForm):
-	
-	class Meta:
-		model = PickProvider
-		fields = (
-			'university',
-		)
+from models import PickRequester, PickUp
 
 class PickRequesterForm(forms.ModelForm):
 	# TODO: dynamic form

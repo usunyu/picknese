@@ -2,18 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from university.models import University
 
-class PickProvider(models.Model):
-	picker = models.ForeignKey(User)
-	university = models.ForeignKey(University)
-	# TODO: check listed, user can unlist, when listed, notify
-	listed = models.BooleanField(default=True)
-
-	class Meta:
-		unique_together = (("picker", "university"),)
-
-	def __str__(self):	# __unicode__ on Python 2
-		return 'Picker: %s, University: %s' % (self.picker.username, self.university)
-
 class PickRequester(models.Model):
 	requester = models.ForeignKey(User, related_name='pick_pequester')
 	university = models.ForeignKey(University)

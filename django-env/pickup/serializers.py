@@ -1,12 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 from userprofile.serializers import UserSerializer
 from university.serializers import UniversitySerializer
-from pickup.models import PickProvider, PickRequester, PickUp
-
-class PickProviderSerializer(ModelSerializer):
-
-    class Meta:
-        model = PickProvider
+from pickup.models import PickRequester, PickUp
 
 """
 Read Only Endpoint for PickRequester

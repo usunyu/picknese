@@ -8,15 +8,11 @@ from rest_framework.generics import (ListCreateAPIView, ListAPIView, CreateAPIVi
                                      RetrieveUpdateDestroyAPIView)
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from university.models import University
-from pickup.models import PickProvider, PickRequester, PickUp
-from pickup.forms import PickProviderForm, PickRequesterForm, PickUpForm
+from pickup.models import PickRequester, PickUp
+from pickup.forms import PickRequesterForm, PickUpForm
 from pickup.serializers import (PickRequesterListSerializer, PickRequesterMutateSerializer,
                                 PickUpListSerializer, PickUpMutateSerializer)
 
-# PickProvider message
-CREATE_PICK_PROVIDER_SUCCESS_MESSAGE = ('Congratulation! You successful register as pick up provider, ' + 
-                                        'we will inform you when someone need help.')
-CREATE_PICK_PROVIDER_ERROR_MESSAGE = 'Sorry! Register pick up provider failed, please try again later.'
 # PickRequester message
 CREATE_PICK_REQUESTER_SUCCESS_MESSAGE = ('Congratulation! You successful post your request, we will inform' + 
                                          ' you if someone help you.')
@@ -149,46 +145,4 @@ class PickUpMutate(RetrieveUpdateDestroyAPIView):
     serializer_class = PickUpMutateSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset = PickUp.objects.all()
-
-"""
-create PickProvider
-pickup.views.provide_pick_provider university_id => pickup/provider/create/1
-"""
-@login_required
-def provide_pick_provider(request, university_id=0):
-    user = request.user
-    if request.POST:
-        form = PickProviderForm(request.POST)
-        if form.is_valid():
-            university = form.cleaned_data['university']
-            try:
-                pick_provider = form.save(commit=False)
-                pick_provider.picker = user
-                pick_provider.save()
-                messages.success(request, CREATE_PICK_PROVIDER_SUCCESS_MESSAGE)
-                return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university.id,)))
-            except Exception as e:
-                # TODO: logging
-                # print '%s (%s)' % (e.message, type(e))
-                messages.error(request, CREATE_PICK_PROVIDER_ERROR_MESSAGE)
-                return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university.id,)))
-    elif university_id:
-        form = PickProviderForm(initial={'university': university_id})
-    else:
-        form = PickProviderForm()
-
-    context = {}
-    context.update(csrf(request))
-    context['form'] = form
-    return render(request, 'provide_pick_provider.html', context)
-
-"""
-delete PickProvider from provider list view
-pickup.views.cancel_pick_provider university_id => pickup/provider/delete/1
-"""
-def cancel_pick_provider(request, university_id):
-    user = request.user
-    university = get_object_or_404(University, id=university_id)
-    PickProvider.objects.filter(picker=user.id, university_id=university.id).delete()
-    return HttpResponseRedirect(reverse('pickup.views.pick_requester_list', args=(university_id,)))
 

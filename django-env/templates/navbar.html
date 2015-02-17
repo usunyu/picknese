@@ -74,11 +74,11 @@
                         <li>
                         <!-- with associated university -->
                         {% if university %}
-                            <a href="{% url 'pickup.views.provide_pick_provider' university.id %}">
+                            <a href="#">
                             <i class="glyphicon glyphicon-plane"></i>&nbsp; Pick Up</a>
                         <!-- if not in pick up requesters page, need select university first -->
                         {% else %}
-                            <a href="{% url 'pickup.views.provide_pick_provider' %}">
+                            <a href="#">
                                 <i class="glyphicon glyphicon-plane"></i>&nbsp; Pick Up
                             </a>
                         {% endif %}
