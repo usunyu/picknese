@@ -161,7 +161,7 @@ var PickRequester = React.createClass({
                         <div className="media-left">
                             <a href="#">
                                 <img className="img-circle box-shadow"
-                                     src={requester.profile.avatar ? requester.profile.avatar : getMediaURL() + "media/default_pic.png"}
+                                     src={requester.profile.avatar ? requester.profile.avatar : getProfileDefaultPic()}
                                      style={{width: '80px', height: '80px'}} />
                             </a>
                         </div>
@@ -169,7 +169,7 @@ var PickRequester = React.createClass({
                             <p className="media-heading">
                                 <i className="glyphicon glyphicon-user"></i>
                                 <b> {requester.first_name} {requester.last_name}</b> 
-                                &nbsp;needs a&nbsp;
+                                &nbsp;needs&nbsp;
                                 {pickType == 1 ?
                                     <span className="label label-success">Flight</span> :
                                     <span className="label label-primary">General</span>}

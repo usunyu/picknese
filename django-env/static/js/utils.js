@@ -55,6 +55,10 @@ function getPickupURL(u_id) {
 	return "/pickup/requesters/" + u_id + "/";
 }
 
+function getProfileDefaultPic() {
+	return getMediaURL() + 'media/default_pic.png';
+}
+
 /*
  * API helper
  * --------------------------------------------------
