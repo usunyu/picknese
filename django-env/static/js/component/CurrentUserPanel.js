@@ -42,7 +42,7 @@ var CurrentUserPanel = React.createClass({
                 <div className="list-group">
                     <a href={getMyPickupURL(this.props.university.id)}
                        className={"list-group-item " + checkActiveTab(getMyPickupBaseURL())}>
-                        <span className="badge">14</span>
+                        <span className="badge">{this.props.currentUserPickCount}</span>
                         <img src={getGlyphiconsAirplaneIcon()} style={{width: '15px'}} /> &nbsp; My Pick Up List
                     </a>
                     <a href="#"

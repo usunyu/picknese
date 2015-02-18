@@ -134,6 +134,10 @@ function getCurrentUserAPI() {
     return "/accounts/api/me/";
 }
 
+function getCurrentUserPickCountAPI(u_id) {
+    return "/pickup/api/mylist/count/" + u_id + "/";
+}
+
 function getPickRequesterListAPI(u_id) {
     return "/pickup/api/requesters/" + u_id + "/";
 }

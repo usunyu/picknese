@@ -15,4 +15,5 @@ urlpatterns = patterns('',
     url(r'^api/mutate/(?P<pk>\d+)/$', apis.PickUpMutate.as_view()),
     # My Pick Up List
     url(r'^mylist/(?P<university_id>\d+)/$', views.pickup_my_list),
+    url(r'^api/mylist/count/(?P<university_id>\d+)/$', apis.MyPickUpRequestCount.as_view()),
 )

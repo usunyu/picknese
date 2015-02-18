@@ -98,6 +98,7 @@ var MyPickListPanel = React.createClass({
                 <div className="col-xs-12 col-sm-4 col-md-3 fadein-effect">
                     <CurrentUserPanel
                         currentUser={this.state.currentUser}
+                        currentUserPickCount={this.state.currentUserPickCount}
                         university={this.state.university} />
                 </div>
                 <div className="col-xs-12 col-sm-8 col-md-7">
