@@ -36,6 +36,14 @@ function getProfileDefaultPic() {
     return getMediaURL() + 'media/default_pic.png';
 }
 
+function getGlyphiconsCarIcon() {
+    return getStaticURL() + 'images/glyphicons/png/glyphicons-6-car.png';
+}
+
+function getGlyphiconsAirplaneIcon() {
+    return getStaticURL() + 'images/glyphicons/png/glyphicons-39-airplane.png';
+}
+
 /*
  * Util function helper
  * --------------------------------------------------

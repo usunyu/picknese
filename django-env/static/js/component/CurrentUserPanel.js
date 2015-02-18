@@ -13,10 +13,6 @@ var CurrentUserPanel = React.createClass({
         }
         var currentUser = this.props.currentUser;
         var avatar = currentUser.profile.avatar;
-
-        var imgurl = getStaticURL() + 'images/glyphicons/png/glyphicons-6-car.png';
-        var imgurl2 = getStaticURL() + 'images/glyphicons/png/glyphicons-39-airplane.png';
-
         return (
             <div className="panel panel-primary clearfix">
                 <div className="panel-heading" style={{minHeight: '80px'}}></div>
@@ -39,12 +35,12 @@ var CurrentUserPanel = React.createClass({
                     </div>
                 </div>
                 <div className="list-group">
-                    <a href="#" className="list-group-item">
+                    <a href="#" className="list-group-item active">
                         <span className="badge">14</span>
-                        <img src={imgurl2} style={{width: '15px'}} /> &nbsp; My Pick Up List
+                        <img src={getGlyphiconsAirplaneIcon()} style={{width: '15px'}} /> &nbsp; My Pick Up List
                     </a>
                     <a href="#" className="list-group-item">
-                        <img src={imgurl} style={{width: '15px'}} /> &nbsp; My Carpool List
+                        <img src={getGlyphiconsCarIcon()} style={{width: '15px'}} /> &nbsp; My Carpool List
                     </a>
                 </div>
             </div>

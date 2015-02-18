@@ -1,3 +1,4 @@
+// Not used
 var NavbarPanel = React.createClass({
     getInitialState: function() {
         return {
