@@ -50,9 +50,11 @@ var PickRequesterActionMixin = {
             success: function(data) {
                 // reload data
                 this.loadPickRequestersFromServer();
+                popupSuccessMessage("You have successfully post your request. Please waiting for your picker to contact you!");
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(getPickRequesterCreateAPI(), status, err.toString());
+                popupDangerMessage("Oops, some errors happen, please try again later.")
             }.bind(this)
         });
     },
@@ -65,9 +67,11 @@ var PickRequesterActionMixin = {
                 $('#' + modalID).modal('hide');
                 // reload data
                 this.loadPickRequestersFromServer();
+                popupWarningMessage("You have successfully cancel your request.")
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(getPickRequesterMutateAPI(requestID), status, err.toString());
+                popupDangerMessage("Oops, some errors happen, please try again later.");
             }.bind(this)
         });
     },

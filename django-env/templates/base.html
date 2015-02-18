@@ -25,23 +25,7 @@
         <!-- Navbar -->
         {% include 'navbar.html' %}
         <!-- Messages -->
-        <div id="alert-messages" class="text-center">
-        {% if messages %}
-        {% for message in messages %}
-            <div
-            {% if message.tags == "info" %} class="alert alert-info alert-dismissible" {% endif %}
-            {% if message.tags == "success" %} class="alert alert-success alert-dismissible" {% endif %}
-            {% if message.tags == "warning" %} class="alert alert-warning alert-dismissible" {% endif %}
-            {% if message.tags == "error" %} class="alert alert-danger alert-dismissible" {% endif %}
-                role="alert" >
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                {{ message }}
-            </div>
-        {% endfor %}
-        {% endif %}
-        </div>
+        <div id="messages"/>
         <!-- Jumbotron -->
         <div>
         {% block jumbotron %}

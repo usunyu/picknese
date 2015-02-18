@@ -25,15 +25,31 @@ function parseLastNumberInURLPath() {
  * Alert Message
  * --------------------------------------------------
  */
-function popupMessage(message) {
-    // console.log(message);
-    // $("#alert-messages").stop(false, true).hide().text(message)
-    // .slideDown("fast").delay(5000).slideUp();
+function popupMessage(message, type) {
+    var alertType = 'alert-' + type;
+    $("#alert-messages").remove();
+    var alertDom = "<div id='alert-messages' class='alert " + alertType + " text-center' role='alert'></div>";
+    $("#messages").append(alertDom);
+    $("#alert-messages").stop(false, true).hide().text(message)
+    .slideDown("fast").delay(5000).slideUp('slow', function() {
+        $(this).remove();
+    });
+}
 
-    // $("#alert-messages").addClass('alert-danger').stop(false, true).hide().text(message)
-    // .slideDown("fast").delay(2000).slideUp('slow', function() {
-    //     $(this).removeClass('alert-danger');
-    // });
+function popupSuccessMessage(message) {
+    popupMessage(message, 'success');
+}
+
+function popupWarningMessage(message) {
+    popupMessage(message, 'warning');
+}
+
+function popupDangerMessage(message) {
+    popupMessage(message, 'danger');
+}
+
+function popupInfoMessage(message) {
+    popupMessage(message, 'info');
 }
 
 /*

@@ -63,9 +63,11 @@ var PickUpActionMixin = {
                 $('#' + modalID).modal('hide');
                 // reload data
                 this.loadPickRequestersFromServer();
+                popupSuccessMessage("Thanks, you have successfully offer your pick, please contact your requester.");
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(getPickRequesterMutateAPI(requester.id), status, err.toString());
+                popupDangerMessage("Oops, some errors happen, please try again later.")
             }.bind(this)
         });
     },
