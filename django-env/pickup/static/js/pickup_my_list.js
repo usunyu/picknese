@@ -24,8 +24,13 @@ var MyPickUp = React.createClass({
                             <p className="media-heading">
                                 <i className="glyphicon glyphicon-user"></i>
                                 <b> {picker.first_name} {picker.last_name}</b>
-                                &nbsp;will pick up&nbsp;
-                                <b> {pickee.first_name} {pickee.last_name}</b> 
+                                &nbsp;will offer&nbsp;
+                                <b> {pickee.first_name} {pickee.last_name}</b>
+                                &nbsp;a&nbsp;
+                                {pickType == 1 ?
+                                    <span className="label label-success">Flight</span> :
+                                    <span className="label label-primary">General</span>}
+                                &nbsp;pick up
                             </p>
                             <p>
                                 {pickType == 1 ?

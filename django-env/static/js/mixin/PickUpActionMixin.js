@@ -24,7 +24,7 @@ var PickUpActionMixin = {
             picker : pickup.picker.id,
             pickee : pickup.pickee.id,
             university : pickup.university.id,
-            pickType : pickup.pickType,
+            pick_type : pickup.pickType,
             start : pickup.start,
             flight : pickup.flight,
             price : pickup.price,

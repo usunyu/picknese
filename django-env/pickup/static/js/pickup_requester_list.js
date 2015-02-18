@@ -7,6 +7,7 @@ var PickupForm = React.createClass({
             university : this.props.pickRequester.university,
             pickType : this.props.pickRequester.pick_type,
             flight : this.props.pickRequester.flight,
+            start : this.props.pickRequester.start,
             price : this.props.pickRequester.price,
             destination : this.props.pickRequester.destination,
             description : this.refs.message.getDOMNode().value.trim(),
