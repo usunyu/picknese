@@ -1,16 +1,20 @@
-// Required:
-// Set: pollInterval
+// Required: pollInterval
+// Optional: myList => true indicate current user's list
 var PickRequesterActionMixin = {
 	loadPickRequestersFromServer: function() {
         var universityID = parseLastNumberInURLPath();
+        var apiURL = getPickRequesterListAPI(universityID);
+        if (this.props.myList) {
+            apiURL = getMyPickRequestListAPI(universityID);
+        }
         $.ajax({
-            url: getPickRequesterListAPI(universityID),
+            url: apiURL,
             dataType: 'json',
             success: function(data) {
                 this.setState({requesters: data});
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(getPickRequesterListAPI(universityID), status, err.toString());
+                console.error(apiURL, status, err.toString());
             }.bind(this)
         });
     },

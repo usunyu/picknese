@@ -70,6 +70,23 @@ class PickUpList(generics.ListAPIView):
         return models.PickUp.objects.filter(university=university_id)
 
 """
+MyPickUpList ListAPIView
+Retrieve PickUps based on University ID and Request User ID
+MyPickUpList.as_view() => pickup/api/mylist/1/
+"""
+class MyPickUpList(generics.ListAPIView):
+    serializer_class = serializers.PickUpListSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def get_queryset(self):
+        user = self.request.user
+        university_id = self.kwargs['university_id']
+        return models.PickUp.objects.filter(
+            Q(university=university_id) & 
+            (Q(picker=user.id) | Q(pickee=user.id))
+        )
+
+"""
 PickUpCreate CreateAPIView
 Create PickUp
 PickUpCreate.as_view() => pickup/api/create/

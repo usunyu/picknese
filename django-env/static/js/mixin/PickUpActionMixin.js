@@ -1,17 +1,20 @@
-// Required:
-// Set: pollInterval
-// Dependency: PickRequesterActionMixin
+// Required: pollInterval
+// Optional: myList => true indicate current user's list
 var PickUpActionMixin = {
 	loadPickUpsFromServer: function() {
         var universityID = parseLastNumberInURLPath();
+        var apiURL = getPickUpListAPI(universityID);
+        if (this.props.myList) {
+            apiURL = getMyPickUpListAPI(universityID);
+        }
         $.ajax({
-            url: getPickUpListAPI(universityID),
+            url: apiURL,
             dataType: 'json',
             success: function(data) {
                 this.setState({pickups: data});
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(getPickUpListAPI(universityID), status, err.toString());
+                console.error(apiURL, status, err.toString());
             }.bind(this)
         });
     },
@@ -61,8 +64,12 @@ var PickUpActionMixin = {
             success: function(data) {
                 // close dialog on success
                 $('#' + modalID).modal('hide');
-                // reload data
-                this.loadPickRequestersFromServer();
+                // try reload data
+                if (this.loadPickRequestersFromServer) {
+                    this.loadPickRequestersFromServer();
+                } else {
+                    console.error("Try load PickRequesters in improper state.");
+                }
                 popupSuccessMessage("Thanks, you have successfully offer your pick, please contact your requester.");
             }.bind(this),
             error: function(xhr, status, err) {

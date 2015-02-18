@@ -154,6 +154,10 @@ function getPickUpListAPI(u_id) {
     return "/pickup/api/" + u_id + "/";
 }
 
+function getMyPickUpListAPI(u_id) {
+    return "/pickup/api/mylist/" + u_id + "/";
+}
+
 function getPickUpCreateAPI() {
     return "/pickup/api/create/";
 }

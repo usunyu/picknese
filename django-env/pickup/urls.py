@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     url(r'^api/requesters/mutate/(?P<pk>\d+)/$', apis.PickRequesterMutate.as_view()),
     # Pick Up
     url(r'^api/(?P<university_id>\d+)/$', apis.PickUpList.as_view()),
+    url(r'^api/mylist/(?P<university_id>\d+)/$', apis.MyPickUpList.as_view()),
     url(r'^api/create/$', apis.PickUpCreate.as_view()),
     url(r'^api/mutate/(?P<pk>\d+)/$', apis.PickUpMutate.as_view()),
     # My Pick Up List
