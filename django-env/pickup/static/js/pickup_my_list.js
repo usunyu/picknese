@@ -9,8 +9,7 @@ var MyPickListPanel = React.createClass({
                  style={{marginTop: '10px'}}>
                 <div className="col-xs-12 col-sm-4 col-md-3 fadein-effect">
                     <CurrentUserPanel
-                        currentUser={this.state.currentUser}
-                        university={this.state.university} />
+                        currentUser={this.state.currentUser} />
                 </div>
             </div>
         );
