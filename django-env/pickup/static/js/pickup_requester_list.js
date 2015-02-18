@@ -402,7 +402,8 @@ var PickRequesterPanel = React.createClass({
                  style={{marginTop: '10px'}}>
                 <div className="col-xs-12 col-sm-4 col-md-3 fadein-effect">
                     <CurrentUserPanel
-                        currentUser={this.state.currentUser} />
+                        currentUser={this.state.currentUser}
+                        university={this.state.university} />
                 </div>
                 <div className="col-xs-12 col-sm-8 col-md-7">
                     <PickRequesterList

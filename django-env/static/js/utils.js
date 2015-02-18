@@ -16,20 +16,36 @@ function getMediaURL() {
     // return 'https://picknese-s3.s3.amazonaws.com/';
 }
 
+function getUniversityBaseURL() {
+    return "/universities/";
+}
+
+function getUniversityURL(u_id) {
+    return getUniversityBaseURL() + u_id + "/";
+}
+
+function getPickupBaseURL() {
+    return "/pickup/requesters/";
+}
+
+function getPickupURL(u_id) {
+    return getPickupBaseURL() + u_id + "/";
+}
+
+function getMyPickupBaseURL() {
+    return "/pickup/mylist/"; 
+}
+
+function getMyPickupURL(u_id) {
+    return getMyPickupBaseURL() + u_id + "/";
+}
+
 function getUniversityLogo(u_short) {
     return getStaticURL() + 'images/campus/' + u_short + "/logo.jpg";
 }
 
 function getUniversityWide(u_short) {
     return getStaticURL() + 'images/campus/' + u_short + "/wide.jpg";
-}
-
-function getUniversityURL(u_id) {
-    return "/universities/" + u_id + "/";
-}
-
-function getPickupURL(u_id) {
-    return "/pickup/requesters/" + u_id + "/";
 }
 
 function getProfileDefaultPic() {
@@ -99,6 +115,18 @@ function popupInfoMessage(message) {
 }
 
 /*
+ * Check selected tab
+ * --------------------------------------------------
+ */
+function checkActiveTab(contain) {
+    var pathname = window.location.pathname;
+    if (pathname.search(contain) != -1) {
+        return 'active';
+    }
+    return null;
+}
+
+/*
  * API helper
  * --------------------------------------------------
  */
@@ -108,6 +136,10 @@ function getCurrentUserAPI() {
 
 function getPickRequesterListAPI(u_id) {
     return "/pickup/api/requesters/" + u_id + "/";
+}
+
+function getMyPickRequestListAPI(u_id) {
+    return "/pickup/api/requesters/mylist/" + u_id + "/";
 }
 
 function getPickRequesterCreateAPI() {

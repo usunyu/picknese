@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework import generics, permissions
 from pickup import serializers, models
 
@@ -13,6 +14,24 @@ class PickRequesterList(generics.ListAPIView):
     def get_queryset(self):
         university_id = self.kwargs['university_id']
         return models.PickRequester.objects.filter(university=university_id, confirmed=False)
+
+"""
+MyPickRequestList ListAPIView
+Retrieve PickRequesters based on University ID and Request User ID
+MyPickRequestList.as_view() => pickup/api/requesters/mylist/1/
+"""
+class MyPickRequestList(generics.ListAPIView):
+    serializer_class = serializers.PickRequesterListSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def get_queryset(self):
+        user = self.request.user
+        university_id = self.kwargs['university_id']
+        return models.PickRequester.objects.filter(
+            Q(university=university_id) & 
+            Q(requester=user.id) &
+            Q(confirmed = False)
+        )
 
 """
 PickRequesterCreate CreateAPIView

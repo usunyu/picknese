@@ -1,11 +1,16 @@
 var CurrentUserPanel = React.createClass({
     render: function() {
-        if (!this.props.currentUser || !this.props.currentUser.id) {
+        if (!this.props.university || !this.props.currentUser) {
+            return (
+                <div className="panel panel-default" />
+            );
+        }
+        if (!this.props.currentUser.id) {
             return (
                 <div className="panel panel-default">
                     <div className="panel-body">
                         <hr />
-                        <p>Hello World, please login :)</p>
+                        <p>Hi, please login to join us :)</p>
                     </div>
                     <hr />
                 </div>
@@ -35,11 +40,13 @@ var CurrentUserPanel = React.createClass({
                     </div>
                 </div>
                 <div className="list-group">
-                    <a href="#" className="list-group-item active">
+                    <a href={getMyPickupURL(this.props.university.id)}
+                       className={"list-group-item " + checkActiveTab(getMyPickupBaseURL())}>
                         <span className="badge">14</span>
                         <img src={getGlyphiconsAirplaneIcon()} style={{width: '15px'}} /> &nbsp; My Pick Up List
                     </a>
-                    <a href="#" className="list-group-item">
+                    <a href="#"
+                       className="list-group-item">
                         <img src={getGlyphiconsCarIcon()} style={{width: '15px'}} /> &nbsp; My Carpool List
                     </a>
                 </div>

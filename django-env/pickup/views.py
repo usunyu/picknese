@@ -3,11 +3,11 @@ from university.models import University
 
 """
 Show My Pick Up List
-pickup.views.pick_my_list => pickup/mylist/1/
+pickup.views.pickup_my_list => pickup/mylist/1/
 """
-def pick_my_list(request, university_id):
+def pickup_my_list(request, university_id):
     university = get_object_or_404(University, id=university_id)
-    return render(request, 'pick_my_list.html', {})
+    return render(request, 'pickup_my_list.html', {})
 
 """
 Show PickRequester List
