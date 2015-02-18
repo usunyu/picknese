@@ -12,6 +12,11 @@ var LoadUniversityMixin = {
             }.bind(this)
         });
     },
+    getInitialState: function() {
+        return {
+            university: null,
+        };
+    },
     componentDidMount: function() {
         this.loadUniversityFromServer();
     },

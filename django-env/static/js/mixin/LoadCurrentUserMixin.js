@@ -11,6 +11,11 @@ var LoadCurrentUserMixin = {
             }.bind(this)
         });
     },
+    getInitialState: function() {
+        return {
+            currentUser: null,
+        };
+    },
     componentDidMount: function() {
         this.loadCurrentUserFromServer();
     },

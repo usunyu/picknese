@@ -106,6 +106,14 @@ class PickRequesterMutate(RetrieveUpdateDestroyAPIView):
     queryset = PickRequester.objects.all()
 
 """
+Show My Pick Up List
+pickup.views.pick_my_list => pickup/mylist/
+"""
+def pick_my_list(request, university_id):
+    university = get_object_or_404(University, id=university_id)
+    return render(request, 'pick_my_list.html', {})
+
+"""
 Show PickRequester List
 pickup.views.pick_requester_list => pickup/requesters/1/
 """

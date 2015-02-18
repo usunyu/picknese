@@ -1,11 +1,5 @@
 var JumbotronPanel = React.createClass({
     mixins: [LoadUniversityMixin],
-    getInitialState: function() {
-        return {
-            university: null,
-        };
-    },
-
     render: function() {
         var university = this.state.university;
         if (!university) {

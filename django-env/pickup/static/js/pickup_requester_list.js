@@ -392,161 +392,10 @@ var PickRecordList = React.createClass({
 });
 
 var PickRequesterPanel = React.createClass({
-    mixins: [LoadCurrentUserMixin, 
-             LoadUniversityMixin],
-    loadPickRequestersFromServer: function() {
-        var universityID = parseLastNumberInURLPath();
-        $.ajax({
-            url: getPickRequesterListAPI(universityID),
-            dataType: 'json',
-            success: function(data) {
-                this.setState({requesters: data});
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(getPickRequesterListAPI(universityID), status, err.toString());
-            }.bind(this)
-        });
-    },
-    loadPickUpsFromServer: function() {
-        var universityID = parseLastNumberInURLPath();
-        $.ajax({
-            url: getPickUpListAPI(universityID),
-            dataType: 'json',
-            success: function(data) {
-                this.setState({pickups: data});
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(getPickUpListAPI(universityID), status, err.toString());
-            }.bind(this)
-        });
-    },
-    handlePickupSubmit: function(pickup, requester, modalID) {
-        // Create PickUp
-        var pickupData = {
-            picker : pickup.picker.id,
-            pickee : pickup.pickee.id,
-            university : pickup.university.id,
-            pickType : pickup.pickType,
-            start : pickup.start,
-            flight : pickup.flight,
-            price : pickup.price,
-            destination : pickup.destination,
-            description : pickup.description,
-        };
-        $.ajax({
-            url: getPickUpCreateAPI(),
-            dataType: 'json',
-            type: 'POST',
-            data: pickupData,
-            success: function(data) {
-                // reload data
-                this.loadPickUpsFromServer();
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(getPickUpCreateAPI(), status, err.toString());
-            }.bind(this)
-        });
-        // Update PickRequester confirmed field
-        var pickRequesterData = {
-            id : requester.id,
-            pick_type : requester.pick_type,
-            price : requester.price,
-            flight : requester.flight,
-            destination : requester.destination,
-            confirmed : true,
-            description : requester.description,
-            requester : requester.requester.id,
-            university : requester.university.id,
-        };
-        $.ajax({
-            url: getPickRequesterMutateAPI(requester.id),
-            dataType: 'json',
-            type: 'PUT',
-            data: pickRequesterData,
-            success: function(data) {
-                // close dialog on success
-                $('#' + modalID).modal('hide');
-                // reload data
-                this.loadPickRequestersFromServer();
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(getPickRequesterMutateAPI(requester.id), status, err.toString());
-            }.bind(this)
-        });
-    },
-    handlePickRequesterSubmit: function(form, requester, university) {
-        // Create Pick Requester
-        var destination = form.destination;
-        if (!destination) {
-            // TODO, show error message
-            alert('Please input destination');
-            return;
-        }
-        var requesterData = {
-            requester : requester.id,
-            university : university.id,
-            pick_type : form.pick_type,
-            price : form.price,
-            confirmed: false,
-            flight : form.flight,
-            start : form.start,
-            destination : form.destination,
-            description : form.description,
-        }
-        var pickRequester = {
-            requester : requester,
-            university : university,
-            pick_type : form.pick_type,
-            price : form.price,
-            confirmed: false,
-            flight : form.flight,
-            destination : form.destination,
-            description : form.description,
-        }
-        $.ajax({
-            url: getPickRequesterCreateAPI(),
-            dataType: 'json',
-            type: 'POST',
-            data: requesterData,
-            success: function(data) {
-                // reload data
-                this.loadPickRequestersFromServer();
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(getPickRequesterCreateAPI(), status, err.toString());
-            }.bind(this)
-        });
-    },
-    handlePickRequesterCancel: function(requestID, modalID) {
-        $.ajax({
-            url: getPickRequesterMutateAPI(requestID),
-            type: 'DELETE',
-            success: function(data) {
-                // close dialog on success
-                $('#' + modalID).modal('hide');
-                // reload data
-                this.loadPickRequestersFromServer();
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(getPickRequesterMutateAPI(requestID), status, err.toString());
-            }.bind(this)
-        });
-    },
-    getInitialState: function() {
-        return {
-            requesters: [],
-            pickups: [],
-            currentUser: null,
-            university: null,
-        };
-    },
-    componentDidMount: function() {
-        this.loadPickRequestersFromServer();
-        setInterval(this.loadPickRequestersFromServer, this.props.pollInterval);
-
-        this.loadPickUpsFromServer();
-        setInterval(this.loadPickUpsFromServer, this.props.pollInterval);
-    },
+    mixins: [LoadCurrentUserMixin,
+             LoadUniversityMixin,
+             PickRequesterActionMixin,
+             PickUpActionMixin],
     render: function() {
         return (
             <div className="row col-md-12"
@@ -576,7 +425,6 @@ var PickRequesterPanel = React.createClass({
 
 React.render(
     <PickRequesterPanel
-        pickupCreateURL="/pickup/api/create/"
         pollInterval={20000}/>,
     document.getElementById('content')
 );
