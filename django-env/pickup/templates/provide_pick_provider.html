@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load staticfiles%}
+{% load bootstrap3 %}
+
+{% block title %}
+Provider Register |
+{% endblock %}
+
+{% block jumbotron %}
+<div class="jumbotron">
+	<div class="container text-center">
+		<h3>Offer Your Pick Up Help</h3>
+		<p>Picknese let you make money while you provide your pick up service.</p>
+	</div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2" style="margin-top: 30px;" >
+	<form action="#" method="post">
+		{% csrf_token %}
+		{% bootstrap_form form %}
+		{% buttons %}
+			<button type="submit" class="btn btn-default">
+				Confirm
+			</button>
+		{% endbuttons %}
+	</form>
+</div>
+{% endblock %}

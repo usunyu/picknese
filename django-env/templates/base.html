@@ -1,0 +1,63 @@
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Social application for student studying abroad to help each other">
+        <meta name="author" content="Yu Sun">
+        <title>{% block title %}{% endblock %}Pickinese</title>
+        <!-- Latest compiled and minified CSS, Paper Style -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.paper.min.css' %}" media="screen"/>
+        <!-- http://bootswatch.com/paper/ -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap/bootswatch.min.css' %}"/>
+        <!-- Custom CSS -->
+        <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
+        <!-- Used for load common React component -->
+        {% block extra_head_js %}
+        {% endblock %}
+        <!-- seperate -->
+    </head>
+    <body>
+        <!-- Navbar -->
+        {% include 'navbar.html' %}
+        <!-- Messages -->
+        <div id="messages"/>
+        <!-- Jumbotron -->
+        <div>
+        {% block jumbotron %}
+        {% endblock %}
+        </div>
+        <!-- Main -->
+        <div class="container">
+            <div class="row">
+            <!-- Content -->
+            {% block content %}
+            {% endblock %}
+            </div><!--/row-->
+        </div>
+        <!-- Footer -->
+        <div class="container">
+            <hr />
+            <footer>
+                <p>&copy; 2015 Picknese Inc. All rights reserved.</p>
+            </footer>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script type="text/javascript" src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
+        <!-- http://bootswatch.com/paper/ -->
+        <script type="text/javascript" src="{% static 'js/bootstrap/bootswatch.js' %}"></script>
+        <!-- http://facebook.github.io/react/ -->
+        <script type="text/javascript" src="{% static 'js/react/react.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/react/JSXTransformer.js' %}"></script>
+        <!-- Provide CSRF protection -->
+        <script type="text/javascript" src="{% static 'js/csrf.js' %}"></script>
+        <!-- Common Utilities -->
+        <script type="text/javascript" src="{% static 'js/utils.js' %}"></script>
+    </body>
+</html>
