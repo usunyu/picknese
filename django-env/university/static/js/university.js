@@ -1,12 +1,6 @@
 var UniversityPanel = React.createClass({
     mixins: [LoadCurrentUserMixin, 
              LoadUniversityMixin],
-    getInitialState: function() {
-        return {
-            university: null,
-            currentUser: null,
-        };
-    },
     render: function() {
         var university = this.state.university;
         if (!university) {

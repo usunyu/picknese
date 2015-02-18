@@ -1,4 +1,42 @@
 /*
+ * Static, Media, URL helper
+ * --------------------------------------------------
+ */
+function getStaticURL() {
+    // set for local development
+    return '/static/';
+    // set for production
+    // return 'https://picknese-s3.s3.amazonaws.com/';
+}
+
+function getMediaURL() {
+    // set for local development
+    return '/';
+    // set for production
+    // return 'https://picknese-s3.s3.amazonaws.com/';
+}
+
+function getUniversityLogo(u_short) {
+    return getStaticURL() + 'images/campus/' + u_short + "/logo.jpg";
+}
+
+function getUniversityWide(u_short) {
+    return getStaticURL() + 'images/campus/' + u_short + "/wide.jpg";
+}
+
+function getUniversityURL(u_id) {
+    return "/universities/" + u_id + "/";
+}
+
+function getPickupURL(u_id) {
+    return "/pickup/requesters/" + u_id + "/";
+}
+
+function getProfileDefaultPic() {
+    return getMediaURL() + 'media/default_pic.png';
+}
+
+/*
  * Util function helper
  * --------------------------------------------------
  */
@@ -50,44 +88,6 @@ function popupDangerMessage(message) {
 
 function popupInfoMessage(message) {
     popupMessage(message, 'info');
-}
-
-/*
- * Static, Media, URL helper
- * --------------------------------------------------
- */
-function getStaticURL() {
-    // set for local development
-    return '/static/';
-    // set for production
-    // return 'https://picknese-s3.s3.amazonaws.com/';
-}
-
-function getMediaURL() {
-    // set for local development
-    return '/';
-    // set for production
-    // return 'https://picknese-s3.s3.amazonaws.com/';
-}
-
-function getUniversityLogo(u_short) {
-    return getStaticURL() + 'images/campus/' + u_short + "/logo.jpg";
-}
-
-function getUniversityWide(u_short) {
-    return getStaticURL() + 'images/campus/' + u_short + "/wide.jpg";
-}
-
-function getUniversityURL(u_id) {
-    return "/universities/" + u_id + "/";
-}
-
-function getPickupURL(u_id) {
-    return "/pickup/requesters/" + u_id + "/";
-}
-
-function getProfileDefaultPic() {
-    return getMediaURL() + 'media/default_pic.png';
 }
 
 /*
