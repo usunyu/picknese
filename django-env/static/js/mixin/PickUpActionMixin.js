@@ -12,6 +12,7 @@ var PickUpActionMixin = {
             dataType: 'json',
             success: function(data) {
                 this.setState({pickups: data});
+                dismissLoadingEffect();
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(apiURL, status, err.toString());

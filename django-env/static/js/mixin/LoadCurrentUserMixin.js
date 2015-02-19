@@ -5,6 +5,7 @@ var LoadCurrentUserMixin = {
             dataType: 'json',
             success: function(data) {
                 this.setState({currentUser: data});
+                dismissLoadingEffect();
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(getCurrentUserAPI(), status, err.toString());

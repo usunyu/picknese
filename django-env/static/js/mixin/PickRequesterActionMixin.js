@@ -12,6 +12,7 @@ var PickRequesterActionMixin = {
             dataType: 'json',
             success: function(data) {
                 this.setState({requesters: data});
+                dismissLoadingEffect();
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(apiURL, status, err.toString());

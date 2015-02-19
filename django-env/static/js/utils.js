@@ -115,6 +115,14 @@ function popupInfoMessage(message) {
 }
 
 /*
+ * Loading
+ * --------------------------------------------------
+ */
+function dismissLoadingEffect() {
+    $("#loading").remove();
+}
+
+/*
  * Check selected tab
  * --------------------------------------------------
  */

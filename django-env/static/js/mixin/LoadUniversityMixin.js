@@ -6,6 +6,7 @@ var LoadUniversityMixin = {
             dataType: 'json',
             success: function(data) {
                 this.setState({university: data});
+                dismissLoadingEffect();
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(getUniversityAPI(universityID), status, err.toString());
