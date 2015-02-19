@@ -42,16 +42,6 @@
                                 <i class="glyphicon glyphicon-user"></i>&nbsp; Profile
                             </a>
                         </li>
-                        <li>
-                            <a href="#">
-                                <i class="glyphicon glyphicon-heart-empty"></i>&nbsp; Your Offering
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="glyphicon glyphicon-paperclip"></i>&nbsp; Your Reservations
-                            </a>
-                        </li>
                         <li class="divider"></li>
                         <li>
                             <a href="/api-auth/logout/">
@@ -72,20 +62,8 @@
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li>
-                        <!-- with associated university -->
-                        {% if university %}
                             <a href="#">
-                            <i class="glyphicon glyphicon-plane"></i>&nbsp; Pick Up</a>
-                        <!-- if not in pick up requesters page, need select university first -->
-                        {% else %}
-                            <a href="#">
-                                <i class="glyphicon glyphicon-plane"></i>&nbsp; Pick Up
-                            </a>
-                        {% endif %}
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="glyphicon glyphicon-road"></i>&nbsp; Carpool
+                                <i class="glyphicon glyphicon-plane"></i>&nbsp; How it works
                             </a>
                         </li>
                     </ul>
