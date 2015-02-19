@@ -7,6 +7,7 @@ from django.core.context_processors import csrf
 from django.contrib.auth.models import User
 from university.models import University
 from forms import PickneseCreationForm
+from userprofile.models import UserProfile
 
 def index(request):
 	universities = University.objects.all()
@@ -51,6 +52,8 @@ def signup(request):
 			username = form.cleaned_data.get('username')
 			password = form.cleaned_data.get('password2')
 			user = auth.authenticate(username=username, password=password)
+			# create user profile
+			UserProfile.objects.get_or_create(user=user)
 			auth.login(request, user)
 			return HttpResponseRedirect('/')
 
