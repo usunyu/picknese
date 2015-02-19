@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load bootstrap3 %}
+{% load staticfiles%}
 {% load static %}
 
 {% block content %}
@@ -28,5 +29,7 @@
         </button>
 	{% endbuttons %}
 </form>
-
+<script type="text/jsx">
+	dismissLoadingEffect();
+</script>
 {% endblock %}
