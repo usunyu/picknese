@@ -30,3 +30,10 @@ def user_profile(request):
 	context['form'] = form
 	context['profile'] = profile
 	return render(request, 'profile.html', context)
+
+"""
+Show My UserProfile
+userprofile.views.my_profile => accounts/myprofile/
+"""
+def my_profile(request):
+    return render(request, 'my_profile.html', {})

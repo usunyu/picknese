@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}
+Profile |
+{% endblock %}
+
+{% block extra_head_js %}
+<script type="text/jsx" src="{% static 'js/mixin/LoadCurrentUserMixin.js' %}"></script>
+<script type="text/jsx" src="{% static 'js/mixin/LoadUniversityMixin.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div id="loading" >
+    <div class="spinner" style="margin-top: 200px; margin-bottom: 200px;"></div>
+</div>
+<div id="content" />
+<script type="text/jsx" src="{% static 'js/profile.js' %}"></script>
+{% endblock %}

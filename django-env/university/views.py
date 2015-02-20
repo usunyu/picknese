@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from university.models import University
 
 """
 Show University
 university.views.university => universities/1
 """
 def university(request, university_id):
+    university = get_object_or_404(University, id=university_id)
     return render(request, 'university.html', {})
 
 """
