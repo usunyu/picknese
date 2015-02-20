@@ -88,6 +88,10 @@ textarea {
     text-align: right;
 }
 
+.normal-font-size {
+    font-size: 100% !important;
+}
+
 #alert-messages {
     position: fixed;
     top: 63px;

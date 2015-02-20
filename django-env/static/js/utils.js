@@ -135,7 +135,7 @@ function checkActiveTab(contain) {
 }
 
 /*
- * Bootstrap
+ * Bootstrap, not used
  * --------------------------------------------------
  */
 function findBootstrapEnvironment() {
@@ -155,6 +155,10 @@ function findBootstrapEnvironment() {
     };
 }
 
+/*
+ * Resize detect, not used
+ * --------------------------------------------------
+ */
 var rtime = new Date(1, 1, 2000, 12,00,00);
 var timeout = false;
 var delta = 200;
@@ -171,7 +175,7 @@ function resizeend() {
         setTimeout(resizeend, delta);
     } else {
         timeout = false;
-        alert('Done resizing');
+        // alert('Done resizing');
     }               
 }
 
