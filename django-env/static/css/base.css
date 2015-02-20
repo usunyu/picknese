@@ -232,8 +232,6 @@ div.show-image button {
     display:none;
 }
 div.show-image button.btn-on-image {
-    /*top:0;*/
-    /*left:0;*/
     width: 225px;
     margin-top: -43px;
 }
