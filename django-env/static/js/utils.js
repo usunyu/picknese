@@ -4,16 +4,16 @@
  */
 function getStaticURL() {
     // set for local development
-    // return '/static/';
+    return '/static/';
     // set for production
-    return 'https://picknese-s3.s3.amazonaws.com/';
+    // return 'https://picknese-s3.s3.amazonaws.com/';
 }
 
 function getMediaURL() {
     // set for local development
-    // return '/';
+    return '/';
     // set for production
-    return 'https://picknese-s3.s3.amazonaws.com/';
+    // return 'https://picknese-s3.s3.amazonaws.com/';
 }
 
 function getUniversityBaseURL() {
@@ -132,6 +132,27 @@ function checkActiveTab(contain) {
         return 'active';
     }
     return null;
+}
+
+/*
+ * Bootstrap
+ * --------------------------------------------------
+ */
+function findBootstrapEnvironment() {
+    var envs = ['xs', 'sm', 'md', 'lg'];
+
+    $el = $('<div>');
+    $el.appendTo($('body'));
+
+    for (var i = envs.length - 1; i >= 0; i--) {
+        var env = envs[i];
+
+        $el.addClass('hidden-'+env);
+        if ($el.is(':hidden')) {
+            $el.remove();
+            return env
+        }
+    };
 }
 
 /*

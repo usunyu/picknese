@@ -1,3 +1,5 @@
+// Optional: loadCount => true indicate load pick up count
+
 var LoadCurrentUserMixin = {
 	loadCurrentUserFromServer: function() {
         $.ajax({
@@ -33,6 +35,8 @@ var LoadCurrentUserMixin = {
     },
     componentDidMount: function() {
         this.loadCurrentUserFromServer();
-        this.loadCurrentUserPickUpRequestCountFromServer();
+        if (this.props.loadCount) {
+            this.loadCurrentUserPickUpRequestCountFromServer();
+        }
     },
 };

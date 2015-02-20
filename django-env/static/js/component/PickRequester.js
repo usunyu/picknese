@@ -270,7 +270,6 @@ var PickRequesterForm = React.createClass({
                         </form>
                     </div>
                 </div>
-
             </div>
         );
     }

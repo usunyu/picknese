@@ -149,6 +149,7 @@ var PickRequesterPanel = React.createClass({
 
 React.render(
     <PickRequesterPanel
+        loadCount={true}
         pollInterval={20000}/>,
     document.getElementById('content')
 );

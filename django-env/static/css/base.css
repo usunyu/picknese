@@ -109,7 +109,7 @@ ul.inline-list li {
     float: left;
     margin-right: 0px;
     border-right: 1px solid #D0D0D0;
-    padding: 0 20px;
+    /*padding: 0 20px;*/
 }
 
 ul.inline-list li:last-child {
@@ -212,3 +212,29 @@ ul.inline-list li.active a {
     from {transform: rotate(0deg);}
     to {transform: rotate(359deg);}
 }
+
+/*
+ * Button on Image
+ * --------------------------------------------------
+ */
+div.show-image {
+    position: relative;
+    float:left;
+}
+div.show-image:hover img{
+    opacity:0.5;
+}
+div.show-image:hover button {
+    display: block;
+}
+div.show-image button {
+    position:absolute;
+    display:none;
+}
+div.show-image button.btn-on-image {
+    /*top:0;*/
+    /*left:0;*/
+    width: 225px;
+    margin-top: -43px;
+}
+

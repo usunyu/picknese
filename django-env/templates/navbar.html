@@ -1,6 +1,5 @@
 {% load staticfiles %}
 {% load static %}
-{% load bootstrap3 %}
 
 <!-- Fixed navbar -->
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -38,7 +37,7 @@
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li>
-                            <a href="{% url 'userprofile.views.user_profile' %}">
+                            <a href="{% url 'userprofile.views.my_profile' %}">
                                 <i class="glyphicon glyphicon-user"></i>&nbsp; Profile
                             </a>
                         </li>
