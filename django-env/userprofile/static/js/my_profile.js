@@ -1,8 +1,5 @@
 var MyProfilePanel = React.createClass({
     mixins: [LoadCurrentUserMixin],
-    renderImageUploadModal: function() {
-
-    },
     renderProfileImage: function(currentUser) {
         var profileImage = currentUser.profile.avatar ? currentUser.profile.avatar : getProfileDefaultPic();
         return (
@@ -11,13 +8,46 @@ var MyProfilePanel = React.createClass({
                     <img className="media-object box-shadow hidden-xs"
                          src={profileImage}
                          style={{width: '225px', height: '225px'}} />
-                    <button type="button" className="btn btn-default btn-lg btn-on-image">
+                    <button type="button" className="btn btn-default btn-lg btn-on-image"
+                            data-toggle="modal" data-target="#imageUploadModal">
                         <i className="glyphicon glyphicon-camera"></i>&nbsp; Change Photo
                     </button>
                 </div>
                 <img className="media-object box-shadow hidden-sm hidden-md hidden-lg"
                      src={profileImage}
                      style={{width: '100px', height: '100px'}} />
+                <div className="modal fade" id="imageUploadModal" tabIndex="-1" role="dialog" 
+                     aria-labelledby="imageUploadModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 className="modal-title" id="imageUploadModalLabel">Change Profile Photo</h4>
+                            </div>
+                            <hr style={{marginTop: "-10px"}}/>
+                            <div className="modal-body">
+                                
+                                <div id="image_input"></div>
+                                /*<img id="image_output" style={{border:"1px solid #000", visibility: "hidden"}}/>
+                                <textarea id="image_source" style={{height:"100px", width:"200px", visibility: "hidden"}}></textarea>*/
+
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <span className="btn btn-primary btn-file">
+                                    Browse
+                                    <input type="file" id="image_file" 
+                                           onClick={this.clickUploadImage}
+                                           onChange={this.changeUploadImage}
+                                           ref="imageFile" />
+                                </span>
+                                <button type="button" className="btn btn-primary">Save Changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     },
@@ -47,6 +77,54 @@ var MyProfilePanel = React.createClass({
                 </div>
             </div>
         );
+    },
+    clickUploadImage: function(evt) {
+        this.refs.imageFile.getDOMNode().value = null;
+    },
+    changeUploadImage: function(evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        var file = evt.dataTransfer !== undefined ? evt.dataTransfer.files[0] : evt.target.files[0];
+        var reader = new FileReader();
+        reader.onload = (function(theFile) {
+            return function(e) {
+                var image = new Image();
+                image.src = e.target.result;
+                image.onload = function() {
+                    var canvas = document.createElement('canvas');
+                    canvas.width = 300;
+                    canvas.height = image.height * (300 / image.width);
+                    var ctx = canvas.getContext('2d');
+                    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+                    $('#image_input').html(['<img src="', canvas.toDataURL(), '"/>'].join(''));
+
+                    var img = $('#image_input img')[0];
+                    var canvas = document.createElement('canvas');
+
+                    $('#image_input img').Jcrop({
+                        bgColor: 'black',
+                        bgOpacity: .6,
+                        setSelect: [0, 0, 100, 100],
+                        aspectRatio: 1,
+                        onSelect: imgSelect,
+                        onChange: imgSelect
+                    });
+
+                    function imgSelect(selection) {
+                        canvas.width = canvas.height = 100;
+
+                        var ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, selection.x, selection.y, selection.w, selection.h, 0, 0, canvas.width, canvas.height);
+                    
+                        $('#image_output').attr('src', canvas.toDataURL());
+                        $('#image_source').text(canvas.toDataURL());
+                        console.log(canvas.toDataURL());
+                    }
+                }
+            }
+        })(file);
+        reader.readAsDataURL(file);
     },
     render: function() {
         var currentUser = this.state.currentUser;
@@ -94,7 +172,7 @@ var MyProfilePanel = React.createClass({
                 </div>
             </div>
         );
-    }
+    },
 });
 
 React.render(

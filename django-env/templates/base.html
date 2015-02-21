@@ -16,6 +16,8 @@
         <link rel="stylesheet" href="{% static 'css/bootstrap/bootswatch.min.css' %}"/>
         <!-- Custom CSS -->
         <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
+        <!--  -->
+        <link rel="stylesheet" type="text/css" href="http://marx-tseng.appspot.com/image_crop/tapmodo-Jcrop/css/jquery.Jcrop.min.css" />
         <!-- Used for load common React component -->
         {% block extra_head_js %}
         {% endblock %}
@@ -41,6 +43,7 @@
                 <p>&copy; 2015 Picknese Inc. All rights reserved.</p>
             </footer>
         </div>
+
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
         <!-- Latest compiled and minified JavaScript -->
@@ -48,8 +51,11 @@
         <!-- http://bootswatch.com/paper/ -->
         <script type="text/javascript" src="{% static 'js/bootstrap/bootswatch.js' %}"></script>
         <!-- http://facebook.github.io/react/ -->
+        <!-- <script type="text/javascript" src="{% static 'js/react/react.min.js' %}"></script> -->
         <script type="text/javascript" src="{% static 'js/react/react.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/react/JSXTransformer.js' %}"></script>
+        <!--  -->
+        <script type="text/javascript" src="http://marx-tseng.appspot.com/image_crop/tapmodo-Jcrop/js/jquery.Jcrop.min.js"></script>
         <!-- Provide CSRF protection -->
         <script type="text/javascript" src="{% static 'js/csrf.js' %}"></script>
         <!-- Common Utilities -->
