@@ -163,6 +163,10 @@ function getCurrentUserAPI() {
     return "/accounts/api/me/";
 }
 
+function getProfileImageUploadAPI() {
+    return "/accounts/api/uploadimage/"
+}
+
 function getCurrentUserPickCountAPI(u_id) {
     return "/pickup/api/mylist/count/" + u_id + "/";
 }

@@ -28,11 +28,12 @@ var MyProfilePanel = React.createClass({
                             </div>
                             <hr style={{marginTop: "-10px"}}/>
                             <div className="modal-body">
-                                
-                                <div id="image_input"></div>
-                                /*<img id="image_output" style={{border:"1px solid #000", visibility: "hidden"}}/>
-                                <textarea id="image_source" style={{height:"100px", width:"200px", visibility: "hidden"}}></textarea>*/
-
+                                <div id="image_input">
+                                    <img className="media-object box-shadow"
+                                         src={profileImage}
+                                         style={{width: '225px', height: '225px'}} />
+                                </div>
+                                <div id="image_code" />
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -43,7 +44,10 @@ var MyProfilePanel = React.createClass({
                                            onChange={this.changeUploadImage}
                                            ref="imageFile" />
                                 </span>
-                                <button type="button" className="btn btn-primary">Save Changes</button>
+                                <button type="button" className="btn btn-primary" 
+                                        onClick={this.submitUploadImage}>
+                                    Save Changes
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -78,6 +82,29 @@ var MyProfilePanel = React.createClass({
             </div>
         );
     },
+    submitUploadImage: function(evt) {
+        var imageCode = $('#image_code').attr('code');
+        console.log(imageCode);
+        $( "#imageUploadModal" ).effect("shake");
+        return;
+        $.ajax({
+            url: getProfileImageUploadAPI(),
+            dataType: 'json',
+            type: 'PUT',
+            data: {image_code : imageCode},
+            success: function(data) {
+                // close dialog on success
+                $('#imageUploadModal').modal('hide');
+                // reload data
+                location.reload();
+                // this.loadCurrentUserFromServer();
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(getProfileImageUploadAPI(), status, err.toString());
+            }.bind(this)
+        });
+
+    },
     clickUploadImage: function(evt) {
         this.refs.imageFile.getDOMNode().value = null;
     },
@@ -97,7 +124,8 @@ var MyProfilePanel = React.createClass({
                     var ctx = canvas.getContext('2d');
                     ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 
-                    $('#image_input').html(['<img src="', canvas.toDataURL(), '"/>'].join(''));
+                    $('#image_input')
+                        .html(['<img class="media-object box-shadow" src="', canvas.toDataURL(), '"/>'].join(''));
 
                     var img = $('#image_input img')[0];
                     var canvas = document.createElement('canvas');
@@ -105,21 +133,20 @@ var MyProfilePanel = React.createClass({
                     $('#image_input img').Jcrop({
                         bgColor: 'black',
                         bgOpacity: .6,
-                        setSelect: [0, 0, 100, 100],
+                        setSelect: [0, 0, 225, 225],
                         aspectRatio: 1,
                         onSelect: imgSelect,
                         onChange: imgSelect
                     });
 
                     function imgSelect(selection) {
-                        canvas.width = canvas.height = 100;
+                        canvas.width = canvas.height = 225;
 
                         var ctx = canvas.getContext('2d');
                         ctx.drawImage(img, selection.x, selection.y, selection.w, selection.h, 0, 0, canvas.width, canvas.height);
                     
-                        $('#image_output').attr('src', canvas.toDataURL());
-                        $('#image_source').text(canvas.toDataURL());
-                        console.log(canvas.toDataURL());
+                        $('#image_code').attr('code', canvas.toDataURL());
+                        // this.setState({imageCode: canvas.toDataURL()});
                     }
                 }
             }

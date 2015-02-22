@@ -1,6 +1,10 @@
+from base64 import b64decode
+
 from django.http import Http404
+from django.core.files.base import ContentFile
 
 from rest_framework import permissions, response, generics, views, status
+from rest_framework.parsers import FileUploadParser
 
 from userprofile.models import User, UserProfile
 from userprofile.serializers import UserSerializer, UserProfileSerializer
@@ -16,6 +20,24 @@ class CurrentUserView(views.APIView):
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+class ProfileImageUploadView(views.APIView):
+    # parser_classes = (FileUploadParser,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def put(self, request, format=None):
+        image_code = request.data['image_code']
+        image_code = image_code.split('base64,')[1]
+        image_data = b64decode(image_code)
+        user = request.user
+        profile = user.profile
+        # delete original profile pic
+        if profile.avatar:
+            profile.avatar.delete(save=False)
+        profile.avatar = ContentFile(image_data, user.username + ".png")
+        profile.save()
+        return response.Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class MyProfileDetail(views.APIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)

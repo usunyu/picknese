@@ -107,7 +107,8 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 AUTH_PROFILE_MODULE = 'userprofile.UserProfile'
 
 # Uploaded file destination
-UPLOAD_FILE_PATTERN = "media/uploaded_files/%s_%s"
+# UPLOAD_FILE_PATTERN = "media/uploaded_files/%s_%s"
+UPLOAD_FILE_PATTERN = "media/uploaded_files/%s"
 
 # https://docs.djangoproject.com/en/1.7/ref/settings/#media-root
 MEDIA_ROOT = ''
