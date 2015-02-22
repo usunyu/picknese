@@ -183,7 +183,7 @@ var PickRequesterForm = React.createClass({
             return <div></div>;
         }
         return (
-            <div className="panel panel-primary">
+            <div id="pick-request-post" className="panel panel-primary">
                 <div className="panel-heading clearfix">
                     <ul className="inline-list col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" style={{marginBottom: "0px"}}>
                         <li className="active col-xs-6 col-sm-6 col-md-6 col-lg-6">

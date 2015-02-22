@@ -23,7 +23,7 @@ var PickRequesterActionMixin = {
         var destination = form.destination;
         if (!destination) {
             // TODO, show error message
-            alert('Please input destination');
+            $( "#pick-request-post" ).effect("shake");
             return;
         }
         var requesterData = {
