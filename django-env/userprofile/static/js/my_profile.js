@@ -84,9 +84,10 @@ var MyProfilePanel = React.createClass({
     },
     submitUploadImage: function(evt) {
         var imageCode = $('#image_code').attr('code');
-        // console.log(imageCode);
-        // $( "#imageUploadModal" ).effect("shake");
-        // return;
+        if (imageCode == null) {
+            $( "#image_input" ).effect("shake");
+            return;
+        }
         $.ajax({
             url: getProfileImageUploadAPI(),
             dataType: 'json',
