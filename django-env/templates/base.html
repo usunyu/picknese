@@ -19,7 +19,7 @@
         <!-- Custom CSS -->
         <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
         <!-- Used for load common React component -->
-        {% block extra_head_js %}
+        {% block extra_head %}
         {% endblock %}
         <!-- seperate -->
     </head>
@@ -43,7 +43,6 @@
                 <p>&copy; 2015 Picknese Inc. All rights reserved.</p>
             </footer>
         </div>
-
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
         <!-- Latest compiled and minified JavaScript -->

@@ -202,3 +202,16 @@ function getPickUpCreateAPI() {
 function getUniversityAPI(u_id) {
     return "/universities/api/" + u_id + "/";
 }
+
+/*
+ * Prevent Enter Submit, TODO: improve user experence
+ * --------------------------------------------------
+ */
+$(document).ready(function() {
+    $(window).keydown(function(event){
+        if(event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+        }
+    });
+});

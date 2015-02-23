@@ -153,11 +153,13 @@ var PickRequesterForm = React.createClass({
             pick_type : 1,
             price : 20,
             flight : this.refs.flight1.getDOMNode().value.trim(),
-            destination : this.refs.destination1.getDOMNode().value.trim(),
+            destination : this.state.destination1,
             description : this.refs.description1.getDOMNode().value.trim(),
         }, requester, university);
         this.refs.flight1.getDOMNode().value = '';
-        this.refs.destination1.getDOMNode().value = '';
+        this.setState({destination1: null});
+        // cannot remove, has bug, TODO: add custom func for google api
+        this.refs.destination1.getDOMNode().children[0].value = '';
         this.refs.description1.getDOMNode().value = '';
     },
     handleGeneralSubmit: function(e) {
@@ -176,6 +178,14 @@ var PickRequesterForm = React.createClass({
         this.refs.destination2.getDOMNode().value = '';
         this.refs.description2.getDOMNode().value = '';
     },
+    onSuggestSelect: function(suggest) {
+        this.setState({destination1: suggest.label});
+    },
+    getInitialState: function() {
+        return {
+            destination1: null,
+        };
+  },
     render: function() {
         var requester = this.props.currentUser;
         var university = this.props.university;
@@ -201,17 +211,19 @@ var PickRequesterForm = React.createClass({
                         <form className="form-horizontal" onSubmit={this.handleFlightSubmit}>
                             <div className="panel-body">
                                 <div className="form-group">
-                                    <div className="col-sm-6">
+                                    <div className="col-sm-4">
                                         <input type="text"
                                                className="form-control" 
                                                placeholder="Your flight number?"
                                                ref="flight1" />
                                     </div>
-                                    <div className="col-sm-6">
-                                        <input type="text"
-                                               className="form-control" 
-                                               placeholder="Where you want to go?"
-                                               ref="destination1" />
+                                    <div className="col-sm-8">
+                                        <Geosuggest
+                                            placeholder="Where you want to go?"
+                                            onSuggestSelect={this.onSuggestSelect}
+                                            location={new google.maps.LatLng(53.558572, 9.9278215)}
+                                            ref="destination1"
+                                            radius="20" />
                                     </div>
                                     <div className="col-sm-12">
                                         <textarea
