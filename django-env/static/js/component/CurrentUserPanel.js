@@ -25,7 +25,7 @@ var CurrentUserPanel = React.createClass({
                     <div className="row">
                         <div className="col-xs-6 col-sm-6 col-md-6">
                             <img
-                                className="img-thumbnail"
+                                className="image-thumbnail"
                                 src={avatar ? avatar : getProfileDefaultPic()}
                                 style={{width: '100px', height: '100px'}} />
                         </div>

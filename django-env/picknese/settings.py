@@ -151,4 +151,3 @@ if not DEBUG or DEPLOY_S3:
     S3_URL = 'https://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
     STATIC_URL = S3_URL
     MEDIA_URL = S3_URL + 'media/'
-

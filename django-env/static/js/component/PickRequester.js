@@ -153,13 +153,11 @@ var PickRequesterForm = React.createClass({
             pick_type : 1,
             price : 20,
             flight : this.refs.flight1.getDOMNode().value.trim(),
-            destination : this.state.destination1,
+            destination : this.refs.destination1.getDOMNode().value.trim(),
             description : this.refs.description1.getDOMNode().value.trim(),
         }, requester, university);
         this.refs.flight1.getDOMNode().value = '';
-        this.setState({destination1: null});
-        // cannot remove, has bug, TODO: add custom func for google map
-        this.refs.destination1.getDOMNode().children[0].value = '';
+        this.refs.destination1.getDOMNode().value = '';
         this.refs.description1.getDOMNode().value = '';
     },
     handleGeneralSubmit: function(e) {
@@ -178,14 +176,14 @@ var PickRequesterForm = React.createClass({
         this.refs.destination2.getDOMNode().value = '';
         this.refs.description2.getDOMNode().value = '';
     },
-    onSuggestSelect: function(suggest) {
-        this.setState({destination1: suggest.label});
+    componentDidUpdate: function() {
+        var input = document.getElementById('google-map-place1');
+        if (!input) {
+            return;
+        }
+        var options = {componentRestrictions: {country: 'us'}};
+        new google.maps.places.Autocomplete(input, options);
     },
-    getInitialState: function() {
-        return {
-            destination1: null,
-        };
-  },
     render: function() {
         var requester = this.props.currentUser;
         var university = this.props.university;
@@ -218,12 +216,11 @@ var PickRequesterForm = React.createClass({
                                                ref="flight1" />
                                     </div>
                                     <div className="col-sm-8">
-                                        <Geosuggest
-                                            placeholder="Where you want to go?"
-                                            onSuggestSelect={this.onSuggestSelect}
-                                            location={new google.maps.LatLng(53.558572, 9.9278215)}
-                                            ref="destination1"
-                                            radius="20" />
+                                        <input type="text"
+                                               id="google-map-place1"
+                                               className="form-control" 
+                                               placeholder="Where you want to go?"
+                                               ref="destination1" />
                                     </div>
                                     <div className="col-sm-12">
                                         <textarea

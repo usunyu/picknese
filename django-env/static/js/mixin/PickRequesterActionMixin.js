@@ -11,16 +11,7 @@ var PickRequesterActionMixin = {
             url: apiURL,
             dataType: 'json',
             success: function(data) {
-                var orderedRequests = [];
-                for (var i = 0; i < data.length; i++) { 
-                    var request = data[i];
-                    if (request.id == this.state.firstRequest) {
-                        orderedRequests.unshift(request);
-                    } else {
-                        orderedRequests.push(request);
-                    }
-                }
-                this.setState({requesters: orderedRequests});
+                this.setState({requesters: data});
                 dismissLoadingEffect();
             }.bind(this),
             error: function(xhr, status, err) {
@@ -63,8 +54,6 @@ var PickRequesterActionMixin = {
             data: requesterData,
             success: function(data) {
                 // reload data
-                $("#pick-request-post").hide();
-                this.setState({firstRequest: data.id});
                 this.loadPickRequestersFromServer();
                 popupSuccessMessage("You have successfully post your request. Please waiting for your picker to contact you!");
             }.bind(this),
@@ -94,7 +83,6 @@ var PickRequesterActionMixin = {
     getInitialState: function() {
         return {
             requesters: [],
-            firstRequest: null,
         };
     },
     componentDidMount: function() {

@@ -7,6 +7,8 @@ Pick Up |
 {% endblock %}
 
 {% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/geosuggest/geosuggest.css' %}" />
+
 <script type="text/jsx" src="{% static 'js/mixin/LoadCurrentUserMixin.js' %}"></script>
 <script type="text/jsx" src="{% static 'js/mixin/LoadUniversityMixin.js' %}"></script>
 <script type="text/jsx" src="{% static 'js/mixin/PickRequesterActionMixin.js' %}"></script>
@@ -29,5 +31,8 @@ Pick Up |
     	<div id="content" />
     </div>
 </div>
+
 <script type="text/jsx" src="{% static 'js/pickup_my_list.js' %}"></script>
+<!-- https://developers.google.com/maps/documentation/javascript/examples/places-searchbox -->
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 {% endblock %}
