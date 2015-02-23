@@ -158,7 +158,7 @@ var PickRequesterForm = React.createClass({
         }, requester, university);
         this.refs.flight1.getDOMNode().value = '';
         this.setState({destination1: null});
-        // cannot remove, has bug, TODO: add custom func for google api
+        // cannot remove, has bug, TODO: add custom func for google map
         this.refs.destination1.getDOMNode().children[0].value = '';
         this.refs.description1.getDOMNode().value = '';
     },
