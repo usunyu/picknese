@@ -13,7 +13,11 @@ var MyPickUp = React.createClass({
                                      src={picker.profile.avatar ? picker.profile.avatar : getProfileDefaultPic()}
                                      style={{width: '50px', height: '50px'}} />
                             </a>
-                            <hr />
+                            <hr className="invisible-hr" />
+                            <div className="text-center">
+                                <i className="glyphicon glyphicon-ok-sign"></i>
+                            </div>
+                            <hr className="invisible-hr" />
                             <a href="#">
                                 <img className="img-circle box-shadow"
                                      src={pickee.profile.avatar ? pickee.profile.avatar : getProfileDefaultPic()}

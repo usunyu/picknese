@@ -102,6 +102,12 @@ textarea {
     background-size: cover;
 }
 
+.invisible-hr {
+    visibility: hidden;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
 #alert-messages {
     position: fixed;
     top: 63px;
