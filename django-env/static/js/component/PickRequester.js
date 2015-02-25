@@ -3,6 +3,9 @@ var PickRequester = React.createClass({
         this.props.onPickRequesterCancel(id, modalID);
     },
     getActionButton: function() {
+        if (!this.props.pickRequester) {
+            return;
+        }
         var modalID = "requester-" + this.props.pickRequester.id;
         if (this.props.picker.id == this.props.pickRequester.requester.id) {
             return (
@@ -105,7 +108,8 @@ var PickRequester = React.createClass({
         var requester = this.props.pickRequester.requester;
         var pickType = this.props.pickRequester.pick_type;
         return (
-            <div className="panel panel-default fadein-effect">
+            <div className="panel panel-primary fadein-effect">
+                <div className="panel-heading" />
                 <div className="panel-body">
                     <div className="media">
                         <div className="media-left">

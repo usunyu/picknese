@@ -4,7 +4,8 @@ var MyPickUp = React.createClass({
         var pickee = this.props.pickup.pickee;
         var pickType = this.props.pickup.pick_type;
         return (
-            <div className="panel panel-default fadein-effect">
+            <div className="panel panel-success fadein-effect">
+                <div className="panel-heading" />
                 <div className="panel-body">
                     <div className="media">
                         <div className="media-left">
