@@ -37,6 +37,6 @@ React.render(
     <MyPickListPanel
         myList={true}
         loadCount={true}
-        pollInterval={20000}/>,
+        pollInterval={20000} />,
     document.getElementById('content')
 );

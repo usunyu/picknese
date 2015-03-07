@@ -171,6 +171,10 @@ function getCurrentUserPickCountAPI(u_id) {
     return "/pickup/api/mylist/count/" + u_id + "/";
 }
 
+function getCurrentUserAllPickCountAPI() {
+    return "/pickup/api/mylist/count/all/";
+}
+
 function getPickRequesterListAPI(u_id) {
     return "/pickup/api/requesters/" + u_id + "/";
 }

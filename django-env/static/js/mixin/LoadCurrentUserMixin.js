@@ -1,5 +1,7 @@
-// Optional: loadCount => true indicate load pick up count
-
+/*
+ * Parameters: loadCount (optional) => indicate load pick up count
+ *             loadAll (optional) => indicate load all pick up, not specific university
+ */
 var LoadCurrentUserMixin = {
 	loadCurrentUserFromServer: function() {
         $.ajax({
@@ -15,15 +17,21 @@ var LoadCurrentUserMixin = {
         });
     },
     loadCurrentUserPickUpRequestCountFromServer: function() {
-        var universityID = parseLastNumberInURLPath();
+        var apiURL = null;
+        if (this.props.loadAll) {
+            apiURL = getCurrentUserAllPickCountAPI();
+        } else {
+            var universityID = parseLastNumberInURLPath();
+            apiURL = getCurrentUserPickCountAPI(universityID);
+        }
         $.ajax({
-            url: getCurrentUserPickCountAPI(universityID),
+            url: apiURL,
             dataType: 'json',
             success: function(data) {
                 this.setState({currentUserPickCount: data});
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(getCurrentUserAPI(), status, err.toString());
+                console.error(apiURL, status, err.toString());
             }.bind(this)
         });
     },

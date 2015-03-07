@@ -111,6 +111,7 @@ class PickUpMutate(generics.RetrieveUpdateDestroyAPIView):
 class MyPickUpRequestCount(APIView):
     """
     A view that returns the count of current user's pick up request count
+    based on University
     """
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     # renderer_classes = (JSONRenderer)
@@ -129,3 +130,22 @@ class MyPickUpRequestCount(APIView):
         content = {'my_pick_count': pickup_count + request_count}
         return Response(content)
 
+class MyAllPickUpRequestCount(APIView):
+    """
+    A view that returns the count of current user's pick up request count
+    based on University
+    """
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    # renderer_classes = (JSONRenderer)
+
+    def get(self, request, format=None):
+        user = request.user
+        pickup_count = models.PickUp.objects.filter(
+            Q(picker=user.id) | Q(pickee=user.id)
+        ).count()
+        request_count = models.PickRequester.objects.filter(
+            Q(requester=user.id) &
+            Q(confirmed = False)
+        ).count()
+        content = {'my_pick_count': pickup_count + request_count}
+        return Response(content)

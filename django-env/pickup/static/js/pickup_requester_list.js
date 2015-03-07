@@ -1,3 +1,6 @@
+/*
+ * Render: /pickup/requesters/1/
+ */
 var PickupForm = React.createClass({
     handleSubmit: function(e) {
         e.preventDefault();

@@ -1,5 +1,6 @@
-// Required: pollInterval
-// Optional: myList => true indicate current user's list
+/*
+ * Parameters: pollInterval, myList (optional) => true indicate current user's list
+ */
 var PickUpActionMixin = {
 	loadPickUpsFromServer: function() {
         var universityID = parseLastNumberInURLPath();
