@@ -228,9 +228,9 @@ var PickRequesterForm = React.createClass({
                                     </div>
                                     <div className="col-sm-12">
                                         <textarea
-                                            className="form-control"
+                                            className="form-control pick-requester-note"
                                             rows="2"
-                                            placeholder="Any thing you want to mention?"
+                                            placeholder="Anything you want to mention?"
                                             ref="description1">
                                         </textarea>
                                     </div>
@@ -264,7 +264,7 @@ var PickRequesterForm = React.createClass({
                                     </div>
                                     <div className="col-sm-12">
                                         <textarea
-                                            className="form-control"
+                                            className="form-control pick-requester-note"
                                             rows="2"
                                             placeholder="Any thing you want to mention?"
                                             ref="description2">
