@@ -1,3 +1,7 @@
+/*
+ * Parameters: picker, pickRequester
+ * Callback: handlePickupSubmit, onPickRequesterCancel
+ */
 var PickRequester = React.createClass({
     handleCancel: function(id, modalID) {
         this.props.onPickRequesterCancel(id, modalID);
