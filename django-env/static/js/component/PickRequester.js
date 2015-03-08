@@ -185,12 +185,16 @@ var PickRequesterForm = React.createClass({
         this.refs.description2.getDOMNode().value = '';
     },
     componentDidUpdate: function() {
-        var input = document.getElementById('google-map-place1');
-        if (!input) {
+        var input1 = document.getElementById('google-map-place1');
+        var input2 = document.getElementById('google-map-place2');
+        var input3 = document.getElementById('google-map-place3');
+        if (!input1 || !input2 || !input3) {
             return;
         }
         var options = {componentRestrictions: {country: 'us'}};
-        new google.maps.places.Autocomplete(input, options);
+        new google.maps.places.Autocomplete(input1, options);
+        new google.maps.places.Autocomplete(input2, options);
+        new google.maps.places.Autocomplete(input3, options);
     },
     render: function() {
         var requester = this.props.currentUser;
@@ -256,12 +260,14 @@ var PickRequesterForm = React.createClass({
                                 <div className="form-group">
                                     <div className="col-sm-6">
                                         <input type="text"
+                                               id="google-map-place2"
                                                className="form-control" 
                                                placeholder="Where to pick up you?"
                                                ref="start2" />
                                     </div>
                                     <div className="col-sm-6">
                                         <input type="text"
+                                               id="google-map-place3"
                                                className="form-control" 
                                                placeholder="Where you want to go?"
                                                ref="destination2" />
