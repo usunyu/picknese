@@ -36,6 +36,22 @@ class MyPickRequestList(generics.ListAPIView):
             Q(confirmed = False)
         )
 
+class MyAllPickRequestList(generics.ListAPIView):
+    """
+    MyAllPickRequestList ListAPIView
+    Retrieve PickRequesters based on Request User ID
+    MyAllPickRequestList.as_view() => pickup/api/requesters/mylist/all/
+    """
+    serializer_class = serializers.PickRequesterListSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def get_queryset(self):
+        user = self.request.user
+        return models.PickRequester.objects.filter(
+            Q(requester=user.id) &
+            Q(confirmed = False)
+        )
+
 class PickRequesterCreate(generics.CreateAPIView):
     """
     PickRequesterCreate CreateAPIView
@@ -89,6 +105,21 @@ class MyPickUpList(generics.ListAPIView):
             (Q(picker=user.id) | Q(pickee=user.id))
         )
 
+class MyAllPickUpList(generics.ListAPIView):
+    """
+    MyAllPickUpList ListAPIView
+    Retrieve all PickUps based on Request User ID
+    MyAllPickUpList.as_view() => pickup/api/mylist/all/
+    """
+    serializer_class = serializers.PickUpListSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def get_queryset(self):
+        user = self.request.user
+        return models.PickUp.objects.filter(
+            (Q(picker=user.id) | Q(pickee=user.id))
+        )
+
 class PickUpCreate(generics.CreateAPIView):
     """
     PickUpCreate CreateAPIView
@@ -112,6 +143,7 @@ class MyPickUpRequestCount(APIView):
     """
     A view that returns the count of current user's pick up request count
     based on University
+    MyPickUpRequestCount.as_view() => pickup/api/mylist/count/1/
     """
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     # renderer_classes = (JSONRenderer)
@@ -134,6 +166,7 @@ class MyAllPickUpRequestCount(APIView):
     """
     A view that returns the count of current user's pick up request count
     based on University
+    MyAllPickUpRequestCount.as_view() => pickup/api/mylist/count/all/
     """
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     # renderer_classes = (JSONRenderer)

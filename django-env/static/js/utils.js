@@ -183,6 +183,10 @@ function getMyPickRequestListAPI(u_id) {
     return "/pickup/api/requesters/mylist/" + u_id + "/";
 }
 
+function getMyAllPickRequestListAPI() {
+    return "/pickup/api/requesters/mylist/all/";
+}
+
 function getPickRequesterCreateAPI() {
     return "/pickup/api/requesters/create/";
 }
@@ -197,6 +201,10 @@ function getPickUpListAPI(u_id) {
 
 function getMyPickUpListAPI(u_id) {
     return "/pickup/api/mylist/" + u_id + "/";
+}
+
+function getMyAllPickUpListAPI() {
+    return "/pickup/api/mylist/all/";
 }
 
 function getPickUpCreateAPI() {

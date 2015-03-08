@@ -1,12 +1,18 @@
 /*
- * Parameters: pollInterval, myList (optional) => true indicate current user's list
+ * Parameters: pollInterval
+ *             myList (optional) => indicate current user's list
+ *             loadAll (optional) => indicate load all pick ups
  */
 var PickUpActionMixin = {
 	loadPickUpsFromServer: function() {
         var universityID = parseLastNumberInURLPath();
         var apiURL = getPickUpListAPI(universityID);
         if (this.props.myList) {
-            apiURL = getMyPickUpListAPI(universityID);
+            if (this.props.loadAll) {
+                apiURL = getMyAllPickUpListAPI();
+            } else {
+                apiURL = getMyPickUpListAPI(universityID);
+            }
         }
         $.ajax({
             url: apiURL,

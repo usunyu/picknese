@@ -1,5 +1,5 @@
 /*
- * Parameters: loadCount (optional) => indicate load pick up count
+ * Parameters: loadCount (optional) => indicate need load pick up count
  *             loadAll (optional) => indicate load all pick up, not specific university
  */
 var LoadCurrentUserMixin = {

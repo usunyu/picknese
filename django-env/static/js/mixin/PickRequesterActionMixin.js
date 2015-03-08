@@ -1,11 +1,18 @@
-// Required: pollInterval
-// Optional: myList => true indicate current user's list
+/*
+ * Parameters: pollInterval
+ *             myList (optional) => indicate current user's list
+ *             loadAll (optional) => indicate load all pick requests
+ */
 var PickRequesterActionMixin = {
 	loadPickRequestersFromServer: function() {
         var universityID = parseLastNumberInURLPath();
         var apiURL = getPickRequesterListAPI(universityID);
         if (this.props.myList) {
-            apiURL = getMyPickRequestListAPI(universityID);
+            if (this.props.loadAll) {
+                apiURL = getMyAllPickRequestListAPI();
+            } else {
+                apiURL = getMyPickRequestListAPI(universityID);
+            }
         }
         $.ajax({
             url: apiURL,

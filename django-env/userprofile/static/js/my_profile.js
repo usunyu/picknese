@@ -1,7 +1,7 @@
 var MyProfilePanel = React.createClass({
     mixins: [LoadCurrentUserMixin,
-             /*PickRequesterActionMixin,*/
-             /*PickUpActionMixin*/],
+             PickRequesterActionMixin,
+             PickUpActionMixin],
     renderProfileImage: function(currentUser) {
         var profileImage = currentUser.profile.avatar ? currentUser.profile.avatar : getProfileDefaultPic();
         return (
@@ -192,7 +192,14 @@ var MyProfilePanel = React.createClass({
                 </div>
                 <div className="container">
                     <div className="tab-content">
-                        <div className="tab-pane fadein-effect active" id="tab_picks">
+                        <div className="tab-pane fadein-effect active col-xs-12 col-sm-8 col-sm-offset-2"
+                             id="tab_picks">
+                            <MyPickUpRequestPanel
+                                currentUser={this.state.currentUser}
+                                requesters={this.state.requesters}
+                                pickups={this.state.pickups}
+                                handlePickupSubmit={this.handlePickupSubmit}
+                                handlePickRequesterCancel={this.handlePickRequesterCancel} />
                         </div>
                         <div className="tab-pane fadein-effect" id="tab_carpools">
                             tab_carpools
@@ -206,7 +213,7 @@ var MyProfilePanel = React.createClass({
 
 React.render(
     <MyProfilePanel
-        /* myList={true} */
+        myList={true}
         loadCount={true}
         loadAll={true}
         pollInterval={20000} />,
