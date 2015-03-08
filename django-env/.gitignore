@@ -61,5 +61,7 @@ target/
 local_settings.py
 
 # Databse files
-django-env/picknese/picknese.db
-django-env/pickup/migrations/0006_auto_20150307_0348.py
+**/pickup/migrations/*
+**/story/migrations/*
+**/university/migrations/*
+**/userprofile/migrations/*
