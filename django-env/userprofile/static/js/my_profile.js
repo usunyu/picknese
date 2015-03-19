@@ -61,10 +61,10 @@ var MyProfilePanel = React.createClass({
         return (
             <div>
                 <h3 className="media-heading color-white"
-                    style={{marginLeft: "30px"}}>
+                    style={{marginLeft: "15px"}}>
                     {currentUser.first_name} {currentUser.last_name}
                 </h3>
-                <div className="container color-white hidden-xs">
+                <div className="color-white hidden-xs">
                     <div className="col-sm-4 col-md-6">
                         <p className="normal-font-size">Shanghai Jiao Tong University, 2007-2011</p>
                         <p className="normal-font-size">University of Southern California, 2012-2014</p>
@@ -76,7 +76,7 @@ var MyProfilePanel = React.createClass({
                     </div>
                 </div>
                 <div className="hidden-sm hidden-md hidden-lg"
-                     style={{marginLeft: "30px"}}>
+                     style={{marginLeft: "15px"}}>
                     <button type="button" className="btn btn-default btn-sm btn-on-image">
                         <i className="glyphicon glyphicon-home"></i>&nbsp; More Info
                     </button>
