@@ -221,13 +221,13 @@ var PickRequesterForm = React.createClass({
                         <form className="form-horizontal" onSubmit={this.handleFlightSubmit}>
                             <div className="panel-body">
                                 <div className="form-group">
-                                    <div className="col-sm-4">
+                                    <div className="col-sm-6">
                                         <input type="text"
                                                className="form-control" 
                                                placeholder="Your flight number?"
                                                ref="flight1" />
                                     </div>
-                                    <div className="col-sm-8">
+                                    <div className="col-sm-6">
                                         <input type="text"
                                                id="google-map-place1"
                                                className="form-control" 
@@ -237,7 +237,7 @@ var PickRequesterForm = React.createClass({
                                     <div className="col-sm-12">
                                         <textarea
                                             className="form-control pick-requester-note"
-                                            rows="2"
+                                            rows="1"
                                             placeholder="Anything you want to mention?"
                                             ref="description1">
                                         </textarea>
@@ -275,7 +275,7 @@ var PickRequesterForm = React.createClass({
                                     <div className="col-sm-12">
                                         <textarea
                                             className="form-control pick-requester-note"
-                                            rows="2"
+                                            rows="1"
                                             placeholder="Any thing you want to mention?"
                                             ref="description2">
                                         </textarea>
