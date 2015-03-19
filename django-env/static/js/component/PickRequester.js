@@ -134,9 +134,7 @@ var PickRequester = React.createClass({
                                 &nbsp;pick up
                             </p>
                             <p>
-                                {pickType == 1 ?
-                                    <div><i className="glyphicon glyphicon-plane"></i> {this.props.pickRequester.flight}</div> :
-                                    <div><i className="glyphicon glyphicon-globe"></i> {this.props.pickRequester.start}</div>}
+                                <div><i className="glyphicon glyphicon-plane"></i> {this.props.pickRequester.start}</div>
                             </p>
                             <p><i className="glyphicon glyphicon-map-marker"></i> {this.props.pickRequester.destination}</p>
                             <p><i className="glyphicon glyphicon-credit-card"></i> ${this.props.pickRequester.price}</p>
@@ -160,7 +158,7 @@ var PickRequesterForm = React.createClass({
         this.props.onPickRequesterSubmit({
             pick_type : 1,
             price : 20,
-            flight : this.refs.flight1.getDOMNode().value.trim(),
+            start : this.refs.flight1.getDOMNode().value.trim(),
             destination : this.refs.destination1.getDOMNode().value.trim(),
             description : this.refs.description1.getDOMNode().value.trim(),
         }, requester, university);
