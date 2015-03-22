@@ -193,6 +193,8 @@ var PickRequesterForm = React.createClass({
         new google.maps.places.Autocomplete(input1, options);
         new google.maps.places.Autocomplete(input2, options);
         new google.maps.places.Autocomplete(input3, options);
+
+        $('#datetimepicker1').datetimepicker();
     },
     render: function() {
         var requester = this.props.currentUser;
@@ -232,7 +234,15 @@ var PickRequesterForm = React.createClass({
                                                placeholder="Where you want to go?"
                                                ref="destination1" />
                                     </div>
-                                    <div className="col-sm-12">
+                                    <div className="col-sm-6">
+                                        <div className='input-group date' id='datetimepicker1'>
+                                            <input type='text' className="form-control"
+                                                   placeholder="Your arrival date?"
+                                                   style={{marginTop: '12px'}} />
+                                            <span className="input-group-addon"><span className="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-6">
                                         <textarea
                                             className="form-control pick-requester-note"
                                             rows="1"
