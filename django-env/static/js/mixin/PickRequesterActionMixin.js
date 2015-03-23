@@ -26,40 +26,27 @@ var PickRequesterActionMixin = {
             }.bind(this)
         });
     },
-    handlePickRequesterSubmit: function(form, requester, university) {
-        var destination = form.destination;
-        if (!destination) {
-            // TODO, show error message
-            $( "#pick-request-post" ).effect("shake");
-            return;
-        }
+    handlePickRequesterSubmit: function(form, requester, university, modalID) {
         var requesterData = {
             requester : requester.id,
             university : university.id,
             pick_type : form.pick_type,
             price : form.price,
             confirmed: false,
-            flight : form.flight,
             start : form.start,
+            date_time : form.date_time,
             destination : form.destination,
             description : form.description,
-        }
-        var pickRequester = {
-            requester : requester,
-            university : university,
-            pick_type : form.pick_type,
-            price : form.price,
-            confirmed: false,
-            flight : form.flight,
-            destination : form.destination,
-            description : form.description,
-        }
+        };
         $.ajax({
             url: getPickRequesterCreateAPI(),
             dataType: 'json',
             type: 'POST',
             data: requesterData,
             success: function(data) {
+                if (modalID) {
+                    $('#' + modalID).modal('hide');
+                }
                 // reload data
                 this.loadPickRequestersFromServer();
                 popupSuccessMessage("You have successfully post your request. Please waiting for your picker to contact you!");
@@ -76,7 +63,9 @@ var PickRequesterActionMixin = {
             type: 'DELETE',
             success: function(data) {
                 // close dialog on success
-                $('#' + modalID).modal('hide');
+                if (modalID) {
+                    $('#' + modalID).modal('hide');
+                }
                 // reload data
                 this.loadPickRequestersFromServer();
                 popupWarningMessage("You have successfully cancel your request.")

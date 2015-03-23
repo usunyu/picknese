@@ -83,6 +83,20 @@ function parseLastNumberInURLPath() {
     return null;
 }
 
+function splitNumberCharInString(str) {
+    var result = [];
+    for (var i = 0; i < str.length; i++) {
+        var num = str.substring(i, str.length);
+        if (isInt(num)) {
+            var chars = str.substring(0, i);
+            result.push(chars);
+            result.push(num);
+            break;
+        }
+    }
+    return result;
+}
+
 /*
  * Alert Message
  * --------------------------------------------------
@@ -213,6 +227,33 @@ function getPickUpCreateAPI() {
 
 function getUniversityAPI(u_id) {
     return "/universities/api/" + u_id + "/";
+}
+
+/*
+ * Flight Status API Helper
+ * https://developer.flightstats.com/getting-started/
+ * --------------------------------------------------
+ */
+function getFlightStatusAppID() {
+    return '81774f6f';
+}
+
+function getFlightStatusAppKey() {
+    return 'dc765dd9201598b2191f7faa0ad5ad73';
+}
+
+function getFlightStatusBaseAPI() {
+    return 'https://api.flightstats.com/flex/';
+}
+
+function getFlightStatusSchedulesAPI() {
+    return getFlightStatusBaseAPI() + 'schedules/rest/v1/jsonp/';
+}
+
+function getFlightStatusScheduledFlightAPI(flightnumber, year, month, day) {
+    var flightnumbers = splitNumberCharInString(flightnumber);
+    return getFlightStatusSchedulesAPI() + 'flight/' + flightnumbers[0] + '/' + flightnumbers[1] + '/arriving/'
+        + year + '/' + month + '/' + day + '/?appId=' + getFlightStatusAppID() + '&appKey=' + getFlightStatusAppKey();
 }
 
 /*

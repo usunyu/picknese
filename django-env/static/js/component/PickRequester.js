@@ -150,19 +150,84 @@ var PickRequester = React.createClass({
 });
 
 var PickRequesterForm = React.createClass({
+    handleFlightPreSubmit: function(e) {
+        e.preventDefault();
+        // clear input error hint
+        $( "#destination1-input" ).removeClass("has-error");
+        $( "#flight1-input" ).removeClass("has-error");
+        $( "#datetimepicker1" ).removeClass("has-error");
+        // check if the input is correct
+        var destination = this.refs.destination1.getDOMNode().value.trim();
+        var flight = this.refs.flight1.getDOMNode().value.trim().toUpperCase();
+        var date = this.refs.datetime1.getDOMNode().value.trim();
+        // month is 0 based, http://momentjs.com/docs/#/get-set/month/
+        var momentdate = moment(date, 'MM/DD/YYYY');
+
+        if (!destination || !flight || !momentdate.isValid()) {
+            if (!destination) {
+                $( "#destination1-input" ).addClass("has-error");
+            }
+            if (!flight) {
+                $( "#flight1-input" ).addClass("has-error");
+            }
+            if (!moment(date, 'MM/DD/YYYY').isValid()) {
+                $( "#datetimepicker1" ).addClass("has-error");
+            }
+            $( "#pick-request-post" ).effect("shake");
+            return;
+        }
+
+        // load scheduled flight
+        $.ajax({
+            url: getFlightStatusScheduledFlightAPI(flight, momentdate.year(), momentdate.month() + 1, momentdate.date()),
+            dataType: 'jsonp',
+            type: 'GET',
+            success: function(data) {
+                if (data.scheduledFlights.length) {
+                    // assume always return length 1
+                    var scheduledFlight = data.scheduledFlights[0];
+                    this.setState({scheduledFlight: scheduledFlight});
+                    var airports = data.appendix.airports;
+                    $('#flight1-post-modal-body').html(
+                        '<div class="row">' + 
+                        '<p class="col-sm-12"><b>Flight Number: </b>' + flight + '</p>' +
+                        '<p class="col-sm-6"><b>Departure Time: </b>' + scheduledFlight.departureTime + '</p>' +
+                        '<p class="col-sm-6"><b>Arrival Time: </b>' + scheduledFlight.arrivalTime + '</p>' +
+                        '<p class="col-sm-6"><b>From: </b>' + airports[1].name + '</p>' +
+                        '<p class="col-sm-6"><b>To: </b>' + airports[0].name + '</p>' + 
+                        '</div>'
+                    );
+                    $('#flight1-post-modal').modal('show');
+                } else {
+                    $('#flight1-post-error-modal-title').text("Cannot find schedule for " + flight);
+                    $('#flight1-post-error-modal').modal('show');
+                }
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(
+                    getFlightStatusScheduledFlightAPI(flight, momentdate.year(), momentdate.month() + 1, momentdate.date()),
+                    status,
+                    err.toString()
+                );
+            }.bind(this)
+        });
+    },
     handleFlightSubmit: function(e) {
         e.preventDefault();
+
         var requester = this.props.currentUser;
         var university = this.props.university;
         // TODO: auto set price according distance
         this.props.onPickRequesterSubmit({
             pick_type : 1,
             price : 20,
-            start : this.refs.flight1.getDOMNode().value.trim(),
+            start : this.refs.flight1.getDOMNode().value.trim().toUpperCase(),
+            date_time: this.state.scheduledFlight.arrivalTime,
             destination : this.refs.destination1.getDOMNode().value.trim(),
             description : this.refs.description1.getDOMNode().value.trim(),
-        }, requester, university);
+        }, requester, university, 'flight1-post-modal');
         this.refs.flight1.getDOMNode().value = '';
+        this.refs.datetime1.getDOMNode().value = '';
         this.refs.destination1.getDOMNode().value = '';
         this.refs.description1.getDOMNode().value = '';
     },
@@ -175,10 +240,12 @@ var PickRequesterForm = React.createClass({
             pick_type : 2,
             price : 20,
             start : this.refs.start2.getDOMNode().value.trim(),
+            date_time: this.refs.datetime2.getDOMNode().value.trim(),
             destination : this.refs.destination2.getDOMNode().value.trim(),
             description : this.refs.description2.getDOMNode().value.trim(),
         }, requester, university);
         this.refs.start2.getDOMNode().value = '';
+        this.refs.datetime2.getDOMNode().value = '';
         this.refs.destination2.getDOMNode().value = '';
         this.refs.description2.getDOMNode().value = '';
     },
@@ -194,7 +261,17 @@ var PickRequesterForm = React.createClass({
         new google.maps.places.Autocomplete(input2, options);
         new google.maps.places.Autocomplete(input3, options);
 
-        $('#datetimepicker1').datetimepicker();
+        var nowDate = new Date();
+        var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
+        $('#datetimepicker1').datetimepicker({
+            format: 'MM/DD/YYYY',
+            minDate: today
+        });
+    },
+    getInitialState: function() {
+        return {
+            scheduledFlight: null,
+        };
     },
     render: function() {
         var requester = this.props.currentUser;
@@ -217,17 +294,17 @@ var PickRequesterForm = React.createClass({
                     </ul>
                 </div>
                 <div className="tab-content">
-                    <div className="tab-pane fadein-effect active" id="tab_flight">
-                        <form className="form-horizontal" onSubmit={this.handleFlightSubmit}>
+                    <div className="tab-pane active" id="tab_flight">
+                        <form className="form-horizontal" onSubmit={this.handleFlightPreSubmit}>
                             <div className="panel-body">
                                 <div className="form-group">
-                                    <div className="col-sm-6">
+                                    <div className="col-sm-6" id="flight1-input">
                                         <input type="text"
                                                className="form-control" 
                                                placeholder="Your flight number?"
                                                ref="flight1" />
                                     </div>
-                                    <div className="col-sm-6">
+                                    <div className="col-sm-6" id="destination1-input">
                                         <input type="text"
                                                id="google-map-place1"
                                                className="form-control" 
@@ -238,7 +315,8 @@ var PickRequesterForm = React.createClass({
                                         <div className='input-group date' id='datetimepicker1'>
                                             <input type='text' className="form-control"
                                                    placeholder="Your arrival date?"
-                                                   style={{marginTop: '12px'}} />
+                                                   style={{marginTop: '12px'}}
+                                                   ref="datetime1" />
                                             <span className="input-group-addon"><span className="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                     </div>
@@ -254,15 +332,53 @@ var PickRequesterForm = React.createClass({
                             </div>
                             <div className="panel-footer clearfix">
                                 <button
+                                    id="flight1-post-button"
                                     type="submit"
                                     style={{float: 'right'}}
                                     className="btn btn-primary">
                                     Post Your Request
                                 </button>
+                                <div className="modal fade" id="flight1-post-modal" tabIndex="-1" role="dialog" aria-hidden="true">
+                                    <div className="modal-dialog">
+                                        <div className="modal-content">
+                                            <div className="modal-header">
+                                                <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 className="modal-title">Confirm your request</h4>
+                                            </div>
+                                            <div className="modal-body" id="flight1-post-modal-body">
+                                            </div>
+                                            <div className="modal-footer">
+                                                <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                <button type="button" className="btn btn-primary"
+                                                        onClick={this.handleFlightSubmit}>Confirm</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="modal fade" id="flight1-post-error-modal" tabIndex="-1" role="dialog" aria-hidden="true">
+                                    <div className="modal-dialog">
+                                        <div className="modal-content">
+                                            <div className="modal-header">
+                                                <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 className="modal-title" id="flight1-post-error-modal-title">Cannot find flight schedule</h4>
+                                            </div>
+                                            <div className="modal-body">
+                                                <p>Sorry, we cannot find any flight schedule based on your input, please input the correct date and flight number.</p>
+                                                <p>For the date, please input the arrival date as format MM/DD/YYYY.</p>
+                                                <p>For the flight number, please input as format CSN327, for the 
+                                                    &nbsp;<a href="http://en.wikipedia.org/wiki/List_of_airline_codes" target="_blank">airline code reference</a>.
+                                                </p>
+                                            </div>
+                                            <div className="modal-footer">
+                                                <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>
-                    <div className="tab-pane fadein-effect" id="tab_general">
+                    <div className="tab-pane" id="tab_general">
                         <form className="form-horizontal" onSubmit={this.handleGeneralSubmit}>
                             <div className="panel-body">
                                 <div className="form-group">
