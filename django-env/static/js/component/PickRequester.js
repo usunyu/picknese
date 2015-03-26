@@ -183,18 +183,15 @@ var PickRequesterForm = React.createClass({
             dataType: 'jsonp',
             type: 'GET',
             success: function(data) {
-                if (data.scheduledFlights.length) {
-                    // assume always return length 1
-                    var scheduledFlight = data.scheduledFlights[0];
-                    this.setState({scheduledFlight: scheduledFlight});
-                    var airports = data.appendix.airports;
+                if (!isResultHasError(data)) {
+                    this.setState({flightSchedulesData: data});
                     $('#flight1-post-modal-body').html(
                         '<div class="row">' + 
                         '<p class="col-sm-12"><b>Flight Number: </b>' + flight + '</p>' +
-                        '<p class="col-sm-6"><b>Departure Time: </b>' + scheduledFlight.departureTime + '</p>' +
-                        '<p class="col-sm-6"><b>Arrival Time: </b>' + scheduledFlight.arrivalTime + '</p>' +
-                        '<p class="col-sm-6"><b>From: </b>' + airports[1].name + '</p>' +
-                        '<p class="col-sm-6"><b>To: </b>' + airports[0].name + '</p>' + 
+                        '<p class="col-sm-6"><b>Departure Time: </b>' + getScheduledDepartureTimeFromResult(data) + '</p>' +
+                        '<p class="col-sm-6"><b>Arrival Time: </b>' + getScheduledArrivalTimeFromResult(data) + '</p>' +
+                        '<p class="col-sm-6"><b>From: </b>' + getScheduledDepartureAirportNameFromResult(data) + '</p>' +
+                        '<p class="col-sm-6"><b>To: </b>' + getScheduledArrivalAirportNameFromResult(data) + '</p>' + 
                         '</div>'
                     );
                     $('#flight1-post-modal').modal('show');
@@ -222,7 +219,7 @@ var PickRequesterForm = React.createClass({
             pick_type : 1,
             price : 20,
             start : this.refs.flight1.getDOMNode().value.trim().toUpperCase(),
-            date_time: this.state.scheduledFlight.arrivalTime,
+            date_time: getScheduledArrivalTimeFromResult(this.state.flightSchedulesData),
             destination : this.refs.destination1.getDOMNode().value.trim(),
             description : this.refs.description1.getDOMNode().value.trim(),
         }, requester, university, 'flight1-post-modal');
@@ -271,6 +268,7 @@ var PickRequesterForm = React.createClass({
     getInitialState: function() {
         return {
             scheduledFlight: null,
+            flightSchedulesData: null,
         };
     },
     render: function() {
