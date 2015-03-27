@@ -173,7 +173,7 @@ var PickRequesterForm = React.createClass({
             // if (!moment(date, 'MM/DD/YYYY').isValid()) {
             //     $( "#datetimepicker1" ).addClass("has-error");
             // }
-            $( "#pick-request-post" ).effect("shake");
+            $( "#pick-request-post" ).effect("shake", {distance: 10, times: 2});
             return;
         }
 
@@ -238,7 +238,7 @@ var PickRequesterForm = React.createClass({
         var momentdate = moment(date_time, 'MM/DD/YYYY');
 
         if (!start || !destination || !momentdate.isValid()) {
-            $( "#pick-request-post" ).effect("shake");
+            $( "#pick-request-post" ).effect("shake", {distance: 10, times: 2});
             return;
         }
 
@@ -246,6 +246,7 @@ var PickRequesterForm = React.createClass({
             '<div class="row">' + 
             '<p class="col-sm-6"><b>From: </b>' + start + '</p>' +
             '<p class="col-sm-6"><b>To: </b>' + destination + '</p>' +
+            '<div class="clearfix" />' +
             '<p class="col-sm-6"><b>Pick Up Time: </b>' + date_time + '</p>' +
             '<p class="col-sm-6"><b>Round Trip: </b>' + 'Yes' + '</p>' +
             '</div>'
@@ -261,9 +262,9 @@ var PickRequesterForm = React.createClass({
         this.props.onPickRequesterSubmit({
             pick_type : 2,
             price : 20,
-            start : start,
-            date_time: date_time,
-            destination : destination,
+            start : this.refs.start2.getDOMNode().value.trim(),
+            date_time: this.refs.datetime2.getDOMNode().value.trim(),   // TODO: fix input time format
+            destination : this.refs.destination2.getDOMNode().value.trim(),
             description : this.refs.description2.getDOMNode().value.trim(),
         }, requester, university);
         this.refs.start2.getDOMNode().value = '';
@@ -291,10 +292,10 @@ var PickRequesterForm = React.createClass({
             format: 'MM/DD/YYYY',
             minDate: today
         });
-        // $('#datetimepicker2').datetimepicker({
-        //     format: 'MM/DD/YYYY',
-        //     minDate: today
-        // });
+        $('#datetimepicker2').datetimepicker({
+            format: 'MM/DD/YYYY',
+            minDate: today
+        });
     },
     getInitialState: function() {
         return {
