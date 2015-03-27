@@ -153,9 +153,9 @@ var PickRequesterForm = React.createClass({
     handleFlightPreSubmit: function(e) {
         e.preventDefault();
         // clear input error hint
-        $( "#destination1-input" ).removeClass("has-error");
-        $( "#flight1-input" ).removeClass("has-error");
-        $( "#datetimepicker1" ).removeClass("has-error");
+        // $( "#destination1-input" ).removeClass("has-error");
+        // $( "#flight1-input" ).removeClass("has-error");
+        // $( "#datetimepicker1" ).removeClass("has-error");
         // check if the input is correct
         var destination = this.refs.destination1.getDOMNode().value.trim();
         var flight = this.refs.flight1.getDOMNode().value.trim().toUpperCase();
@@ -164,15 +164,15 @@ var PickRequesterForm = React.createClass({
         var momentdate = moment(date, 'MM/DD/YYYY');
 
         if (!destination || !flight || !momentdate.isValid()) {
-            if (!destination) {
-                $( "#destination1-input" ).addClass("has-error");
-            }
-            if (!flight) {
-                $( "#flight1-input" ).addClass("has-error");
-            }
-            if (!moment(date, 'MM/DD/YYYY').isValid()) {
-                $( "#datetimepicker1" ).addClass("has-error");
-            }
+            // if (!destination) {
+            //     $( "#destination1-input" ).addClass("has-error");
+            // }
+            // if (!flight) {
+            //     $( "#flight1-input" ).addClass("has-error");
+            // }
+            // if (!moment(date, 'MM/DD/YYYY').isValid()) {
+            //     $( "#datetimepicker1" ).addClass("has-error");
+            // }
             $( "#pick-request-post" ).effect("shake");
             return;
         }
@@ -228,17 +228,42 @@ var PickRequesterForm = React.createClass({
         this.refs.destination1.getDOMNode().value = '';
         this.refs.description1.getDOMNode().value = '';
     },
+    handleGeneralPreSubmit: function(e) {
+        e.preventDefault();
+
+        var start = this.refs.start2.getDOMNode().value.trim();
+        var destination = this.refs.destination2.getDOMNode().value.trim();
+        var date_time = this.refs.datetime2.getDOMNode().value.trim();
+        // month is 0 based, http://momentjs.com/docs/#/get-set/month/
+        var momentdate = moment(date_time, 'MM/DD/YYYY');
+
+        if (!start || !destination || !momentdate.isValid()) {
+            $( "#pick-request-post" ).effect("shake");
+            return;
+        }
+
+        $('#general2-post-modal-body').html(
+            '<div class="row">' + 
+            '<p class="col-sm-6"><b>From: </b>' + start + '</p>' +
+            '<p class="col-sm-6"><b>To: </b>' + destination + '</p>' +
+            '<p class="col-sm-6"><b>Pick Up Time: </b>' + date_time + '</p>' +
+            '<p class="col-sm-6"><b>Round Trip: </b>' + 'Yes' + '</p>' +
+            '</div>'
+        );
+        $('#general2-post-modal').modal('show');
+    },
     handleGeneralSubmit: function(e) {
         e.preventDefault();
+
         var requester = this.props.currentUser;
         var university = this.props.university;
         // TODO: auto set price according distance
         this.props.onPickRequesterSubmit({
             pick_type : 2,
             price : 20,
-            start : this.refs.start2.getDOMNode().value.trim(),
-            date_time: this.refs.datetime2.getDOMNode().value.trim(),
-            destination : this.refs.destination2.getDOMNode().value.trim(),
+            start : start,
+            date_time: date_time,
+            destination : destination,
             description : this.refs.description2.getDOMNode().value.trim(),
         }, requester, university);
         this.refs.start2.getDOMNode().value = '';
@@ -247,6 +272,7 @@ var PickRequesterForm = React.createClass({
         this.refs.description2.getDOMNode().value = '';
     },
     componentDidUpdate: function() {
+        // Prepare google map api
         var input1 = document.getElementById('google-map-place1');
         var input2 = document.getElementById('google-map-place2');
         var input3 = document.getElementById('google-map-place3');
@@ -258,16 +284,20 @@ var PickRequesterForm = React.createClass({
         new google.maps.places.Autocomplete(input2, options);
         new google.maps.places.Autocomplete(input3, options);
 
+        // Prepare date selector
         var nowDate = new Date();
         var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
         $('#datetimepicker1').datetimepicker({
             format: 'MM/DD/YYYY',
             minDate: today
         });
+        // $('#datetimepicker2').datetimepicker({
+        //     format: 'MM/DD/YYYY',
+        //     minDate: today
+        // });
     },
     getInitialState: function() {
         return {
-            scheduledFlight: null,
             flightSchedulesData: null,
         };
     },
@@ -279,6 +309,7 @@ var PickRequesterForm = React.createClass({
         }
         return (
             <div id="pick-request-post" className="panel panel-primary">
+                {/* Pick Up Tab Select */}
                 <div className="panel-heading clearfix">
                     <ul className="inline-list col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" style={{marginBottom: "0px"}}>
                         <li className="active col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -292,6 +323,7 @@ var PickRequesterForm = React.createClass({
                     </ul>
                 </div>
                 <div className="tab-content">
+                    {/* Flight Pick Up Tab */}
                     <div className="tab-pane active" id="tab_flight">
                         <form className="form-horizontal" onSubmit={this.handleFlightPreSubmit}>
                             <div className="panel-body">
@@ -329,6 +361,7 @@ var PickRequesterForm = React.createClass({
                                 </div>
                             </div>
                             <div className="panel-footer clearfix">
+                                {/* Flight Pick Up Request Button */}
                                 <button
                                     id="flight1-post-button"
                                     type="submit"
@@ -336,6 +369,7 @@ var PickRequesterForm = React.createClass({
                                     className="btn btn-primary">
                                     Post Your Request
                                 </button>
+                                {/* Flight Pick Up Request Success Modal */}
                                 <div className="modal fade" id="flight1-post-modal" tabIndex="-1" role="dialog" aria-hidden="true">
                                     <div className="modal-dialog">
                                         <div className="modal-content">
@@ -353,6 +387,7 @@ var PickRequesterForm = React.createClass({
                                         </div>
                                     </div>
                                 </div>
+                                {/* Flight Pick Up Request Error Modal */}
                                 <div className="modal fade" id="flight1-post-error-modal" tabIndex="-1" role="dialog" aria-hidden="true">
                                     <div className="modal-dialog">
                                         <div className="modal-content">
@@ -376,8 +411,9 @@ var PickRequesterForm = React.createClass({
                             </div>
                         </form>
                     </div>
+                    {/* General Pick Up Tab */}
                     <div className="tab-pane" id="tab_general">
-                        <form className="form-horizontal" onSubmit={this.handleGeneralSubmit}>
+                        <form className="form-horizontal" onSubmit={this.handleGeneralPreSubmit}>
                             <div className="panel-body">
                                 <div className="form-group">
                                     <div className="col-sm-6">
@@ -394,7 +430,16 @@ var PickRequesterForm = React.createClass({
                                                placeholder="Where you want to go?"
                                                ref="destination2" />
                                     </div>
-                                    <div className="col-sm-12">
+                                    <div className="col-sm-6">
+                                        <div className='input-group date' id='datetimepicker2'>
+                                            <input type='text' className="form-control"
+                                                   placeholder="Your pick up time?"
+                                                   style={{marginTop: '12px'}}
+                                                   ref="datetime2" />
+                                            <span className="input-group-addon"><span className="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-6">
                                         <textarea
                                             className="form-control pick-requester-note"
                                             rows="1"
@@ -405,12 +450,31 @@ var PickRequesterForm = React.createClass({
                                 </div>
                             </div>
                             <div className="panel-footer clearfix">
+                                {/* General Pick Up Request Button */}
                                 <button
                                     type="submit"
                                     style={{float: 'right'}}
                                     className="btn btn-primary">
                                     Post Your Request
                                 </button>
+                                {/* General Pick Up Request Confirm Modal */}
+                                <div className="modal fade" id="general2-post-modal" tabIndex="-1" role="dialog" aria-hidden="true">
+                                    <div className="modal-dialog">
+                                        <div className="modal-content">
+                                            <div className="modal-header">
+                                                <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 className="modal-title">Confirm your request</h4>
+                                            </div>
+                                            <div className="modal-body" id="general2-post-modal-body">
+                                            </div>
+                                            <div className="modal-footer">
+                                                <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                <button type="button" className="btn btn-primary"
+                                                        onClick={this.handleGeneralSubmit}>Confirm</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>

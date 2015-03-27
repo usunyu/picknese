@@ -76,8 +76,6 @@ function getScheduledArrivalAirportFromResult(data) {
 	var airports = data.appendix.airports;
 	for (var i = 0; i < airports.length; i++) {
 		var airport = airports[i];
-		// console.log(arrivalAirportFsCode);
-		// console.log(airport.fs);
 		if (airport.fs == arrivalAirportFsCode) {
 			return airport;
 		}
