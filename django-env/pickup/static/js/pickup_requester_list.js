@@ -6,13 +6,6 @@ var PickupForm = React.createClass({
         e.preventDefault();
         this.props.onPickupSubmit({
             picker : this.props.picker,
-            pickee : this.props.pickRequester.requester,
-            university : this.props.pickRequester.university,
-            pickType : this.props.pickRequester.pick_type,
-            flight : this.props.pickRequester.flight,
-            start : this.props.pickRequester.start,
-            price : this.props.pickRequester.price,
-            destination : this.props.pickRequester.destination,
             description : this.refs.message.getDOMNode().value.trim(),
         }, this.props.pickRequester, this.props.modalID);
     },
@@ -84,7 +77,7 @@ var PickRecord = React.createClass({
     render: function() {
         return (
             <li className="feed-item">
-                <time className="date" dateTime="9-22">Sep 22</time>
+                <time className="date" dateTime={this.props.date_time}>{this.props.date_time}</time>
                 <span className="text" >
                     <a href="#">{this.props.picker.first_name} {this.props.picker.last_name}</a>
                     &nbsp;will pick up&nbsp;
@@ -100,13 +93,13 @@ var PickRecordList = React.createClass({
         var pickRecords = [];
         for (var i = 0; i < this.props.pickups.length; i++) {
             var pickup = this.props.pickups[i];
+            var moment_datetime = moment(pickup.date_time, "YYYY-MM-DD HH:mm");
             pickRecords.push(
                 <PickRecord
                     key={pickup.id}
                     pickee={pickup.pickee}
                     picker={pickup.picker}
-                    // TODO: add real time in model
-                    time={""} />
+                    date_time={moment_datetime.format("YYYY-MM-DD")} />
             );
         }
         return (

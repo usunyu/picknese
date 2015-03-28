@@ -30,15 +30,16 @@ var PickUpActionMixin = {
         // Create PickUp
         var pickupData = {
             picker : pickup.picker.id,
-            pickee : pickup.pickee.id,
-            university : pickup.university.id,
-            pick_type : pickup.pickType,
-            start : pickup.start,
-            flight : pickup.flight,
-            price : pickup.price,
-            destination : pickup.destination,
+            pickee : requester.requester.id,
+            university : requester.university.id,
+            pick_type : requester.pick_type,
+            start : requester.start,
+            price : requester.price,
+            destination : requester.destination,
             description : pickup.description,
+            date_time : requester.date_time,
         };
+
         $.ajax({
             url: getPickUpCreateAPI(),
             dataType: 'json',
@@ -52,18 +53,22 @@ var PickUpActionMixin = {
                 console.error(getPickUpCreateAPI(), status, err.toString());
             }.bind(this)
         });
+
         // Update PickRequester confirmed field
         var pickRequesterData = {
             id : requester.id,
             pick_type : requester.pick_type,
             price : requester.price,
-            flight : requester.flight,
+            start : requester.start,
             destination : requester.destination,
             confirmed : true,
+            bags : requester.bags,
+            date_time : requester.date_time,
             description : requester.description,
             requester : requester.requester.id,
             university : requester.university.id,
         };
+
         $.ajax({
             url: getPickRequesterMutateAPI(requester.id),
             dataType: 'json',

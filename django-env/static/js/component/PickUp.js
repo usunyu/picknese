@@ -6,6 +6,7 @@ var PickUp = React.createClass({
         var picker = this.props.pickup.picker;
         var pickee = this.props.pickup.pickee;
         var pickType = this.props.pickup.pick_type;
+        var moment_datetime = moment(this.props.pickup.date_time, "YYYY-MM-DD HH:mm");
         return (
             <div className="panel panel-success fadein-effect">
                 <div className="panel-heading" />
@@ -29,25 +30,32 @@ var PickUp = React.createClass({
                             </a>
                         </div>
                         <div className="media-body">
-                            <p className="media-heading">
-                                <i className="glyphicon glyphicon-user"></i>
-                                <b> {picker.first_name} {picker.last_name}</b>
-                                &nbsp;will offer&nbsp;
-                                <b> {pickee.first_name} {pickee.last_name}</b>
-                                &nbsp;a&nbsp;
+                            <div className="row">
+                                <p className="media-heading col-md-12">
+                                    <i className="glyphicon glyphicon-user"></i>
+                                    <b> {picker.first_name} {picker.last_name}</b>
+                                    &nbsp;will offer&nbsp;
+                                    <b> {pickee.first_name} {pickee.last_name}</b>
+                                    &nbsp;a&nbsp;
+                                    {pickType == 1 ?
+                                        <span className="label label-success">Flight</span> :
+                                        <span className="label label-primary">General</span>}
+                                    &nbsp;pick up
+                                </p>
                                 {pickType == 1 ?
-                                    <span className="label label-success">Flight</span> :
-                                    <span className="label label-primary">General</span>}
-                                &nbsp;pick up
-                            </p>
-                            <p>
-                                {pickType == 1 ?
-                                    <div><i className="glyphicon glyphicon-plane"></i> {this.props.pickup.flight}</div> :
-                                    <div><i className="glyphicon glyphicon-globe"></i> {this.props.pickup.start}</div>}
-                            </p>
-                            <p><i className="glyphicon glyphicon-map-marker"></i> {this.props.pickup.destination}</p>
-                            <p><i className="glyphicon glyphicon-credit-card"></i> ${this.props.pickup.price}</p>
-                            <p><i className="glyphicon glyphicon-comment"></i> {this.props.pickup.description}</p>
+                                <div>
+                                    <p className="col-md-5"><i className="glyphicon glyphicon-plane"></i> {this.props.pickup.start}</p>
+                                    <p className="col-md-5"><i className="glyphicon glyphicon-time"></i> {moment_datetime.format("YYYY-MM-DD HH:mm")}</p>
+                                    <p className="col-md-12"><i className="glyphicon glyphicon-map-marker"></i> {this.props.pickup.destination}</p>
+                                    <p className="col-md-5"><i className="glyphicon glyphicon-credit-card"></i> ${this.props.pickup.price}</p>
+                                </div> : <div>
+                                    <p className="col-md-12"><i className="glyphicon glyphicon-flag"></i> {this.props.pickup.start}</p>
+                                    <p className="col-md-12"><i className="glyphicon glyphicon-map-marker"></i> {this.props.pickup.destination}</p>
+                                    <p className="col-md-5"><i className="glyphicon glyphicon-time"></i> {moment_datetime.format("YYYY-MM-DD HH:mm")}</p>
+                                    <p className="col-md-5"><i className="glyphicon glyphicon-credit-card"></i> ${this.props.pickup.price}</p>
+                                </div>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
