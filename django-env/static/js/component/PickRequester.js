@@ -115,6 +115,7 @@ var PickRequester = React.createClass({
         var start = this.props.pickRequester.start;
         var destination = this.props.pickRequester.destination;
         var price = this.props.pickRequester.price;
+        var bags = this.props.pickRequester.bags;
         var dateTime = this.props.pickRequester.date_time;
         var moment_datetime = moment(dateTime, "YYYY-MM-DD HH:mm");
         var description = this.props.pickRequester.description;
@@ -142,14 +143,20 @@ var PickRequester = React.createClass({
                                         <span className="label label-primary">General</span>}
                                     &nbsp;pick up
                                 </p>
-                                <p className="col-md-12"><i className={pickType == 1 ? 
-                                    "glyphicon glyphicon-plane" : 
-                                    "glyphicon glyphicon-flag"}></i>
-                                    &nbsp;{start}
-                                </p>
-                                <p className="col-md-12"><i className="glyphicon glyphicon-map-marker"></i> {destination}</p>
-                                <p className="col-md-5"><i className="glyphicon glyphicon-credit-card"></i> ${price}</p>
-                                <p className="col-md-5"><i className="glyphicon glyphicon-time"></i> {moment_datetime.format("YYYY-MM-DD HH:mm")}</p>
+                                {pickType == 1 ? 
+                                <div>
+                                    <p className="col-md-5"><i className="glyphicon glyphicon-plane"></i> {start}</p>
+                                    <p className="col-md-5"><i className="glyphicon glyphicon-time"></i> {moment_datetime.format("YYYY-MM-DD HH:mm")}</p>
+                                    <p className="col-md-12"><i className="glyphicon glyphicon-map-marker"></i> {destination}</p>
+                                    <p className="col-md-5"><i className="glyphicon glyphicon-credit-card"></i> ${price}</p>
+                                    <p className="col-md-5"><i className="glyphicon glyphicon-briefcase"></i> {bags}</p>
+                                </div> : <div>
+                                    <p className="col-md-12"><i className="glyphicon glyphicon-flag"></i> {start}</p>
+                                    <p className="col-md-12"><i className="glyphicon glyphicon-map-marker"></i> {destination}</p>
+                                    <p className="col-md-5"><i className="glyphicon glyphicon-credit-card"></i> ${price}</p>
+                                    <p className="col-md-5"><i className="glyphicon glyphicon-time"></i> {moment_datetime.format("YYYY-MM-DD HH:mm")}</p>
+                                </div>
+                                }
                                 <p className="col-md-12"><i className={description ? "glyphicon glyphicon-comment" : ""}></i> {description} </p>
                             </div>
                         </div>

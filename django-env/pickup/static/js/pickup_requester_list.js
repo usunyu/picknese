@@ -124,13 +124,16 @@ var PickRequesterPanel = React.createClass({
              PickUpActionMixin],
     render: function() {
         return (
-            <div className="row col-md-12"
+            <div className="row col-xs-12 col-sm-12 col-md-12 col-lg-12"
                  style={{marginTop: '10px'}}>
                 <div className="col-xs-12 col-sm-4 col-md-3 fadein-effect">
                     <CurrentUserPanel
                         currentUser={this.state.currentUser}
                         currentUserPickCount={this.state.currentUserPickCount}
                         university={this.state.university} />
+                    <div className="col-xs-12 col-sm-12 hidden-md hidden-lg">
+                        <PickRequesterFormCollapseButton />
+                    </div>
                 </div>
                 <div className="col-xs-12 col-sm-8 col-md-7">
                     <PickRequesterList
@@ -141,7 +144,7 @@ var PickRequesterPanel = React.createClass({
                         handlePickRequesterSubmit={this.handlePickRequesterSubmit}
                         handlePickRequesterCancel={this.handlePickRequesterCancel} />
                 </div>
-                <div className="col-xs-12 col-sm-6 col-md-2 sidebar-offcanvas fadein-effect">
+                <div className="col-md-2 hidden-xs hidden-sm sidebar-offcanvas fadein-effect">
                     <PickRequesterFormCollapseButton />
                     <PickRecordList
                         pickups={this.state.pickups} />

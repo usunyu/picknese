@@ -74,6 +74,10 @@ function showPickRequestForm() {
     $('#pick-request-post').collapse('show');
 }
 
+function hidePickRequestForm() {
+    $('#pick-request-post').collapse('hide');
+}
+
 /*
  * Loading
  * --------------------------------------------------

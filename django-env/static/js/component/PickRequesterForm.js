@@ -21,6 +21,7 @@ var PickRequesterForm = React.createClass({
         var destination = this.refs.destination1.getDOMNode().value.trim();
         var flight = this.refs.flight1.getDOMNode().value.trim().toUpperCase();
         var date = this.refs.datetime1.getDOMNode().value.trim();
+        var baggage = this.refs.baggage.getDOMNode().value.trim();
         // month is 0 based, http://momentjs.com/docs/#/get-set/month/
         var momentdate = moment(date, 'MM/DD/YYYY');
 
@@ -48,7 +49,8 @@ var PickRequesterForm = React.createClass({
                     this.setState({flightSchedulesData: data});
                     $('#flight1-post-modal-body').html(
                         '<div class="row">' + 
-                        '<p class="col-sm-12"><b>Flight Number: </b>' + flight + '</p>' +
+                        '<p class="col-sm-6"><b>Flight Number: </b>' + flight + '</p>' +
+                        '<p class="col-sm-6"><b>Baggage Number: </b>' + baggage + '</p>' +
                         '<p class="col-sm-6"><b>Departure Time: </b>' + getScheduledDepartureTimeFromResult(data) + '</p>' +
                         '<p class="col-sm-6"><b>Arrival Time: </b>' + getScheduledArrivalTimeFromResult(data) + '</p>' +
                         '<p class="col-sm-6"><b>From: </b>' + getScheduledDepartureAirportNameFromResult(data) + '</p>' +
@@ -81,11 +83,13 @@ var PickRequesterForm = React.createClass({
             price : 20,
             start : this.refs.flight1.getDOMNode().value.trim().toUpperCase(),
             date_time: getScheduledArrivalTimeFromResult(this.state.flightSchedulesData),
+            bags: this.refs.baggage.getDOMNode().value.trim(),
             destination : this.refs.destination1.getDOMNode().value.trim(),
             description : this.refs.description1.getDOMNode().value.trim(),
         }, requester, university, 'flight1-post-modal');
         this.refs.flight1.getDOMNode().value = '';
         this.refs.datetime1.getDOMNode().value = '';
+        this.refs.baggage.getDOMNode().value = '';
         this.refs.destination1.getDOMNode().value = '';
         this.refs.description1.getDOMNode().value = '';
     },

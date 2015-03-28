@@ -19,9 +19,6 @@ var PickRequesterActionMixin = {
             dataType: 'json',
             success: function(data) {
                 this.setState({requesters: data});
-                if (data.length == 0) {
-                    showPickRequestForm();
-                }
                 dismissLoadingEffect();
             }.bind(this),
             error: function(xhr, status, err) {
@@ -37,6 +34,7 @@ var PickRequesterActionMixin = {
             price : form.price,
             confirmed: false,
             start : form.start,
+            bags : form.bags,
             date_time : form.date_time,
             destination : form.destination,
             description : form.description,
