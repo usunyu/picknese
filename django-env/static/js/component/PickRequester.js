@@ -235,9 +235,9 @@ var PickRequesterForm = React.createClass({
         var destination = this.refs.destination2.getDOMNode().value.trim();
         var date_time = this.refs.datetime2.getDOMNode().value.trim();
         // month is 0 based, http://momentjs.com/docs/#/get-set/month/
-        var momentdate = moment(date_time, 'MM/DD/YYYY');
+        var moment_time = moment(date_time, 'MM/DD/YYYY HH:mm');
 
-        if (!start || !destination || !momentdate.isValid()) {
+        if (!start || !destination || !moment_time.isValid()) {
             $( "#pick-request-post" ).effect("shake", {distance: 10, times: 2});
             return;
         }
@@ -258,15 +258,19 @@ var PickRequesterForm = React.createClass({
 
         var requester = this.props.currentUser;
         var university = this.props.university;
+
+        var date_time = this.refs.datetime2.getDOMNode().value.trim();
+        var moment_time = moment(date_time, 'MM/DD/YYYY HH:mm');
+
         // TODO: auto set price according distance
         this.props.onPickRequesterSubmit({
             pick_type : 2,
             price : 20,
             start : this.refs.start2.getDOMNode().value.trim(),
-            date_time: this.refs.datetime2.getDOMNode().value.trim(),   // TODO: fix input time format
+            date_time: moment_time.format(),
             destination : this.refs.destination2.getDOMNode().value.trim(),
             description : this.refs.description2.getDOMNode().value.trim(),
-        }, requester, university);
+        }, requester, university, 'general2-post-modal');
         this.refs.start2.getDOMNode().value = '';
         this.refs.datetime2.getDOMNode().value = '';
         this.refs.destination2.getDOMNode().value = '';
@@ -290,11 +294,10 @@ var PickRequesterForm = React.createClass({
         var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
         $('#datetimepicker1').datetimepicker({
             format: 'MM/DD/YYYY',
-            minDate: today
+            minDate: today,
         });
         $('#datetimepicker2').datetimepicker({
-            format: 'MM/DD/YYYY',
-            minDate: today
+            minDate: today,
         });
     },
     getInitialState: function() {
@@ -333,6 +336,7 @@ var PickRequesterForm = React.createClass({
                                         <input type="text"
                                                className="form-control" 
                                                placeholder="Your flight number?"
+                                               required
                                                ref="flight1" />
                                     </div>
                                     <div className="col-sm-6" id="destination1-input">
@@ -340,6 +344,7 @@ var PickRequesterForm = React.createClass({
                                                id="google-map-place1"
                                                className="form-control" 
                                                placeholder="Where you want to go?"
+                                               required
                                                ref="destination1" />
                                     </div>
                                     <div className="col-sm-6">
@@ -347,6 +352,7 @@ var PickRequesterForm = React.createClass({
                                             <input type='text' className="form-control"
                                                    placeholder="Your arrival date?"
                                                    style={{marginTop: '12px'}}
+                                                   required
                                                    ref="datetime1" />
                                             <span className="input-group-addon"><span className="glyphicon glyphicon-calendar"></span></span>
                                         </div>
@@ -378,6 +384,7 @@ var PickRequesterForm = React.createClass({
                                                 <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                 <h4 className="modal-title">Confirm your request</h4>
                                             </div>
+                                            <hr style={{marginTop: "-10px"}}/>
                                             <div className="modal-body" id="flight1-post-modal-body">
                                             </div>
                                             <div className="modal-footer">
@@ -396,6 +403,7 @@ var PickRequesterForm = React.createClass({
                                                 <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                 <h4 className="modal-title" id="flight1-post-error-modal-title">Cannot find flight schedule</h4>
                                             </div>
+                                            <hr style={{marginTop: "-10px"}}/>
                                             <div className="modal-body">
                                                 <p>Sorry, we cannot find any flight schedule based on your input, please input the correct date and flight number.</p>
                                                 <p>For the date, please input the arrival date as format MM/DD/YYYY.</p>
@@ -422,6 +430,7 @@ var PickRequesterForm = React.createClass({
                                                id="google-map-place2"
                                                className="form-control" 
                                                placeholder="Where to pick up you?"
+                                               required
                                                ref="start2" />
                                     </div>
                                     <div className="col-sm-6">
@@ -429,12 +438,14 @@ var PickRequesterForm = React.createClass({
                                                id="google-map-place3"
                                                className="form-control" 
                                                placeholder="Where you want to go?"
+                                               required
                                                ref="destination2" />
                                     </div>
                                     <div className="col-sm-6">
                                         <div className='input-group date' id='datetimepicker2'>
                                             <input type='text' className="form-control"
                                                    placeholder="Your pick up time?"
+                                                   required
                                                    style={{marginTop: '12px'}}
                                                    ref="datetime2" />
                                             <span className="input-group-addon"><span className="glyphicon glyphicon-calendar"></span></span>
@@ -464,8 +475,9 @@ var PickRequesterForm = React.createClass({
                                         <div className="modal-content">
                                             <div className="modal-header">
                                                 <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 className="modal-title">Confirm your request</h4>
+                                                <h4 className="modal-title">Confirm Your Request</h4>
                                             </div>
+                                            <hr style={{marginTop: "-10px"}}/>
                                             <div className="modal-body" id="general2-post-modal-body">
                                             </div>
                                             <div className="modal-footer">

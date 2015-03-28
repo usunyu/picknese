@@ -62,7 +62,8 @@ class PickRequesterCreate(generics.CreateAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     # def perform_create(self, serializer):
-    #     serializer.save(owner=self.request.user)
+    #     date_time = serializer.data['date_time']
+    #     serializer.save()
 
 class PickRequesterMutate(generics.RetrieveUpdateDestroyAPIView):
     """
