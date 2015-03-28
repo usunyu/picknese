@@ -15,6 +15,7 @@ class PickRequester(models.Model):
 	# TODO: delete flight in database
 	start = models.CharField(max_length=200)
 	destination = models.CharField(max_length=200)
+	bags = models.IntegerField(default=1)
 	confirmed = models.BooleanField(default=False)
 	description = models.TextField('Message', null=True, blank=True)
 	date_time = models.DateTimeField()

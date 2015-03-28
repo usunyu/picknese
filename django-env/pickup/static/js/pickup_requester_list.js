@@ -142,6 +142,7 @@ var PickRequesterPanel = React.createClass({
                         handlePickRequesterCancel={this.handlePickRequesterCancel} />
                 </div>
                 <div className="col-xs-12 col-sm-6 col-md-2 sidebar-offcanvas fadein-effect">
+                    <PickRequesterFormCollapseButton />
                     <PickRecordList
                         pickups={this.state.pickups} />
                 </div>

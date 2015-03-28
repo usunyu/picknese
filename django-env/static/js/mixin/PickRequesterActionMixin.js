@@ -19,6 +19,9 @@ var PickRequesterActionMixin = {
             dataType: 'json',
             success: function(data) {
                 this.setState({requesters: data});
+                if (data.length == 0) {
+                    showPickRequestForm();
+                }
                 dismissLoadingEffect();
             }.bind(this),
             error: function(xhr, status, err) {
@@ -47,6 +50,7 @@ var PickRequesterActionMixin = {
                 if (modalID) {
                     $('#' + modalID).modal('hide');
                 }
+                $('#pick-request-post').collapse('hide');
                 // reload data
                 this.loadPickRequestersFromServer();
                 popupSuccessMessage("You have successfully post your request. Please waiting for your picker to contact you!");

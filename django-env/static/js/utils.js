@@ -67,6 +67,14 @@ function popupInfoMessage(message) {
 }
 
 /*
+ * Pick Up
+ * --------------------------------------------------
+ */
+function showPickRequestForm() {
+    $('#pick-request-post').collapse('show');
+}
+
+/*
  * Loading
  * --------------------------------------------------
  */
