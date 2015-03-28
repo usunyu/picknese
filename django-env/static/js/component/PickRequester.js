@@ -1,9 +1,17 @@
+/*
+ * Parameters: picker, pickRequester
+ * Callback: handlePickupSubmit, onPickRequesterCancel
+ */
 var PickRequester = React.createClass({
     handleCancel: function(id, modalID) {
         this.props.onPickRequesterCancel(id, modalID);
     },
     getActionButton: function() {
+        if (!this.props.pickRequester) {
+            return;
+        }
         var modalID = "requester-" + this.props.pickRequester.id;
+        {/* If it is user's own request */}
         if (this.props.picker.id == this.props.pickRequester.requester.id) {
             return (
                 <div>
@@ -104,8 +112,17 @@ var PickRequester = React.createClass({
     render: function() {
         var requester = this.props.pickRequester.requester;
         var pickType = this.props.pickRequester.pick_type;
+        var start = this.props.pickRequester.start;
+        var destination = this.props.pickRequester.destination;
+        var price = this.props.pickRequester.price;
+        var bags = this.props.pickRequester.bags;
+        var dateTime = this.props.pickRequester.date_time;
+        var moment_datetime = moment(dateTime, "YYYY-MM-DD HH:mm");
+        var description = this.props.pickRequester.description;
+
         return (
-            <div className="panel panel-default fadein-effect">
+            <div className="panel panel-primary fadein-effect">
+                <div className="panel-heading" />
                 <div className="panel-body">
                     <div className="media">
                         <div className="media-left">
@@ -115,169 +132,37 @@ var PickRequester = React.createClass({
                                      style={{width: '60px', height: '60px'}} />
                             </a>
                         </div>
-                        <div className="media-body">
-                            <p className="media-heading">
-                                <i className="glyphicon glyphicon-user"></i>
-                                <b> {requester.first_name} {requester.last_name}</b> 
-                                &nbsp;needs&nbsp;
-                                {pickType == 1 ?
-                                    <span className="label label-success">Flight</span> :
-                                    <span className="label label-primary">General</span>}
-                                &nbsp;pick up
-                            </p>
-                            <p>
-                                {pickType == 1 ?
-                                    <div><i className="glyphicon glyphicon-plane"></i> {this.props.pickRequester.flight}</div> :
-                                    <div><i className="glyphicon glyphicon-globe"></i> {this.props.pickRequester.start}</div>}
-                            </p>
-                            <p><i className="glyphicon glyphicon-map-marker"></i> {this.props.pickRequester.destination}</p>
-                            <p><i className="glyphicon glyphicon-credit-card"></i> ${this.props.pickRequester.price}</p>
-                            <p><i className="glyphicon glyphicon-comment"></i> {this.props.pickRequester.description}</p>
+                        <div className="media-body ">
+                            <div className="row">
+                                <p className="media-heading col-md-12">
+                                    <i className="glyphicon glyphicon-user"></i>
+                                    <b> {requester.first_name} {requester.last_name}</b> 
+                                    &nbsp;needs&nbsp;
+                                    {pickType == 1 ?
+                                        <span className="label label-success">Flight</span> :
+                                        <span className="label label-primary">General</span>}
+                                    &nbsp;pick up
+                                </p>
+                                {pickType == 1 ? 
+                                <div>
+                                    <p className="col-md-5"><i className="glyphicon glyphicon-plane"></i> {start}</p>
+                                    <p className="col-md-5"><i className="glyphicon glyphicon-time"></i> {moment_datetime.format("YYYY-MM-DD HH:mm")}</p>
+                                    <p className="col-md-12"><i className="glyphicon glyphicon-map-marker"></i> {destination}</p>
+                                    <p className="col-md-5"><i className="glyphicon glyphicon-credit-card"></i> ${price}</p>
+                                    <p className="col-md-5"><i className="glyphicon glyphicon-briefcase"></i> {bags}</p>
+                                </div> : <div>
+                                    <p className="col-md-12"><i className="glyphicon glyphicon-flag"></i> {start}</p>
+                                    <p className="col-md-12"><i className="glyphicon glyphicon-map-marker"></i> {destination}</p>
+                                    <p className="col-md-5"><i className="glyphicon glyphicon-credit-card"></i> ${price}</p>
+                                    <p className="col-md-5"><i className="glyphicon glyphicon-time"></i> {moment_datetime.format("YYYY-MM-DD HH:mm")}</p>
+                                </div>
+                                }
+                                <p className="col-md-12"><i className={description ? "glyphicon glyphicon-comment" : ""}></i> {description} </p>
+                            </div>
                         </div>
                     </div>
                     <hr style={{marginTop: '5px', marginBottom: '15px'}} />
                     {this.getActionButton()}
-                </div>
-            </div>
-        );
-    }
-});
-
-var PickRequesterForm = React.createClass({
-    handleFlightSubmit: function(e) {
-        e.preventDefault();
-        var requester = this.props.currentUser;
-        var university = this.props.university;
-        // TODO: auto set price according distance
-        this.props.onPickRequesterSubmit({
-            pick_type : 1,
-            price : 20,
-            flight : this.refs.flight1.getDOMNode().value.trim(),
-            destination : this.refs.destination1.getDOMNode().value.trim(),
-            description : this.refs.description1.getDOMNode().value.trim(),
-        }, requester, university);
-        this.refs.flight1.getDOMNode().value = '';
-        this.refs.destination1.getDOMNode().value = '';
-        this.refs.description1.getDOMNode().value = '';
-    },
-    handleGeneralSubmit: function(e) {
-        e.preventDefault();
-        var requester = this.props.currentUser;
-        var university = this.props.university;
-        // TODO: auto set price according distance
-        this.props.onPickRequesterSubmit({
-            pick_type : 2,
-            price : 20,
-            start : this.refs.start2.getDOMNode().value.trim(),
-            destination : this.refs.destination2.getDOMNode().value.trim(),
-            description : this.refs.description2.getDOMNode().value.trim(),
-        }, requester, university);
-        this.refs.start2.getDOMNode().value = '';
-        this.refs.destination2.getDOMNode().value = '';
-        this.refs.description2.getDOMNode().value = '';
-    },
-    componentDidUpdate: function() {
-        var input = document.getElementById('google-map-place1');
-        if (!input) {
-            return;
-        }
-        var options = {componentRestrictions: {country: 'us'}};
-        new google.maps.places.Autocomplete(input, options);
-    },
-    render: function() {
-        var requester = this.props.currentUser;
-        var university = this.props.university;
-        if (!university) {
-            return <div></div>;
-        }
-        return (
-            <div id="pick-request-post" className="panel panel-primary">
-                <div className="panel-heading clearfix">
-                    <ul className="inline-list col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" style={{marginBottom: "0px"}}>
-                        <li className="active col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <i className="glyphicon glyphicon-plane"></i>&nbsp;
-                            <a href="#tab_flight" data-toggle="tab">Flight</a>
-                        </li>
-                        <li className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <i className="glyphicon glyphicon-globe"></i>&nbsp;
-                            <a href="#tab_general" data-toggle="tab">General</a>
-                        </li>
-                    </ul>
-                </div>
-                <div className="tab-content">
-                    <div className="tab-pane fadein-effect active" id="tab_flight">
-                        <form className="form-horizontal" onSubmit={this.handleFlightSubmit}>
-                            <div className="panel-body">
-                                <div className="form-group">
-                                    <div className="col-sm-4">
-                                        <input type="text"
-                                               className="form-control" 
-                                               placeholder="Your flight number?"
-                                               ref="flight1" />
-                                    </div>
-                                    <div className="col-sm-8">
-                                        <input type="text"
-                                               id="google-map-place1"
-                                               className="form-control" 
-                                               placeholder="Where you want to go?"
-                                               ref="destination1" />
-                                    </div>
-                                    <div className="col-sm-12">
-                                        <textarea
-                                            className="form-control"
-                                            rows="2"
-                                            placeholder="Any thing you want to mention?"
-                                            ref="description1">
-                                        </textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="panel-footer clearfix">
-                                <button
-                                    type="submit"
-                                    style={{float: 'right'}}
-                                    className="btn btn-primary">
-                                    Post Your Request
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <div className="tab-pane fadein-effect" id="tab_general">
-                        <form className="form-horizontal" onSubmit={this.handleGeneralSubmit}>
-                            <div className="panel-body">
-                                <div className="form-group">
-                                    <div className="col-sm-6">
-                                        <input type="text"
-                                               className="form-control" 
-                                               placeholder="Where to pick up you?"
-                                               ref="start2" />
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <input type="text"
-                                               className="form-control" 
-                                               placeholder="Where you want to go?"
-                                               ref="destination2" />
-                                    </div>
-                                    <div className="col-sm-12">
-                                        <textarea
-                                            className="form-control"
-                                            rows="2"
-                                            placeholder="Any thing you want to mention?"
-                                            ref="description2">
-                                        </textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="panel-footer clearfix">
-                                <button
-                                    type="submit"
-                                    style={{float: 'right'}}
-                                    className="btn btn-primary">
-                                    Post Your Request
-                                </button>
-                            </div>
-                        </form>
-                    </div>
                 </div>
             </div>
         );

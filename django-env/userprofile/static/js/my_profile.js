@@ -1,5 +1,7 @@
 var MyProfilePanel = React.createClass({
-    mixins: [LoadCurrentUserMixin],
+    mixins: [LoadCurrentUserMixin,
+             PickRequesterActionMixin,
+             PickUpActionMixin],
     renderProfileImage: function(currentUser) {
         var profileImage = currentUser.profile.avatar ? currentUser.profile.avatar : getProfileDefaultPic();
         return (
@@ -59,10 +61,10 @@ var MyProfilePanel = React.createClass({
         return (
             <div>
                 <h3 className="media-heading color-white"
-                    style={{marginLeft: "30px"}}>
+                    style={{marginLeft: "15px"}}>
                     {currentUser.first_name} {currentUser.last_name}
                 </h3>
-                <div className="container color-white hidden-xs">
+                <div className="color-white hidden-xs">
                     <div className="col-sm-4 col-md-6">
                         <p className="normal-font-size">Shanghai Jiao Tong University, 2007-2011</p>
                         <p className="normal-font-size">University of Southern California, 2012-2014</p>
@@ -74,7 +76,7 @@ var MyProfilePanel = React.createClass({
                     </div>
                 </div>
                 <div className="hidden-sm hidden-md hidden-lg"
-                     style={{marginLeft: "30px"}}>
+                     style={{marginLeft: "15px"}}>
                     <button type="button" className="btn btn-default btn-sm btn-on-image">
                         <i className="glyphicon glyphicon-home"></i>&nbsp; More Info
                     </button>
@@ -177,7 +179,7 @@ var MyProfilePanel = React.createClass({
                                 style={{paddingLeft: "0px"}}>
                                 <li className="active col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                     <a href="#tab_picks" data-toggle="tab">Picks</a>
-                                    &nbsp;&nbsp;<span className="badge">3</span>
+                                    &nbsp;&nbsp;<span className="badge">{this.state.currentUserPickCount}</span>
                                 </li>
                                 <li className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                     <a href="#tab_carpools" data-toggle="tab">Carpools</a>
@@ -190,8 +192,14 @@ var MyProfilePanel = React.createClass({
                 </div>
                 <div className="container">
                     <div className="tab-content">
-                        <div className="tab-pane fadein-effect active" id="tab_picks">
-                            tab_picks
+                        <div className="tab-pane fadein-effect active col-xs-12 col-sm-8 col-sm-offset-2"
+                             id="tab_picks">
+                            <MyPickUpRequestPanel
+                                currentUser={this.state.currentUser}
+                                requesters={this.state.requesters}
+                                pickups={this.state.pickups}
+                                handlePickupSubmit={this.handlePickupSubmit}
+                                handlePickRequesterCancel={this.handlePickRequesterCancel} />
                         </div>
                         <div className="tab-pane fadein-effect" id="tab_carpools">
                             tab_carpools
@@ -204,6 +212,10 @@ var MyProfilePanel = React.createClass({
 });
 
 React.render(
-    <MyProfilePanel />,
+    <MyProfilePanel
+        myList={true}
+        loadCount={true}
+        loadAll={true}
+        pollInterval={20000} />,
     document.getElementById('content')
 );

@@ -7,14 +7,15 @@ Pick Up |
 {% endblock %}
 
 {% block extra_head %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/geosuggest/geosuggest.css' %}" />
-
 <script type="text/jsx" src="{% static 'js/mixin/LoadCurrentUserMixin.js' %}"></script>
 <script type="text/jsx" src="{% static 'js/mixin/LoadUniversityMixin.js' %}"></script>
 <script type="text/jsx" src="{% static 'js/mixin/PickRequesterActionMixin.js' %}"></script>
 <script type="text/jsx" src="{% static 'js/mixin/PickUpActionMixin.js' %}"></script>
-<script type="text/jsx" src="{% static 'js/component/CurrentUserPanel.js' %}"></script>
+<script type="text/jsx" src="{% static 'js/component/PickUp.js' %}"></script>
 <script type="text/jsx" src="{% static 'js/component/PickRequester.js' %}"></script>
+<script type="text/jsx" src="{% static 'js/component/PickRequesterForm.js' %}"></script>
+<script type="text/jsx" src="{% static 'js/component/CurrentUserPanel.js' %}"></script>
+<script type="text/jsx" src="{% static 'js/component/MyPickUpRequestPanel.js' %}"></script>
 {% endblock %}
 
 {% block jumbotron %}

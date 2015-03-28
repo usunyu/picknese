@@ -1,67 +1,5 @@
 /*
- * Static, Media, URL helper
- * --------------------------------------------------
- */
-function getStaticURL() {
-    // set for local development
-    // return '/static/';
-    // set for production
-    return 'https://picknese-s3.s3.amazonaws.com/';
-}
-
-function getMediaURL() {
-    // set for local development
-    // return '/';
-    // set for production
-    return 'https://picknese-s3.s3.amazonaws.com/';
-}
-
-function getUniversityBaseURL() {
-    return "/universities/";
-}
-
-function getUniversityURL(u_id) {
-    return getUniversityBaseURL() + u_id + "/";
-}
-
-function getPickupBaseURL() {
-    return "/pickup/requesters/";
-}
-
-function getPickupURL(u_id) {
-    return getPickupBaseURL() + u_id + "/";
-}
-
-function getMyPickupBaseURL() {
-    return "/pickup/mylist/"; 
-}
-
-function getMyPickupURL(u_id) {
-    return getMyPickupBaseURL() + u_id + "/";
-}
-
-function getUniversityLogo(u_short) {
-    return getStaticURL() + 'images/campus/' + u_short + "/logo.jpg";
-}
-
-function getUniversityWide(u_short) {
-    return getStaticURL() + 'images/campus/' + u_short + "/wide.jpg";
-}
-
-function getProfileDefaultPic() {
-    return getMediaURL() + 'media/default_pic.png';
-}
-
-function getGlyphiconsCarIcon() {
-    return getStaticURL() + 'images/glyphicons/png/glyphicons-6-car.png';
-}
-
-function getGlyphiconsAirplaneIcon() {
-    return getStaticURL() + 'images/glyphicons/png/glyphicons-39-airplane.png';
-}
-
-/*
- * Util function helper
+ * Utils function helper
  * --------------------------------------------------
  */
 function isInt(n) {
@@ -81,6 +19,20 @@ function parseLastNumberInURLPath() {
         }
     }
     return null;
+}
+
+function splitNumberCharInString(str) {
+    var result = [];
+    for (var i = 0; i < str.length; i++) {
+        var num = str.substring(i, str.length);
+        if (isInt(num)) {
+            var chars = str.substring(0, i);
+            result.push(chars);
+            result.push(num);
+            break;
+        }
+    }
+    return result;
 }
 
 /*
@@ -112,6 +64,18 @@ function popupDangerMessage(message) {
 
 function popupInfoMessage(message) {
     popupMessage(message, 'info');
+}
+
+/*
+ * Pick Up
+ * --------------------------------------------------
+ */
+function showPickRequestForm() {
+    $('#pick-request-post').collapse('show');
+}
+
+function hidePickRequestForm() {
+    $('#pick-request-post').collapse('hide');
 }
 
 /*
@@ -153,54 +117,6 @@ function findBootstrapEnvironment() {
             return env;
         }
     };
-}
-
-/*
- * API helper
- * --------------------------------------------------
- */
-function getCurrentUserAPI() {
-    return "/accounts/api/me/";
-}
-
-function getProfileImageUploadAPI() {
-    return "/accounts/api/uploadimage/"
-}
-
-function getCurrentUserPickCountAPI(u_id) {
-    return "/pickup/api/mylist/count/" + u_id + "/";
-}
-
-function getPickRequesterListAPI(u_id) {
-    return "/pickup/api/requesters/" + u_id + "/";
-}
-
-function getMyPickRequestListAPI(u_id) {
-    return "/pickup/api/requesters/mylist/" + u_id + "/";
-}
-
-function getPickRequesterCreateAPI() {
-    return "/pickup/api/requesters/create/";
-}
-
-function getPickRequesterMutateAPI(r_id) {
-    return "/pickup/api/requesters/mutate/" + r_id + "/";
-}
-
-function getPickUpListAPI(u_id) {
-    return "/pickup/api/" + u_id + "/";
-}
-
-function getMyPickUpListAPI(u_id) {
-    return "/pickup/api/mylist/" + u_id + "/";
-}
-
-function getPickUpCreateAPI() {
-    return "/pickup/api/create/";
-}
-
-function getUniversityAPI(u_id) {
-    return "/universities/api/" + u_id + "/";
 }
 
 /*

@@ -1,3 +1,4 @@
+// Parameters: currentUser, university, onPickRequesterSubmit
 var CurrentUserPanel = React.createClass({
     render: function() {
         if (!this.props.university || !this.props.currentUser) {

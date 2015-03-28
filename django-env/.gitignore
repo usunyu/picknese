@@ -59,3 +59,9 @@ target/
 
 # Settings
 local_settings.py
+
+# Databse files
+**/pickup/migrations/*
+**/story/migrations/*
+**/university/migrations/*
+**/userprofile/migrations/*

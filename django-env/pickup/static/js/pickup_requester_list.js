@@ -1,15 +1,11 @@
+/*
+ * Render: /pickup/requesters/1/
+ */
 var PickupForm = React.createClass({
     handleSubmit: function(e) {
         e.preventDefault();
         this.props.onPickupSubmit({
             picker : this.props.picker,
-            pickee : this.props.pickRequester.requester,
-            university : this.props.pickRequester.university,
-            pickType : this.props.pickRequester.pick_type,
-            flight : this.props.pickRequester.flight,
-            start : this.props.pickRequester.start,
-            price : this.props.pickRequester.price,
-            destination : this.props.pickRequester.destination,
             description : this.refs.message.getDOMNode().value.trim(),
         }, this.props.pickRequester, this.props.modalID);
     },
@@ -81,7 +77,7 @@ var PickRecord = React.createClass({
     render: function() {
         return (
             <li className="feed-item">
-                <time className="date" dateTime="9-22">Sep 22</time>
+                <time className="date" dateTime={this.props.date_time}>{this.props.date_time}</time>
                 <span className="text" >
                     <a href="#">{this.props.picker.first_name} {this.props.picker.last_name}</a>
                     &nbsp;will pick up&nbsp;
@@ -97,13 +93,13 @@ var PickRecordList = React.createClass({
         var pickRecords = [];
         for (var i = 0; i < this.props.pickups.length; i++) {
             var pickup = this.props.pickups[i];
+            var moment_datetime = moment(pickup.date_time, "YYYY-MM-DD HH:mm");
             pickRecords.push(
                 <PickRecord
                     key={pickup.id}
                     pickee={pickup.pickee}
                     picker={pickup.picker}
-                    // TODO: add real time in model
-                    time={""} />
+                    date_time={moment_datetime.format("YYYY-MM-DD")} />
             );
         }
         return (
@@ -121,13 +117,16 @@ var PickRequesterPanel = React.createClass({
              PickUpActionMixin],
     render: function() {
         return (
-            <div className="row col-md-12"
+            <div className="row col-xs-12 col-sm-12 col-md-12 col-lg-12"
                  style={{marginTop: '10px'}}>
                 <div className="col-xs-12 col-sm-4 col-md-3 fadein-effect">
                     <CurrentUserPanel
                         currentUser={this.state.currentUser}
                         currentUserPickCount={this.state.currentUserPickCount}
                         university={this.state.university} />
+                    <div className="col-xs-12 col-sm-12 hidden-md hidden-lg">
+                        <PickRequesterFormCollapseButton />
+                    </div>
                 </div>
                 <div className="col-xs-12 col-sm-8 col-md-7">
                     <PickRequesterList
@@ -138,7 +137,8 @@ var PickRequesterPanel = React.createClass({
                         handlePickRequesterSubmit={this.handlePickRequesterSubmit}
                         handlePickRequesterCancel={this.handlePickRequesterCancel} />
                 </div>
-                <div className="col-xs-12 col-sm-6 col-md-2 sidebar-offcanvas fadein-effect">
+                <div className="col-md-2 hidden-xs hidden-sm sidebar-offcanvas fadein-effect">
+                    <PickRequesterFormCollapseButton />
                     <PickRecordList
                         pickups={this.state.pickups} />
                 </div>

@@ -1,11 +1,18 @@
-// Required: pollInterval
-// Optional: myList => true indicate current user's list
+/*
+ * Parameters: pollInterval
+ *             myList (optional) => indicate current user's list
+ *             loadAll (optional) => indicate load all pick requests
+ */
 var PickRequesterActionMixin = {
 	loadPickRequestersFromServer: function() {
         var universityID = parseLastNumberInURLPath();
         var apiURL = getPickRequesterListAPI(universityID);
         if (this.props.myList) {
-            apiURL = getMyPickRequestListAPI(universityID);
+            if (this.props.loadAll) {
+                apiURL = getMyAllPickRequestListAPI();
+            } else {
+                apiURL = getMyPickRequestListAPI(universityID);
+            }
         }
         $.ajax({
             url: apiURL,
@@ -19,40 +26,29 @@ var PickRequesterActionMixin = {
             }.bind(this)
         });
     },
-    handlePickRequesterSubmit: function(form, requester, university) {
-        var destination = form.destination;
-        if (!destination) {
-            // TODO, show error message
-            $( "#pick-request-post" ).effect("shake");
-            return;
-        }
+    handlePickRequesterSubmit: function(form, requester, university, modalID) {
         var requesterData = {
             requester : requester.id,
             university : university.id,
             pick_type : form.pick_type,
             price : form.price,
             confirmed: false,
-            flight : form.flight,
             start : form.start,
+            bags : form.bags,
+            date_time : form.date_time,
             destination : form.destination,
             description : form.description,
-        }
-        var pickRequester = {
-            requester : requester,
-            university : university,
-            pick_type : form.pick_type,
-            price : form.price,
-            confirmed: false,
-            flight : form.flight,
-            destination : form.destination,
-            description : form.description,
-        }
+        };
         $.ajax({
             url: getPickRequesterCreateAPI(),
             dataType: 'json',
             type: 'POST',
             data: requesterData,
             success: function(data) {
+                if (modalID) {
+                    $('#' + modalID).modal('hide');
+                }
+                $('#pick-request-post').collapse('hide');
                 // reload data
                 this.loadPickRequestersFromServer();
                 popupSuccessMessage("You have successfully post your request. Please waiting for your picker to contact you!");
@@ -69,7 +65,9 @@ var PickRequesterActionMixin = {
             type: 'DELETE',
             success: function(data) {
                 // close dialog on success
-                $('#' + modalID).modal('hide');
+                if (modalID) {
+                    $('#' + modalID).modal('hide');
+                }
                 // reload data
                 this.loadPickRequestersFromServer();
                 popupWarningMessage("You have successfully cancel your request.")
