@@ -109,6 +109,11 @@ var PickRequester = React.createClass({
             );
         }
     },
+    componentDidUpdate: function() {
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    },
     render: function() {
         var requester = this.props.pickRequester.requester;
         var pickType = this.props.pickRequester.pick_type;
@@ -136,7 +141,10 @@ var PickRequester = React.createClass({
                         </div>
                         <div className="media-body ">
                             <div className="row">
-                                <p className="media-heading col-md-12">
+                                <p className="media-heading col-md-12"
+                                   data-toggle="tooltip"
+                                   data-placement="left"
+                                   title="Requester">
                                     <i className="glyphicon glyphicon-user"></i>
                                     <b> {requester.first_name} {requester.last_name}</b> 
                                     &nbsp;needs&nbsp;
@@ -147,21 +155,81 @@ var PickRequester = React.createClass({
                                 </p>
                                 {pickType == 1 ? 
                                 <div>
-                                    <p className="col-md-5"><i className="glyphicon glyphicon-plane"></i> {start}</p>
-                                    <p className="col-md-5"><i className="glyphicon glyphicon-time"></i> {moment_datetime.format("YYYY-MM-DD HH:mm")}</p>
-                                    <p className="col-md-12"><i className="glyphicon glyphicon-map-marker"></i> {destination}</p>
-                                    <p className="col-md-5"><i className="glyphicon glyphicon-credit-card"></i> ${price}</p>
-                                    <p className="col-md-5"><i className="glyphicon glyphicon-briefcase"></i> {bags}</p>
+                                    <p className="col-md-5"
+                                       data-toggle="tooltip"
+                                       data-placement="left"
+                                       title="Flight Number">
+                                        <i className="glyphicon glyphicon-plane"></i> {start}
+                                    </p>
+                                    <p className="col-md-5"
+                                       data-toggle="tooltip"
+                                       data-placement="left"
+                                       title="Arrival Time">
+                                        <i className="glyphicon glyphicon-time"></i> {moment_datetime.format("YYYY-MM-DD HH:mm")}
+                                    </p>
+                                    <p className="col-md-12"
+                                       data-toggle="tooltip"
+                                       data-placement="left"
+                                       title="Destination">
+                                        <i className="glyphicon glyphicon-map-marker"></i> {destination}
+                                    </p>
+                                    <p className="col-md-5"
+                                       data-toggle="tooltip"
+                                       data-placement="left"
+                                       title="Pay">
+                                        <i className="glyphicon glyphicon-credit-card"></i> ${price}
+                                    </p>
+                                    <p className="col-md-5"
+                                       data-toggle="tooltip"
+                                       data-placement="left"
+                                       title="Baggage Number">
+                                        <i className="glyphicon glyphicon-briefcase"></i> {bags}
+                                    </p>
                                 </div> : <div>
-                                    <p className="col-md-12"><i className="glyphicon glyphicon-flag"></i> {start}</p>
-                                    <p className="col-md-12"><i className="glyphicon glyphicon-map-marker"></i> {destination}</p>
-                                    <p className="col-md-5"><i className="glyphicon glyphicon-credit-card"></i> ${price}</p>
-                                    <p className="col-md-5"><i className="glyphicon glyphicon-time"></i> {moment_datetime.format("YYYY-MM-DD HH:mm")}</p>
-                                    <p className="col-md-5"><i className="glyphicon glyphicon-repeat"></i> {round_trip}</p>
-                                    <p className="col-md-5"><i className="glyphicon glyphicon-star"></i> {time_flexible}</p>
+                                    <p className="col-md-12"
+                                       data-toggle="tooltip"
+                                       data-placement="left"
+                                       title="Start">
+                                        <i className="glyphicon glyphicon-flag"></i> {start}
+                                    </p>
+                                    <p className="col-md-12"
+                                       data-toggle="tooltip"
+                                       data-placement="left"
+                                       title="Destination">
+                                        <i className="glyphicon glyphicon-map-marker"></i> {destination}
+                                    </p>
+                                    <p className="col-md-5"
+                                       data-toggle="tooltip"
+                                       data-placement="left"
+                                       title="Pay">
+                                        <i className="glyphicon glyphicon-credit-card"></i> ${price}
+                                    </p>
+                                    <p className="col-md-5"
+                                       data-toggle="tooltip"
+                                       data-placement="left"
+                                       title="Pickup Time">
+                                        <i className="glyphicon glyphicon-time"></i> {moment_datetime.format("YYYY-MM-DD HH:mm")}
+                                    </p>
+                                    <p className="col-md-5"
+                                       data-toggle="tooltip"
+                                       data-placement="left"
+                                       title="Round Trip">
+                                        <i className="glyphicon glyphicon-repeat"></i> {round_trip}
+                                    </p>
+                                    <p className="col-md-5"
+                                       data-toggle="tooltip"
+                                       data-placement="left"
+                                       title="Time Flexible">
+                                        <i className="glyphicon glyphicon-star"></i> {time_flexible}
+                                    </p>
                                 </div>
                                 }
-                                <p className="col-md-12"><i className={description ? "glyphicon glyphicon-comment" : ""}></i> {description} </p>
+                                <p className="col-md-12"
+                                   data-toggle="tooltip"
+                                   data-placement="left"
+                                   title="Message">
+                                    <i className={description ? "glyphicon glyphicon-comment" : ""}></i> {description} 
+                                </p>
                             </div>
                         </div>
                     </div>
