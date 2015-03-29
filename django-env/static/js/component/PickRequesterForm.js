@@ -11,12 +11,19 @@ var PickRequesterFormCollapseButton = React.createClass({
 });
 
 var PickRequesterForm = React.createClass({
+    handleFlightButtonLoading: function(e) {
+        var destination = this.refs.destination1.getDOMNode().value.trim();
+        var flight = this.refs.flight1.getDOMNode().value.trim().toUpperCase();
+        var date = this.refs.datetime1.getDOMNode().value.trim();
+        var baggage = this.refs.baggage.getDOMNode().value.trim();
+        var momentdate = moment(date, 'MM/DD/YYYY');
+
+        if (destination && flight && momentdate.isValid() && baggage) {
+            $('#flight1-post-button').button('loading');
+        }
+    },
     handleFlightPreSubmit: function(e) {
         e.preventDefault();
-        // clear input error hint
-        // $( "#destination1-input" ).removeClass("has-error");
-        // $( "#flight1-input" ).removeClass("has-error");
-        // $( "#datetimepicker1" ).removeClass("has-error");
         // check if the input is correct
         var destination = this.refs.destination1.getDOMNode().value.trim();
         var flight = this.refs.flight1.getDOMNode().value.trim().toUpperCase();
@@ -25,16 +32,7 @@ var PickRequesterForm = React.createClass({
         // month is 0 based, http://momentjs.com/docs/#/get-set/month/
         var momentdate = moment(date, 'MM/DD/YYYY');
 
-        if (!destination || !flight || !momentdate.isValid()) {
-            // if (!destination) {
-            //     $( "#destination1-input" ).addClass("has-error");
-            // }
-            // if (!flight) {
-            //     $( "#flight1-input" ).addClass("has-error");
-            // }
-            // if (!moment(date, 'MM/DD/YYYY').isValid()) {
-            //     $( "#datetimepicker1" ).addClass("has-error");
-            // }
+        if (!destination || !flight || !momentdate.isValid() || !baggage) {
             $( "#pick-request-post" ).effect("shake", {distance: 10, times: 2});
             return;
         }
@@ -58,9 +56,13 @@ var PickRequesterForm = React.createClass({
                         '</div>'
                     );
                     $('#flight1-post-modal').modal('show');
+
+                    dismissFlightRequestLoadingEffect();
                 } else {
                     $('#flight1-post-error-modal-title').text("Cannot find schedule for " + flight);
                     $('#flight1-post-error-modal').modal('show');
+
+                    dismissFlightRequestLoadingEffect();
                 }
             }.bind(this),
             error: function(xhr, status, err) {
@@ -248,7 +250,10 @@ var PickRequesterForm = React.createClass({
                                     id="flight1-post-button"
                                     type="submit"
                                     style={{float: 'right'}}
-                                    className="btn btn-primary">
+                                    className="btn btn-primary"
+                                    data-loading-text="Processing..."
+                                    data-role="button"
+                                    onClick={this.handleFlightButtonLoading}>
                                     Post Your Request
                                 </button>
                                 {/* Flight Pick Up Request Success Modal */}
@@ -339,6 +344,7 @@ var PickRequesterForm = React.createClass({
                             <div className="panel-footer clearfix">
                                 {/* General Pick Up Request Button */}
                                 <button
+                                    id="general2-post-button"
                                     type="submit"
                                     style={{float: 'right'}}
                                     className="btn btn-primary">
