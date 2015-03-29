@@ -101,6 +101,8 @@ var PickRequesterForm = React.createClass({
         var start = this.refs.start2.getDOMNode().value.trim();
         var destination = this.refs.destination2.getDOMNode().value.trim();
         var date_time = this.refs.datetime2.getDOMNode().value.trim();
+        var round_trip = this.refs.round_trip.getDOMNode().checked;
+        var time_flexible = this.refs.time_flexible.getDOMNode().checked;
         // month is 0 based, http://momentjs.com/docs/#/get-set/month/
         var moment_time = moment(date_time, 'MM/DD/YYYY HH:mm');
 
@@ -109,13 +111,16 @@ var PickRequesterForm = React.createClass({
             return;
         }
 
+        round_trip = round_trip ? "YES" : "NO";
+        time_flexible = time_flexible ? "YES" : "NO";
         $('#general2-post-modal-body').html(
             '<div class="row">' + 
             '<p class="col-sm-6"><b>From: </b>' + start + '</p>' +
             '<p class="col-sm-6"><b>To: </b>' + destination + '</p>' +
             '<div class="clearfix" />' +
-            '<p class="col-sm-6"><b>Pick Up Time: </b>' + date_time + '</p>' +
-            '<p class="col-sm-6"><b>Round Trip: </b>' + 'Yes' + '</p>' +
+            '<p class="col-sm-12"><b>Pick Up Time: </b>' + date_time + '</p>' +
+            '<p class="col-sm-6"><b>Round Trip: </b>' + round_trip + '</p>' +
+            '<p class="col-sm-6"><b>Time Flexible: </b>' + time_flexible + '</p>' +
             '</div>'
         );
         $('#general2-post-modal').modal('show');
@@ -135,6 +140,8 @@ var PickRequesterForm = React.createClass({
             price : 20,
             start : this.refs.start2.getDOMNode().value.trim(),
             date_time: moment_time.format(),
+            round_trip: this.refs.round_trip.getDOMNode().checked,
+            time_flexible: this.refs.time_flexible.getDOMNode().checked,
             destination : this.refs.destination2.getDOMNode().value.trim(),
             description : this.refs.description2.getDOMNode().value.trim(),
         }, requester, university, 'general2-post-modal');
@@ -142,6 +149,8 @@ var PickRequesterForm = React.createClass({
         this.refs.datetime2.getDOMNode().value = '';
         this.refs.destination2.getDOMNode().value = '';
         this.refs.description2.getDOMNode().value = '';
+        this.refs.round_trip.getDOMNode().checked = false;
+        this.refs.time_flexible.getDOMNode().checked = false;
     },
     componentDidUpdate: function() {
         // Prepare google map api
@@ -179,7 +188,6 @@ var PickRequesterForm = React.createClass({
             return <div></div>;
         }
         return (
-            <div>
             <div id="pick-request-post" className="panel panel-primary collapse">
                 {/* Pick Up Tab Select */}
                 <div className="panel-heading clearfix">
@@ -331,6 +339,18 @@ var PickRequesterForm = React.createClass({
                                             <span className="input-group-addon"><span className="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                     </div>
+
+                                    <div className="checkbox col-sm-3">
+                                        <label style={{marginTop: '15px'}}>
+                                            <input type="checkbox" ref="round_trip"> Round Trip </input>
+                                        </label>
+                                    </div>
+                                    <div className="checkbox col-sm-3">
+                                        <label style={{marginTop: '15px'}}>
+                                            <input type="checkbox" ref="time_flexible"> Time Flexible </input>
+                                        </label>
+                                    </div>
+
                                     <div className="col-sm-12">
                                         <textarea
                                             className="form-control pick-requester-note"
@@ -373,7 +393,6 @@ var PickRequesterForm = React.createClass({
                         </form>
                     </div>
                 </div>
-            </div>
             </div>
         );
     }

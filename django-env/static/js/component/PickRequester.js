@@ -117,6 +117,8 @@ var PickRequester = React.createClass({
         var price = this.props.pickRequester.price;
         var bags = this.props.pickRequester.bags;
         var dateTime = this.props.pickRequester.date_time;
+        var round_trip = this.props.pickRequester.round_trip ? "YES" : "NO";
+        var time_flexible = this.props.pickRequester.time_flexible ? "YES" : "NO";
         var moment_datetime = moment(dateTime, "YYYY-MM-DD HH:mm");
         var description = this.props.pickRequester.description;
 
@@ -155,6 +157,8 @@ var PickRequester = React.createClass({
                                     <p className="col-md-12"><i className="glyphicon glyphicon-map-marker"></i> {destination}</p>
                                     <p className="col-md-5"><i className="glyphicon glyphicon-credit-card"></i> ${price}</p>
                                     <p className="col-md-5"><i className="glyphicon glyphicon-time"></i> {moment_datetime.format("YYYY-MM-DD HH:mm")}</p>
+                                    <p className="col-md-5"><i className="glyphicon glyphicon-repeat"></i> {round_trip}</p>
+                                    <p className="col-md-5"><i className="glyphicon glyphicon-star"></i> {time_flexible}</p>
                                 </div>
                                 }
                                 <p className="col-md-12"><i className={description ? "glyphicon glyphicon-comment" : ""}></i> {description} </p>
