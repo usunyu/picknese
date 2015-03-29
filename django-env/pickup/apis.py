@@ -16,7 +16,7 @@ class PickRequesterList(generics.ListAPIView):
 
     def get_queryset(self):
         university_id = self.kwargs['university_id']
-        return models.PickRequester.objects.filter(university=university_id, confirmed=False)
+        return models.PickRequester.objects.filter(university=university_id)
 
 class MyPickRequestList(generics.ListAPIView):
     """
@@ -32,8 +32,7 @@ class MyPickRequestList(generics.ListAPIView):
         university_id = self.kwargs['university_id']
         return models.PickRequester.objects.filter(
             Q(university=university_id) & 
-            Q(requester=user.id) &
-            Q(confirmed = False)
+            Q(requester=user.id)
         )
 
 class MyAllPickRequestList(generics.ListAPIView):
@@ -48,8 +47,7 @@ class MyAllPickRequestList(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         return models.PickRequester.objects.filter(
-            Q(requester=user.id) &
-            Q(confirmed = False)
+            Q(requester=user.id)
         )
 
 class PickRequesterCreate(generics.CreateAPIView):
@@ -157,8 +155,7 @@ class MyPickUpRequestCount(APIView):
         ).count()
         request_count = models.PickRequester.objects.filter(
             Q(university=university_id) & 
-            Q(requester=user.id) &
-            Q(confirmed = False)
+            Q(requester=user.id)
         ).count()
         content = {'my_pick_count': pickup_count + request_count}
         return Response(content)
@@ -178,8 +175,7 @@ class MyAllPickUpRequestCount(APIView):
             Q(picker=user.id) | Q(pickee=user.id)
         ).count()
         request_count = models.PickRequester.objects.filter(
-            Q(requester=user.id) &
-            Q(confirmed = False)
+            Q(requester=user.id)
         ).count()
         content = {'my_pick_count': pickup_count + request_count}
         return Response(content)

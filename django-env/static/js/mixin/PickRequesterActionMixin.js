@@ -32,7 +32,6 @@ var PickRequesterActionMixin = {
             university : university.id,
             pick_type : form.pick_type,
             price : form.price,
-            confirmed: false,
             start : form.start,
             bags : form.bags,
             date_time : form.date_time,

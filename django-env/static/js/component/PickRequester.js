@@ -100,7 +100,7 @@ var PickRequester = React.createClass({
                     </div>
                     <button
                         type="button"
-                        className="btn btn-default"
+                        className="btn btn-info"
                         style={{float: 'right', marginRight: '10px'}} >
                         <i className="glyphicon glyphicon-envelope"></i>&nbsp;
                         Message
