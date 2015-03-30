@@ -86,6 +86,10 @@ function dismissLoadingEffect() {
     $("#loading").remove();
 }
 
+function dismissFlightRequestLoadingEffect() {
+    $('#flight1-post-button').button('reset');
+}
+
 /*
  * Check selected tab
  * --------------------------------------------------

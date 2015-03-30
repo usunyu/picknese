@@ -54,26 +54,11 @@ var PickUpActionMixin = {
             }.bind(this)
         });
 
-        // Update PickRequester confirmed field
-        var pickRequesterData = {
-            id : requester.id,
-            pick_type : requester.pick_type,
-            price : requester.price,
-            start : requester.start,
-            destination : requester.destination,
-            confirmed : true,
-            bags : requester.bags,
-            date_time : requester.date_time,
-            description : requester.description,
-            requester : requester.requester.id,
-            university : requester.university.id,
-        };
-
+        // Delete PickRequester Record
         $.ajax({
             url: getPickRequesterMutateAPI(requester.id),
             dataType: 'json',
-            type: 'PUT',
-            data: pickRequesterData,
+            type: 'DELETE',
             success: function(data) {
                 // close dialog on success
                 $('#' + modalID).modal('hide');

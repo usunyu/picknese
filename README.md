@@ -66,3 +66,44 @@ Social application for student studying abroad to help each other
      ```$ pip freeze > requirements.txt```
      
      ```$ pip install -r requirements.txt```
+
+##### Databse:
+1. [Reset App Database:](http://stackoverflow.com/questions/25606879/how-to-migrate-back-from-initial-migration-in-django-1-7)
+
+     ```$ python manage.py migrate <app> zero```
+
+##### Heroku:
+1. [Django Setup:](https://devcenter.heroku.com/articles/getting-started-with-django)
+
+     ```$ heroku run python manage.py migrate```
+
+     ```$ heroku run bash```
+
+##### AWS S3:
+1. [Update AWS S3 Server:](https://devcenter.heroku.com/articles/s3-upload-python)
+
+     1) Set the correct URL helper:
+     ```UrlHelper.js:```
+
+     ```
+     function getStaticURL() {
+         // set for local development
+         // return '/static/';
+         // set for production
+         return 'https://picknese-s3.s3.amazonaws.com/';
+     }
+
+     function getMediaURL() {
+         // set for local development
+         // return '/';
+         // set for production
+         return 'https://picknese-s3.s3.amazonaws.com/';
+     }
+     ```
+
+     2) Enable the S3 settings:
+     ```settings.py:```
+
+     ```DEPLOY_S3 = True```
+
+     3) ```$ python manage.py collectstatic```

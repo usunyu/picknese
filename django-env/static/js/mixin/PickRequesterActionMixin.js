@@ -32,10 +32,11 @@ var PickRequesterActionMixin = {
             university : university.id,
             pick_type : form.pick_type,
             price : form.price,
-            confirmed: false,
             start : form.start,
             bags : form.bags,
             date_time : form.date_time,
+            round_trip : form.round_trip,
+            time_flexible : form.time_flexible,
             destination : form.destination,
             description : form.description,
         };

@@ -50,16 +50,14 @@ var PickRequesterList = React.createClass({
         var pickRequesters = [];
         for (var i = 0; i < this.props.requesters.length; i++) {
             var pickRequester = this.props.requesters[i];
-            if (!pickRequester.confirmed) {
-                pickRequesters.push(
-                    <PickRequester
-                        key={pickRequester.id}
-                        pickRequester={pickRequester}
-                        picker={this.props.currentUser}
-                        handlePickupSubmit={this.props.handlePickupSubmit}
-                        onPickRequesterCancel={this.props.handlePickRequesterCancel} />
-                );
-            }
+            pickRequesters.push(
+                <PickRequester
+                    key={pickRequester.id}
+                    pickRequester={pickRequester}
+                    picker={this.props.currentUser}
+                    handlePickupSubmit={this.props.handlePickupSubmit}
+                    onPickRequesterCancel={this.props.handlePickRequesterCancel} />
+            );
         }
         return (
             <div>
