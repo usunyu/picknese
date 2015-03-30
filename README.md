@@ -85,7 +85,6 @@ Social application for student studying abroad to help each other
      1) Set the correct URL helper:
      ```UrlHelper.js:```
 
-     ```
      function getStaticURL() {
          // set for local development
          // return '/static/';
@@ -99,11 +98,11 @@ Social application for student studying abroad to help each other
          // set for production
          return 'https://picknese-s3.s3.amazonaws.com/';
      }
-     ```
 
      2) Enable the S3 settings:
      ```settings.py:```
 
      ```DEPLOY_S3 = True```
 
-     3) ```$ python manage.py collectstatic```
+     3) Upload to S3 Server:
+     ```$ python manage.py collectstatic```
