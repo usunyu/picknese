@@ -82,9 +82,8 @@ Social application for student studying abroad to help each other
 ##### AWS S3:
 1. [Update AWS S3 Server:](https://devcenter.heroku.com/articles/s3-upload-python)
 
-     1) Set the correct URL helper:
-     ```UrlHelper.js:```
-
+     1. Set the correct URL helper: ```UrlHelper.js:```
+     ```
      function getStaticURL() {
          // set for local development
          // return '/static/';
@@ -98,11 +97,12 @@ Social application for student studying abroad to help each other
          // set for production
          return 'https://picknese-s3.s3.amazonaws.com/';
      }
+     ```
 
-     2) Enable the S3 settings:
-     ```settings.py:```
 
+     2. Enable the S3 settings: ```settings.py:```
      ```DEPLOY_S3 = True```
 
-     3) Upload to S3 Server:
+
+     3. Upload to S3 Server:
      ```$ python manage.py collectstatic```
