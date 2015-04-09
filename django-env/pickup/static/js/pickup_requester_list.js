@@ -114,7 +114,7 @@ var PickRequesterPanel = React.createClass({
              PickRequesterActionMixin,
              PickUpActionMixin],
     render: function() {
-        if (this.state.university && this.state.currentUser && this.state.currentUserPickCount) {
+        if (this.state.university && this.state.currentUser && this.state.currentUserPickCount && production) {
             var pickRequestEvent = {
                 university: this.state.university.name,
                 referrer: document.referrer,
