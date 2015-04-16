@@ -283,3 +283,19 @@ div.show-image button.btn-on-image {
     cursor: inherit;
     display: block;
 }
+
+/*
+ * Hide Button
+ * --------------------------------------------------
+ */
+.button-hide-wrap:hover .button-hide-div {
+    display:block;
+}
+
+.button-hide-div {
+    position: absolute;
+    /*right: 0px;*/
+    /*top: 0px;*/
+    overflow: auto;
+    display:none;
+}

@@ -64,15 +64,63 @@ var MyProfilePanel = React.createClass({
                     style={{marginLeft: "15px"}}>
                     {currentUser.first_name} {currentUser.last_name}
                 </h3>
-                <div className="color-white hidden-xs">
-                    <div className="col-sm-4 col-md-6">
-                        <p className="normal-font-size">Shanghai Jiao Tong University, 2007-2011</p>
-                        <p className="normal-font-size">University of Southern California, 2012-2014</p>
+                <div className="hidden-xs">
+                    <div className="col-md-5 button-hide-wrap">
+                        <p className="normal-font-size color-white"><b>Current:</b></p>
+                        <p className="normal-font-size color-white">Facebook, 2014-present</p>
+                        <p className="normal-font-size color-white"><b>Previous:</b></p>
+                        <p className="normal-font-size color-white">Shanghai Jiao Tong University, 2007-2011</p>
+                        <p className="normal-font-size color-white">University of Southern California, 2012-2014</p>
+                        <div className="button-hide-div">
+                            {/* update info button */}
+                            <button
+                                type="button"
+                                className="btn btn-default btn-xs"
+                                data-toggle="modal"
+                                data-target="#update-info-modal">
+                                <i className="glyphicon glyphicon-pencil"></i>&nbsp;
+                                Update Info
+                            </button>
+                            {/* update info modal */}
+                            <div className="modal fade" 
+                                 id="update-info-modal"
+                                 tabIndex="-1" role="dialog"
+                                 aria-hidden="true">
+                                <div className="modal-dialog">
+                                    <div className="modal-content">
+                                        <div className="modal-header">
+                                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h4 className="modal-title">Update Your Info</h4>
+                                        </div>
+                                        <hr style={{marginTop: "-10px"}}/>
+                                        <div className="modal-body">
+                                            Add update info form here
+                                        </div>
+                                        <div className="modal-footer">
+                                            <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="button" className="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="col-sm-4 col-md-6">
-                        <p className="normal-font-size">Phone: +1 (650) 561-5620</p>
-                        <p className="normal-font-size">WeChat: sunny77yu</p>
-                        <p className="normal-font-size">QQ: 845863869</p>
+                    <div className="col-md-offset-4 col-md-3 button-hide-wrap">
+                        <p className="normal-font-size color-white"><b>Contact:</b></p>
+                        <p className="normal-font-size color-white">Phone: +1 (650) 561-5620</p>
+                        <p className="normal-font-size color-white">WeChat: sunny77yu</p>
+                        <p className="normal-font-size color-white">QQ: 845863869</p>
+                        <p className="normal-font-size color-white">Email: usunyu@sina.com</p>
+                        <div className="button-hide-div">
+                            <button
+                                type="button"
+                                className="btn btn-default btn-xs">
+                                <i className="glyphicon glyphicon-pencil"></i>&nbsp;
+                                Update Contact
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div className="hidden-sm hidden-md hidden-lg"
@@ -167,15 +215,15 @@ var MyProfilePanel = React.createClass({
                      style={{backgroundColor: "#666362"}} >
                     <div className="container" >
                         <div className="media">
-                            <div className="media-left">
+                            <div className="media-left col-sm-4 col-md-3">
                                 {this.renderProfileImage(currentUser)}
                             </div>
-                            <div className="media-body"
+                            <div className="media-body col-sm-8 col-md-9"
                                  style={{marginTop: "10px"}}>
                                 {this.renderProfileInfo(currentUser)}
                             </div>
-                            <hr />
-                            <ul className="inline-list text-center"
+                            <hr className="col-sm-12" style={{marginTop: "30px"}} />
+                            <ul className="inline-list text-center col-sm-12"
                                 style={{paddingLeft: "0px"}}>
                                 <li className="active col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                     <a href="#tab_picks" data-toggle="tab">Picks</a>
@@ -186,7 +234,7 @@ var MyProfilePanel = React.createClass({
                                     &nbsp;&nbsp;<span className="badge">5</span>
                                 </li>
                             </ul>
-                            <hr />
+                            <hr className="col-sm-12" />
                         </div>
                     </div>
                 </div>
