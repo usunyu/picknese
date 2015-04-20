@@ -57,3 +57,7 @@ function getPickUpCreateAPI() {
 function getUniversityAPI(u_id) {
     return "/universities/api/" + u_id + "/";
 }
+
+function getUniversitySimpleListAPI () {
+    return "/universities/api/simplelist/";
+}

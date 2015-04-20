@@ -1,7 +1,8 @@
 var MyProfilePanel = React.createClass({
     mixins: [LoadCurrentUserMixin,
              PickRequesterActionMixin,
-             PickUpActionMixin],
+             PickUpActionMixin,
+             UniversityActionMixin],
     renderProfileImage: function(currentUser) {
         var profileImage = currentUser.profile.avatar ? currentUser.profile.avatar : getProfileDefaultPic();
         return (
@@ -66,9 +67,9 @@ var MyProfilePanel = React.createClass({
                 </h3>
                 <div className="hidden-xs">
                     <div className="col-md-5 button-hide-wrap">
-                        <p className="normal-font-size color-white"><b>Current:</b></p>
+                        <p className="normal-font-size color-white"><b>Current University:</b></p>
                         <p className="normal-font-size color-white">Facebook, 2014-present</p>
-                        <p className="normal-font-size color-white"><b>Previous:</b></p>
+                        <p className="normal-font-size color-white"><b>Previous University:</b></p>
                         <p className="normal-font-size color-white">Shanghai Jiao Tong University, 2007-2011</p>
                         <p className="normal-font-size color-white">University of Southern California, 2012-2014</p>
                         <div className="button-hide-div">
@@ -81,7 +82,7 @@ var MyProfilePanel = React.createClass({
                                 <i className="glyphicon glyphicon-pencil"></i>&nbsp;
                                 Update Info
                             </button>
-                            {/* update info modal */}
+                            {/* update university info modal */}
                             <div className="modal fade" 
                                  id="update-info-modal"
                                  tabIndex="-1" role="dialog"
@@ -92,15 +93,15 @@ var MyProfilePanel = React.createClass({
                                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
-                                            <h4 className="modal-title">Update Your Info</h4>
+                                            <h4 className="modal-title">Update Your University Info</h4>
                                         </div>
                                         <hr style={{marginTop: "-10px"}}/>
                                         <div className="modal-body">
-                                            Add update info form here
+                                            <UserProfileInfoForm />
                                         </div>
                                         <div className="modal-footer">
-                                            <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                                            <button type="button" className="btn btn-primary">Save changes</button>
+                                            <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
+                                            <button type="submit" className="btn btn-primary">Save changes</button>
                                         </div>
                                     </div>
                                 </div>
@@ -108,7 +109,7 @@ var MyProfilePanel = React.createClass({
                         </div>
                     </div>
                     <div className="col-md-offset-4 col-md-3 button-hide-wrap">
-                        <p className="normal-font-size color-white"><b>Contact:</b></p>
+                        <p className="normal-font-size color-white"><b>Contact Info:</b></p>
                         <p className="normal-font-size color-white">Phone: +1 (650) 561-5620</p>
                         <p className="normal-font-size color-white">WeChat: sunny77yu</p>
                         <p className="normal-font-size color-white">QQ: 845863869</p>
@@ -264,6 +265,7 @@ React.render(
         myList={true}
         loadCount={true}
         loadAll={true}
+        universityActionMinxinLoadUniversitySimpleList={true}
         pollInterval={20000} />,
     document.getElementById('content')
 );

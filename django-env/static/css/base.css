@@ -294,8 +294,8 @@ div.show-image button.btn-on-image {
 
 .button-hide-div {
     position: absolute;
-    /*right: 0px;*/
-    /*top: 0px;*/
+    /*left: 70%;*/
+    /*top: 18px;*/
     overflow: auto;
     display:none;
 }
