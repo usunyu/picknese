@@ -78,7 +78,8 @@ var MyProfilePanel = React.createClass({
                                 type="button"
                                 className="btn btn-default btn-xs"
                                 data-toggle="modal"
-                                data-target="#update-info-modal">
+                                data-target="#update-info-modal"
+                                onClick={this.loadUniversitySimpleListFromServer}>
                                 <i className="glyphicon glyphicon-pencil"></i>&nbsp;
                                 Update Info
                             </button>
@@ -97,7 +98,8 @@ var MyProfilePanel = React.createClass({
                                         </div>
                                         <hr style={{marginTop: "-10px"}}/>
                                         <div className="modal-body">
-                                            <UserProfileInfoForm />
+                                            <UserProfileInfoForm
+                                                universitySimpleList={this.state.universitySimpleList} />
                                         </div>
                                         <div className="modal-footer">
                                             <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -265,7 +267,6 @@ React.render(
         myList={true}
         loadCount={true}
         loadAll={true}
-        universityActionMinxinLoadUniversitySimpleList={true}
         pollInterval={20000} />,
     document.getElementById('content')
 );
