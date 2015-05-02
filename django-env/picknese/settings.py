@@ -92,12 +92,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 STATIC_ROOT = ''
+# STATIC_ROOT = os.path.join(PROJECT_DIRECTORY, 'static')
 
-# STATIC_URL = '/static/'
+STATIC_URL = '/static/'
 
 # Satic assets that aren't tied to a particular app
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_DIRECTORY, 'static/'),
+    os.path.join(PROJECT_DIRECTORY, 'static'),
 )
 
 # Customizing your project's templates
@@ -114,7 +115,7 @@ UPLOAD_FILE_PATTERN = "media/uploaded_files/%s"
 MEDIA_ROOT = ''
 
 # https://docs.djangoproject.com/en/1.7/ref/settings/#media-url
-# MEDIA_URL = '/media/'
+MEDIA_URL = '/media/'
 
 # http://www.django-rest-framework.org/
 REST_FRAMEWORK = {

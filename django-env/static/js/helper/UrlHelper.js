@@ -1,3 +1,5 @@
+var production = true;
+
 /*
  * Static, Media, URL helper
  * --------------------------------------------------

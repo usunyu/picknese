@@ -22,6 +22,10 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/selectize/selectize.css' %}" />
         <!-- Custom CSS -->
         <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
+        <!-- http://facebook.github.io/react/ -->
+        <!-- <script type="text/javascript" src="{% static 'js/react/react.min.js' %}"></script> -->
+        <script type="text/javascript" src="{% static 'js/react/react.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/react/JSXTransformer.js' %}"></script>
         <!-- Used for load common React component -->
         {% block extra_head %}
         {% endblock %}
@@ -55,10 +59,6 @@
         <script type="text/javascript" src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
         <!-- http://bootswatch.com/paper/ -->
         <script type="text/javascript" src="{% static 'js/bootstrap/bootswatch.js' %}"></script>
-        <!-- http://facebook.github.io/react/ -->
-        <!-- <script type="text/javascript" src="{% static 'js/react/react.min.js' %}"></script> -->
-        <script type="text/javascript" src="{% static 'js/react/react.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/react/JSXTransformer.js' %}"></script>
         <!-- https://github.com/tapmodo/Jcrop -->
         <script type="text/javascript" src="{% static 'js/Jcrop/jquery.Jcrop.min.js' %}"></script>
         <!-- http://momentjs.com/ -->
@@ -80,8 +80,6 @@
         <script type="text/javascript" src="{% static 'js/keen.js' %}"></script>
         <!-- http://brianreavis.github.io/selectize.js/ -->
         <script type="text/javascript" src="{% static 'js/selectize/standalone/selectize.min.js' %}"></script>
-        <!-- Front End Settings -->
-        <script type="text/javascript" src="{% static 'js/settings.js' %}"></script>
         {% block extra_js %}
         {% endblock %}
     </body>

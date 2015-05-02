@@ -7,7 +7,7 @@ pickup.views.pickup_my_list => pickup/mylist/1/
 """
 def pickup_my_list(request, university_id):
     university = get_object_or_404(University, id=university_id)
-    return render(request, 'pickup_my_list.html', {})
+    return render(request, 'pickup/pickup_my_list.html', {})
 
 """
 Show PickRequester List
@@ -15,4 +15,4 @@ pickup.views.pick_requester_list => pickup/requesters/1/
 """
 def pick_requester_list(request, university_id):
     university = get_object_or_404(University, id=university_id)
-    return render(request, 'pick_requester_list.html', {})
+    return render(request, 'pickup/pick_requester_list.html', {})

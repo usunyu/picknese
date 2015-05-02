@@ -1,16 +1,16 @@
-var PickRequesterFormCollapseButton = React.createClass({
+var PickRequesterFormCollapseButton = React.createClass({displayName: "PickRequesterFormCollapseButton",
     render: function() {
         return (
-            <button className="btn btn-success" type="button" data-toggle="collapse" 
-                data-target="#pick-request-post" aria-expanded="false" aria-controls="pick-request-post"
-                style={{marginBottom: "10px"}}>
-                Post Your Request <i className="glyphicon glyphicon-plus"></i>
-            </button>
+            React.createElement("button", {className: "btn btn-success", type: "button", "data-toggle": "collapse", 
+                "data-target": "#pick-request-post", "aria-expanded": "false", "aria-controls": "pick-request-post", 
+                style: {marginBottom: "10px"}}, 
+                "Post Your Request ", React.createElement("i", {className: "glyphicon glyphicon-plus"})
+            )
         );
     }
 });
 
-var PickRequesterForm = React.createClass({
+var PickRequesterForm = React.createClass({displayName: "PickRequesterForm",
     handleFlightButtonLoading: function(e) {
         var destination = this.refs.destination1.getDOMNode().value.trim();
         var flight = this.refs.flight1.getDOMNode().value.trim().toUpperCase();
@@ -185,215 +185,215 @@ var PickRequesterForm = React.createClass({
         var requester = this.props.currentUser;
         var university = this.props.university;
         if (!university) {
-            return <div></div>;
+            return React.createElement("div", null);
         }
         return (
-            <div id="pick-request-post" className="panel panel-primary collapse">
-                {/* Pick Up Tab Select */}
-                <div className="panel-heading clearfix">
-                    <ul className="inline-list col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" style={{marginBottom: "0px"}}>
-                        <li className="active col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <i className="glyphicon glyphicon-plane"></i>&nbsp;
-                            <a href="#tab_flight" data-toggle="tab">Flight</a>
-                        </li>
-                        <li className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <i className="glyphicon glyphicon-globe"></i>&nbsp;
-                            <a href="#tab_general" data-toggle="tab">General</a>
-                        </li>
-                    </ul>
-                </div>
-                <div className="tab-content">
-                    {/* Flight Pick Up Tab */}
-                    <div className="tab-pane active" id="tab_flight">
-                        <form className="form-horizontal" onSubmit={this.handleFlightPreSubmit}>
-                            <div className="panel-body">
-                                <div className="form-group">
-                                    <div className="col-sm-6" id="flight1-input">
-                                        <input type="text"
-                                               className="form-control" 
-                                               placeholder="Your flight number?"
-                                               required
-                                               ref="flight1" />
-                                    </div>
-                                    <div className="col-sm-6" id="destination1-input">
-                                        <input type="text"
-                                               id="google-map-place1"
-                                               className="form-control" 
-                                               placeholder="Where you want to go?"
-                                               required
-                                               ref="destination1" />
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <div className='input-group date' id='datetimepicker1'>
-                                            <input type='text' className="form-control"
-                                                   placeholder="Your arrival date?"
-                                                   style={{marginTop: '12px'}}
-                                                   required
-                                                   ref="datetime1" />
-                                            <span className="input-group-addon"><span className="glyphicon glyphicon-calendar"></span></span>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-6" id="baggage-input">
-                                        <input type='number' className="form-control"
-                                               placeholder="Your number of baggage?"
-                                               style={{marginTop: '12px'}}
-                                               min="1"
-                                               max="6"
-                                               required
-                                               ref="baggage" />
-                                    </div>
-                                    <div className="col-sm-12">
-                                        <textarea
-                                            className="form-control pick-requester-note"
-                                            rows="1"
-                                            placeholder="Anything you want to mention?"
-                                            ref="description1">
-                                        </textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="panel-footer clearfix">
-                                {/* Flight Pick Up Request Button */}
-                                <button
-                                    id="flight1-post-button"
-                                    type="submit"
-                                    style={{float: 'right'}}
-                                    className="btn btn-primary"
-                                    data-loading-text="Processing..."
-                                    data-role="button"
-                                    onClick={this.handleFlightButtonLoading}>
-                                    Post Your Request
-                                </button>
-                                {/* Flight Pick Up Request Success Modal */}
-                                <div className="modal fade" id="flight1-post-modal" tabIndex="-1" role="dialog" aria-hidden="true">
-                                    <div className="modal-dialog">
-                                        <div className="modal-content">
-                                            <div className="modal-header">
-                                                <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 className="modal-title">Confirm your request</h4>
-                                            </div>
-                                            <hr style={{marginTop: "-10px"}}/>
-                                            <div className="modal-body" id="flight1-post-modal-body">
-                                            </div>
-                                            <div className="modal-footer">
-                                                <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
-                                                <button type="button" className="btn btn-primary"
-                                                        onClick={this.handleFlightSubmit}>Confirm</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* Flight Pick Up Request Error Modal */}
-                                <div className="modal fade" id="flight1-post-error-modal" tabIndex="-1" role="dialog" aria-hidden="true">
-                                    <div className="modal-dialog">
-                                        <div className="modal-content">
-                                            <div className="modal-header">
-                                                <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 className="modal-title" id="flight1-post-error-modal-title">Cannot find flight schedule</h4>
-                                            </div>
-                                            <hr style={{marginTop: "-10px"}}/>
-                                            <div className="modal-body">
-                                                <p>Sorry, we cannot find any flight schedule based on your input, please input the correct date and flight number.</p>
-                                                <p>For the date, please input the arrival date as format MM/DD/YYYY.</p>
-                                                <p>For the flight number, please input as format CSN327, for the 
-                                                    &nbsp;<a href="http://en.wikipedia.org/wiki/List_of_airline_codes" target="_blank">airline code reference</a>.
-                                                </p>
-                                            </div>
-                                            <div className="modal-footer">
-                                                <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    {/* General Pick Up Tab */}
-                    <div className="tab-pane" id="tab_general">
-                        <form className="form-horizontal" onSubmit={this.handleGeneralPreSubmit}>
-                            <div className="panel-body">
-                                <div className="form-group">
-                                    <div className="col-sm-6">
-                                        <input type="text"
-                                               id="google-map-place2"
-                                               className="form-control" 
-                                               placeholder="Where to pick up you?"
-                                               required
-                                               ref="start2" />
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <input type="text"
-                                               id="google-map-place3"
-                                               className="form-control" 
-                                               placeholder="Where you want to go?"
-                                               required
-                                               ref="destination2" />
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <div className='input-group date' id='datetimepicker2'>
-                                            <input type='text' className="form-control"
-                                                   placeholder="Your pick up time?"
-                                                   required
-                                                   style={{marginTop: '12px'}}
-                                                   ref="datetime2" />
-                                            <span className="input-group-addon"><span className="glyphicon glyphicon-calendar"></span></span>
-                                        </div>
-                                    </div>
+            React.createElement("div", {id: "pick-request-post", className: "panel panel-primary collapse"}, 
+                /* Pick Up Tab Select */
+                React.createElement("div", {className: "panel-heading clearfix"}, 
+                    React.createElement("ul", {className: "inline-list col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center", style: {marginBottom: "0px"}}, 
+                        React.createElement("li", {className: "active col-xs-6 col-sm-6 col-md-6 col-lg-6"}, 
+                            React.createElement("i", {className: "glyphicon glyphicon-plane"}), " ", 
+                            React.createElement("a", {href: "#tab_flight", "data-toggle": "tab"}, "Flight")
+                        ), 
+                        React.createElement("li", {className: "col-xs-6 col-sm-6 col-md-6 col-lg-6"}, 
+                            React.createElement("i", {className: "glyphicon glyphicon-globe"}), " ", 
+                            React.createElement("a", {href: "#tab_general", "data-toggle": "tab"}, "General")
+                        )
+                    )
+                ), 
+                React.createElement("div", {className: "tab-content"}, 
+                    /* Flight Pick Up Tab */
+                    React.createElement("div", {className: "tab-pane active", id: "tab_flight"}, 
+                        React.createElement("form", {className: "form-horizontal", onSubmit: this.handleFlightPreSubmit}, 
+                            React.createElement("div", {className: "panel-body"}, 
+                                React.createElement("div", {className: "form-group"}, 
+                                    React.createElement("div", {className: "col-sm-6", id: "flight1-input"}, 
+                                        React.createElement("input", {type: "text", 
+                                               className: "form-control", 
+                                               placeholder: "Your flight number?", 
+                                               required: true, 
+                                               ref: "flight1"})
+                                    ), 
+                                    React.createElement("div", {className: "col-sm-6", id: "destination1-input"}, 
+                                        React.createElement("input", {type: "text", 
+                                               id: "google-map-place1", 
+                                               className: "form-control", 
+                                               placeholder: "Where you want to go?", 
+                                               required: true, 
+                                               ref: "destination1"})
+                                    ), 
+                                    React.createElement("div", {className: "col-sm-6"}, 
+                                        React.createElement("div", {className: "input-group date", id: "datetimepicker1"}, 
+                                            React.createElement("input", {type: "text", className: "form-control", 
+                                                   placeholder: "Your arrival date?", 
+                                                   style: {marginTop: '12px'}, 
+                                                   required: true, 
+                                                   ref: "datetime1"}), 
+                                            React.createElement("span", {className: "input-group-addon"}, React.createElement("span", {className: "glyphicon glyphicon-calendar"}))
+                                        )
+                                    ), 
+                                    React.createElement("div", {className: "col-sm-6", id: "baggage-input"}, 
+                                        React.createElement("input", {type: "number", className: "form-control", 
+                                               placeholder: "Your number of baggage?", 
+                                               style: {marginTop: '12px'}, 
+                                               min: "1", 
+                                               max: "6", 
+                                               required: true, 
+                                               ref: "baggage"})
+                                    ), 
+                                    React.createElement("div", {className: "col-sm-12"}, 
+                                        React.createElement("textarea", {
+                                            className: "form-control pick-requester-note", 
+                                            rows: "1", 
+                                            placeholder: "Anything you want to mention?", 
+                                            ref: "description1"}
+                                        )
+                                    )
+                                )
+                            ), 
+                            React.createElement("div", {className: "panel-footer clearfix"}, 
+                                /* Flight Pick Up Request Button */
+                                React.createElement("button", {
+                                    id: "flight1-post-button", 
+                                    type: "submit", 
+                                    style: {float: 'right'}, 
+                                    className: "btn btn-primary", 
+                                    "data-loading-text": "Processing...", 
+                                    "data-role": "button", 
+                                    onClick: this.handleFlightButtonLoading}, 
+                                    "Post Your Request"
+                                ), 
+                                /* Flight Pick Up Request Success Modal */
+                                React.createElement("div", {className: "modal fade", id: "flight1-post-modal", tabIndex: "-1", role: "dialog", "aria-hidden": "true"}, 
+                                    React.createElement("div", {className: "modal-dialog"}, 
+                                        React.createElement("div", {className: "modal-content"}, 
+                                            React.createElement("div", {className: "modal-header"}, 
+                                                React.createElement("button", {type: "button", className: "close", "data-dismiss": "modal", "aria-label": "Close"}, React.createElement("span", {"aria-hidden": "true"}, "×")), 
+                                                React.createElement("h4", {className: "modal-title"}, "Confirm your request")
+                                            ), 
+                                            React.createElement("hr", {style: {marginTop: "-10px"}}), 
+                                            React.createElement("div", {className: "modal-body", id: "flight1-post-modal-body"}
+                                            ), 
+                                            React.createElement("div", {className: "modal-footer"}, 
+                                                React.createElement("button", {type: "button", className: "btn btn-default", "data-dismiss": "modal"}, "Cancel"), 
+                                                React.createElement("button", {type: "button", className: "btn btn-primary", 
+                                                        onClick: this.handleFlightSubmit}, "Confirm")
+                                            )
+                                        )
+                                    )
+                                ), 
+                                /* Flight Pick Up Request Error Modal */
+                                React.createElement("div", {className: "modal fade", id: "flight1-post-error-modal", tabIndex: "-1", role: "dialog", "aria-hidden": "true"}, 
+                                    React.createElement("div", {className: "modal-dialog"}, 
+                                        React.createElement("div", {className: "modal-content"}, 
+                                            React.createElement("div", {className: "modal-header"}, 
+                                                React.createElement("button", {type: "button", className: "close", "data-dismiss": "modal", "aria-label": "Close"}, React.createElement("span", {"aria-hidden": "true"}, "×")), 
+                                                React.createElement("h4", {className: "modal-title", id: "flight1-post-error-modal-title"}, "Cannot find flight schedule")
+                                            ), 
+                                            React.createElement("hr", {style: {marginTop: "-10px"}}), 
+                                            React.createElement("div", {className: "modal-body"}, 
+                                                React.createElement("p", null, "Sorry, we cannot find any flight schedule based on your input, please input the correct date and flight number."), 
+                                                React.createElement("p", null, "For the date, please input the arrival date as format MM/DD/YYYY."), 
+                                                React.createElement("p", null, "For the flight number, please input as format CSN327, for the" + ' ' + 
+                                                    " ", React.createElement("a", {href: "http://en.wikipedia.org/wiki/List_of_airline_codes", target: "_blank"}, "airline code reference"), "."
+                                                )
+                                            ), 
+                                            React.createElement("div", {className: "modal-footer"}, 
+                                                React.createElement("button", {type: "button", className: "btn btn-default", "data-dismiss": "modal"}, "Close")
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    ), 
+                    /* General Pick Up Tab */
+                    React.createElement("div", {className: "tab-pane", id: "tab_general"}, 
+                        React.createElement("form", {className: "form-horizontal", onSubmit: this.handleGeneralPreSubmit}, 
+                            React.createElement("div", {className: "panel-body"}, 
+                                React.createElement("div", {className: "form-group"}, 
+                                    React.createElement("div", {className: "col-sm-6"}, 
+                                        React.createElement("input", {type: "text", 
+                                               id: "google-map-place2", 
+                                               className: "form-control", 
+                                               placeholder: "Where to pick up you?", 
+                                               required: true, 
+                                               ref: "start2"})
+                                    ), 
+                                    React.createElement("div", {className: "col-sm-6"}, 
+                                        React.createElement("input", {type: "text", 
+                                               id: "google-map-place3", 
+                                               className: "form-control", 
+                                               placeholder: "Where you want to go?", 
+                                               required: true, 
+                                               ref: "destination2"})
+                                    ), 
+                                    React.createElement("div", {className: "col-sm-6"}, 
+                                        React.createElement("div", {className: "input-group date", id: "datetimepicker2"}, 
+                                            React.createElement("input", {type: "text", className: "form-control", 
+                                                   placeholder: "Your pick up time?", 
+                                                   required: true, 
+                                                   style: {marginTop: '12px'}, 
+                                                   ref: "datetime2"}), 
+                                            React.createElement("span", {className: "input-group-addon"}, React.createElement("span", {className: "glyphicon glyphicon-calendar"}))
+                                        )
+                                    ), 
 
-                                    <div className="checkbox col-sm-3">
-                                        <label style={{marginTop: '15px'}}>
-                                            <input type="checkbox" ref="round_trip"> Round Trip </input>
-                                        </label>
-                                    </div>
-                                    <div className="checkbox col-sm-3">
-                                        <label style={{marginTop: '15px'}}>
-                                            <input type="checkbox" ref="time_flexible"> Time Flexible </input>
-                                        </label>
-                                    </div>
+                                    React.createElement("div", {className: "checkbox col-sm-3"}, 
+                                        React.createElement("label", {style: {marginTop: '15px'}}, 
+                                            React.createElement("input", {type: "checkbox", ref: "round_trip"}, " Round Trip ")
+                                        )
+                                    ), 
+                                    React.createElement("div", {className: "checkbox col-sm-3"}, 
+                                        React.createElement("label", {style: {marginTop: '15px'}}, 
+                                            React.createElement("input", {type: "checkbox", ref: "time_flexible"}, " Time Flexible ")
+                                        )
+                                    ), 
 
-                                    <div className="col-sm-12">
-                                        <textarea
-                                            className="form-control pick-requester-note"
-                                            rows="1"
-                                            placeholder="Any thing you want to mention?"
-                                            ref="description2">
-                                        </textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="panel-footer clearfix">
-                                {/* General Pick Up Request Button */}
-                                <button
-                                    id="general2-post-button"
-                                    type="submit"
-                                    style={{float: 'right'}}
-                                    className="btn btn-primary">
-                                    Post Your Request
-                                </button>
-                                {/* General Pick Up Request Confirm Modal */}
-                                <div className="modal fade" id="general2-post-modal" tabIndex="-1" role="dialog" aria-hidden="true">
-                                    <div className="modal-dialog">
-                                        <div className="modal-content">
-                                            <div className="modal-header">
-                                                <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 className="modal-title">Confirm Your Request</h4>
-                                            </div>
-                                            <hr style={{marginTop: "-10px"}}/>
-                                            <div className="modal-body" id="general2-post-modal-body">
-                                            </div>
-                                            <div className="modal-footer">
-                                                <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
-                                                <button type="button" className="btn btn-primary"
-                                                        onClick={this.handleGeneralSubmit}>Confirm</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+                                    React.createElement("div", {className: "col-sm-12"}, 
+                                        React.createElement("textarea", {
+                                            className: "form-control pick-requester-note", 
+                                            rows: "1", 
+                                            placeholder: "Any thing you want to mention?", 
+                                            ref: "description2"}
+                                        )
+                                    )
+                                )
+                            ), 
+                            React.createElement("div", {className: "panel-footer clearfix"}, 
+                                /* General Pick Up Request Button */
+                                React.createElement("button", {
+                                    id: "general2-post-button", 
+                                    type: "submit", 
+                                    style: {float: 'right'}, 
+                                    className: "btn btn-primary"}, 
+                                    "Post Your Request"
+                                ), 
+                                /* General Pick Up Request Confirm Modal */
+                                React.createElement("div", {className: "modal fade", id: "general2-post-modal", tabIndex: "-1", role: "dialog", "aria-hidden": "true"}, 
+                                    React.createElement("div", {className: "modal-dialog"}, 
+                                        React.createElement("div", {className: "modal-content"}, 
+                                            React.createElement("div", {className: "modal-header"}, 
+                                                React.createElement("button", {type: "button", className: "close", "data-dismiss": "modal", "aria-label": "Close"}, React.createElement("span", {"aria-hidden": "true"}, "×")), 
+                                                React.createElement("h4", {className: "modal-title"}, "Confirm Your Request")
+                                            ), 
+                                            React.createElement("hr", {style: {marginTop: "-10px"}}), 
+                                            React.createElement("div", {className: "modal-body", id: "general2-post-modal-body"}
+                                            ), 
+                                            React.createElement("div", {className: "modal-footer"}, 
+                                                React.createElement("button", {type: "button", className: "btn btn-default", "data-dismiss": "modal"}, "Cancel"), 
+                                                React.createElement("button", {type: "button", className: "btn btn-primary", 
+                                                        onClick: this.handleGeneralSubmit}, "Confirm")
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
         );
     }
 });
