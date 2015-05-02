@@ -1,17 +1,17 @@
-var University = React.createClass({
+var University = React.createClass({displayName: "University",
     render: function() {
         return (
-            <div className="university">
-                <h4 className="universityName">
-                    {this.props.name}
-                </h4>
-                {this.props.children}
-            </div>
+            React.createElement("div", {className: "university"}, 
+                React.createElement("h4", {className: "universityName"}, 
+                    this.props.name
+                ), 
+                this.props.children
+            )
         );
     }
 });
 
-var UniversityList = React.createClass({
+var UniversityList = React.createClass({displayName: "UniversityList",
     render: function() {
         var filterText = this.props.filterText;
         var universities = this.props.data.map(function (university) {
@@ -19,22 +19,22 @@ var UniversityList = React.createClass({
                 return;
             }
             return (
-                <University name={university.name}>
-                    <p>{university.shorthand}</p>
-                    <p>{university.url}</p>
-                    <p>{university.description}</p>
-                </University>
+                React.createElement(University, {name: university.name}, 
+                    React.createElement("p", null, university.shorthand), 
+                    React.createElement("p", null, university.url), 
+                    React.createElement("p", null, university.description)
+                )
             );
         });
         return (
-            <div className="universityList">
-                {universities}
-            </div>
+            React.createElement("div", {className: "universityList"}, 
+                universities
+            )
         );
     }
 });
 
-var UniversityForm = React.createClass({
+var UniversityForm = React.createClass({displayName: "UniversityForm",
     handleSubmit: function(e) {
         e.preventDefault();
         var name = this.refs.name.getDOMNode().value.trim();
@@ -55,17 +55,17 @@ var UniversityForm = React.createClass({
     },
     render: function() {
         return (
-            <form className="commentForm" onSubmit={this.handleSubmit}>
-                <input type="text" placeholder="University name" ref="name" />
-                <input type="text" placeholder="Shorthand" ref="shorthand" />
-                <input type="text" placeholder="Url" ref="url" />
-                <input type="submit" value="Post" />
-            </form>
+            React.createElement("form", {className: "commentForm", onSubmit: this.handleSubmit}, 
+                React.createElement("input", {type: "text", placeholder: "University name", ref: "name"}), 
+                React.createElement("input", {type: "text", placeholder: "Shorthand", ref: "shorthand"}), 
+                React.createElement("input", {type: "text", placeholder: "Url", ref: "url"}), 
+                React.createElement("input", {type: "submit", value: "Post"})
+            )
         );
     }
 });
 
-var UniversitySearch = React.createClass({
+var UniversitySearch = React.createClass({displayName: "UniversitySearch",
     handleChange: function() {
         this.props.onUserInput(
             this.refs.filterTextInput.getDOMNode().value
@@ -73,17 +73,17 @@ var UniversitySearch = React.createClass({
     },
     render: function() {
         return (
-            <form>
-                <input type="text" placeholder="Search..." 
-                       value={this.props.filterText}
-                       ref="filterTextInput"
-                       onChange={this.handleChange} />
-            </form>
+            React.createElement("form", null, 
+                React.createElement("input", {type: "text", placeholder: "Search...", 
+                       value: this.props.filterText, 
+                       ref: "filterTextInput", 
+                       onChange: this.handleChange})
+            )
         );
     }
 });
 
-var UniversityPanel = React.createClass({
+var UniversityPanel = React.createClass({displayName: "UniversityPanel",
     loadUniversitiesFromServer: function() {
         $.ajax({
             url: this.props.url,
@@ -127,16 +127,16 @@ var UniversityPanel = React.createClass({
     },
     render: function() {
         return (
-            <div className="universityPanel">
-                <UniversitySearch filterText={this.state.filterText} onUserInput={this.handleUserInput} />
-                <UniversityList filterText={this.state.filterText} data={this.state.data} />
-                <UniversityForm onUniversitySubmit={this.handleUniversitySubmit} />
-            </div>
+            React.createElement("div", {className: "universityPanel"}, 
+                React.createElement(UniversitySearch, {filterText: this.state.filterText, onUserInput: this.handleUserInput}), 
+                React.createElement(UniversityList, {filterText: this.state.filterText, data: this.state.data}), 
+                React.createElement(UniversityForm, {onUniversitySubmit: this.handleUniversitySubmit})
+            )
         );
     }
 });
 
 React.render(
-    <UniversityPanel url="api/" pollInterval={20000}/>,
+    React.createElement(UniversityPanel, {url: "api/", pollInterval: 20000}),
     document.getElementById('content')
 );

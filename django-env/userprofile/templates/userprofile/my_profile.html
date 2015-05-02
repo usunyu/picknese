@@ -3,37 +3,31 @@
 {% load staticfiles %}
 
 {% block title %}
-Pick Up |
+Profile |
 {% endblock %}
 
 {% block extra_head %}
 <script type="text/javascript" src="{% static 'userprofile/mixin/LoadCurrentUserMixin.js' %}"></script>
-<script type="text/javascript" src="{% static 'university/mixin/LoadUniversityMixin.js' %}"></script>
 <script type="text/javascript" src="{% static 'pickup/mixin/PickRequesterActionMixin.js' %}"></script>
 <script type="text/javascript" src="{% static 'pickup/mixin/PickUpActionMixin.js' %}"></script>
+<script type="text/javascript" src="{% static 'university/mixin/UniversityActionMixin.js' %}"></script>
 <script type="text/javascript" src="{% static 'pickup/component/PickUp.js' %}"></script>
 <script type="text/javascript" src="{% static 'pickup/component/PickRequester.js' %}"></script>
-<script type="text/javascript" src="{% static 'pickup/component/PickRequesterForm.js' %}"></script>
-<script type="text/javascript" src="{% static 'userprofile/component/CurrentUserPanel.js' %}"></script>
 <script type="text/javascript" src="{% static 'pickup/component/MyPickUpRequestPanel.js' %}"></script>
-{% endblock %}
-
-{% block jumbotron %}
-<div id="jumbotron" />
-<script type="text/javascript" src="{% static 'component/JumbotronPanel.js' %}"></script>
+<script type="text/javascript" src="{% static 'userprofile/component/UserProfileForm.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 <div id="loading" >
     <div class="spinner" style="margin-top: 200px; margin-bottom: 200px;"></div>
 </div>
-<div class="container">
+<!-- <div class="row">
+	<div id="content" />
+</div> -->
+<div class="container-fluid">
     <div class="row">
-    	<div id="content" />
+		<div id="content" />
     </div>
 </div>
-
-<!-- https://developers.google.com/maps/documentation/javascript/examples/places-searchbox -->
-<script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
-<script type="text/javascript" src="{% static 'pickup/pickup_my_list.js' %}"></script>
+<script type="text/javascript" src="{% static 'userprofile/my_profile.js' %}"></script>
 {% endblock %}

@@ -29,11 +29,11 @@ def user_profile(request):
 	context.update(csrf(request))
 	context['form'] = form
 	context['profile'] = profile
-	return render(request, 'profile.html', context)
+	return render(request, 'userprofile/profile.html', context)
 
 """
 Show My UserProfile
 userprofile.views.my_profile => accounts/myprofile/
 """
 def my_profile(request):
-    return render(request, 'my_profile.html', {})
+    return render(request, 'userprofile/my_profile.html', {})
