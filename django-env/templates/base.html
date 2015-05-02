@@ -18,8 +18,33 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/Jcrop/jquery.Jcrop.min.css' %}" />
         <!-- http://eonasdan.github.io/bootstrap-datetimepicker/ -->
         <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css' %}" />
+        <!-- http://brianreavis.github.io/selectize.js/ -->
+        <link rel="stylesheet" type="text/css" href="{% static 'css/selectize/selectize.css' %}" />
         <!-- Custom CSS -->
         <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
+        <!-- http://facebook.github.io/react/ -->
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script type="text/javascript" src="{% static 'js/jquery/jquery.min.js' %}"></script>
+        <!-- http://learn.jquery.com/jquery-ui/ -->
+        <script type="text/javascript" src="{% static 'js/jquery-ui/jquery-ui.min.js' %}"></script>
+        <!-- Provide CSRF protection -->
+        <script type="text/javascript" src="{% static 'js/csrf.js' %}"></script>
+        <!-- Common Utilities -->
+        <script type="text/javascript" src="{% static 'js/utils.js' %}"></script>
+        <!-- URL Helper -->
+        <script type="text/javascript" src="{% static 'js/helper/UrlHelper.js' %}"></script>
+        <!-- REST API Helper -->
+        <script type="text/javascript" src="{% static 'js/helper/RestApiHelper.js' %}"></script>
+        <!-- <script type="text/javascript" src="{% static 'js/react/react.min.js' %}"></script> -->
+        <script type="text/javascript" src="{% static 'js/react/react.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/react/JSXTransformer.js' %}"></script>
+        <!-- http://momentjs.com/ -->
+        <script type="text/javascript" src="{% static 'js/moment/moment.min.js' %}"></script>
+        <!-- http://eonasdan.github.io/bootstrap-datetimepicker/ -->
+        <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js' %}"></script>
+        <!-- https://github.com/keen/keen-js -->
+        <script type="text/javascript" src="https://d26b395fwzu5fz.cloudfront.net/3.2.4/keen.min.js"></script>
+        <script type="text/javascript" src="{% static 'js/keen.js' %}"></script>
         <!-- Used for load common React component -->
         {% block extra_head %}
         {% endblock %}
@@ -45,34 +70,16 @@
                 <p>&copy; 2015 Picknese Inc. All rights reserved.</p>
             </footer>
         </div>
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script type="text/javascript" src="{% static 'js/jquery/jquery.min.js' %}"></script>
-        <!-- http://learn.jquery.com/jquery-ui/ -->
-        <script type="text/javascript" src="{% static 'js/jquery-ui/jquery-ui.min.js' %}"></script>
         <!-- Latest compiled and minified JavaScript -->
         <script type="text/javascript" src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
         <!-- http://bootswatch.com/paper/ -->
         <script type="text/javascript" src="{% static 'js/bootstrap/bootswatch.js' %}"></script>
-        <!-- http://facebook.github.io/react/ -->
-        <!-- <script type="text/javascript" src="{% static 'js/react/react.min.js' %}"></script> -->
-        <script type="text/javascript" src="{% static 'js/react/react.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/react/JSXTransformer.js' %}"></script>
         <!-- https://github.com/tapmodo/Jcrop -->
         <script type="text/javascript" src="{% static 'js/Jcrop/jquery.Jcrop.min.js' %}"></script>
-        <!-- http://momentjs.com/ -->
-        <script type="text/javascript" src="{% static 'js/moment/moment.min.js' %}"></script>
-        <!-- http://eonasdan.github.io/bootstrap-datetimepicker/ -->
-        <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js' %}"></script>
-        <!-- Provide CSRF protection -->
-        <script type="text/javascript" src="{% static 'js/csrf.js' %}"></script>
-        <!-- Common Utilities -->
-        <script type="text/javascript" src="{% static 'js/utils.js' %}"></script>
-        <!-- URL Helper -->
-        <script type="text/javascript" src="{% static 'js/helper/UrlHelper.js' %}"></script>
-        <!-- REST API Helper -->
-        <script type="text/javascript" src="{% static 'js/helper/RestApiHelper.js' %}"></script>
         <!-- Flight Status API Helper -->
         <script type="text/javascript" src="{% static 'js/helper/FlightStatusAPIHelper.js' %}"></script>
+        <!-- http://brianreavis.github.io/selectize.js/ -->
+        <script type="text/javascript" src="{% static 'js/selectize/standalone/selectize.min.js' %}"></script>
         {% block extra_js %}
         {% endblock %}
     </body>

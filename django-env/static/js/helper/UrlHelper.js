@@ -1,19 +1,27 @@
+var production = true;
+
 /*
  * Static, Media, URL helper
  * --------------------------------------------------
  */
 function getStaticURL() {
-    // set for local development
-    return '/static/';
-    // set for production
-    // return 'https://picknese-s3.s3.amazonaws.com/';
+    if (production) {
+        // set for production
+        return 'https://picknese-s3.s3.amazonaws.com/';
+    } else {
+        // set for local development
+        return '/static/';
+    }
 }
 
 function getMediaURL() {
-    // set for local development
-    return '/';
-    // set for production
-    // return 'https://picknese-s3.s3.amazonaws.com/';
+    if (production) {
+        // set for production
+        return 'https://picknese-s3.s3.amazonaws.com/';
+    } else {
+        // set for local development
+        return '/';
+    }
 }
 
 function getUniversityBaseURL() {

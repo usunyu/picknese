@@ -66,3 +66,25 @@ Welcome |
     </div>
 </div>
 {% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript">
+    if (production) {
+        var indexEvent = {
+            referrer: document.referrer,
+            keen: {
+                timestamp: new Date().toISOString()
+            }
+        };
+        keen_client.addEvent("index", indexEvent, function(err, res){
+            if (err) {
+                // there was an error!
+                // console.log('index event keen logging error');
+            } else {
+                // see sample response below
+                // console.log('index event keen logging success');
+            }
+        });
+    }
+</script>
+{% endblock %}

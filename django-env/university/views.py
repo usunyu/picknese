@@ -7,10 +7,10 @@ university.views.university => universities/1
 """
 def university(request, university_id):
     university = get_object_or_404(University, id=university_id)
-    return render(request, 'university.html', {})
+    return render(request, 'university/university.html', {})
 
 """
 Demo University Page
 """
 def university_list(request):
-    return render(request, 'university_list.html', {})
+    return render(request, 'university/university_list.html', {})
