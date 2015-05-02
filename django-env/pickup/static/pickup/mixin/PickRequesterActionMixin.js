@@ -19,6 +19,24 @@ var PickRequesterActionMixin = {
             dataType: 'json',
             success: function(data) {
                 this.setState({requesters: data});
+                if (production) {
+                    var pickRequestEvent = {
+                        university: this.state.university ? this.state.university.name : null,
+                        referrer: document.referrer,
+                        keen: {
+                            timestamp: new Date().toISOString()
+                        }
+                    };
+                    keen_client.addEvent("PickRequesterActionMixin", pickRequestEvent, function(err, res){
+                        if (err) {
+                            // there was an error!
+                            // console.log('PickRequesterActionMixin event keen logging error');
+                        } else {
+                            // see sample response below
+                            // console.log('PickRequesterActionMixin event keen logging success');
+                        }
+                    });
+                }
                 dismissLoadingEffect();
             }.bind(this),
             error: function(xhr, status, err) {
