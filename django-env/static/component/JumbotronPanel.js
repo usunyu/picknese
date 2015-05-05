@@ -1,4 +1,4 @@
-var JumbotronPanel = React.createClass({displayName: "JumbotronPanel",
+var JumbotronPanel = React.createClass({displayName: 'JumbotronPanel',
     mixins: [LoadUniversityMixin],
     render: function() {
         var university = this.state.university;
