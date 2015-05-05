@@ -77,6 +77,10 @@ textarea {
 
 .box-blur-overlay {
     -webkit-filter: blur(3px) opacity(70%);
+    -moz-filter: blur(3px) opacity(70%);
+    -o-filter: blur(3px) opacity(70%);
+    -ms-filter: blur(3px) opacity(70%);
+    filter: blur(3px) opacity(70%);
 }
 
 .box-blur-wrapper {
