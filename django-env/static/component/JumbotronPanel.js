@@ -7,9 +7,17 @@ var JumbotronPanel = React.createClass({displayName: "JumbotronPanel",
         }
         return (
             React.createElement("div", {style: {marginTop: '10px'}}, 
-                React.createElement("div", {
-                    className: "jumbotron box-shadow", 
-                    style: {background: 'url(' + getUniversityWide(university.shorthand) + ') center', minHeight: '200px'}}
+                React.createElement("div", {className: "box-wrapper"}, 
+                    React.createElement("div", {className: "box-blur-wrapper"}, 
+                        React.createElement("div", {
+                            className: "jumbotron box-shadow box-blur", 
+                            style: {background: 'url(' + getUniversityWide(university.shorthand) + ') center', minHeight: '200px'}}
+                        ), 
+                        React.createElement("div", {
+                            className: "jumbotron box-shadow box-blur box-blur-overlay", 
+                            style: {background: 'url(' + getUniversityWide(university.shorthand) + ') center', minHeight: '200px'}}
+                        )
+                    )
                 ), 
 
                 React.createElement("div", {className: "container", style: {marginTop: '-140px'}}, 
