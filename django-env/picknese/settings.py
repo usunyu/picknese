@@ -49,8 +49,8 @@ INSTALLED_APPS = (
     'rest_framework',
     'storages',
     'bootstrap3',
+    'feed',
     'userprofile',
-    'story',
     'university',
     'pickup',
 )
