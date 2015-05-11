@@ -8,22 +8,169 @@ Welcome |
 {% endblock %}
 
 {% block content %}
-    <div id="bg">
-        <div id="search-container">
-            <div id="search-bg"></div>
-            <div id="search">
-                <h2>Need a pick up from your schoolmate?</h2>
-                <h5>We think that should be easy :)</h4>
-                <form class="form-wrapper cf">
-                    <input type="text" placeholder="Tell us what's your school..." required>
-                    <button type="submit">Go</button>
-                </form>
-                <h5>Join us now, to be {{user_count}}th pickneses!</h5>
-                <h5><a href="#">How it works »</a></h5>
+<div id="bg">
+    <div id="search-container">
+        <div id="search-bg"></div>
+        <div id="search">
+            <h2>Need a pick up from your schoolmate?</h2>
+            <h5>We think that should be easy :)</h4>
+            <form class="form-wrapper cf">
+                <input type="text" placeholder="Tell us what's your school..." required>
+                <button type="submit">Go</button>
+            </form>
+            <h5>Join us now, to be {{user_count}}th pickneses!</h5>
+            <h5><a href="#">See how it works »</a></h5>
+        </div>
+    </div>
+</div>
+
+<section id="services">
+    <!-- <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h3 class="section-heading">How it works</h3>
+                <hr class="creative">
+            </div>
+        </div>
+    </div> -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="service-box">
+                    <i class="fa fa-4x fa-diamond wow bounceIn text-primary"></i>
+                    <h3>Step 1</h3>
+                    <p class="text-muted">blah blah blah blah blah...</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="service-box">
+                    <i class="fa fa-4x fa-paper-plane wow bounceIn text-primary" data-wow-delay=".1s"></i>
+                    <h3>Step 2</h3>
+                    <p class="text-muted">blah blah blah blah blah...</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="service-box">
+                    <i class="fa fa-4x fa-newspaper-o wow bounceIn text-primary" data-wow-delay=".2s"></i>
+                    <h3>Step 3</h3>
+                    <p class="text-muted">blah blah blah blah blah...</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="service-box">
+                    <i class="fa fa-4x fa-heart wow bounceIn text-primary" data-wow-delay=".3s"></i>
+                    <h3>Step 4</h3>
+                    <p class="text-muted">blah blah blah blah blah...</p>
+                </div>
             </div>
         </div>
     </div>
+</section>
 
+<section class="no-padding" id="portfolio">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h3 class="section-heading">Popular School</h3>
+                <hr class="creative">
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row no-gutter">
+            <div class="col-lg-4 col-sm-6">
+                <a href="#" class="portfolio-box">
+                    <img src="static/images/campus/stanford/thumbnail.jpg" class="img-responsive" alt="">
+                    <div class="portfolio-box-caption">
+                        <div class="portfolio-box-caption-content">
+                            <!-- <div class="project-category text-faded">
+                                Category
+                            </div> -->
+                            <div class="project-name">
+                                Stanford University
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a href="#" class="portfolio-box">
+                    <img src="static/images/campus/usc/thumbnail.jpg" class="img-responsive" alt="">
+                    <div class="portfolio-box-caption">
+                        <div class="portfolio-box-caption-content">
+                            <!-- <div class="project-category text-faded">
+                                Category
+                            </div> -->
+                            <div class="project-name">
+                                University of Southern California
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a href="#" class="portfolio-box">
+                    <img src="static/images/campus/ucla/thumbnail.jpg" class="img-responsive" alt="">
+                    <div class="portfolio-box-caption">
+                        <div class="portfolio-box-caption-content">
+                            <!-- <div class="project-category text-faded">
+                                Category
+                            </div> -->
+                            <div class="project-name">
+                                UCLA
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a href="#" class="portfolio-box">
+                    <img src="static/images/campus/ucb/thumbnail.jpg" class="img-responsive" alt="">
+                    <div class="portfolio-box-caption">
+                        <div class="portfolio-box-caption-content">
+                            <!-- <div class="project-category text-faded">
+                                Category
+                            </div> -->
+                            <div class="project-name">
+                                UCB
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a href="#" class="portfolio-box">
+                    <img src="static/images/campus/mit/thumbnail.jpg" class="img-responsive" alt="">
+                    <div class="portfolio-box-caption">
+                        <div class="portfolio-box-caption-content">
+                            <!-- <div class="project-category text-faded">
+                                Category
+                            </div> -->
+                            <div class="project-name">
+                                MIT
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a href="#" class="portfolio-box">
+                    <img src="static/images/campus/cmu/thumbnail.jpg" class="img-responsive" alt="">
+                    <div class="portfolio-box-caption">
+                        <div class="portfolio-box-caption-content">
+                            <!-- <div class="project-category text-faded">
+                                Category
+                            </div> -->
+                            <div class="project-name">
+                                CMU
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
 
 {% block extra_js %}
