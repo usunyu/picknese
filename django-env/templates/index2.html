@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% load staticfiles%}
+{% load static %}
+
+{% block title %}
+Welcome |
+{% endblock %}
+
+{% block content %}
+    <div id="bg">
+        <div id="search-container">
+            <div id="search-bg"></div>
+            <div id="search">
+                <h2>Need a pick up from your schoolmate?</h2>
+                <h5>We think that should be easy :)</h4>
+                <form class="form-wrapper cf">
+                    <input type="text" placeholder="Tell us what's your school..." required>
+                    <button type="submit">Go</button>
+                </form>
+                <h5>Join us now, to be {{user_count}}th pickneses!</h5>
+                <h5><a href="#">How it works »</a></h5>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript">
+    if (production) {
+        var indexEvent = {
+            referrer: document.referrer,
+            keen: {
+                timestamp: new Date().toISOString()
+            }
+        };
+        keen_client.addEvent("index", indexEvent, function(err, res){
+            if (err) {
+                // there was an error!
+                // console.log('index event keen logging error');
+            } else {
+                // see sample response below
+                // console.log('index event keen logging success');
+            }
+        });
+    }
+</script>
+{% endblock %}
