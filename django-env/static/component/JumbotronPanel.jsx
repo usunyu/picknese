@@ -7,9 +7,17 @@ var JumbotronPanel = React.createClass({
         }
         return (
             <div style={{marginTop: '10px'}}>
-                <div
-                    className="jumbotron box-shadow"
-                    style={{background: 'url(' + getUniversityWide(university.shorthand) + ') center', minHeight: '200px'}} >
+                <div className="box-wrapper">
+                    <div className="box-blur-wrapper" >
+                        <div
+                            className="jumbotron box-shadow box-blur"
+                            style={{background: 'url(' + getUniversityWide(university.shorthand) + ') center', minHeight: '200px'}} >
+                        </div>
+                        <div
+                            className="jumbotron box-shadow box-blur box-blur-overlay"
+                            style={{background: 'url(' + getUniversityWide(university.shorthand) + ') center', minHeight: '200px'}} >
+                        </div>
+                    </div>
                 </div>
 
                 <div className="container" style={{marginTop: '-140px'}} >

@@ -114,24 +114,6 @@ var PickRequesterPanel = React.createClass({
              PickRequesterActionMixin,
              PickUpActionMixin],
     render: function() {
-        if (this.state.university && this.state.currentUser && this.state.currentUserPickCount && production) {
-            var pickRequestEvent = {
-                university: this.state.university.name,
-                referrer: document.referrer,
-                keen: {
-                    timestamp: new Date().toISOString()
-                }
-            };
-            keen_client.addEvent("pickup_requester_list", pickRequestEvent, function(err, res){
-                if (err) {
-                    // there was an error!
-                    // console.log('pickup_requester_list event keen logging error');
-                } else {
-                    // see sample response below
-                    // console.log('pickup_requester_list event keen logging success');
-                }
-            });
-        }
         return (
             <div className="row col-xs-12 col-sm-12 col-md-12 col-lg-12"
                  style={{marginTop: '10px'}}>

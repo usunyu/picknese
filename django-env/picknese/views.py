@@ -16,7 +16,7 @@ def index(request):
 		'universities': universities,
 		'user_count': user_count,
 	}
-	return render(request, 'index.html', context)
+	return render(request, 'index2.html', context)
 
 def login(request):
 	context = {}
