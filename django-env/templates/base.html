@@ -29,10 +29,10 @@
         <script type="text/javascript" src="{% static 'js/jquery/jquery.min.js' %}"></script>
         <!-- http://learn.jquery.com/jquery-ui/ -->
         <script type="text/javascript" src="{% static 'js/jquery-ui/jquery-ui.min.js' %}"></script>
-        <!-- WOW -->
         <!-- http://mynameismatthieu.com/WOW/docs.html -->
         <script type="text/javascript" src="{% static 'js/wow/wow.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/wow/wow_loading.js' %}"></script>
+        <!-- Initial Loading -->
+        <script type="text/javascript" src="{% static 'js/initial.js' %}"></script>
         <!-- Provide CSRF protection -->
         <script type="text/javascript" src="{% static 'js/csrf.js' %}"></script>
         <!-- Common Utilities -->
@@ -60,12 +60,10 @@
         <!-- Navbar -->
         {% include 'navbar.html' %}
         <!-- Messages -->
-        <div id="messages"/>
+        <div id="messages"></div>
         <!-- Jumbotron -->
-        <div>
         {% block jumbotron %}
         {% endblock %}
-        </div>
         <!-- Main -->
         {% block content %}
         {% endblock %}

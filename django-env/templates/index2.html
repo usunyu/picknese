@@ -7,23 +7,27 @@
 Welcome |
 {% endblock %}
 
-{% block content %}
-<div id="bg">
-    <div id="search-container">
-        <div id="search-bg"></div>
-        <div id="search">
-            <h2>Need a pick up from your schoolmate?</h2>
-            <h5>We think that should be easy :)</h4>
-            <form class="form-wrapper cf">
-                <input type="text" placeholder="Tell us what's your school..." required>
-                <button type="submit">Go</button>
-            </form>
-            <h5>Join us now, to be {{user_count}}th pickneses!</h5>
-            <h5><a href="#">See how it works »</a></h5>
+{% block jumbotron %}
+<header>
+    <div class="header-content">
+        <div class="header-search-container">
+            <div class="header-search-bg"></div>
+            <div class="header-search">
+                <h2>Need a pick up from your schoolmate?</h2>
+                <h5>We think that should be easy :)</h5>
+                <form class="form-wrapper cf">
+                    <input type="text" placeholder="Tell us what's your school..." required>
+                    <button type="submit">Go</button>
+                </form>
+                <h5>Join us now, to be {{user_count}}th pickneses!</h5>
+                <h5><a href="#services" class="page-scroll">See how it works »</a></h5>
+            </div>
         </div>
     </div>
-</div>
+</header>
+{% endblock %}
 
+{% block content %}
 <section id="services">
     <!-- <div class="container">
         <div class="row">
@@ -79,7 +83,6 @@ Welcome |
     <div class="container-fluid">
         <div class="row no-gutter">
             {% for university in universities %}
-            <!-- University -->
             <div class="col-lg-4 col-sm-6">
                 <a href="{% url 'pickup.views.pick_requester_list' university.id %}" class="portfolio-box">
                     <img src="{% get_static_prefix %}images/campus/{{university.shorthand}}/thumbnail.jpg" class="img-responsive" alt="">
