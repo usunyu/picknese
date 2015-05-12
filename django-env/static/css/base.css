@@ -76,7 +76,7 @@ textarea {
     z-index: 99;
 
     /* Pull the background 70px higher to the same place as #bg's */
-    background-position: center -150px;
+    background-position: center -170px;
 
     -webkit-filter: blur(5px);
     filter: blur(5px);
@@ -96,8 +96,8 @@ textarea {
 }
 
 .header-search h2, .header-search h5 { text-align: center; color: #fefefe; font-weight: normal; }
-/*#search h2 { margin-bottom: 50px }*/
-/*#search h5 { margin-top: 70px }*/
+/*.header-search h2 { margin-bottom: 50px }*/
+/*.header-search h5 { margin-top: 70px }*/
 
 /*
  * Search Bar
@@ -244,8 +244,13 @@ header {
 header .header-content {
     position: relative;
     width: 100%;
-    padding: 10% 20% 10% 20%;
     text-align: center;
+}
+
+@media (min-width: 768px) {
+  .header-content {
+    padding: 10% 20% 10% 20%;
+  }
 }
 
 @media(min-width:768px) {
