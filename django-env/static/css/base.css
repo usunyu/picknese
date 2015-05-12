@@ -2,6 +2,11 @@
  * Base Element Style
  * --------------------------------------------------
  */
+html {
+    width: 100%;
+    height: 100%;
+}
+
 body {
     /*padding-top: 50px;*/
     /*background-color: #f0eeeb;*/
@@ -32,6 +37,8 @@ body {
     /*background-color: #888;*/
     /*background-color: #4c483f;*/
     /*background-color: #827e75;*/
+    width: 100%;
+    height: 100%;
 }
 
 a:hover {
@@ -47,54 +54,50 @@ textarea {
  * http://jordanhollinger.com/2014/01/29/css-gaussian-blur-behind-a-translucent-box/
  * ---------------------------------------------------------------------------------
  */
-#bg, #search-bg {
-  background-image: url(../images/landing/intro-bg2.jpg);
-  background-repeat: no-repeat;
-  background-size: cover auto;
+.header-search-container {
+    position: relative;
 }
 
-#bg {
-  background-position: center top;
-  padding: 10% 20% 10% 20%;
+.header-search-bg {
+    background-image: url(../images/landing/intro-bg.jpg);
+    background-repeat: no-repeat center center fixed;
+
+    background-size: cover auto;
+    -webkit-background-size: cover auto;
+    -moz-background-size: cover auto;
+    -o-background-size: cover auto;
+
+    /* Absolutely position it, but stretch it to all four corners, then put it just behind #search's z-index */
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    z-index: 99;
+
+    /* Pull the background 70px higher to the same place as #bg's */
+    background-position: center -170px;
+
+    -webkit-filter: blur(5px);
+    filter: blur(5px);
 }
 
-#search-container {
-  position: relative;
-}
-
-#search-bg {
-  /* Absolutely position it, but stretch it to all four corners, then put it just behind #search's z-index */
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  z-index: 99;
-
-  /* Pull the background 70px higher to the same place as #bg's */
-  background-position: center -150px;
-
-  -webkit-filter: blur(5px);
-  filter: blur(5px);
-}
-
-#search {
-  /* Put this on top of the blurred layer */
-  position: relative;
-  z-index: 100;
-  padding: 20px;
-  background: rgb(34,34,34); /* for IE */
-  background: rgba(34,34,34,0.75);
+.header-search {
+    /* Put this on top of the blurred layer */
+    position: relative;
+    z-index: 100;
+    padding: 20px;
+    background: rgb(34,34,34); /* for IE */
+    background: rgba(34,34,34,0.75);
 }
 
 @media (max-width: 600px ) {
-  #bg { padding: 10px; }
-  #search-bg { background-position: center -10px; }
+    .header-search-bg { background-position: center -10px; }
 }
 
-#search h2, #search h5 { text-align: center; color: #fefefe; font-weight: normal; }
-/*#search h2 { margin-bottom: 50px }*/
-/*#search h5 { margin-top: 70px }*/
+.header-search h2, .header-search h5 { text-align: center; color: #fefefe; font-weight: normal; }
+/*.header-search h2 { margin-bottom: 50px }*/
+/*.header-search h5 { margin-top: 70px }*/
 
 /*
  * Search Bar
@@ -102,16 +105,16 @@ textarea {
  * -----------------------------------------------------------------------
  */
 .cf:before, .cf:after{
-  content:"";
-  display:table;
+    content:"";
+    display:table;
 }
 
 .cf:after{
-  clear:both;
+    clear:both;
 }
 
 .cf{
-  zoom:1;
+    zoom:1;
 }
 
 .form-wrapper {
@@ -150,9 +153,9 @@ textarea {
 }
 
 .form-wrapper input::-webkit-input-placeholder {
-   color: #999;
-   font-weight: normal;
-   font-style: italic;
+    color: #999;
+    font-weight: normal;
+    font-style: italic;
 }
 
 .form-wrapper input:-moz-placeholder {
@@ -225,6 +228,37 @@ textarea {
  * http://startbootstrap.com/template-overviews/creative/
  * ------------------------------------------------------
  */
+header {
+    position: relative;
+    width: 100%;
+    min-height: auto;
+    text-align: center;
+    background-image: url(../images/landing/intro-bg.jpg);
+    background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+header .header-content {
+    position: relative;
+    width: 100%;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+  .header-content {
+    padding: 10% 20% 10% 20%;
+  }
+}
+
+@media(min-width:768px) {
+    header {
+        min-height: 100%;
+    }
+}
+
 hr.creative {
     max-width: 50px;
     /*border-color: #f05f40;*/
@@ -319,11 +353,11 @@ aside {
 
 @media(min-width:768px) {
     .portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-category {
-        font-size: 16px;
+        font-size: 20px;
     }
 
     .portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-name {
-        font-size: 22px;
+        font-size: 13px;
     }
 }
 
