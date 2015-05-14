@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from university.models import University
-from feed import constants
+from picknese import constants
 
 class FlightPickRequest(models.Model):
     """

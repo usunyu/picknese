@@ -1,17 +1,15 @@
 from django.conf.urls import patterns, include, url
-from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
-from django.contrib.auth.models import User
-from rest_framework.authtoken import views
+from django.contrib import admin
+
+from picknese import views
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'picknese.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-
-    # home urls
+    # index urls
     url(r'^$', 'picknese.views.index'),
+    # home urls
+    url(r'^home/(?P<university_id>\d+)/$', views.home),
     # pickup urls
     url(r'^pickup/', include('pickup.urls')),
     # admin usrls

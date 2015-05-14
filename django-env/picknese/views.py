@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
@@ -17,6 +17,15 @@ def index(request):
 		'user_count': user_count,
 	}
 	return render(request, 'index2.html', context)
+
+def home(request, university_id):
+    """
+    Show feed list based on University
+    picknese.views.home => home/1/
+    """
+    university = get_object_or_404(University, id=university_id)
+    context = {'university': university}
+    return render(request, 'home.html', context)
 
 def login(request):
 	context = {}
