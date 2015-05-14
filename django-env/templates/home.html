@@ -7,9 +7,43 @@ Home |
 {% endblock %}
 
 {% block jumbotron %}
+<div style="margin-top: 10px;">
+    <div class="box-wrapper">
+        <div class="box-blur-wrapper" >
+        	{% with 'university/images/'|add:university.shorthand|add:'/wide.jpg' as university_wide_image %}
+            <div
+                class="jumbotron box-shadow box-blur"
+                style="background: url('{% static university_wide_image %}') center; min-height:200px;" >
+            </div>
+            <div
+                class="jumbotron box-shadow box-blur box-blur-overlay"
+                style="background: url('{% static university_wide_image %}') center; min-height:200px;" >
+            </div>
+            {% endwith %}
+        </div>
+    </div>
 
+    <div class="container" style="margin-top: -140px;" >
+        <div class="row">
+            <div class="col-xs-6 col-sm-3 col-md-3 col-lg-2">
+            	{% with 'university/images/'|add:university.shorthand|add:'/logo.jpg' as university_logo_image %}
+                <img
+                    src="{% static university_logo_image %}"
+                    class="img-thumbnail img-responsive img-center box-shadow-light"
+                    style="width: 150px;" />
+                {% endwith %}
+            </div>
+            <div class="col-sm-9 col-md-9 col-lg-9 hidden-xs" style="margin-top: 38px;">
+                <h3 class="color-white text-shadow">{{university.name}}</h3>
+            </div>
+            <div class="col-xs-6 visible-xs" style="margin-top: 38px;">
+                <h6 class="color-white text-shadow">{{university.name}}</h6>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block content %}
-<div>Hello World</div>
+<!-- <div>Hello World</div> -->
 {% endblock %}

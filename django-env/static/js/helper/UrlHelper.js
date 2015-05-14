@@ -1,4 +1,4 @@
-var production = true;
+var production = false;
 
 /*
  * Static, Media, URL helper
@@ -49,11 +49,11 @@ function getMyPickupURL(u_id) {
 }
 
 function getUniversityLogo(u_short) {
-    return getStaticURL() + 'images/campus/' + u_short + "/logo.jpg";
+    return getStaticURL() + 'university/images/' + u_short + "/logo.jpg";
 }
 
 function getUniversityWide(u_short) {
-    return getStaticURL() + 'images/campus/' + u_short + "/wide.jpg";
+    return getStaticURL() + 'university/images/' + u_short + "/wide.jpg";
 }
 
 function getProfileDefaultPic() {
