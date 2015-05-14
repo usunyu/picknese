@@ -1,9 +1,28 @@
 from django.db.models import Q
-from rest_framework import generics, permissions
-from rest_framework.views import APIView
-from rest_framework.renderers import JSONRenderer
-from rest_framework.response import Response
+from rest_framework import generics, permissions, views, renderers, response
 from pickup import serializers, models
+
+class FlightPickRequestList(generics.ListAPIView):
+    """
+    FlightPickRequestList ListAPIView
+    Retrieve FlightPickRequests based on University ID
+    FlightPickRequestList.as_view() => pickup/api/flight_pick_request/1/
+    """
+    serializer_class = serializers.FlightPickRequestListSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    def get_queryset(self):
+        university_id = self.kwargs['university_id']
+        return models.FlightPickRequest.objects.filter(university=university_id)
+
+class FlightPickRequestCreate(generics.CreateAPIView):
+    """
+    FlightPickRequestCreate CreateAPIView
+    Create FlightPickRequest
+    FlightPickRequestCreate.as_view() => pickup/api/flight_pick_request/create/
+    """
+    serializer_class = serializers.FlightPickRequestMutateSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 class PickRequesterList(generics.ListAPIView):
     """
@@ -138,14 +157,14 @@ class PickUpMutate(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = models.PickUp.objects.all()
 
-class MyPickUpRequestCount(APIView):
+class MyPickUpRequestCount(views.APIView):
     """
     A view that returns the count of current user's pick up request count
     based on University
     MyPickUpRequestCount.as_view() => pickup/api/mylist/count/1/
     """
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    # renderer_classes = (JSONRenderer)
+    # renderer_classes = (renderers.JSONRenderer)
 
     def get(self, request, university_id, format=None):
         user = request.user
@@ -158,16 +177,16 @@ class MyPickUpRequestCount(APIView):
             Q(requester=user.id)
         ).count()
         content = {'my_pick_count': pickup_count + request_count}
-        return Response(content)
+        return response.Response(content)
 
-class MyAllPickUpRequestCount(APIView):
+class MyAllPickUpRequestCount(views.APIView):
     """
     A view that returns the count of current user's pick up request count
     based on University
     MyAllPickUpRequestCount.as_view() => pickup/api/mylist/count/all/
     """
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    # renderer_classes = (JSONRenderer)
+    # renderer_classes = (renderers.JSONRenderer)
 
     def get(self, request, format=None):
         user = request.user
@@ -178,4 +197,4 @@ class MyAllPickUpRequestCount(APIView):
             Q(requester=user.id)
         ).count()
         content = {'my_pick_count': pickup_count + request_count}
-        return Response(content)
+        return response.Response(content)
