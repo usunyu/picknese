@@ -6,11 +6,14 @@
 Home |
 {% endblock %}
 
+{% block extra_head %}
+{% endblock %}
+
 {% block jumbotron %}
 <div style="margin-top: 10px;">
     <div class="box-wrapper">
         <div class="box-blur-wrapper" >
-        	{% with 'university/images/'|add:university.shorthand|add:'/wide.jpg' as university_wide_image %}
+            {% with 'university/images/'|add:university.shorthand|add:'/wide.jpg' as university_wide_image %}
             <div
                 class="jumbotron box-shadow box-blur"
                 style="background: url('{% static university_wide_image %}') center; min-height:200px;" >
@@ -26,7 +29,7 @@ Home |
     <div class="container" style="margin-top: -140px;" >
         <div class="row">
             <div class="col-xs-6 col-sm-3 col-md-3 col-lg-2">
-            	{% with 'university/images/'|add:university.shorthand|add:'/logo.jpg' as university_logo_image %}
+                {% with 'university/images/'|add:university.shorthand|add:'/logo.jpg' as university_logo_image %}
                 <img
                     src="{% static university_logo_image %}"
                     class="img-thumbnail img-responsive img-center box-shadow-light"
@@ -45,5 +48,21 @@ Home |
 {% endblock %}
 
 {% block content %}
-<!-- <div>Hello World</div> -->
+<div class="container">
+    <hr />
+    <div class="row">
+        <div
+            class="row col-xs-12 col-sm-12 col-md-12 col-lg-12"
+            style="margin-top: 10px;">
+            <div class="col-xs-12 col-sm-4 col-md-3">
+                <!-- Current User Panel -->
+                {% include 'current_user.html' %}
+            </div>
+            <div id="loading">
+                <div class="spinner" style="margin-top: 150px; margin-bottom: 150px;"></div>
+            </div>
+            <div id="content" ></div>
+        </div>
+    </div>
+</div>
 {% endblock %}

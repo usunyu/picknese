@@ -10,13 +10,13 @@ from forms import PickneseCreationForm
 from userprofile.models import UserProfile
 
 def index(request):
-	universities = University.objects.all()
-	user_count = User.objects.count()
-	context = {
-		'universities': universities,
-		'user_count': user_count,
-	}
-	return render(request, 'index2.html', context)
+    universities = University.objects.all()
+    user_count = User.objects.count()
+    context = {
+        'universities': universities,
+        'user_count': user_count,
+    }
+    return render(request, 'index2.html', context)
 
 def home(request, university_id):
     """
@@ -24,49 +24,52 @@ def home(request, university_id):
     picknese.views.home => home/1/
     """
     university = get_object_or_404(University, id=university_id)
-    context = {'university': university}
+    context = {
+        'current_user': request.user,
+        'university': university,
+    }
     return render(request, 'home.html', context)
 
 def login(request):
-	context = {}
-	context.update(csrf(request))
-	return render(request, 'login.html', context)
+    context = {}
+    context.update(csrf(request))
+    return render(request, 'login.html', context)
 
 def auth_view(request):
-	username = request.POST.get('username', '')
-	password = request.POST.get('password', '')
-	user = auth.authenticate(username=username, password=password)
+    username = request.POST.get('username', '')
+    password = request.POST.get('password', '')
+    user = auth.authenticate(username=username, password=password)
 
-	if user is not None:
-		auth.login(request, user)
-		url = request.META['HTTP_REFERER']
-		# manually parse the next page
-		url_parts = url.split('next=')
-		next_url = '/'
-		if len(url_parts) == 2:
-			next_url = url_parts[1]
-		return HttpResponseRedirect(next_url)
-	else:
-		return HttpResponseRedirect('/accounts/login')
+    if user is not None:
+        auth.login(request, user)
+        url = request.META['HTTP_REFERER']
+        # manually parse the next page
+        url_parts = url.split('next=')
+        next_url = '/'
+        if len(url_parts) == 2:
+            next_url = url_parts[1]
+        return HttpResponseRedirect(next_url)
+    else:
+        return HttpResponseRedirect('/accounts/login')
 
 def logout(request):
-	auth.logout(request)
-	return HttpResponseRedirect('/')
+    auth.logout(request)
+    return HttpResponseRedirect('/')
 
 def signup(request):
-	if request.method == 'POST':
-		form = PickneseCreationForm(request.POST)
-		if form.is_valid():
-			form.save()
-			username = form.cleaned_data.get('username')
-			password = form.cleaned_data.get('password2')
-			user = auth.authenticate(username=username, password=password)
-			# create user profile
-			UserProfile.objects.get_or_create(user=user)
-			auth.login(request, user)
-			return HttpResponseRedirect('/')
+    if request.method == 'POST':
+        form = PickneseCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password2')
+            user = auth.authenticate(username=username, password=password)
+            # create user profile
+            UserProfile.objects.get_or_create(user=user)
+            auth.login(request, user)
+            return HttpResponseRedirect('/')
 
-	context = {}
-	context.update(csrf(request))
-	context['form'] = PickneseCreationForm()
-	return render(request, 'signup.html', context)
+    context = {}
+    context.update(csrf(request))
+    context['form'] = PickneseCreationForm()
+    return render(request, 'signup.html', context)
