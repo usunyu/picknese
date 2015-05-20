@@ -1,17 +1,22 @@
 var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCard',
+    componentDidUpdate: function() {
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    },
     render: function() {
         var feed = this.props.feed;
         var moment_datetime = moment(feed.date_time, "YYYY-MM-DD HH:mm");
 
         return (
-            React.createElement("div", {className: "panel panel-primary fadein-effect"}, 
-                React.createElement("div", {className: "panel-heading"}, 
-                    React.createElement("h3", {
-                        className: "panel-title", 
-                        style: {marginLeft: "71px"}}, 
-                        React.createElement("b", null, feed.requester.first_name, " ", feed.requester.last_name), " is asking for a flight pick up"
-                    )
+            React.createElement("div", {className: "panel panel-primary clearfix fadein-effect"}, 
+                React.createElement("h6", {
+                    style: {marginLeft: '85px'}}, 
+                    React.createElement("a", {href: "#"}, 
+                        React.createElement("b", null, feed.requester.first_name, " ", feed.requester.last_name)
+                    ), " is asking for a ", React.createElement("span", {className: "label label-success"}, "Flight Pick Up")
                 ), 
+                React.createElement("hr", {style: {marginTop: '9px', marginBottom: '0px'}}), 
                 React.createElement("div", {className: "panel-body"}, 
                     React.createElement("div", {className: "media"}, 
                         React.createElement("div", {className: "media-left"}, 
@@ -22,7 +27,7 @@ var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCa
                                         feed.requester.profile.avatar ? 
                                         feed.requester.profile.avatar : getProfileDefaultPic(), 
                                     
-                                    style: {width: '60px', height: '60px', marginTop: '-50px'}})
+                                    style: {width: '60px', height: '60px', marginTop: '-60px'}})
                             )
                         ), 
                         React.createElement("div", {className: "media-body"}, 

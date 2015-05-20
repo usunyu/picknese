@@ -1,17 +1,22 @@
 var FlightPickRequestCard = React.createClass({
+    componentDidUpdate: function() {
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    },
     render: function() {
         var feed = this.props.feed;
         var moment_datetime = moment(feed.date_time, "YYYY-MM-DD HH:mm");
 
         return (
-            <div className="panel panel-primary fadein-effect">
-                <div className="panel-heading" >
-                    <h3
-                        className="panel-title"
-                        style={{marginLeft: "71px"}}>
-                        <b>{feed.requester.first_name} {feed.requester.last_name}</b> is asking for a flight pick up
-                    </h3>
-                </div>
+            <div className="panel panel-primary clearfix fadein-effect">
+                <h6
+                    style={{marginLeft: '85px'}}>
+                    <a href="#">
+                        <b>{feed.requester.first_name} {feed.requester.last_name}</b>
+                    </a> is asking for a <span className="label label-success">Flight Pick Up</span>
+                </h6>
+                <hr style={{marginTop: '9px', marginBottom: '0px'}}/>
                 <div className="panel-body">
                     <div className="media">
                         <div className="media-left">
@@ -22,7 +27,7 @@ var FlightPickRequestCard = React.createClass({
                                         feed.requester.profile.avatar ? 
                                         feed.requester.profile.avatar : getProfileDefaultPic()
                                     }
-                                    style={{width: '60px', height: '60px', marginTop: '-50px'}} />
+                                    style={{width: '60px', height: '60px', marginTop: '-60px'}} />
                             </a>
                         </div>
                         <div className="media-body">
