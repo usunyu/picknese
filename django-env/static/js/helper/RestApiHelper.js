@@ -2,6 +2,10 @@
  * REST API helper
  * --------------------------------------------------
  */
+function getHomeFeedListAPI(u_id) {
+    return "/home/api/" + u_id + "/";
+}
+
 function getCurrentUserAPI() {
     return "/accounts/api/me/";
 }

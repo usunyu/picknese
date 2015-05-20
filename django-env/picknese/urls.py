@@ -3,13 +3,14 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
 
-from picknese import views
+from picknese import views, apis
 
 urlpatterns = patterns('',
     # index urls
     url(r'^$', 'picknese.views.index'),
     # home urls
     url(r'^home/(?P<university_id>\d+)/$', views.home),
+    url(r'^home/api/(?P<university_id>\d+)/$', apis.HomeFeedList.as_view()),
     # pickup urls
     url(r'^pickup/', include('pickup.urls')),
     # admin usrls

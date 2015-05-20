@@ -479,6 +479,13 @@ img::-moz-selection {
     background-size: cover;
 }
 
+.image-circular {
+    border:2px solid white;
+    border-radius: 500px;
+    -webkit-border-radius: 500px;
+    -moz-border-radius: 500px;
+}
+
 .invisible-hr {
     visibility: hidden;
     margin-top: 3px;

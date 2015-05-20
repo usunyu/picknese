@@ -28,7 +28,7 @@ def home(request, university_id):
         'current_user': request.user,
         'university': university,
     }
-    return render(request, 'home.html', context)
+    return render(request, 'picknese/home.html', context)
 
 def login(request):
     context = {}
