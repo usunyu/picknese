@@ -16,7 +16,7 @@ def index(request):
         'universities': universities,
         'user_count': user_count,
     }
-    return render(request, 'index2.html', context)
+    return render(request, 'picknese/index2.html', context)
 
 def home(request, university_id):
     """
@@ -33,7 +33,7 @@ def home(request, university_id):
 def login(request):
     context = {}
     context.update(csrf(request))
-    return render(request, 'login.html', context)
+    return render(request, 'picknese/login.html', context)
 
 def auth_view(request):
     username = request.POST.get('username', '')
@@ -72,4 +72,4 @@ def signup(request):
     context = {}
     context.update(csrf(request))
     context['form'] = PickneseCreationForm()
-    return render(request, 'signup.html', context)
+    return render(request, 'picknese/signup.html', context)
