@@ -66,48 +66,16 @@
                         </li>
                     </ul>
                 </li>
-                <!-- Post Button -->
+                <!-- Post Request Button -->
                 <li>
                     <button
                         type="button"
                         class="btn btn-red"
-                        data-toggle="modal"
-                        data-target="#post-my-request"
-                        style="margin-top: 14px;">
+                        style="margin-top: 14px;"
+                        onclick="location.href = '{% url 'picknese.views.post_request' %}';">
                         Post My Request
                     </button>
                 </li>
-
-                <div class="modal fade" id="post-my-request" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <h4 class="modal-title">POST MY REQUEST</h4>
-                            </div>
-                            <hr style="margin-top: -15px; margin-bottom: -5px;"/>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="form-group">
-                                        <label for="recipient-name" class="control-label">Recipient:</label>
-                                        <input type="text" class="form-control" id="recipient-name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="message-text" class="control-label">Message:</label>
-                                        <textarea class="form-control" id="message-text"></textarea>
-                                    </div>
-                                </form>
-                            </div>
-                            <hr style="margin-top: -5px; margin-bottom: 0px;"/>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-primary">Continue</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </ul>
         </div>
     </div>

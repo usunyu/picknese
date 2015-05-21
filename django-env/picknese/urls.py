@@ -11,6 +11,8 @@ urlpatterns = patterns('',
     # home urls
     url(r'^home/(?P<university_id>\d+)/$', views.home),
     url(r'^home/api/(?P<university_id>\d+)/$', apis.HomeFeedList.as_view()),
+    # post request
+    url(r'^request/new/$', views.post_request),
     # pickup urls
     url(r'^pickup/', include('pickup.urls')),
     # admin usrls

@@ -30,6 +30,9 @@ def home(request, university_id):
     }
     return render(request, 'picknese/home.html', context)
 
+def post_request(request):
+    return render(request, 'picknese/post_request.html', {})
+
 def login(request):
     context = {}
     context.update(csrf(request))
