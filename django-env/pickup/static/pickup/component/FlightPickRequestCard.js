@@ -14,7 +14,7 @@ var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCa
                     style: {marginLeft: '85px'}}, 
                     React.createElement("a", {href: "#"}, 
                         React.createElement("b", null, feed.requester.first_name, " ", feed.requester.last_name)
-                    ), " is asking for a ", React.createElement("span", {className: "label label-success"}, "Flight Pick Up")
+                    ), " is asking for a flight pick up"
                 ), 
                 React.createElement("hr", {style: {marginTop: '9px', marginBottom: '0px'}}), 
                 React.createElement("div", {className: "panel-body"}, 

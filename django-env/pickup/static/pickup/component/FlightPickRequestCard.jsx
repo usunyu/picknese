@@ -14,7 +14,7 @@ var FlightPickRequestCard = React.createClass({
                     style={{marginLeft: '85px'}}>
                     <a href="#">
                         <b>{feed.requester.first_name} {feed.requester.last_name}</b>
-                    </a> is asking for a <span className="label label-success">Flight Pick Up</span>
+                    </a> is asking for a flight pick up
                 </h6>
                 <hr style={{marginTop: '9px', marginBottom: '0px'}}/>
                 <div className="panel-body">
