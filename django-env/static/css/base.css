@@ -450,25 +450,6 @@ img::-moz-selection {
     text-shadow: 0 0 0.2em black;
 }
 
-.btn-red {
-    color: white;
-    background: #d83c3c;
-}
-
-.btn-red:hover,
-.btn-red:focus,
-.btn-red.focus,
-.btn-red:active,
-.btn-red.active,
-.open > .dropdown-toggle.btn-red  {
-    color: white;
-    background: #e54040;
-}
-
-.btn-red.disabled {
-    color: white;
-}
-
 .color-white {
     color: white;
 }

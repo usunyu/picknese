@@ -67,15 +67,27 @@
                     </ul>
                 </li>
                 <!-- Post Request Button -->
+                {% if university %}
                 <li>
                     <button
                         type="button"
                         class="btn btn-red"
                         style="margin-top: 14px;"
-                        onclick="location.href = '{% url 'picknese.views.post_request' %}';">
+                        onclick="location.href = '{% url 'picknese.views.post_request' university.id %}';">
                         Post My Request
                     </button>
                 </li>
+                {% else %}
+                <li>
+                    <button
+                        type="button"
+                        class="btn btn-red"
+                        style="margin-top: 14px;"
+                        onclick="location.href = '{% url 'picknese.views.post_request' 0 %}';">
+                        Post My Request
+                    </button>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </div>

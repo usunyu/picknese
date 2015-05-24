@@ -27,7 +27,7 @@ var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCa
                                         feed.requester.profile.avatar ? 
                                         feed.requester.profile.avatar : getProfileDefaultPic(), 
                                     
-                                    style: {width: '60px', height: '60px', marginTop: '-60px'}})
+                                    style: {width: '60px', height: '60px', marginTop: '-60px', marginLeft: '-7px'}})
                             )
                         ), 
                         React.createElement("div", {className: "media-body"}, 

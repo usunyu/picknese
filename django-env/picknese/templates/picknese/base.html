@@ -31,6 +31,8 @@
         <script type="text/javascript" src="{% static 'js/jquery-ui/jquery-ui.min.js' %}"></script>
         <!-- http://mynameismatthieu.com/WOW/docs.html -->
         <script type="text/javascript" src="{% static 'js/wow/wow.min.js' %}"></script>
+        <!-- http://brianreavis.github.io/selectize.js/ -->
+        <script type="text/javascript" src="{% static 'js/selectize/standalone/selectize.min.js' %}"></script>
         <!-- Initial Loading -->
         <script type="text/javascript" src="{% static 'js/initial.js' %}"></script>
         <!-- Provide CSRF protection -->
@@ -41,6 +43,8 @@
         <script type="text/javascript" src="{% static 'js/helper/UrlHelper.js' %}"></script>
         <!-- REST API Helper -->
         <script type="text/javascript" src="{% static 'js/helper/RestApiHelper.js' %}"></script>
+        <!-- Constant -->
+        <script type="text/javascript" src="{% static 'picknese/constant.js' %}"></script>
         <!-- <script type="text/javascript" src="{% static 'js/react/react.min.js' %}"></script> -->
         <script type="text/javascript" src="{% static 'js/react/react.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/react/JSXTransformer.js' %}"></script>
@@ -82,8 +86,6 @@
         <script type="text/javascript" src="{% static 'js/Jcrop/jquery.Jcrop.min.js' %}"></script>
         <!-- Flight Status API Helper -->
         <script type="text/javascript" src="{% static 'js/helper/FlightStatusAPIHelper.js' %}"></script>
-        <!-- http://brianreavis.github.io/selectize.js/ -->
-        <script type="text/javascript" src="{% static 'js/selectize/standalone/selectize.min.js' %}"></script>
         {% block extra_js %}
         {% endblock %}
     </body>

@@ -3,6 +3,7 @@ from react import jsx
 
 sub_paths = [
     '/picknese/static/picknese/home.jsx',
+    '/picknese/static/picknese/post_request.jsx',
     '/pickup/static/pickup/component/FlightPickRequestCard.jsx',
     '/static/component/JumbotronPanel.jsx',
 ]

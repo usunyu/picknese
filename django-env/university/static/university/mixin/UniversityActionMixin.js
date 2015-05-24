@@ -1,5 +1,7 @@
 /*
- * Parameters: @UniversityActionMinxinLoadUniversitySimpleList => load all university simple info form server
+ * React Parameters
+ * --------------------------------------------------
+ * @universityActionMinxinLoadSimpleList
  */
 var UniversityActionMixin = {
     loadUniversitySimpleListFromServer: function() {
@@ -25,7 +27,7 @@ var UniversityActionMixin = {
         };
     },
     componentDidMount: function() {
-        if (this.props.universityActionMinxinLoadUniversitySimpleList) {
+        if (this.props.universityActionMinxinLoadSimpleList) {
             this.loadUniversitySimpleListFromServer();
         }
     },

@@ -30,8 +30,16 @@ def home(request, university_id):
     }
     return render(request, 'picknese/home.html', context)
 
-def post_request(request):
-    return render(request, 'picknese/post_request.html', {})
+def post_request(request, university_id):
+    """
+    Post new request
+    picknese.views.post_request => home/1/new/
+    """
+    context = {
+        'current_user': request.user,
+        'university_id': university_id,
+    }
+    return render(request, 'picknese/post_request.html', context)
 
 def login(request):
     context = {}

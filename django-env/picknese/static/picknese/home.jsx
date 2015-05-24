@@ -2,6 +2,7 @@
  * Template Parameters
  * --------------------------------------------------
  * @current_user
+ * @university
  */
 
 var FlightPickRequestList = React.createClass({
@@ -80,12 +81,6 @@ var HomeFeedList = React.createClass({
         );
     }
 });
-
-var PICK_REQUEST                = 1
-var PICK_UP                     = 2
-var FLIGHT_PICK_REQUEST         = 3
-var FLIGHT_PICK_UP              = 4
-var CARPOOL_POST                = 5
 
 var HomePanel = React.createClass({
     mixins: [HomeFeedActionMixin],
