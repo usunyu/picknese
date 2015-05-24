@@ -67,12 +67,25 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                 elements[i].style.display = "";
             }
         });
+        // Prepare google map api
+        var pickRequestStartInput = document.getElementById("pick-request-start-input");
+        var pickRequestDestInput = document.getElementById("pick-request-dest-input");
+        var mapOptions = {componentRestrictions: {country: 'us'}};
+        new google.maps.places.Autocomplete(pickRequestStartInput, mapOptions);
+        new google.maps.places.Autocomplete(pickRequestDestInput, mapOptions);
+        // Prepare date selector
+        var nowDate = new Date();
+        var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
+        $('#flight-pick-request-date-input').datetimepicker({
+            format: 'MM/DD/YYYY',
+            minDate: today,
+        });
     },
     render: function() {
         return (
             React.createElement("form", {className: "form-horizontal"}, 
                 React.createElement("div", {className: "form-group"}, 
-                    React.createElement("label", {className: "col-sm-2 control-label"}, "I Want To"), 
+                    React.createElement("label", {className: "col-sm-2 control-label"}, "I want to"), 
                     React.createElement("div", {className: "btn-group col-sm-10", 'data-toggle': "buttons"}, 
                         React.createElement("label", {className: "btn btn-white active"}, 
                             React.createElement("input", {
@@ -94,29 +107,53 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                     )
                 ), 
                 React.createElement("div", {className: "form-group"}, 
-                    React.createElement("label", {className: "col-sm-2 control-label"}, "I Study At"), 
+                    React.createElement("label", {className: "col-sm-2 control-label"}, "I study at"), 
                     React.createElement("select", {className: "select-universities col-sm-10"})
                 ), 
                 React.createElement("div", {className: "form-group flight-pick-request-input", style: {display: 'none'}}, 
-                    React.createElement("label", {className: "col-sm-2 control-label"}, "I Will Take Flight"), 
+                    React.createElement("label", {className: "col-sm-2 control-label"}, "I'll take the flight"), 
                     React.createElement("div", {className: "col-sm-10"}, 
                         React.createElement("input", {type: "text", className: "form-control", placeholder: "What's your flight number?"})
                     )
                 ), 
+                React.createElement("div", {className: "form-group flight-pick-request-input", style: {display: 'none'}}, 
+                    React.createElement("label", {className: "col-sm-2 control-label"}, "I have baggages"), 
+                    React.createElement("div", {className: "col-sm-4"}, 
+                        React.createElement("input", {type: "text", className: "form-control", placeholder: "How many bags do you have?"})
+                    ), 
+                    React.createElement("label", {className: "col-sm-2 control-label"}, "I'll arrive at"), 
+                    React.createElement("div", {className: "col-sm-4"}, 
+                        React.createElement("div", {className: "input-group date", id: "flight-pick-request-date-input"}, 
+                            React.createElement("input", {
+                                type: "text", 
+                                className: "form-control", 
+                                placeholder: "What's your arrival date?"}), 
+                            React.createElement("span", {className: "input-group-addon"}, React.createElement("span", {className: "glyphicon glyphicon-calendar"}))
+                        )
+                    )
+                ), 
                 React.createElement("div", {className: "form-group pick-request-input"}, 
-                    React.createElement("label", {className: "col-sm-2 control-label"}, "I Will Go From"), 
+                    React.createElement("label", {className: "col-sm-2 control-label"}, "I need be picked at"), 
                     React.createElement("div", {className: "col-sm-10"}, 
-                        React.createElement("input", {type: "text", className: "form-control", placeholder: "Where you want to be picked up?"})
+                        React.createElement("input", {
+                            id: "pick-request-start-input", 
+                            type: "text", 
+                            className: "form-control", 
+                            placeholder: "Where you want to be picked up?"})
                     )
                 ), 
                 React.createElement("div", {className: "form-group"}, 
-                    React.createElement("label", {className: "col-sm-2 control-label"}, "I Want To Go To"), 
+                    React.createElement("label", {className: "col-sm-2 control-label"}, "I want to go to"), 
                     React.createElement("div", {className: "col-sm-10"}, 
-                        React.createElement("input", {type: "text", className: "form-control", placeholder: "Where you want to go?"})
+                        React.createElement("input", {
+                            id: "pick-request-dest-input", 
+                            type: "text", 
+                            className: "form-control", 
+                            placeholder: "Where you want to go?"})
                     )
                 ), 
                 React.createElement("div", {className: "form-group"}, 
-                    React.createElement("label", {className: "col-sm-2 control-label"}, "I Can Pay Tip"), 
+                    React.createElement("label", {className: "col-sm-2 control-label"}, "I can pay tip"), 
                     React.createElement("div", {className: "col-sm-5"}, 
                         React.createElement("input", {type: "text", className: "form-control", placeholder: "Remunerated is good :)"})
                     )

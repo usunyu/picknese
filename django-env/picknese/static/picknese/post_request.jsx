@@ -67,12 +67,25 @@ var PostRequestForm = React.createClass({
                 elements[i].style.display = "";
             }
         });
+        // Prepare google map api
+        var pickRequestStartInput = document.getElementById("pick-request-start-input");
+        var pickRequestDestInput = document.getElementById("pick-request-dest-input");
+        var mapOptions = {componentRestrictions: {country: 'us'}};
+        new google.maps.places.Autocomplete(pickRequestStartInput, mapOptions);
+        new google.maps.places.Autocomplete(pickRequestDestInput, mapOptions);
+        // Prepare date selector
+        var nowDate = new Date();
+        var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
+        $('#flight-pick-request-date-input').datetimepicker({
+            format: 'MM/DD/YYYY',
+            minDate: today,
+        });
     },
     render: function() {
         return (
             <form className="form-horizontal">
                 <div className="form-group">
-                    <label className="col-sm-2 control-label">I Want To</label>
+                    <label className="col-sm-2 control-label">I want to</label>
                     <div className="btn-group col-sm-10" data-toggle="buttons">
                         <label className="btn btn-white active">
                             <input
@@ -94,29 +107,53 @@ var PostRequestForm = React.createClass({
                     </div>
                 </div>
                 <div className="form-group">
-                    <label className="col-sm-2 control-label">I Study At</label>
+                    <label className="col-sm-2 control-label">I study at</label>
                     <select className="select-universities col-sm-10"></select>
                 </div>
                 <div className="form-group flight-pick-request-input" style={{display: 'none'}}>
-                    <label className="col-sm-2 control-label">I Will Take Flight</label>
+                    <label className="col-sm-2 control-label">I'll take the flight</label>
                     <div className="col-sm-10">
                         <input type="text" className="form-control" placeholder="What's your flight number?" />
                     </div>
                 </div>
+                <div className="form-group flight-pick-request-input" style={{display: 'none'}}>
+                    <label className="col-sm-2 control-label">I have baggages</label>
+                    <div className="col-sm-4">
+                        <input type="text" className="form-control" placeholder="How many bags do you have?" />
+                    </div>
+                    <label className="col-sm-2 control-label">I'll arrive at</label>
+                    <div className="col-sm-4">
+                        <div className='input-group date' id='flight-pick-request-date-input'>
+                            <input
+                                type='text'
+                                className="form-control"
+                                placeholder="What's your arrival date?" />
+                            <span className="input-group-addon"><span className="glyphicon glyphicon-calendar"></span></span>
+                        </div>
+                    </div>
+                </div>
                 <div className="form-group pick-request-input">
-                    <label className="col-sm-2 control-label">I Will Go From</label>
+                    <label className="col-sm-2 control-label">I need be picked at</label>
                     <div className="col-sm-10">
-                        <input type="text" className="form-control" placeholder="Where you want to be picked up?" />
+                        <input
+                            id="pick-request-start-input"
+                            type="text"
+                            className="form-control"
+                            placeholder="Where you want to be picked up?" />
                     </div>
                 </div>
                 <div className="form-group">
-                    <label className="col-sm-2 control-label">I Want To Go To</label>
+                    <label className="col-sm-2 control-label">I want to go to</label>
                     <div className="col-sm-10">
-                        <input type="text" className="form-control" placeholder="Where you want to go?" />
+                        <input
+                            id="pick-request-dest-input"
+                            type="text"
+                            className="form-control"
+                            placeholder="Where you want to go?" />
                     </div>
                 </div>
                 <div className="form-group">
-                    <label className="col-sm-2 control-label">I Can Pay Tip</label>
+                    <label className="col-sm-2 control-label">I can pay tip</label>
                     <div className="col-sm-5">
                         <input type="text" className="form-control" placeholder="Remunerated is good :)" />
                     </div>
