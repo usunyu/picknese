@@ -23,14 +23,27 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
             }
         }
         // Bind university type hint
-        $('.select-universities').selectize({
+        $('#pick-request-university-select').selectize({
             items : selected,
             maxItems: 1,
             valueField: 'id',
             labelField: 'title',
             searchField: 'search',
             options: universities,
-            create: false
+            create: false,
+            onBlur: function() {
+                // Hack! Selectize not work well with Bootstrap
+                var element = $('#pick-request-university-select');
+                var value = element.val();
+                var borderDiv = element.parent().children()[1].children[0];
+                if (!value) {
+                    element.parent().parent().addClass("has-error");
+                    borderDiv.style.borderColor = "#a94442";
+                } else {
+                    element.parent().parent().removeClass("has-error");
+                    borderDiv.style.borderColor = "";
+                }
+            },
         });
         // Hack! Have to bind change event like this way, since
         // Bootstrap data-toggle="buttons" is conflict with onChange
@@ -76,10 +89,90 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
         // Prepare date selector
         var nowDate = new Date();
         var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
-        $('#flight-pick-request-date-input').datetimepicker({
+        $('#flight-pick-request-date-div').datetimepicker({
             format: 'MM/DD/YYYY',
             minDate: today,
         });
+    },
+    onInputFocusLose: function(event) {
+        var targetID = event.target.id;
+        var element = $('#' + targetID);
+        // Check input error
+        var inputError = false;
+        switch(targetID) {
+            case "flight-pick-request-flight-input":
+                var value = this.refs.flightPickRequestFlightInput.getDOMNode().value.trim();
+                if (!value) {
+                    inputError = true;
+                }
+                break;
+            case "pick-request-baggages-input":
+                var value = this.refs.pickRequestBaggagesInput.getDOMNode().value.trim();
+                if (!value || !isInt(value)) {
+                    inputError = true;
+                }
+                break;
+            case "flight-pick-request-date-input":
+                var value = this.refs.flightPickRequestDateInput.getDOMNode().value.trim();
+                if (!value) {
+                    inputError = true;
+                }
+            case "pick-request-dest-input":
+                var value = this.refs.pickRequestDestInput.getDOMNode().value.trim();
+                if (!value) {
+                    inputError = true;
+                }
+            case "pick-request-tip-input":
+                var value = this.refs.pickRequestTipInput.getDOMNode().value.trim();
+                if (!value || !isInt(value)) {
+                    inputError = true;
+                }
+            default:
+                break;
+        }
+        if (inputError) {
+            element.parent().parent().addClass("has-error");
+        } else {
+            element.parent().parent().removeClass("has-error");
+        }
+        // Check if can enable submit button
+        var enableSubmit = true;
+        switch(CURRENT_REQUEST) {
+            case PICK_REQUEST:
+                break;
+            case FLIGHT_PICK_REQUEST:
+                var values = [];
+                values.push(this.refs.pickRequestUniversitySelect.getDOMNode().value.trim());
+                values.push(this.refs.flightPickRequestFlightInput.getDOMNode().value.trim());
+                values.push(this.refs.pickRequestBaggagesInput.getDOMNode().value.trim());
+                values.push(this.refs.flightPickRequestDateInput.getDOMNode().value.trim());
+                values.push(this.refs.pickRequestDestInput.getDOMNode().value.trim());
+                values.push(this.refs.pickRequestTipInput.getDOMNode().value.trim());
+                for (var i = 0; i < values.length && enableSubmit; i++) {
+                    var value = values[i];
+                    if (!value) {
+                        enableSubmit = false;
+                    }
+                }
+                var intValues = [];
+                intValues.push(this.refs.pickRequestBaggagesInput.getDOMNode().value.trim());
+                intValues.push(this.refs.pickRequestTipInput.getDOMNode().value.trim());
+                for (var i = 0; i < intValues.length && enableSubmit; i++) {
+                    var value = intValues[i];
+                    if (!isInt(value)) {
+                        enableSubmit = false;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+        var submitButton = document.getElementById("post-request-submit-button");
+        if (enableSubmit) {
+            submitButton.disabled = "";
+        } else {
+            submitButton.disabled = "disabled";
+        }
     },
     render: function() {
         return (
@@ -108,25 +201,43 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                 ), 
                 React.createElement("div", {className: "form-group"}, 
                     React.createElement("label", {className: "col-sm-2 control-label"}, "I study at"), 
-                    React.createElement("select", {className: "select-universities col-sm-10"})
+                    React.createElement("div", {className: "col-sm-10"}, 
+                        React.createElement("select", {id: "pick-request-university-select", ref: "pickRequestUniversitySelect"})
+                    )
                 ), 
                 React.createElement("div", {className: "form-group flight-pick-request-input", style: {display: 'none'}}, 
-                    React.createElement("label", {className: "col-sm-2 control-label"}, "I'll take the flight"), 
+                    React.createElement("label", {className: "col-sm-2 control-label"}, "I will take the flight"), 
                     React.createElement("div", {className: "col-sm-10"}, 
-                        React.createElement("input", {type: "text", className: "form-control", placeholder: "What's your flight number?"})
+                        React.createElement("input", {
+                            id: "flight-pick-request-flight-input", 
+                            ref: "flightPickRequestFlightInput", 
+                            type: "text", 
+                            className: "form-control", 
+                            onBlur: this.onInputFocusLose, 
+                            placeholder: "What's your flight number?"})
                     )
                 ), 
                 React.createElement("div", {className: "form-group flight-pick-request-input", style: {display: 'none'}}, 
                     React.createElement("label", {className: "col-sm-2 control-label"}, "I have baggages"), 
                     React.createElement("div", {className: "col-sm-4"}, 
-                        React.createElement("input", {type: "text", className: "form-control", placeholder: "How many bags do you have?"})
+                        React.createElement("input", {
+                            id: "pick-request-baggages-input", 
+                            ref: "pickRequestBaggagesInput", 
+                            type: "number", 
+                            className: "form-control", 
+                            defaultValue: 1, 
+                            onBlur: this.onInputFocusLose, 
+                            placeholder: "How many bags do you have?"})
                     ), 
-                    React.createElement("label", {className: "col-sm-2 control-label"}, "I'll arrive at"), 
+                    React.createElement("label", {className: "col-sm-2 control-label"}, "I will arrive at"), 
                     React.createElement("div", {className: "col-sm-4"}, 
-                        React.createElement("div", {className: "input-group date", id: "flight-pick-request-date-input"}, 
+                        React.createElement("div", {className: "input-group date", id: "flight-pick-request-date-div"}, 
                             React.createElement("input", {
+                                id: "flight-pick-request-date-input", 
+                                ref: "flightPickRequestDateInput", 
                                 type: "text", 
                                 className: "form-control", 
+                                onBlur: this.onInputFocusLose, 
                                 placeholder: "What's your arrival date?"}), 
                             React.createElement("span", {className: "input-group-addon"}, React.createElement("span", {className: "glyphicon glyphicon-calendar"}))
                         )
@@ -147,20 +258,35 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                     React.createElement("div", {className: "col-sm-10"}, 
                         React.createElement("input", {
                             id: "pick-request-dest-input", 
+                            ref: "pickRequestDestInput", 
                             type: "text", 
                             className: "form-control", 
+                            onBlur: this.onInputFocusLose, 
                             placeholder: "Where you want to go?"})
                     )
                 ), 
                 React.createElement("div", {className: "form-group"}, 
                     React.createElement("label", {className: "col-sm-2 control-label"}, "I can pay tip"), 
-                    React.createElement("div", {className: "col-sm-5"}, 
-                        React.createElement("input", {type: "text", className: "form-control", placeholder: "Remunerated is good :)"})
+                    React.createElement("div", {className: "col-sm-4"}, 
+                        React.createElement("input", {
+                            id: "pick-request-tip-input", 
+                            ref: "pickRequestTipInput", 
+                            type: "number", 
+                            defaultValue: 20, 
+                            className: "form-control", 
+                            onBlur: this.onInputFocusLose, 
+                            placeholder: "Remunerated is good :)"})
                     )
                 ), 
                 React.createElement("div", {className: "form-group"}, 
                     React.createElement("div", {className: "col-sm-offset-2 col-sm-10"}, 
-                        React.createElement("button", {type: "submit", className: "btn btn-primary"}, "Continue")
+                        React.createElement("button", {
+                            id: "post-request-submit-button", 
+                            type: "submit", 
+                            disabled: "disabled", 
+                            className: "btn btn-primary"}, 
+                            "Continue"
+                        )
                     )
                 )
             )
