@@ -35,6 +35,20 @@ function splitNumberCharInString(str) {
     return result;
 }
 
+// return diff in arr1 but not in arr2
+function arrayDiff(arr1, arr2) {
+    var cache = [], diff = [];
+    for (var i = 0; i < arr2.length; i++) {
+        cache[arr2[i]] = true;
+    }
+    for (var i = 0; i < arr1.length; i++) {
+        if (!cache[arr1[i]]) {
+            diff.push(arr1[i]);
+        }
+    }
+    return diff;
+}
+
 /*
  * Alert Message
  * --------------------------------------------------
@@ -84,10 +98,6 @@ function hidePickRequestForm() {
  */
 function dismissLoadingEffect() {
     $("#loading").remove();
-}
-
-function dismissFlightRequestLoadingEffect() {
-    $('#flight1-post-button').button('reset');
 }
 
 /*
