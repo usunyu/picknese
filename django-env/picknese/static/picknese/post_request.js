@@ -100,12 +100,9 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
             CURRENT_REQUEST = parseInt($(this).attr('id'));
             var needInputs = RequestTypeInputMap.get(CURRENT_REQUEST);
 
-
-
             var showInputs = arrayDiff(needInputs, currentInputs);
             var hideInputs = arrayDiff(currentInputs, needInputs);
-            console.log('showInputs: ' + showInputs);
-            console.log('hideInputs: ' + hideInputs);
+
             for (var i = 0; i < showInputs.length; i++) {
                 var element = $("#" + showInputs[i]);
                 element.parent().parent().addClass("fadein-effect");
@@ -116,38 +113,6 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                 element.parent().parent().addClass("fadein-effect");
                 element.parent().parent().hide();
             }
-
-            // var elements = [];
-            // // TODO: do this based on map
-            // switch(CURRENT_REQUEST) {
-            //     case PICK_REQUEST:
-            //         elements = document.getElementsByClassName("pick-request-input");
-            //         break;
-            //     case FLIGHT_PICK_REQUEST:
-            //         elements = document.getElementsByClassName("flight-pick-request-input");
-            //         break;
-            //     default:
-            //         break;
-            // }
-            // for (var i = 0; i < elements.length; ++i) {
-            //     elements[i].style.display = "none";
-            // }
-            // CURRENT_REQUEST = parseInt($(this).attr('id'));
-            // // show the form according request type
-            // switch(CURRENT_REQUEST) {
-            //     case PICK_REQUEST:
-            //         elements = document.getElementsByClassName("pick-request-input");
-            //         break;
-            //     case FLIGHT_PICK_REQUEST:
-            //         elements = document.getElementsByClassName("flight-pick-request-input");
-            //         break;
-            //     default:
-            //         break;
-            // }
-            // for (var i = 0; i < elements.length; ++i) {
-            //     elements[i].className = elements[i].className + " fadein-effect";
-            //     elements[i].style.display = "";
-            // }
             enablePostRequestSubmit();
         });
         // Prepare google map api
@@ -192,12 +157,12 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
             case PICK_REQUEST:
                 break;
             case FLIGHT_PICK_REQUEST:
-                var university  = this.refs.pickRequestUniversitySelect.getDOMNode().value.trim();
-                var flight      = this.refs.flightPickRequestFlightInput.getDOMNode().value.trim();
-                var baggages    = this.refs.pickRequestBaggagesInput.getDOMNode().value.trim();
-                var date        = this.refs.flightPickRequestDateInput.getDOMNode().value.trim();
-                var dest        = this.refs.pickRequestDestInput.getDOMNode().value.trim();
-                var tip         = this.refs.pickRequestTipInput.getDOMNode().value.trim();
+                var university  = $("#pick-request-university-select").val().trim();
+                var flight      = $("#flight-pick-request-flight-input").val().trim();
+                var baggages    = $("#pick-request-baggages-input").val().trim();
+                var date        = $("#flight-pick-request-date-input").val().trim();
+                var dest        = $("#pick-request-dest-input").val().trim();
+                var tip         = $("#pick-request-tip-input").val().trim();
                 // month is 0 indexed, http://momentjs.com/docs/#/get-set/month/
                 var momentDate  = moment(date, 'MM/DD/YYYY');
                 // load scheduled flight
@@ -273,16 +238,15 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                 React.createElement("div", {className: "form-group"}, 
                     React.createElement("label", {className: "col-sm-2 control-label"}, "I study at"), 
                     React.createElement("div", {className: "col-sm-10"}, 
-                        React.createElement("select", {id: "pick-request-university-select", ref: "pickRequestUniversitySelect"})
+                        React.createElement("select", {id: "pick-request-university-select"})
                     )
                 ), 
                 /* Flight Number Input */
-                React.createElement("div", {className: "form-group flight-pick-request-input", style: {display: 'none'}}, 
+                React.createElement("div", {className: "form-group", style: {display: 'none'}}, 
                     React.createElement("label", {className: "col-sm-2 control-label"}, "I will take the flight"), 
                     React.createElement("div", {className: "col-sm-10"}, 
                         React.createElement("input", {
                             id: "flight-pick-request-flight-input", 
-                            ref: "flightPickRequestFlightInput", 
                             type: "text", 
                             className: "form-control", 
                             onBlur: this.onInputFocusLose, 
@@ -290,12 +254,11 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                     )
                 ), 
                 /* Flight Baggages & Date Input */
-                React.createElement("div", {className: "form-group flight-pick-request-input", style: {display: 'none'}}, 
+                React.createElement("div", {className: "form-group", style: {display: 'none'}}, 
                     React.createElement("label", {className: "col-sm-2 control-label"}, "I have baggages"), 
                     React.createElement("div", {className: "col-sm-4"}, 
                         React.createElement("input", {
                             id: "pick-request-baggages-input", 
-                            ref: "pickRequestBaggagesInput", 
                             type: "number", 
                             className: "form-control", 
                             defaultValue: 1, 
@@ -307,7 +270,6 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                         React.createElement("div", {className: "input-group date", id: "flight-pick-request-date-div"}, 
                             React.createElement("input", {
                                 id: "flight-pick-request-date-input", 
-                                ref: "flightPickRequestDateInput", 
                                 type: "text", 
                                 className: "form-control", 
                                 onBlur: this.onInputFocusLose, 
@@ -316,11 +278,11 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                         )
                     )
                 ), 
-                React.createElement("div", {className: "form-group flight-pick-request-input", style: {display: 'none'}}
+                React.createElement("div", {className: "form-group", style: {display: 'none'}}
 
                 ), 
                 /* Pick Location Input */
-                React.createElement("div", {className: "form-group pick-request-input"}, 
+                React.createElement("div", {className: "form-group"}, 
                     React.createElement("label", {className: "col-sm-2 control-label"}, "I need be picked at"), 
                     React.createElement("div", {className: "col-sm-10"}, 
                         React.createElement("input", {
@@ -336,7 +298,6 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                     React.createElement("div", {className: "col-sm-10"}, 
                         React.createElement("input", {
                             id: "pick-request-dest-input", 
-                            ref: "pickRequestDestInput", 
                             type: "text", 
                             className: "form-control", 
                             onBlur: this.onInputFocusLose, 
@@ -349,7 +310,6 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                     React.createElement("div", {className: "col-sm-4"}, 
                         React.createElement("input", {
                             id: "pick-request-tip-input", 
-                            ref: "pickRequestTipInput", 
                             type: "number", 
                             defaultValue: 20, 
                             className: "form-control", 
@@ -373,13 +333,24 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                 React.createElement("div", {className: "modal fade", id: "flight-pick-request-error-modal", tabIndex: "-1", role: "dialog", 'aria-hidden': "true"}, 
                     React.createElement("div", {className: "modal-dialog"}, 
                         React.createElement("div", {className: "modal-content"}, 
-                            React.createElement("div", {className: "modal-header"}, 
-                                React.createElement("button", {type: "button", className: "close", 'data-dismiss': "modal", 'aria-label': "Close"}, React.createElement("span", {'aria-hidden': "true"}, "×")), 
-                                React.createElement("h4", {className: "modal-title", id: "flight-pick-request-error-modal-title"}, "Cannot find flight schedule")
+                            React.createElement("div", {className: "modal-header", style: {backgroundColor: "#ff9800"}}, 
+                                React.createElement("button", {
+                                    type: "button", 
+                                    className: "close", 
+                                    'data-dismiss': "modal", 
+                                    style: {color: "white"}, 
+                                    'aria-label': "Close"}, 
+                                    React.createElement("span", {'aria-hidden': "true"}, "×")
+                                ), 
+                                React.createElement("h5", {
+                                    id: "flight-pick-request-error-modal-title", 
+                                    className: "modal-title", 
+                                    style: {color: "white"}}, 
+                                    "Cannot find flight schedule"
+                                )
                             ), 
-                            React.createElement("hr", {style: {marginTop: "-10px"}}), 
                             React.createElement("div", {className: "modal-body"}, 
-                                React.createElement("p", null, "Sorry, we cannot find any flight schedule based on your input, please try again and input the correct Date & Flight Number."), 
+                                React.createElement("p", null, "Sorry! we cannot find any flight schedule based on your input, please try again and make sure input the correct Date & Flight Number."), 
                                 React.createElement("p", null, "For the date, please input the arrival date as format MM/DD/YYYY."), 
                                 React.createElement("p", null, "For the flight number, please input as format CSN327, for the" + ' ' + 
                                     " ", React.createElement("a", {href: "http://en.wikipedia.org/wiki/List_of_airline_codes", target: "_blank"}, "airline code reference"), "."

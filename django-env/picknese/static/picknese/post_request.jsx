@@ -157,12 +157,12 @@ var PostRequestForm = React.createClass({
             case PICK_REQUEST:
                 break;
             case FLIGHT_PICK_REQUEST:
-                var university  = this.refs.pickRequestUniversitySelect.getDOMNode().value.trim();
-                var flight      = this.refs.flightPickRequestFlightInput.getDOMNode().value.trim();
-                var baggages    = this.refs.pickRequestBaggagesInput.getDOMNode().value.trim();
-                var date        = this.refs.flightPickRequestDateInput.getDOMNode().value.trim();
-                var dest        = this.refs.pickRequestDestInput.getDOMNode().value.trim();
-                var tip         = this.refs.pickRequestTipInput.getDOMNode().value.trim();
+                var university  = $("#pick-request-university-select").val().trim();
+                var flight      = $("#flight-pick-request-flight-input").val().trim();
+                var baggages    = $("#pick-request-baggages-input").val().trim();
+                var date        = $("#flight-pick-request-date-input").val().trim();
+                var dest        = $("#pick-request-dest-input").val().trim();
+                var tip         = $("#pick-request-tip-input").val().trim();
                 // month is 0 indexed, http://momentjs.com/docs/#/get-set/month/
                 var momentDate  = moment(date, 'MM/DD/YYYY');
                 // load scheduled flight
@@ -238,7 +238,7 @@ var PostRequestForm = React.createClass({
                 <div className="form-group">
                     <label className="col-sm-2 control-label">I study at</label>
                     <div className="col-sm-10">
-                        <select id="pick-request-university-select" ref="pickRequestUniversitySelect" />
+                        <select id="pick-request-university-select" />
                     </div>
                 </div>
                 {/* Flight Number Input */}
@@ -247,7 +247,6 @@ var PostRequestForm = React.createClass({
                     <div className="col-sm-10">
                         <input
                             id="flight-pick-request-flight-input"
-                            ref="flightPickRequestFlightInput"
                             type="text"
                             className="form-control"
                             onBlur={this.onInputFocusLose}
@@ -260,7 +259,6 @@ var PostRequestForm = React.createClass({
                     <div className="col-sm-4">
                         <input 
                             id="pick-request-baggages-input"
-                            ref="pickRequestBaggagesInput"
                             type="number"
                             className="form-control"
                             defaultValue={1}
@@ -272,7 +270,6 @@ var PostRequestForm = React.createClass({
                         <div className='input-group date' id='flight-pick-request-date-div'>
                             <input
                                 id="flight-pick-request-date-input"
-                                ref="flightPickRequestDateInput"
                                 type='text'
                                 className="form-control"
                                 onBlur={this.onInputFocusLose}
@@ -301,7 +298,6 @@ var PostRequestForm = React.createClass({
                     <div className="col-sm-10">
                         <input
                             id="pick-request-dest-input"
-                            ref="pickRequestDestInput"
                             type="text"
                             className="form-control"
                             onBlur={this.onInputFocusLose}
@@ -314,7 +310,6 @@ var PostRequestForm = React.createClass({
                     <div className="col-sm-4">
                         <input
                             id="pick-request-tip-input"
-                            ref="pickRequestTipInput"
                             type="number"
                             defaultValue={20}
                             className="form-control"
@@ -338,13 +333,24 @@ var PostRequestForm = React.createClass({
                 <div className="modal fade" id="flight-pick-request-error-modal" tabIndex="-1" role="dialog" aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
-                            <div className="modal-header">
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 className="modal-title" id="flight-pick-request-error-modal-title">Cannot find flight schedule</h4>
+                            <div className="modal-header" style={{backgroundColor: "#ff9800"}}>
+                                <button
+                                    type="button"
+                                    className="close"
+                                    data-dismiss="modal"
+                                    style={{color: "white"}}
+                                    aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h5
+                                    id="flight-pick-request-error-modal-title"
+                                    className="modal-title"
+                                    style={{color: "white"}}>
+                                    Cannot find flight schedule
+                                </h5>
                             </div>
-                            <hr style={{marginTop: "-10px"}}/>
                             <div className="modal-body">
-                                <p>Sorry, we cannot find any flight schedule based on your input, please try again and input the correct Date & Flight Number.</p>
+                                <p>Sorry! we cannot find any flight schedule based on your input, please try again and make sure input the correct Date & Flight Number.</p>
                                 <p>For the date, please input the arrival date as format MM/DD/YYYY.</p>
                                 <p>For the flight number, please input as format CSN327, for the 
                                     &nbsp;<a href="http://en.wikipedia.org/wiki/List_of_airline_codes" target="_blank">airline code reference</a>.
