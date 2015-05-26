@@ -7,36 +7,34 @@
 var CURRENT_REQUEST = PICK_REQUEST;
 
 // Request Type => [Inputs Required]
-var RequestTypeInputMap = new Map ([
-    [PICK_REQUEST, [
-        "pick-request-university-select",
-        "pick-request-start-input",
-        "pick-request-dest-input",
-        "pick-request-tip-input",
-    ]],
-    [FLIGHT_PICK_REQUEST, [
-        "pick-request-university-select",
-        "flight-pick-request-flight-input",
-        "pick-request-baggages-input",
-        "flight-pick-request-date-input",
-        "pick-request-dest-input",
-        "pick-request-tip-input",
-    ]],
-]);
+var RequestTypeInputMap = {};
+RequestTypeInputMap[PICK_REQUEST] = [
+    "pick-request-university-select",
+    "pick-request-start-input",
+    "pick-request-dest-input",
+    "pick-request-tip-input",
+];
+RequestTypeInputMap[FLIGHT_PICK_REQUEST] = [
+    "pick-request-university-select",
+    "flight-pick-request-flight-input",
+    "pick-request-baggages-input",
+    "flight-pick-request-date-input",
+    "pick-request-dest-input",
+    "pick-request-tip-input",
+];
 
 // Input => Input Valid Type
-var InputValidTypeMap = new Map ([
-    ["pick-request-baggages-input", "Integer"],
-    ["pick-request-tip-input", "Integer"],
-]);
+var InputValidTypeMap = {};
+InputValidTypeMap["pick-request-baggages-input"] = "Integer";
+InputValidTypeMap["pick-request-tip-input"] = "Integer";
 
 function enablePostRequestSubmit() {
     var enableSubmit = true;
-    var requiredInputs = RequestTypeInputMap.get(FLIGHT_PICK_REQUEST);
+    var requiredInputs = RequestTypeInputMap[FLIGHT_PICK_REQUEST];
     for (var i = 0; i < requiredInputs.length && enableSubmit; i++) {
         var value = $("#" + requiredInputs[i]).val().trim();
         if (!value) { enableSubmit = false; }
-        var validType = InputValidTypeMap.get(requiredInputs[i]);
+        var validType = InputValidTypeMap[requiredInputs[i]];
         switch(validType) {
             case "Integer":
                 if (!isInt(value)) { enableSubmit = false; }
@@ -98,9 +96,9 @@ var PostRequestForm = React.createClass({
         // Hack! Have to bind change event like this way, since
         // Bootstrap data-toggle="buttons" is conflict with onChange
         $('input[name="request-type"]').change(function() {
-            var currentInputs = RequestTypeInputMap.get(CURRENT_REQUEST);
+            var currentInputs = RequestTypeInputMap[CURRENT_REQUEST];
             CURRENT_REQUEST = parseInt($(this).attr('id'));
-            var needInputs = RequestTypeInputMap.get(CURRENT_REQUEST);
+            var needInputs = RequestTypeInputMap[CURRENT_REQUEST];
 
             var showInputs = arrayDiff(needInputs, currentInputs);
             var hideInputs = arrayDiff(currentInputs, needInputs);
@@ -137,7 +135,7 @@ var PostRequestForm = React.createClass({
         // Check input error
         var value = $("#" + targetID).val().trim();
         var inputError = value == "";
-        var validType = InputValidTypeMap.get(targetID);
+        var validType = InputValidTypeMap[targetID];
         switch(validType) {
             case "Integer":
                 if (!isInt(value)) { inputError = true; }

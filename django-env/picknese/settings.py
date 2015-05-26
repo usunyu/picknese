@@ -26,9 +26,9 @@ SECRET_KEY = '(l3twho*_7sw4m&2w2be-)c-+rsc4qseh2dtai(!!&4w4(ufd5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 TEMPLATE_DEBUG = True
 
+PRODUCTION = False
 # python manage.py collectstatic
 # Set True to manually deploy static and media files to S3
 # Don't forget to set correct static & media url of front end
@@ -146,7 +146,7 @@ AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 AWS_PRELOAD_METADATA = True
 
 #Storage on S3 settings are stored as os.environs to keep settings.py clean
-if not DEBUG or DEPLOY_S3:
+if PRODUCTION or DEPLOY_S3:
     STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
     S3_URL = 'https://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
