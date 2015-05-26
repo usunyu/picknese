@@ -25,15 +25,14 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECRET_KEY = '(l3twho*_7sw4m&2w2be-)c-+rsc4qseh2dtai(!!&4w4(ufd5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
+
+TEMPLATE_DEBUG = True
 
 # python manage.py collectstatic
 # Set True to manually deploy static and media files to S3
 # Don't forget to set correct static & media url of front end
-# 
 DEPLOY_S3 = False
-
-TEMPLATE_DEBUG = False
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
@@ -48,9 +47,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'picknese',
     'storages',
     'bootstrap3',
-    'feed',
     'userprofile',
     'university',
     'pickup',

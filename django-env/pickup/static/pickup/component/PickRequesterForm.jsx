@@ -43,7 +43,7 @@ var PickRequesterForm = React.createClass({
             dataType: 'jsonp',
             type: 'GET',
             success: function(data) {
-                if (!isResultHasError(data)) {
+                if (!isFlightStatusResultHasError(data)) {
                     this.setState({flightSchedulesData: data});
                     $('#flight1-post-modal-body').html(
                         '<div class="row">' + 
@@ -57,12 +57,12 @@ var PickRequesterForm = React.createClass({
                     );
                     $('#flight1-post-modal').modal('show');
 
-                    dismissFlightRequestLoadingEffect();
+                    $('#flight1-post-button').button('reset');
                 } else {
                     $('#flight1-post-error-modal-title').text("Cannot find schedule for " + flight);
                     $('#flight1-post-error-modal').modal('show');
 
-                    dismissFlightRequestLoadingEffect();
+                    $('#flight1-post-button').button('reset');
                 }
             }.bind(this),
             error: function(xhr, status, err) {

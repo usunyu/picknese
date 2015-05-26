@@ -11,7 +11,7 @@ function getFlightStatusAppKey() {
     return 'dc765dd9201598b2191f7faa0ad5ad73';
 }
 
-function isResultHasError(data) {
+function isFlightStatusResultHasError(data) {
 	if (data.hasOwnProperty("scheduledFlights")) {
 		return data.scheduledFlights.length == 0;
 	}

@@ -2,6 +2,10 @@ from django.conf.urls import patterns, include, url
 from pickup import views, apis
 
 urlpatterns = patterns('',
+    # Flight Pick Request Read API
+    url(r'^api/flight/(?P<university_id>\d+)/$', apis.FlightPickRequestList.as_view()),
+    # Flight Pick Request Create API
+    url(r'^api/flight/create/$', apis.FlightPickRequestCreate.as_view()),
     # Requester
     url(r'^requesters/(?P<university_id>\d+)/$', views.pick_requester_list),
     url(r'^api/requesters/(?P<university_id>\d+)/$', apis.PickRequesterList.as_view()),

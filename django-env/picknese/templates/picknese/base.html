@@ -10,10 +10,9 @@
         <meta name="description" content="Social application for student studying abroad to help each other">
         <meta name="author" content="Yu Sun">
         <title>{% block title %}{% endblock %}Pickinese</title>
-        <!-- Latest compiled and minified CSS, Paper Style -->
-        <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.paper.min.css' %}" media="screen"/>
-        <!-- http://bootswatch.com/paper/ -->
-        <link rel="stylesheet" href="{% static 'css/bootstrap/bootswatch.min.css' %}"/>
+        <!-- Latest compiled and minified CSS, http://bootswatch.com/paper/ -->
+        <!-- <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.paper.min.css' %}" media="screen"/> -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.paper.css' %}" media="screen"/>
         <!-- https://github.com/tapmodo/Jcrop -->
         <link rel="stylesheet" type="text/css" href="{% static 'css/Jcrop/jquery.Jcrop.min.css' %}" />
         <!-- http://eonasdan.github.io/bootstrap-datetimepicker/ -->
@@ -23,7 +22,7 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'css/wow/animate.min.css' %}" />
         <!-- Custom CSS -->
-        <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
         <!-- http://facebook.github.io/react/ -->
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script type="text/javascript" src="{% static 'js/jquery/jquery.min.js' %}"></script>
@@ -31,16 +30,22 @@
         <script type="text/javascript" src="{% static 'js/jquery-ui/jquery-ui.min.js' %}"></script>
         <!-- http://mynameismatthieu.com/WOW/docs.html -->
         <script type="text/javascript" src="{% static 'js/wow/wow.min.js' %}"></script>
+        <!-- http://brianreavis.github.io/selectize.js/ -->
+        <script type="text/javascript" src="{% static 'js/selectize/standalone/selectize.min.js' %}"></script>
         <!-- Initial Loading -->
         <script type="text/javascript" src="{% static 'js/initial.js' %}"></script>
         <!-- Provide CSRF protection -->
         <script type="text/javascript" src="{% static 'js/csrf.js' %}"></script>
         <!-- Common Utilities -->
         <script type="text/javascript" src="{% static 'js/utils.js' %}"></script>
+        <!-- Common UI component -->
+        <script type="text/javascript" src="{% static 'picknese/js/ui.js' %}"></script>
         <!-- URL Helper -->
         <script type="text/javascript" src="{% static 'js/helper/UrlHelper.js' %}"></script>
         <!-- REST API Helper -->
         <script type="text/javascript" src="{% static 'js/helper/RestApiHelper.js' %}"></script>
+        <!-- Constant -->
+        <script type="text/javascript" src="{% static 'picknese/constant.js' %}"></script>
         <!-- <script type="text/javascript" src="{% static 'js/react/react.min.js' %}"></script> -->
         <script type="text/javascript" src="{% static 'js/react/react.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/react/JSXTransformer.js' %}"></script>
@@ -58,7 +63,7 @@
     </head>
     <body>
         <!-- Navbar -->
-        {% include 'navbar.html' %}
+        {% include 'picknese/navbar.html' %}
         <!-- Messages -->
         <div id="messages"></div>
         <!-- Jumbotron -->
@@ -82,8 +87,6 @@
         <script type="text/javascript" src="{% static 'js/Jcrop/jquery.Jcrop.min.js' %}"></script>
         <!-- Flight Status API Helper -->
         <script type="text/javascript" src="{% static 'js/helper/FlightStatusAPIHelper.js' %}"></script>
-        <!-- http://brianreavis.github.io/selectize.js/ -->
-        <script type="text/javascript" src="{% static 'js/selectize/standalone/selectize.min.js' %}"></script>
         {% block extra_js %}
         {% endblock %}
     </body>
