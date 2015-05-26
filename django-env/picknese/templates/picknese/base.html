@@ -10,6 +10,7 @@
         <meta name="description" content="Social application for student studying abroad to help each other">
         <meta name="author" content="Yu Sun">
         <title>{% block title %}{% endblock %}Pickinese</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">
         <!-- Latest compiled and minified CSS, http://bootswatch.com/paper/ -->
         <!-- <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.paper.min.css' %}" media="screen"/> -->
         <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.paper.css' %}" media="screen"/>
@@ -19,7 +20,7 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css' %}" />
         <!-- http://brianreavis.github.io/selectize.js/ -->
         <link rel="stylesheet" type="text/css" href="{% static 'css/selectize/selectize.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">
+        <!-- http://mynameismatthieu.com/WOW/docs.html -->
         <link rel="stylesheet" type="text/css" href="{% static 'css/wow/animate.min.css' %}" />
         <!-- Custom CSS -->
         <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
@@ -31,7 +32,9 @@
         <!-- http://mynameismatthieu.com/WOW/docs.html -->
         <script type="text/javascript" src="{% static 'js/wow/wow.min.js' %}"></script>
         <!-- http://brianreavis.github.io/selectize.js/ -->
-        <script type="text/javascript" src="{% static 'js/selectize/standalone/selectize.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'picknese/js/selectize/selectize.min.js' %}"></script>
+        <!-- https://www.devbridge.com/sourcery/components/jquery-autocomplete/ -->
+        <script type="text/javascript" src="{% static 'picknese/js/autocomplete/jquery.autocomplete.min.js' %}"></script>
         <!-- Initial Loading -->
         <script type="text/javascript" src="{% static 'js/initial.js' %}"></script>
         <!-- Provide CSRF protection -->
@@ -59,7 +62,6 @@
         <!-- Used for load common React component -->
         {% block extra_head %}
         {% endblock %}
-        <!-- seperate -->
     </head>
     <body>
         <!-- Navbar -->
