@@ -6,7 +6,7 @@ class FlightPickRequestList(generics.ListAPIView):
     """
     FlightPickRequestList ListAPIView
     Retrieve FlightPickRequests based on University ID
-    FlightPickRequestList.as_view() => pickup/api/flight_pick_request/1/
+    FlightPickRequestList.as_view() => pickup/api/flight/1/
     """
     serializer_class = serializers.FlightPickRequestListSerializer
     permission_classes = (permissions.AllowAny,)
@@ -19,7 +19,7 @@ class FlightPickRequestCreate(generics.CreateAPIView):
     """
     FlightPickRequestCreate CreateAPIView
     Create FlightPickRequest
-    FlightPickRequestCreate.as_view() => pickup/api/flight_pick_request/create/
+    FlightPickRequestCreate.as_view() => pickup/api/flight/create/
     """
     serializer_class = serializers.FlightPickRequestMutateSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)

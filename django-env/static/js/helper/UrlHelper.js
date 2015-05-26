@@ -24,6 +24,10 @@ function getMediaURL() {
     }
 }
 
+function getHomeFeedURL(u_id) {
+    return "/home/" + u_id + "/";
+}
+
 function getUniversityBaseURL() {
     return "/universities/";
 }

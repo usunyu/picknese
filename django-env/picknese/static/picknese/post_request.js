@@ -1,6 +1,7 @@
 /*
  * Template Parameters
  * --------------------------------------------------
+ * @current_user
  * @university
  */
 var CURRENT_REQUEST = PICK_REQUEST;
@@ -53,7 +54,8 @@ function enablePostRequestSubmit() {
 }
 
 var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
-    mixins: [UniversityActionMixin],
+    mixins: [UniversityActionMixin,
+             PostRequestActionMixin],
     componentDidUpdate: function() {
         var universities = [];
         var selected = [];
@@ -157,14 +159,9 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
             case PICK_REQUEST:
                 break;
             case FLIGHT_PICK_REQUEST:
-                var university  = $("#pick-request-university-select").val().trim();
-                var flight      = $("#flight-pick-request-flight-input").val().trim();
-                var baggages    = $("#pick-request-baggages-input").val().trim();
-                var date        = $("#flight-pick-request-date-input").val().trim();
-                var dest        = $("#pick-request-dest-input").val().trim();
-                var tip         = $("#pick-request-tip-input").val().trim();
+                var flight = $("#flight-pick-request-flight-input").val().trim().toUpperCase();
                 // month is 0 indexed, http://momentjs.com/docs/#/get-set/month/
-                var momentDate  = moment(date, 'MM/DD/YYYY');
+                var momentDate  = moment($("#flight-pick-request-date-input").val().trim(), 'MM/DD/YYYY');
                 // load scheduled flight
                 $.ajax({
                     url: getFlightStatusScheduledFlightAPI(flight, momentDate.year(), momentDate.month() + 1, momentDate.date()),
@@ -172,24 +169,19 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                     type: 'GET',
                     success: function(data) {
                         if (!isFlightStatusResultHasError(data)) {
-                            console.log('has flight');
-                            // this.setState({flightSchedulesData: data});
-                            // $('#flight1-post-modal-body').html(
-                            //     '<div class="row">' + 
-                            //     '<p class="col-sm-6"><b>Flight Number: </b>' + flight + '</p>' +
-                            //     '<p class="col-sm-6"><b>Baggage Number: </b>' + baggage + '</p>' +
-                            //     '<p class="col-sm-6"><b>Departure Time: </b>' + getScheduledDepartureTimeFromResult(data) + '</p>' +
-                            //     '<p class="col-sm-6"><b>Arrival Time: </b>' + getScheduledArrivalTimeFromResult(data) + '</p>' +
-                            //     '<p class="col-sm-6"><b>From: </b>' + getScheduledDepartureAirportNameFromResult(data) + '</p>' +
-                            //     '<p class="col-sm-6"><b>To: </b>' + getScheduledArrivalAirportNameFromResult(data) + '</p>' + 
-                            //     '</div>'
-                            // );
-                            // $('#flight1-post-modal').modal('show');
-
-                            // $('#flight1-post-button').button('reset');
+                            this.handleFlightPickRequestSubmit({
+                                requester   : current_user.id,
+                                university  : $("#pick-request-university-select").val().trim(),
+                                price       : $("#pick-request-tip-input").val().trim(),
+                                flight      : flight,
+                                date_time   : getScheduledArrivalTimeFromResult(data),
+                                destination : $("#pick-request-dest-input").val().trim(),
+                                bags        : $("#pick-request-baggages-input").val().trim(),
+                                feed_type   : FLIGHT_PICK_REQUEST,
+                                description : $("#pick-request-desc-textarea").val().trim(),
+                            });
                             $("#post-request-submit-button").button('reset');
                         } else {
-                            console.log('no flight');
                             $('#flight-pick-request-error-modal-title').text("Cannot find schedule for " + flight);
                             $('#flight-pick-request-error-modal').modal('show');
                             $("#post-request-submit-button").button('reset');
@@ -315,6 +307,18 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                             className: "form-control", 
                             onBlur: this.onInputFocusLose, 
                             placeholder: "Remunerated is good :)"})
+                    )
+                ), 
+                /* Message Input */
+                React.createElement("div", {className: "form-group"}, 
+                    React.createElement("label", {className: "col-sm-2 control-label"}, "I have note"), 
+                    React.createElement("div", {className: "col-sm-10"}, 
+                        React.createElement("textarea", {
+                            id: "pick-request-desc-textarea", 
+                            className: "form-control", 
+                            rows: "3", 
+                            placeholder: "Anything you want to mention?"}
+                        )
                     )
                 ), 
                 /* Submit Button */

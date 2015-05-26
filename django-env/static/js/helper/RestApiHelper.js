@@ -6,6 +6,19 @@ function getHomeFeedListAPI(u_id) {
     return "/home/api/" + u_id + "/";
 }
 
+/*
+ * Pickup Module
+ * --------------------------------------------------
+ */
+function getFlightPickRequestCreateAPI() {
+    return "/pickup/api/flight/create/";
+}
+
+/*
+ * Legacy
+ * --------------------------------------------------
+ */
+// @deprecated
 function getCurrentUserAPI() {
     return "/accounts/api/me/";
 }
@@ -33,11 +46,11 @@ function getMyPickRequestListAPI(u_id) {
 function getMyAllPickRequestListAPI() {
     return "/pickup/api/requesters/mylist/all/";
 }
-
+// @deprecated
 function getPickRequesterCreateAPI() {
     return "/pickup/api/requesters/create/";
 }
-
+// @deprecated
 function getPickRequesterMutateAPI(r_id) {
     return "/pickup/api/requesters/mutate/" + r_id + "/";
 }

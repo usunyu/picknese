@@ -84,6 +84,11 @@ var HomeFeedList = React.createClass({
 
 var HomePanel = React.createClass({
     mixins: [HomeFeedActionMixin],
+    componentDidUpdate: function() {
+        if (hasPopupMessage()) {
+            setTimeout(function() { popupMessage(); }, 500);
+        }
+    },
     render: function() {
         var homeFeedList = [];
         for (var i = 0; i < this.state.feeds.length; i++) {
