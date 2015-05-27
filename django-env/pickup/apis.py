@@ -24,6 +24,32 @@ class FlightPickRequestCreate(generics.CreateAPIView):
     serializer_class = serializers.FlightPickRequestMutateSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
+class PickRequestList(generics.ListAPIView):
+    """
+    PickRequestList ListAPIView
+    Retrieve PickRequests based on University ID
+    PickRequestList.as_view() => pickup/api/pick/1/
+    """
+    serializer_class = serializers.PickRequestListSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    def get_queryset(self):
+        university_id = self.kwargs['university_id']
+        return models.PickRequest.objects.filter(university=university_id)
+
+class PickRequestCreate(generics.CreateAPIView):
+    """
+    PickRequestCreate CreateAPIView
+    Create PickRequest
+    PickRequestCreate.as_view() => pickup/api/pick/create/
+    """
+    serializer_class = serializers.PickRequestMutateSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+#                               Legacy Code                                     #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 class PickRequesterList(generics.ListAPIView):
     """
     PickRequesterList ListAPIView

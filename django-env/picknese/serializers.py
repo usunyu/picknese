@@ -14,7 +14,8 @@ class HomeFeedSerializer(serializers.Serializer):
     university = UniversitySerializer(read_only=True)
 
     price = serializers.IntegerField(default=20)
-    flight = serializers.CharField(max_length=30)
+    start = serializers.CharField(max_length=200, required=False)
+    flight = serializers.CharField(max_length=30, required=False)
     date_time = serializers.DateTimeField()
     destination = serializers.CharField(max_length=200)
     bags = serializers.IntegerField()

@@ -17,11 +17,12 @@ var HomePanel = React.createClass({
             var feed = this.state.feeds[i];
             switch(feed.feed_type) {
                 case PICK_REQUEST:
+                    
                     break;
                 case FLIGHT_PICK_REQUEST:
                     homeFeedList.push(
                         <FlightPickRequestCard
-                            key={feed.id}
+                            key={i}
                             feed={feed} />
                     );
                     break;

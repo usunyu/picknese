@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 from userprofile.serializers import UserSerializer
 from university.serializers import UniversitySerializer
-from pickup.models import PickRequester, PickUp, FlightPickRequest
+from pickup.models import PickRequester, PickUp, FlightPickRequest, PickRequest
 
 class FlightPickRequestListSerializer(ModelSerializer):
     """
@@ -22,6 +22,29 @@ class FlightPickRequestMutateSerializer(ModelSerializer):
     class Meta:
         model = FlightPickRequest
 
+class PickRequestListSerializer(ModelSerializer):
+    """
+    Read Only Endpoint for PickRequest
+    Support nested Serializer
+    """
+    requester = UserSerializer(read_only=True)
+    university = UniversitySerializer(read_only=True)
+
+    class Meta:
+        model = PickRequest
+
+class PickRequestMutateSerializer(ModelSerializer):
+    """
+    Create, Update, Delete Endpoint for PickRequest
+    Flat Serializer
+    """
+    class Meta:
+        model = PickRequest
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+#                               Legacy Code                                     #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 class PickRequesterListSerializer(ModelSerializer):
     """
     Read Only Endpoint for PickRequester
