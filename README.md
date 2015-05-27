@@ -83,9 +83,7 @@ Social application for student studying abroad to help each other
 1. [Update AWS S3 Server:](https://devcenter.heroku.com/articles/s3-upload-python)
 
      1. Set the correct URL helper: ```urls.js:```
-     ```
-     var production = true;
-     ```
+     ```var production = true;```
 
 
      2. Enable the S3 settings: ```settings.py:```
