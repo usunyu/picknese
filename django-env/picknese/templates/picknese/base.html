@@ -10,55 +10,55 @@
         <meta name="description" content="Social application for student studying abroad to help each other">
         <meta name="author" content="Yu Sun">
         <title>{% block title %}{% endblock %}Pickinese</title>
-        <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'picknese/css/font-awesome/css/font-awesome.min.css' %}">
         <!-- Latest compiled and minified CSS, http://bootswatch.com/paper/ -->
-        <!-- <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.paper.min.css' %}" media="screen"/> -->
-        <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.paper.css' %}" media="screen"/>
+        <!-- <link rel="stylesheet" href="{% static 'picknese/css/bootstrap/bootstrap.paper.min.css' %}" media="screen"/> -->
+        <link rel="stylesheet" href="{% static 'picknese/css/bootstrap/bootstrap.paper.css' %}" media="screen"/>
         <!-- https://github.com/tapmodo/Jcrop -->
-        <link rel="stylesheet" type="text/css" href="{% static 'css/Jcrop/jquery.Jcrop.min.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'picknese/css/Jcrop/jquery.Jcrop.min.css' %}" />
         <!-- http://eonasdan.github.io/bootstrap-datetimepicker/ -->
-        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'picknese/css/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css' %}" />
         <!-- http://brianreavis.github.io/selectize.js/ -->
-        <link rel="stylesheet" type="text/css" href="{% static 'css/selectize/selectize.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'picknese/css/selectize/selectize.css' %}" />
         <!-- http://mynameismatthieu.com/WOW/docs.html -->
-        <link rel="stylesheet" type="text/css" href="{% static 'css/wow/animate.min.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'picknese/css/wow/animate.min.css' %}" />
         <!-- Custom CSS -->
-        <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'picknese/css/custom.css' %}" />
         <!-- http://facebook.github.io/react/ -->
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script type="text/javascript" src="{% static 'js/jquery/jquery.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'picknese/js/jquery/jquery.min.js' %}"></script>
         <!-- http://learn.jquery.com/jquery-ui/ -->
-        <script type="text/javascript" src="{% static 'js/jquery-ui/jquery-ui.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'picknese/js/jquery-ui/jquery-ui.min.js' %}"></script>
         <!-- http://mynameismatthieu.com/WOW/docs.html -->
-        <script type="text/javascript" src="{% static 'js/wow/wow.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'picknese/js/wow/wow.min.js' %}"></script>
         <!-- http://brianreavis.github.io/selectize.js/ -->
         <script type="text/javascript" src="{% static 'picknese/js/selectize/selectize.min.js' %}"></script>
         <!-- https://www.devbridge.com/sourcery/components/jquery-autocomplete/ -->
         <script type="text/javascript" src="{% static 'picknese/js/autocomplete/jquery.autocomplete.min.js' %}"></script>
         <!-- Initial Loading -->
-        <script type="text/javascript" src="{% static 'js/initial.js' %}"></script>
+        <script type="text/javascript" src="{% static 'picknese/js/initial.js' %}"></script>
         <!-- Provide CSRF protection -->
-        <script type="text/javascript" src="{% static 'js/csrf.js' %}"></script>
+        <script type="text/javascript" src="{% static 'picknese/js/csrf.js' %}"></script>
         <!-- Common Utilities -->
-        <script type="text/javascript" src="{% static 'js/utils.js' %}"></script>
+        <script type="text/javascript" src="{% static 'picknese/js/utils.js' %}"></script>
         <!-- Common UI component -->
         <script type="text/javascript" src="{% static 'picknese/js/ui.js' %}"></script>
         <!-- URL Helper -->
-        <script type="text/javascript" src="{% static 'js/helper/UrlHelper.js' %}"></script>
+        <script type="text/javascript" src="{% static 'picknese/js/helper/UrlHelper.js' %}"></script>
         <!-- REST API Helper -->
-        <script type="text/javascript" src="{% static 'js/helper/RestApiHelper.js' %}"></script>
+        <script type="text/javascript" src="{% static 'picknese/js/helper/RestApiHelper.js' %}"></script>
         <!-- Constant -->
         <script type="text/javascript" src="{% static 'picknese/constant.js' %}"></script>
         <!-- <script type="text/javascript" src="{% static 'js/react/react.min.js' %}"></script> -->
-        <script type="text/javascript" src="{% static 'js/react/react.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/react/JSXTransformer.js' %}"></script>
+        <script type="text/javascript" src="{% static 'picknese/js/react/react.js' %}"></script>
+        <script type="text/javascript" src="{% static 'picknese/js/react/JSXTransformer.js' %}"></script>
         <!-- http://momentjs.com/ -->
-        <script type="text/javascript" src="{% static 'js/moment/moment.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'picknese/js/moment/moment.min.js' %}"></script>
         <!-- http://eonasdan.github.io/bootstrap-datetimepicker/ -->
-        <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'picknese/js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js' %}"></script>
         <!-- https://github.com/keen/keen-js -->
         <script type="text/javascript" src="https://d26b395fwzu5fz.cloudfront.net/3.2.4/keen.min.js"></script>
-        <script type="text/javascript" src="{% static 'js/keen.js' %}"></script>
+        <script type="text/javascript" src="{% static 'picknese/js/keen.js' %}"></script>
         <!-- Used for load common React component -->
         {% block extra_head %}
         {% endblock %}
@@ -82,13 +82,13 @@
             </footer>
         </div>
         <!-- Latest compiled and minified JavaScript -->
-        <script type="text/javascript" src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'picknese/js/bootstrap/bootstrap.min.js' %}"></script>
         <!-- http://bootswatch.com/paper/ -->
-        <script type="text/javascript" src="{% static 'js/bootstrap/bootswatch.js' %}"></script>
+        <script type="text/javascript" src="{% static 'picknese/js/bootstrap/bootswatch.js' %}"></script>
         <!-- https://github.com/tapmodo/Jcrop -->
-        <script type="text/javascript" src="{% static 'js/Jcrop/jquery.Jcrop.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'picknese/js/Jcrop/jquery.Jcrop.min.js' %}"></script>
         <!-- Flight Status API Helper -->
-        <script type="text/javascript" src="{% static 'js/helper/FlightStatusAPIHelper.js' %}"></script>
+        <script type="text/javascript" src="{% static 'picknese/js/helper/FlightStatusAPIHelper.js' %}"></script>
         {% block extra_js %}
         {% endblock %}
     </body>
