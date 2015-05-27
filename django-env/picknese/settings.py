@@ -26,13 +26,12 @@ SECRET_KEY = '(l3twho*_7sw4m&2w2be-)c-+rsc4qseh2dtai(!!&4w4(ufd5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 TEMPLATE_DEBUG = True
 
-# python manage.py collectstatic
-# Set True to manually deploy static and media files to S3
+# You can set True to manually deploy static and files to S3
 # Don't forget to set correct static & media url of front end
-DEPLOY_S3 = False
+# python manage.py collectstatic
+PRODUCTION = False
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
@@ -131,14 +130,14 @@ REST_FRAMEWORK = {
 }
 
 # Try load local sttings
-try:
-    if not DEPLOY_S3:
+if PRODUCTION:
+    print "Loading production settings..."
+else:
+    try:
         from local_settings import *
         print "Loading local settings..."
-    else:
-        print "Ready to deploy to S3..."
-except ImportError as e:
-    print "Loading production settings..."
+    except ImportError as e:
+        print "No local settings found..."
 
 AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
 AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
@@ -146,7 +145,7 @@ AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 AWS_PRELOAD_METADATA = True
 
 #Storage on S3 settings are stored as os.environs to keep settings.py clean
-if not DEBUG or DEPLOY_S3:
+if PRODUCTION:
     STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
     S3_URL = 'https://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME

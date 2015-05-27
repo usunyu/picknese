@@ -33,10 +33,9 @@ class UserProfile(models.Model):
 	def __str__(self):	# __unicode__ on Python 2
 		return 'Profile of user: %s' % self.user.username
 
-	# TODO: remove
 	def get_avatar(self):
 		avatar = str(self.avatar)
-		if not settings.DEBUG:
+		if settings.PRODUCTION:
 			avatar = avatar.replace('media/', '')
 		return avatar
 
