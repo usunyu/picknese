@@ -79,29 +79,17 @@ Social application for student studying abroad to help each other
 
      ```$ heroku run bash```
 
-##### AWS S3:
+##### AWS S3: (Heroku deployment included this step)
 1. [Update AWS S3 Server:](https://devcenter.heroku.com/articles/s3-upload-python)
 
-     1. Set the correct URL helper: ```UrlHelper.js:```
+     1. Set the correct URL helper: ```urls.js:```
      ```
-     function getStaticURL() {
-         // set for local development
-         // return '/static/';
-         // set for production
-         return 'https://picknese-s3.s3.amazonaws.com/';
-     }
-
-     function getMediaURL() {
-         // set for local development
-         // return '/';
-         // set for production
-         return 'https://picknese-s3.s3.amazonaws.com/';
-     }
+     var production = true;
      ```
 
 
      2. Enable the S3 settings: ```settings.py:```
-     ```DEPLOY_S3 = True```
+     ```PRODUCTION = True```
 
 
      3. Upload to S3 Server:
