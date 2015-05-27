@@ -34,7 +34,6 @@ function enablePostRequestSubmit() {
     for (var i = 0; i < requiredInputs.length && enableSubmit; i++) {
         var value = $("#" + requiredInputs[i]).val().trim();
         if (!value) { enableSubmit = false; }
-        // var validType = InputValidTypeMap.get(requiredInputs[i]);
         var validType = InputValidTypeMap[requiredInputs[i]];
         switch(validType) {
             case "Integer":
@@ -136,7 +135,6 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
         // Check input error
         var value = $("#" + targetID).val().trim();
         var inputError = value == "";
-        // var validType = InputValidTypeMap.get(targetID);
         var validType = InputValidTypeMap[targetID];
         switch(validType) {
             case "Integer":
