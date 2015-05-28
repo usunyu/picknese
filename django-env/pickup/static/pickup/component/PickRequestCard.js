@@ -1,4 +1,4 @@
-var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCard',
+var PickRequestCard = React.createClass({displayName: 'PickRequestCard',
     componentDidUpdate: function() {
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
@@ -15,8 +15,8 @@ var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCa
                     React.createElement("a", {href: "#"}, 
                         React.createElement("b", null, feed.requester.first_name, " ", feed.requester.last_name)
                     ), 
-                    React.createElement("b", null, " is asking for a ", React.createElement("span", {className: "label label-primary", style: {fontSize: "95%"}}, "flight pick up")), 
-                    React.createElement("i", {className: "glyphicon glyphicon-plane hidden-xs", style: {float: "right", marginRight: "10px"}})
+                    React.createElement("b", null, " is asking for a ", React.createElement("span", {className: "label label-success", style: {fontSize: "95%"}}, "pick up")), 
+                    React.createElement("i", {className: "glyphicon glyphicon-tag hidden-xs", style: {float: "right", marginRight: "10px"}})
                 ), 
                 React.createElement("hr", {style: {marginTop: '9px', marginBottom: '0px'}}), 
                 React.createElement("div", {className: "panel-body"}, 
@@ -36,18 +36,11 @@ var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCa
                             React.createElement("div", {className: "row"}, 
                                 React.createElement("div", null, 
                                     React.createElement("p", {
-                                        className: "col-md-5", 
+                                        className: "col-md-10", 
                                         'data-toggle': "tooltip", 
                                         'data-placement': "left", 
-                                        title: "Flight Number"}, 
-                                        React.createElement("i", {className: "glyphicon glyphicon-plane"}), " ", feed.flight
-                                    ), 
-                                    React.createElement("p", {
-                                        className: "col-md-5", 
-                                        'data-toggle': "tooltip", 
-                                        'data-placement': "left", 
-                                        title: "Arrival Time"}, 
-                                        React.createElement("i", {className: "glyphicon glyphicon-time"}), " ", moment_datetime.format("YYYY-MM-DD HH:mm")
+                                        title: "Start"}, 
+                                        React.createElement("i", {className: "glyphicon glyphicon-tag"}), " ", feed.start
                                     ), 
                                     React.createElement("p", {
                                         className: "col-md-10", 
@@ -60,15 +53,15 @@ var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCa
                                         className: "col-md-5", 
                                         'data-toggle': "tooltip", 
                                         'data-placement': "left", 
-                                        title: "Pay"}, 
-                                        React.createElement("i", {className: "glyphicon glyphicon-credit-card"}), " $", feed.price
+                                        title: "Pick Time"}, 
+                                        React.createElement("i", {className: "glyphicon glyphicon-time"}), " ", moment_datetime.format("YYYY-MM-DD HH:mm")
                                     ), 
                                     React.createElement("p", {
                                         className: "col-md-5", 
                                         'data-toggle': "tooltip", 
                                         'data-placement': "left", 
-                                        title: "Baggage Number"}, 
-                                        React.createElement("i", {className: "glyphicon glyphicon-briefcase"}), " ", feed.bags
+                                        title: "Pay"}, 
+                                        React.createElement("i", {className: "glyphicon glyphicon-credit-card"}), " $", feed.price
                                     ), 
                                     feed.description ? 
                                     React.createElement("p", {

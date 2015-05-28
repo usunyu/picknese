@@ -11,6 +11,7 @@ var RequestTypeInputMap = {};
 RequestTypeInputMap[PICK_REQUEST] = [
     "pick-request-university-select",
     "pick-request-start-input",
+    "pick-request-time-input",
     "pick-request-dest-input",
     "pick-request-tip-input",
 ];
@@ -30,7 +31,7 @@ InputValidTypeMap["pick-request-tip-input"] = "Integer";
 
 function enablePostRequestSubmit() {
     var enableSubmit = true;
-    var requiredInputs = RequestTypeInputMap[FLIGHT_PICK_REQUEST];
+    var requiredInputs = RequestTypeInputMap[CURRENT_REQUEST];
     for (var i = 0; i < requiredInputs.length && enableSubmit; i++) {
         var value = $("#" + requiredInputs[i]).val().trim();
         if (!value) { enableSubmit = false; }
@@ -105,13 +106,19 @@ var PostRequestForm = React.createClass({
 
             for (var i = 0; i < showInputs.length; i++) {
                 var element = $("#" + showInputs[i]);
-                element.parent().parent().addClass("fadein-effect");
-                element.parent().parent().show();
+                while (element.attr('class').indexOf("form-group") == -1) {
+                    element = element.parent();
+                }
+                element.addClass("fadein-effect");
+                element.show();
             }
             for (var i = 0; i < hideInputs.length; i++) {
                 var element = $("#" + hideInputs[i]);
-                element.parent().parent().addClass("fadein-effect");
-                element.parent().parent().hide();
+                while (element.attr('class').indexOf("form-group") == -1) {
+                    element = element.parent();
+                }
+                element.addClass("fadein-effect");
+                element.hide();
             }
             enablePostRequestSubmit();
         });
@@ -121,11 +128,14 @@ var PostRequestForm = React.createClass({
         var mapOptions = {componentRestrictions: {country: 'us'}};
         new google.maps.places.Autocomplete(pickRequestStartInput, mapOptions);
         new google.maps.places.Autocomplete(pickRequestDestInput, mapOptions);
-        // Prepare date selector
+        // Prepare date time selector
         var nowDate = new Date();
         var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
         $('#flight-pick-request-date-div').datetimepicker({
             format: 'MM/DD/YYYY',
+            minDate: today,
+        });
+        $('#pick-request-time-div').datetimepicker({
             minDate: today,
         });
     },
@@ -155,11 +165,23 @@ var PostRequestForm = React.createClass({
         $("#post-request-submit-button").button('loading');
         switch(CURRENT_REQUEST) {
             case PICK_REQUEST:
+                this.handlePickRequestSubmit({
+                    requester   : current_user.id,
+                    university  : $("#pick-request-university-select").val().trim(),
+                    price       : $("#pick-request-tip-input").val().trim(),
+                    date_time   : moment($("#pick-request-time-input").val().trim(), 'MM/DD/YYYY HH:mm').format(),
+                    start       : $("#pick-request-start-input").val().trim(),
+                    destination : $("#pick-request-dest-input").val().trim(),
+                    bags        : $("#pick-request-baggages-input").val().trim(),
+                    feed_type   : PICK_REQUEST,
+                    description : $("#pick-request-desc-textarea").val().trim(),
+                });
+                $("#post-request-submit-button").button('reset');
                 break;
             case FLIGHT_PICK_REQUEST:
                 var flight = $("#flight-pick-request-flight-input").val().trim().toUpperCase();
                 // month is 0 indexed, http://momentjs.com/docs/#/get-set/month/
-                var momentDate  = moment($("#flight-pick-request-date-input").val().trim(), 'MM/DD/YYYY');
+                var momentDate = moment($("#flight-pick-request-date-input").val().trim(), 'MM/DD/YYYY');
                 // load scheduled flight
                 $.ajax({
                     url: getFlightStatusScheduledFlightAPI(flight, momentDate.year(), momentDate.month() + 1, momentDate.date()),
@@ -203,7 +225,7 @@ var PostRequestForm = React.createClass({
             <form className="form-horizontal" onSubmit={this.handlePostRequestSubmit}>
                 {/* Request Type Tab */}
                 <div className="form-group">
-                    <label className="col-sm-2 control-label">I want to</label>
+                    <label className="col-sm-2 control-label">Request</label>
                     <div className="btn-group col-sm-10" data-toggle="buttons">
                         <label className="btn btn-white active">
                             <input
@@ -226,14 +248,14 @@ var PostRequestForm = React.createClass({
                 </div>
                 {/* University Select */}
                 <div className="form-group">
-                    <label className="col-sm-2 control-label">I study at</label>
+                    <label className="col-sm-2 control-label">University</label>
                     <div className="col-sm-10">
                         <select id="pick-request-university-select" />
                     </div>
                 </div>
                 {/* Flight Number Input */}
                 <div className="form-group" style={{display: 'none'}}>
-                    <label className="col-sm-2 control-label">I will take the flight</label>
+                    <label className="col-sm-2 control-label">Flight</label>
                     <div className="col-sm-10">
                         <input
                             id="flight-pick-request-flight-input"
@@ -245,17 +267,7 @@ var PostRequestForm = React.createClass({
                 </div>
                 {/* Flight Baggages & Date Input */}
                 <div className="form-group" style={{display: 'none'}}>
-                    <label className="col-sm-2 control-label">I have baggages</label>
-                    <div className="col-sm-4">
-                        <input 
-                            id="pick-request-baggages-input"
-                            type="number"
-                            className="form-control"
-                            defaultValue={1}
-                            onBlur={this.onInputFocusLose}
-                            placeholder="How many bags do you have?" />
-                    </div>
-                    <label className="col-sm-2 control-label">I will arrive at</label>
+                    <label className="col-sm-2 control-label">Arrival Date</label>
                     <div className="col-sm-4">
                         <div className='input-group date' id='flight-pick-request-date-div'>
                             <input
@@ -267,13 +279,20 @@ var PostRequestForm = React.createClass({
                             <span className="input-group-addon"><span className="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
-                </div>
-                <div className="form-group" style={{display: 'none'}}>
-
+                    <label className="col-sm-2 control-label">Baggages</label>
+                    <div className="col-sm-4">
+                        <input 
+                            id="pick-request-baggages-input"
+                            type="number"
+                            className="form-control"
+                            defaultValue={1}
+                            onBlur={this.onInputFocusLose}
+                            placeholder="How many bags do you have?" />
+                    </div>
                 </div>
                 {/* Pick Location Input */}
                 <div className="form-group">
-                    <label className="col-sm-2 control-label">I need be picked at</label>
+                    <label className="col-sm-2 control-label">Pick location</label>
                     <div className="col-sm-10">
                         <input
                             id="pick-request-start-input"
@@ -282,9 +301,24 @@ var PostRequestForm = React.createClass({
                             placeholder="Where you want to be picked up?" />
                     </div>
                 </div>
+                {/* Pick Time Input */}
+                <div className="form-group">
+                    <label className="col-sm-2 control-label">Pick Time</label>
+                    <div className="col-sm-4">
+                        <div className='input-group date' id='pick-request-time-div'>
+                            <input
+                                id="pick-request-time-input"
+                                type='text'
+                                className="form-control"
+                                onBlur={this.onInputFocusLose}
+                                placeholder="What's your pick time?" />
+                            <span className="input-group-addon"><span className="glyphicon glyphicon-calendar"></span></span>
+                        </div>
+                    </div>
+                </div>
                 {/* Pick Dest Input */}
                 <div className="form-group">
-                    <label className="col-sm-2 control-label">I want to go to</label>
+                    <label className="col-sm-2 control-label">Destination</label>
                     <div className="col-sm-10">
                         <input
                             id="pick-request-dest-input"
@@ -296,7 +330,7 @@ var PostRequestForm = React.createClass({
                 </div>
                 {/* Pick Tip Input */}
                 <div className="form-group">
-                    <label className="col-sm-2 control-label">I can pay tip</label>
+                    <label className="col-sm-2 control-label">Tip</label>
                     <div className="col-sm-4">
                         <input
                             id="pick-request-tip-input"
@@ -309,7 +343,7 @@ var PostRequestForm = React.createClass({
                 </div>
                 {/* Message Input */}
                 <div className="form-group">
-                    <label className="col-sm-2 control-label">I have note</label>
+                    <label className="col-sm-2 control-label">Note</label>
                     <div className="col-sm-10">
                         <textarea
                             id="pick-request-desc-textarea"

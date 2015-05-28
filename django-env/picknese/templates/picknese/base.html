@@ -10,7 +10,6 @@
         <meta name="description" content="Social application for student studying abroad to help each other">
         <meta name="author" content="Yu Sun">
         <title>{% block title %}{% endblock %}Pickinese</title>
-        <link rel="stylesheet" type="text/css" href="{% static 'picknese/css/font-awesome/css/font-awesome.min.css' %}">
         <!-- Latest compiled and minified CSS, http://bootswatch.com/paper/ -->
         <!-- <link rel="stylesheet" href="{% static 'picknese/css/bootstrap/bootstrap.paper.min.css' %}" media="screen"/> -->
         <link rel="stylesheet" href="{% static 'picknese/css/bootstrap/bootstrap.paper.css' %}" media="screen"/>
@@ -75,8 +74,8 @@
         {% block content %}
         {% endblock %}
         <!-- Footer -->
+        <hr />
         <div class="container">
-            <hr />
             <footer>
                 <p>&copy; 2015 Picknese Inc. All rights reserved.</p>
             </footer>
@@ -89,7 +88,7 @@
         <script type="text/javascript" src="{% static 'picknese/js/Jcrop/jquery.Jcrop.min.js' %}"></script>
         <!-- Flight Status API Helper -->
         <script type="text/javascript" src="{% static 'picknese/js/api/FlightStatusAPIHelper.js' %}"></script>
-        {% block extra_js %}
+        {% block extra %}
         {% endblock %}
     </body>
 </html>

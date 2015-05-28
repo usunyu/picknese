@@ -1,4 +1,4 @@
-var FlightPickRequestCard = React.createClass({
+var PickRequestCard = React.createClass({
     componentDidUpdate: function() {
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
@@ -15,8 +15,8 @@ var FlightPickRequestCard = React.createClass({
                     <a href="#">
                         <b>{feed.requester.first_name} {feed.requester.last_name}</b>
                     </a>
-                    <b> is asking for a <span className="label label-primary" style={{fontSize: "95%"}}>flight pick up</span></b>
-                    <i className="glyphicon glyphicon-plane hidden-xs" style={{float: "right", marginRight: "10px"}}></i>
+                    <b> is asking for a <span className="label label-success" style={{fontSize: "95%"}}>pick up</span></b>
+                    <i className="glyphicon glyphicon-tag hidden-xs" style={{float: "right", marginRight: "10px"}}></i>
                 </h6>
                 <hr style={{marginTop: '9px', marginBottom: '0px'}}/>
                 <div className="panel-body">
@@ -36,18 +36,11 @@ var FlightPickRequestCard = React.createClass({
                             <div className="row">
                                 <div>
                                     <p
-                                        className="col-md-5"
+                                        className="col-md-10"
                                         data-toggle="tooltip"
                                         data-placement="left"
-                                        title="Flight Number">
-                                        <i className="glyphicon glyphicon-plane"></i> {feed.flight}
-                                    </p>
-                                    <p
-                                        className="col-md-5"
-                                        data-toggle="tooltip"
-                                        data-placement="left"
-                                        title="Arrival Time">
-                                        <i className="glyphicon glyphicon-time"></i> {moment_datetime.format("YYYY-MM-DD HH:mm")}
+                                        title="Start">
+                                        <i className="glyphicon glyphicon-tag"></i> {feed.start}
                                     </p>
                                     <p
                                         className="col-md-10"
@@ -60,15 +53,15 @@ var FlightPickRequestCard = React.createClass({
                                         className="col-md-5"
                                         data-toggle="tooltip"
                                         data-placement="left"
-                                        title="Pay">
-                                        <i className="glyphicon glyphicon-credit-card"></i> ${feed.price}
+                                        title="Pick Time">
+                                        <i className="glyphicon glyphicon-time"></i> {moment_datetime.format("YYYY-MM-DD HH:mm")}
                                     </p>
                                     <p
                                         className="col-md-5"
                                         data-toggle="tooltip"
                                         data-placement="left"
-                                        title="Baggage Number">
-                                        <i className="glyphicon glyphicon-briefcase"></i> {feed.bags}
+                                        title="Pay">
+                                        <i className="glyphicon glyphicon-credit-card"></i> ${feed.price}
                                     </p>
                                     {feed.description ? 
                                     <p
