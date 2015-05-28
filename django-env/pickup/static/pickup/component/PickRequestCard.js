@@ -6,8 +6,6 @@ var PickRequestCard = React.createClass({displayName: 'PickRequestCard',
     },
     render: function() {
         var feed = this.props.feed;
-        var moment_datetime = moment(feed.date_time, "YYYY-MM-DD HH:mm");
-
         return (
             React.createElement("div", {className: "panel panel-primary clearfix fadein-effect"}, 
                 React.createElement("h6", {
@@ -16,7 +14,10 @@ var PickRequestCard = React.createClass({displayName: 'PickRequestCard',
                         React.createElement("b", null, feed.requester.first_name, " ", feed.requester.last_name)
                     ), 
                     React.createElement("b", null, " is looking for ", React.createElement("span", {className: "label label-success", style: {fontSize: "95%"}}, "pick up")), 
-                    React.createElement("i", {className: "glyphicon glyphicon-tag hidden-xs", style: {float: "right", marginRight: "10px"}})
+                    React.createElement("div", {style: {float: "right"}}, 
+                        React.createElement("span", {style: {fontSize: "80%", marginRight: "15px", marginTop: "3px"}}, moment(feed.created).format("YYYY-MM-DD HH:mm")), 
+                        React.createElement("i", {className: "glyphicon glyphicon-tag", style: {marginRight: "10px"}})
+                    )
                 ), 
                 React.createElement("hr", {style: {marginTop: '9px', marginBottom: '0px'}}), 
                 React.createElement("div", {className: "panel-body"}, 
@@ -54,7 +55,7 @@ var PickRequestCard = React.createClass({displayName: 'PickRequestCard',
                                         'data-toggle': "tooltip", 
                                         'data-placement': "left", 
                                         title: "Pick Time"}, 
-                                        React.createElement("i", {className: "glyphicon glyphicon-time"}), " ", moment_datetime.format("YYYY-MM-DD HH:mm")
+                                        React.createElement("i", {className: "glyphicon glyphicon-time"}), " ", moment(feed.date_time).format("YYYY-MM-DD HH:mm")
                                     ), 
                                     React.createElement("p", {
                                         className: "col-md-5", 

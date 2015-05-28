@@ -6,8 +6,6 @@ var PickRequestCard = React.createClass({
     },
     render: function() {
         var feed = this.props.feed;
-        var moment_datetime = moment(feed.date_time, "YYYY-MM-DD HH:mm");
-
         return (
             <div className="panel panel-primary clearfix fadein-effect">
                 <h6
@@ -16,7 +14,10 @@ var PickRequestCard = React.createClass({
                         <b>{feed.requester.first_name} {feed.requester.last_name}</b>
                     </a>
                     <b> is looking for <span className="label label-success" style={{fontSize: "95%"}}>pick up</span></b>
-                    <i className="glyphicon glyphicon-tag hidden-xs" style={{float: "right", marginRight: "10px"}}></i>
+                    <div style={{float: "right"}}>
+                        <span style={{fontSize: "80%", marginRight: "15px", marginTop: "3px"}}>{moment(feed.created).format("YYYY-MM-DD HH:mm")}</span>
+                        <i className="glyphicon glyphicon-tag" style={{marginRight: "10px"}}></i>
+                    </div>
                 </h6>
                 <hr style={{marginTop: '9px', marginBottom: '0px'}}/>
                 <div className="panel-body">
@@ -54,7 +55,7 @@ var PickRequestCard = React.createClass({
                                         data-toggle="tooltip"
                                         data-placement="left"
                                         title="Pick Time">
-                                        <i className="glyphicon glyphicon-time"></i> {moment_datetime.format("YYYY-MM-DD HH:mm")}
+                                        <i className="glyphicon glyphicon-time"></i> {moment(feed.date_time).format("YYYY-MM-DD HH:mm")}
                                     </p>
                                     <p
                                         className="col-md-5"

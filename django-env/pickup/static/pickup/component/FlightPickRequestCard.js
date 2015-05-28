@@ -13,7 +13,6 @@ var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCa
     handleRequestCancel: function() {
         var feed = this.props.feed;
         this.props.onCancel(feed);
-        // this.handleFlightPickRequestCancel(feed);
     },
     getActionButton: function() {
         var feed = this.props.feed;
@@ -92,7 +91,10 @@ var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCa
                         React.createElement("b", null, feed.requester.first_name, " ", feed.requester.last_name)
                     ), 
                     React.createElement("b", null, " is looking for ", React.createElement("span", {className: "label label-primary", style: {fontSize: "95%"}}, "flight pick up")), 
-                    React.createElement("i", {className: "glyphicon glyphicon-plane hidden-xs", style: {float: "right", marginRight: "10px"}})
+                    React.createElement("div", {style: {float: "right"}}, 
+                        React.createElement("span", {style: {fontSize: "80%", marginRight: "15px", marginTop: "3px"}}, moment(feed.created).format("YYYY-MM-DD HH:mm")), 
+                        React.createElement("i", {className: "glyphicon glyphicon-plane", style: {marginRight: "10px"}})
+                    )
                 ), 
                 React.createElement("hr", {style: {marginTop: '9px', marginBottom: '0px'}}), 
                 React.createElement("div", {className: "panel-body"}, 

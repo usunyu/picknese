@@ -8,7 +8,7 @@
 }
 
 .header-search-bg {
-    background-image: url(../images/landing/intro-bg.jpg);
+    background-image: url(../images/landing/intro-bg2.jpg);
     background-repeat: no-repeat center center fixed;
 
     background-size: cover auto;
@@ -182,7 +182,7 @@ header {
     width: 100%;
     min-height: auto;
     text-align: center;
-    background-image: url(../images/landing/intro-bg.jpg);
+    background-image: url(../images/landing/intro-bg2.jpg);
     background-position: center;
     -webkit-background-size: cover;
     -moz-background-size: cover;

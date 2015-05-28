@@ -91,7 +91,10 @@ var FlightPickRequestCard = React.createClass({
                         <b>{feed.requester.first_name} {feed.requester.last_name}</b>
                     </a>
                     <b> is looking for <span className="label label-primary" style={{fontSize: "95%"}}>flight pick up</span></b>
-                    <i className="glyphicon glyphicon-plane hidden-xs" style={{float: "right", marginRight: "10px"}}></i>
+                    <div style={{float: "right"}}>
+                        <span style={{fontSize: "80%", marginRight: "15px", marginTop: "3px"}}>{moment(feed.created).format("YYYY-MM-DD HH:mm")}</span>
+                        <i className="glyphicon glyphicon-plane" style={{marginRight: "10px"}}></i>
+                    </div>
                 </h6>
                 <hr style={{marginTop: '9px', marginBottom: '0px'}}/>
                 <div className="panel-body">
