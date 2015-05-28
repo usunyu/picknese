@@ -14,6 +14,10 @@ function getFlightPickRequestCreateAPI() {
     return "/pickup/api/flight/create/";
 }
 
+function getFlightPickRequestMutateAPI(id) {
+    return "/pickup/api/flight/mutate/" + id + "/";
+}
+
 function getPickRequestCreateAPI() {
     return "/pickup/api/pick/create/";
 }

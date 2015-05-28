@@ -64,10 +64,10 @@ function getProfileDefaultPic() {
     return getMediaURL() + 'media/default_pic.png';
 }
 
-function getGlyphiconsCarIcon() {
-    return getStaticURL() + 'picknese/images/glyphicons/png/glyphicons-6-car.png';
-}
+// function getGlyphiconsCarIcon() {
+//     return getStaticURL() + 'picknese/images/glyphicons/png/glyphicons-6-car.png';
+// }
 
-function getGlyphiconsAirplaneIcon() {
-    return getStaticURL() + 'picknese/images/glyphicons/png/glyphicons-39-airplane.png';
-}
+// function getGlyphiconsAirplaneIcon() {
+//     return getStaticURL() + 'picknese/images/glyphicons/png/glyphicons-39-airplane.png';
+// }

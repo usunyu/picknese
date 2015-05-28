@@ -6,7 +6,7 @@
  */
 var HomePanel = React.createClass({displayName: 'HomePanel',
     mixins: [HomeFeedActionMixin],
-    componentDidUpdate: function() {
+    componentDidMount: function() {
         if (hasPopupMessage()) {
             setTimeout(function() { popupMessage(); }, 500);
         }
@@ -27,7 +27,8 @@ var HomePanel = React.createClass({displayName: 'HomePanel',
                     homeFeedList.push(
                         React.createElement(FlightPickRequestCard, {
                             key: i, 
-                            feed: feed})
+                            feed: feed, 
+                            onCancel: this.handleFlightPickRequestCancel})
                     );
                     break;
                 default:
@@ -44,6 +45,7 @@ var HomePanel = React.createClass({displayName: 'HomePanel',
 
 React.render(
     React.createElement(HomePanel, {
+        homeFeedActionMixinLoadHomeFeedInterval: true, 
         pollInterval: 20000}),
     document.getElementById('content')
 );

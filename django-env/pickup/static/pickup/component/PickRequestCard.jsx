@@ -15,7 +15,7 @@ var PickRequestCard = React.createClass({
                     <a href="#">
                         <b>{feed.requester.first_name} {feed.requester.last_name}</b>
                     </a>
-                    <b> is asking for a <span className="label label-success" style={{fontSize: "95%"}}>pick up</span></b>
+                    <b> is looking for <span className="label label-success" style={{fontSize: "95%"}}>pick up</span></b>
                     <i className="glyphicon glyphicon-tag hidden-xs" style={{float: "right", marginRight: "10px"}}></i>
                 </h6>
                 <hr style={{marginTop: '9px', marginBottom: '0px'}}/>

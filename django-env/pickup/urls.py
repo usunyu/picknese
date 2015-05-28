@@ -6,6 +6,8 @@ urlpatterns = patterns('',
     url(r'^api/flight/(?P<university_id>\d+)/$', apis.FlightPickRequestList.as_view()),
     # Flight Pick Request Create API
     url(r'^api/flight/create/$', apis.FlightPickRequestCreate.as_view()),
+    # Flight Pick Request Mutate API
+    url(r'^api/flight/mutate/(?P<pk>\d+)/$', apis.FlightPickRequestMutate.as_view()),
     # Normal Pick Request Read API
     url(r'^api/pick/(?P<university_id>\d+)/$', apis.PickRequestList.as_view()),
     # Normal Pick Request Create API

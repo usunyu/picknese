@@ -3,6 +3,11 @@
  * --------------------------------------------------
  * @current_user
  * @university
+ *
+ * Required Mixin
+ * --------------------------------------------------
+ * UniversityActionMixin
+ * HomeFeedActionMixin
  */
 var CURRENT_REQUEST = PICK_REQUEST;
 
@@ -54,7 +59,7 @@ function enablePostRequestSubmit() {
 
 var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
     mixins: [UniversityActionMixin,
-             PostRequestActionMixin],
+             HomeFeedActionMixin],
     componentDidUpdate: function() {
         var universities = [];
         var selected = [];
@@ -202,7 +207,7 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                             });
                             $("#post-request-submit-button").button('reset');
                         } else {
-                            $('#flight-pick-request-error-modal-title').text("Cannot find schedule for " + flight);
+                            $('#flight-pick-request-error-modal-title').text("Cannot Find Flight Schedule For " + flight);
                             $('#flight-pick-request-error-modal').modal('show');
                             $("#post-request-submit-button").button('reset');
                         }
@@ -382,7 +387,7 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                                     id: "flight-pick-request-error-modal-title", 
                                     className: "modal-title", 
                                     style: {color: "white"}}, 
-                                    "Cannot find flight schedule"
+                                    "Cannot Find Flight Schedule"
                                 )
                             ), 
                             React.createElement("div", {className: "modal-body"}, 

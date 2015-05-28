@@ -15,7 +15,7 @@ var PickRequestCard = React.createClass({displayName: 'PickRequestCard',
                     React.createElement("a", {href: "#"}, 
                         React.createElement("b", null, feed.requester.first_name, " ", feed.requester.last_name)
                     ), 
-                    React.createElement("b", null, " is asking for a ", React.createElement("span", {className: "label label-success", style: {fontSize: "95%"}}, "pick up")), 
+                    React.createElement("b", null, " is looking for ", React.createElement("span", {className: "label label-success", style: {fontSize: "95%"}}, "pick up")), 
                     React.createElement("i", {className: "glyphicon glyphicon-tag hidden-xs", style: {float: "right", marginRight: "10px"}})
                 ), 
                 React.createElement("hr", {style: {marginTop: '9px', marginBottom: '0px'}}), 
