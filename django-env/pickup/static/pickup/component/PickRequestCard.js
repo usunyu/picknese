@@ -4,6 +4,75 @@ var PickRequestCard = React.createClass({displayName: 'PickRequestCard',
             $('[data-toggle="tooltip"]').tooltip();
         });
     },
+    handleRequestCancel: function() {
+        var feed = this.props.feed;
+        this.props.onCancel(feed);
+    },
+    getActionButton: function() {
+        var feed = this.props.feed;
+        {/* If it is user's own request */}
+        if (current_user.id == feed.requester.id) {
+            return (
+                React.createElement("div", null, 
+                    React.createElement("button", {
+                        type: "button", 
+                        className: "btn btn-warning", 
+                        style: {float: 'right'}, 
+                        'data-toggle': "modal", 
+                        'data-target': "#feed-" + feed.id}, 
+                        React.createElement("i", {className: "glyphicon glyphicon-remove"}), " " + ' ' +
+                        "Cancel"
+                    ), 
+                    React.createElement("button", {
+                        type: "button", 
+                        className: "btn btn-primary", 
+                        style: {float: 'right', marginRight: '10px'}}, 
+                        React.createElement("i", {className: "glyphicon glyphicon-edit"}), " " + ' ' +
+                        "Update"
+                    ), 
+                    /* Cancel Button Modal */
+                    React.createElement("div", {
+                        id: "feed-" + feed.id, 
+                        className: "modal fade", 
+                        tabIndex: "-1", 
+                        role: "dialog", 
+                        'aria-labelledby': "modalLabel", 
+                        'aria-hidden': "true"}, 
+                        React.createElement("div", {className: "modal-dialog modal-sm"}, 
+                            React.createElement("div", {className: "modal-content"}, 
+                                React.createElement("div", {className: "modal-header", style: {backgroundColor: "#ff9800"}}, 
+                                    React.createElement("button", {
+                                        type: "button", 
+                                        className: "close", 
+                                        'data-dismiss': "modal", 
+                                        'aria-label': "Close", 
+                                        style: {color: "white"}}, 
+                                        React.createElement("span", {'aria-hidden': "true"}, "×")
+                                    ), 
+                                    React.createElement("h5", {className: "modal-title", style: {color: "white"}}, 
+                                        "Cancel Confirmation"
+                                    )
+                                ), 
+                                React.createElement("div", {className: "modal-body"}, 
+                                    React.createElement("p", null, "Are you sure want to cancel this request?")
+                                ), 
+                                React.createElement("div", {className: "modal-footer"}, 
+                                    React.createElement("button", {type: "button", className: "btn btn-default", 'data-dismiss': "modal"}, "Cancel"), 
+                                    React.createElement("button", {
+                                        type: "button", 
+                                        className: "btn btn-primary", 
+                                        onClick: this.handleRequestCancel}, 
+                                        "Confirm"
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+        } else {
+        }
+    },
     render: function() {
         var feed = this.props.feed;
         return (
@@ -76,7 +145,8 @@ var PickRequestCard = React.createClass({displayName: 'PickRequestCard',
                             )
                         )
                     ), 
-                    React.createElement("hr", {style: {marginTop: '5px', marginBottom: '15px'}})
+                    React.createElement("hr", {style: {marginTop: '5px', marginBottom: '15px'}}), 
+                    this.getActionButton()
                 )
             )
         );

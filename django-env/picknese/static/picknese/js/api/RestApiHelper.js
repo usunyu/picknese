@@ -22,6 +22,10 @@ function getPickRequestCreateAPI() {
     return "/pickup/api/pick/create/";
 }
 
+function getPickRequestMutateAPI(id) {
+    return "/pickup/api/pick/mutate/" + id + "/";
+}
+
 /*
  * Legacy
  * --------------------------------------------------

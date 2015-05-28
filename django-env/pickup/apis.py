@@ -56,6 +56,16 @@ class PickRequestCreate(generics.CreateAPIView):
     serializer_class = serializers.PickRequestMutateSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
+class PickRequestMutate(generics.RetrieveUpdateDestroyAPIView):
+    """
+    PickRequestMutate RetrieveUpdateDestroyAPIView
+    Retrieve, Update, Delete PickRequest
+    PickRequestMutate.as_view() => pickup/api/pick/mutate/1/
+    """
+    serializer_class = serializers.PickRequestMutateSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    queryset = models.PickRequest.objects.all()
+
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 #                               Legacy Code                                     #

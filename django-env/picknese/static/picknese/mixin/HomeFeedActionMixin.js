@@ -72,7 +72,6 @@ var HomeFeedActionMixin = {
                     "success"
                 );
                 popupMessage();
-                // setTimeout(this.loadHomeFeedFromServer, 5000);
                 this.loadHomeFeedFromServer();
             }.bind(this),
             error: function(xhr, status, err) {
@@ -101,6 +100,32 @@ var HomeFeedActionMixin = {
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(getPickRequestCreateAPI(), status, err.toString());
+                preparePopupMessage(
+                    "Oops, some errors happen, please try again later.",
+                    "danger"
+                );
+                popupMessage();
+            }.bind(this)
+        });
+    },
+    handlePickRequestCancel: function(data) {
+        var id = data.id;
+        $.ajax({
+            url: getPickRequestMutateAPI(data.id),
+            dataType: 'json',
+            type: 'DELETE',
+            success: function(data) {
+                $("#feed-" + id).modal('hide');
+                preparePopupMessage(
+                    "You have successfully cancel your request.",
+                    "success"
+                );
+                popupMessage();
+                this.loadHomeFeedFromServer();
+            }.bind(this),
+            error: function(xhr, status, err) {
+                $("#feed-" + data.id).modal('hide');
+                console.error(getPickRequestMutateAPI(), status, err.toString());
                 preparePopupMessage(
                     "Oops, some errors happen, please try again later.",
                     "danger"

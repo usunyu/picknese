@@ -20,7 +20,8 @@ var HomePanel = React.createClass({
                     homeFeedList.push(
                         <PickRequestCard
                             key={i}
-                            feed={feed} />
+                            feed={feed}
+                            onCancel={this.handlePickRequestCancel} />
                     );
                     break;
                 case FLIGHT_PICK_REQUEST:

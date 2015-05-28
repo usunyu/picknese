@@ -12,6 +12,8 @@ urlpatterns = patterns('',
     url(r'^api/pick/(?P<university_id>\d+)/$', apis.PickRequestList.as_view()),
     # Normal Pick Request Create API
     url(r'^api/pick/create/$', apis.PickRequestCreate.as_view()),
+    # Normal Pick Request Mutate API
+    url(r'^api/pick/mutate/(?P<pk>\d+)/$', apis.PickRequestMutate.as_view()),
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
     #                               Legacy Code                                     #
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
