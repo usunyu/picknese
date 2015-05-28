@@ -65,9 +65,9 @@ function getProfileDefaultPic() {
 }
 
 // function getGlyphiconsCarIcon() {
-//     return getStaticURL() + 'picknese/images/glyphicons/png/glyphicons-6-car.png';
+//     return getStaticURL() + 'images/glyphicons/png/glyphicons-6-car.png';
 // }
 
 // function getGlyphiconsAirplaneIcon() {
-//     return getStaticURL() + 'picknese/images/glyphicons/png/glyphicons-39-airplane.png';
+//     return getStaticURL() + 'images/glyphicons/png/glyphicons-39-airplane.png';
 // }

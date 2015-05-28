@@ -72,6 +72,10 @@ Social application for student studying abroad to help each other
 
      ```$ python manage.py migrate <app> zero```
 
+2. [Heroku Connect:]
+
+     ```$ heroku pg:psql```
+
 ##### Heroku:
 1. [Django Setup:](https://devcenter.heroku.com/articles/getting-started-with-django)
 
