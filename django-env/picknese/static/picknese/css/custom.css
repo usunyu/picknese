@@ -197,9 +197,9 @@ header .header-content {
 }
 
 @media (min-width: 768px) {
-  .header-content {
-    padding: 10% 20% 10% 20%;
-  }
+    .header-content {
+        padding: 10% 20% 10% 20%;
+    }
 }
 
 @media(min-width:768px) {
@@ -799,4 +799,30 @@ div.show-image button.btn-on-image {
     -o-transition-duration: 0.4s;
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
+}
+
+/*
+ * Home Feed Card
+ * --------------------------------------------------
+ */
+.home-feed-title {
+    margin-left: 65px;
+}
+
+@media (max-width: 768px ) {
+    .home-feed-title {
+        margin-left: 10px;
+    }
+}
+
+@media (min-width: 768px ) {
+    .home-feed-sm-profile {
+        display: none;
+    }
+}
+
+@media (max-width: 768px ) {
+    .home-feed-md-profile {
+        display: none;
+    }
 }

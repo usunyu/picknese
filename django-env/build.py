@@ -9,6 +9,7 @@ sub_paths = [
     PICKNESE_PATH + 'post_request.jsx',
     PICKNESE_PATH + 'component/JumbotronPanel.jsx',
 
+    PICKUP_PATH + 'component/BaseRequestCard.jsx',
     PICKUP_PATH + 'component/FlightPickRequestCard.jsx',
     PICKUP_PATH + 'component/PickRequestCard.jsx',
 ]

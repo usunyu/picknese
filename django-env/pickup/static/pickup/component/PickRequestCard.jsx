@@ -1,154 +1,62 @@
+/*
+ * Template Parameters
+ * --------------------------------------------------
+ * @current_user
+ * @university
+ */
 var PickRequestCard = React.createClass({
-    componentDidUpdate: function() {
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-    },
-    handleRequestCancel: function() {
+    getCustomLayout: function() {
         var feed = this.props.feed;
-        this.props.onCancel(feed);
-    },
-    getActionButton: function() {
-        var feed = this.props.feed;
-        {/* If it is user's own request */}
-        if (current_user.id == feed.requester.id) {
-            return (
-                <div>
-                    <button
-                        type="button"
-                        className="btn btn-warning"
-                        style={{float: 'right'}}
-                        data-toggle="modal"
-                        data-target={"#feed-" + feed.id}>
-                        <i className="glyphicon glyphicon-remove"></i>&nbsp;
-                        Cancel
-                    </button>
-                    <button
-                        type="button"
-                        className="btn btn-primary"
-                        style={{float: 'right', marginRight: '10px'}} >
-                        <i className="glyphicon glyphicon-edit"></i>&nbsp;
-                        Update
-                    </button>
-                    {/* Cancel Button Modal */}
-                    <div
-                        id={"feed-" + feed.id}
-                        className="modal fade"
-                        tabIndex="-1"
-                        role="dialog"
-                        aria-labelledby="modalLabel"
-                        aria-hidden="true">
-                        <div className="modal-dialog modal-sm">
-                            <div className="modal-content">
-                                <div className="modal-header" style={{backgroundColor: "#ff9800"}}>
-                                    <button
-                                        type="button"
-                                        className="close"
-                                        data-dismiss="modal"
-                                        aria-label="Close"
-                                        style={{color: "white"}}>
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    <h5 className="modal-title" style={{color: "white"}}>
-                                        Cancel Confirmation
-                                    </h5>
-                                </div>
-                                <div className="modal-body">
-                                    <p>Are you sure want to cancel this request?</p>
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
-                                    <button
-                                        type="button"
-                                        className="btn btn-primary"
-                                        onClick={this.handleRequestCancel}>
-                                        Confirm
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-        } else {
+        var layoutMap = {};
+
+        layoutMap['heading'] = {};
+        layoutMap['heading']['verb'] = "is looking for";
+        layoutMap['heading']['action'] = "pick up";
+        layoutMap['heading']['icon'] = "glyphicon glyphicon-tag";
+
+        layoutMap['body'] = {}
+        layoutMap['body']['start'] = {}
+        layoutMap['body']['start']['class'] = 'col-md-10';
+        layoutMap['body']['start']['title'] = 'Start';
+        layoutMap['body']['start']['content'] = feed.start;
+        layoutMap['body']['start']['icon'] = 'glyphicon glyphicon-tag';
+
+        layoutMap['body']['dest'] = {}
+        layoutMap['body']['dest']['class'] = 'col-md-10';
+        layoutMap['body']['dest']['title'] = 'Destination';
+        layoutMap['body']['dest']['content'] = feed.destination;
+        layoutMap['body']['dest']['icon'] = 'glyphicon glyphicon-map-marker';
+
+        layoutMap['body']['time'] = {}
+        layoutMap['body']['time']['class'] = 'col-md-5';
+        layoutMap['body']['time']['title'] = 'Pick Time';
+        layoutMap['body']['time']['content'] = moment(feed.date_time).format("YYYY-MM-DD HH:mm");
+        layoutMap['body']['time']['icon'] = 'glyphicon glyphicon-time';
+
+        layoutMap['body']['tip'] = {}
+        layoutMap['body']['tip']['class'] = 'col-md-5';
+        layoutMap['body']['tip']['title'] = 'Remuneration';
+        layoutMap['body']['tip']['content'] = '$'.concat(feed.price);
+        layoutMap['body']['tip']['icon'] = 'glyphicon glyphicon-credit-card';
+
+        if (feed.description) {
+            layoutMap['body']['message'] = {}
+            layoutMap['body']['message']['class'] = 'col-md-10';
+            layoutMap['body']['message']['title'] = 'Message';
+            layoutMap['body']['message']['content'] = feed.description;
+            layoutMap['body']['message']['icon'] = 'glyphicon glyphicon-comment';
         }
+
+        return layoutMap;
     },
     render: function() {
         var feed = this.props.feed;
+        var layout = this.getCustomLayout();
         return (
-            <div className="panel panel-primary clearfix fadein-effect">
-                <h6
-                    style={{marginLeft: '80px', marginRight: '4px', color: '#666666'}}>
-                    <a href="#">
-                        <b>{feed.requester.first_name} {feed.requester.last_name}</b>
-                    </a>
-                    <b> is looking for <span className="label label-success" style={{fontSize: "95%"}}>pick up</span></b>
-                    <div style={{float: "right"}}>
-                        <span style={{fontSize: "80%", marginRight: "15px", marginTop: "3px"}}>{moment(feed.created).format("YYYY-MM-DD HH:mm")}</span>
-                        <i className="glyphicon glyphicon-tag" style={{marginRight: "10px"}}></i>
-                    </div>
-                </h6>
-                <hr style={{marginTop: '9px', marginBottom: '0px'}}/>
-                <div className="panel-body">
-                    <div className="media">
-                        <div className="media-left">
-                            <a href="#">
-                                <img
-                                    className="image-circular"
-                                    src={
-                                        feed.requester.profile.avatar ? 
-                                        feed.requester.profile.avatar : getProfileDefaultPic()
-                                    }
-                                    style={{width: '60px', height: '60px', marginTop: '-60px', marginLeft: '-7px'}} />
-                            </a>
-                        </div>
-                        <div className="media-body">
-                            <div className="row">
-                                <div>
-                                    <p
-                                        className="col-md-10"
-                                        data-toggle="tooltip"
-                                        data-placement="left"
-                                        title="Start">
-                                        <i className="glyphicon glyphicon-tag"></i> {feed.start}
-                                    </p>
-                                    <p
-                                        className="col-md-10"
-                                        data-toggle="tooltip"
-                                        data-placement="left"
-                                        title="Destination">
-                                        <i className="glyphicon glyphicon-map-marker"></i> {feed.destination}
-                                    </p>
-                                    <p
-                                        className="col-md-5"
-                                        data-toggle="tooltip"
-                                        data-placement="left"
-                                        title="Pick Time">
-                                        <i className="glyphicon glyphicon-time"></i> {moment(feed.date_time).format("YYYY-MM-DD HH:mm")}
-                                    </p>
-                                    <p
-                                        className="col-md-5"
-                                        data-toggle="tooltip"
-                                        data-placement="left"
-                                        title="Pay">
-                                        <i className="glyphicon glyphicon-credit-card"></i> ${feed.price}
-                                    </p>
-                                    {feed.description ? 
-                                    <p
-                                        className="col-md-10"
-                                        data-toggle="tooltip"
-                                        data-placement="left"
-                                        title="Message">
-                                        <i className={feed.description ? "glyphicon glyphicon-comment" : ""}></i> {feed.description} 
-                                    </p> : null}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr style={{marginTop: '5px', marginBottom: '15px'}} />
-                    {this.getActionButton()}
-                </div>
-            </div>
+            <BaseRequestCard
+                feed={this.props.feed}
+                onCancel={this.props.onCancel}
+                layout={layout} />
         );
     }
 });
