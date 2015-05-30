@@ -70,6 +70,62 @@ var BaseRequestCard = React.createClass({
                 </div>
             );
         } else {
+            return (
+                <div>
+                    <button
+                        type="button"
+                        className="btn btn-success"
+                        style={{float: 'right'}}
+                        data-toggle="modal"
+                        data-target={"#feed-" + feed.id}>
+                        <i className="glyphicon glyphicon-heart"></i>&nbsp;
+                        Offer Help
+                    </button>
+                    <button
+                        type="button"
+                        className="btn btn-primary"
+                        style={{float: 'right', marginRight: '10px'}} >
+                        <i className="glyphicon glyphicon-edit"></i>&nbsp;
+                        Comment
+                    </button>
+                    {/* Offer Button Modal */}
+                    <div
+                        id={"feed-" + feed.id}
+                        className="modal fade"
+                        tabIndex="-1"
+                        role="dialog"
+                        aria-hidden="true">
+                        <div className="modal-dialog modal-sm">
+                            <div className="modal-content">
+                                <div className="modal-header" style={{backgroundColor: "#4caf50"}}>
+                                    <button
+                                        type="button"
+                                        className="close"
+                                        data-dismiss="modal"
+                                        aria-label="Close"
+                                        style={{color: "white"}}>
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h5 className="modal-title" style={{color: "white"}}>
+                                        Offer Confirmation
+                                    </h5>
+                                </div>
+                                <div className="modal-body">
+                                    <p>Are you sure want to take this request?</p>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary">
+                                        Confirm
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
         }
     },
     getContentBody: function() {
@@ -105,7 +161,7 @@ var BaseRequestCard = React.createClass({
                             }
                             style={{width: '40px', height: '40px'}} />
                     </a>
-                    <b className="home-feed-title">{feed.requester.first_name} {feed.requester.last_name} {layout.heading.verb} <span className="label label-success" style={{fontSize: "95%"}}>{layout.heading.action}</span></b>
+                    <b className="home-feed-title">{feed.requester.first_name} {feed.requester.last_name} {layout.heading.verb} <span className="label label-danger" style={{fontSize: "95%"}}>{layout.heading.action}</span></b>
                     <div style={{float: "right"}}>
                         <span style={{fontSize: "80%", marginRight: "15px", marginTop: "3px"}}>{moment(feed.created).format("YYYY-MM-DD HH:mm")}</span>
                         <i className={layout.heading.icon} style={{marginRight: "10px"}}></i>

@@ -2,18 +2,24 @@ from django.conf.urls import patterns, include, url
 from pickup import views, apis
 
 urlpatterns = patterns('',
-    # Flight Pick Request Read API
-    url(r'^api/flight/(?P<university_id>\d+)/$', apis.FlightPickRequestList.as_view()),
-    # Flight Pick Request Create API
-    url(r'^api/flight/create/$', apis.FlightPickRequestCreate.as_view()),
-    # Flight Pick Request Mutate API
-    url(r'^api/flight/mutate/(?P<pk>\d+)/$', apis.FlightPickRequestMutate.as_view()),
-    # Normal Pick Request Read API
-    url(r'^api/pick/(?P<university_id>\d+)/$', apis.PickRequestList.as_view()),
-    # Normal Pick Request Create API
-    url(r'^api/pick/create/$', apis.PickRequestCreate.as_view()),
-    # Normal Pick Request Mutate API
-    url(r'^api/pick/mutate/(?P<pk>\d+)/$', apis.PickRequestMutate.as_view()),
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    #                           FlightPickRequest                                   #
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    url(r'^api/flight_request/(?P<university_id>\d+)/$', apis.FlightPickRequestList.as_view()),
+    url(r'^api/flight_request/create/$', apis.FlightPickRequestCreate.as_view()),
+    url(r'^api/flight_request/mutate/(?P<pk>\d+)/$', apis.FlightPickRequestMutate.as_view()),
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    #                              FlightPickUp                                     #
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    url(r'^api/flight_pickup/(?P<pk>\d+)/$', apis.FlightPickUpList.as_view()),
+    url(r'^api/flight_pickup/create/$', apis.FlightPickUpCreate.as_view()),
+    url(r'^api/flight_pickup/mutate/(?P<pk>\d+)/$', apis.FlightPickUpMutate.as_view()),
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    #                               PickRequest                                     #
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    url(r'^api/request/(?P<university_id>\d+)/$', apis.PickRequestList.as_view()),
+    url(r'^api/request/create/$', apis.PickRequestCreate.as_view()),
+    url(r'^api/request/mutate/(?P<pk>\d+)/$', apis.PickRequestMutate.as_view()),
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
     #                               Legacy Code                                     #
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 

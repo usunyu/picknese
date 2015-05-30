@@ -2,11 +2,13 @@ from django.db.models import Q
 from rest_framework import generics, permissions, views, renderers, response
 from pickup import serializers, models
 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#                           FlightPickRequest                                   #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 class FlightPickRequestList(generics.ListAPIView):
     """
-    FlightPickRequestList ListAPIView
     Retrieve FlightPickRequests based on University ID
-    FlightPickRequestList.as_view() => pickup/api/flight/1/
+    FlightPickRequestList.as_view() => pickup/api/flight_request/1/
     """
     serializer_class = serializers.FlightPickRequestListSerializer
     permission_classes = (permissions.AllowAny,)
@@ -17,16 +19,14 @@ class FlightPickRequestList(generics.ListAPIView):
 
 class FlightPickRequestCreate(generics.CreateAPIView):
     """
-    FlightPickRequestCreate CreateAPIView
     Create FlightPickRequest
-    FlightPickRequestCreate.as_view() => pickup/api/flight/create/
+    FlightPickRequestCreate.as_view() => pickup/api/flight_request/create/
     """
     serializer_class = serializers.FlightPickRequestMutateSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 class FlightPickRequestMutate(generics.RetrieveUpdateDestroyAPIView):
     """
-    FlightPickRequestMutate RetrieveUpdateDestroyAPIView
     Retrieve, Update, Delete FlightPickRequest
     FlightPickRequestMutate.as_view() => pickup/api/flight/mutate/1/
     """
@@ -34,11 +34,45 @@ class FlightPickRequestMutate(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = models.FlightPickRequest.objects.all()
 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#                              FlightPickUp                                     #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+class FlightPickUpList(generics.ListAPIView):
+    """
+    Retrieve FlightPickUps based on User ID
+    FlightPickUpList.as_view() => pickup/api/flight_pickup/1/
+    """
+    serializer_class = serializers.FlightPickUpListSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    def get_queryset(self):
+        user_id = self.request.user.id
+        return models.FlightPickUp.objects.filter(picker=user_id)
+
+class FlightPickUpCreate(generics.CreateAPIView):
+    """
+    Create FlightPickUp
+    FlightPickUpCreate.as_view() => pickup/api/flight_pickup/create/
+    """
+    serializer_class = serializers.FlightPickUpMutateSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+class FlightPickUpMutate(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Retrieve, Update, Delete FlightPickUp
+    FlightPickRequestMutate.as_view() => pickup/api/flight_pickup/mutate/1/
+    """
+    serializer_class = serializers.FlightPickUpMutateSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    queryset = models.FlightPickUp.objects.all()
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#                               PickRequest                                     #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 class PickRequestList(generics.ListAPIView):
     """
-    PickRequestList ListAPIView
     Retrieve PickRequests based on University ID
-    PickRequestList.as_view() => pickup/api/pick/1/
+    PickRequestList.as_view() => pickup/api/request/1/
     """
     serializer_class = serializers.PickRequestListSerializer
     permission_classes = (permissions.AllowAny,)
@@ -49,18 +83,16 @@ class PickRequestList(generics.ListAPIView):
 
 class PickRequestCreate(generics.CreateAPIView):
     """
-    PickRequestCreate CreateAPIView
     Create PickRequest
-    PickRequestCreate.as_view() => pickup/api/pick/create/
+    PickRequestCreate.as_view() => pickup/api/request/create/
     """
     serializer_class = serializers.PickRequestMutateSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 class PickRequestMutate(generics.RetrieveUpdateDestroyAPIView):
     """
-    PickRequestMutate RetrieveUpdateDestroyAPIView
     Retrieve, Update, Delete PickRequest
-    PickRequestMutate.as_view() => pickup/api/pick/mutate/1/
+    PickRequestMutate.as_view() => pickup/api/request/mutate/1/
     """
     serializer_class = serializers.PickRequestMutateSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)

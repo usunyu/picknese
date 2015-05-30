@@ -16,7 +16,7 @@ class HomeFeedList(generics.ListAPIView):
 
     def get_queryset(self):
         university_id = self.kwargs['university_id']
-        
+
         return list(itertools.chain(
             FlightPickRequest.objects.filter(Q(university=university_id) & Q(confirmed=False)), 
             PickRequest.objects.filter(Q(university=university_id) & Q(confirmed=False)), 

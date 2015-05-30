@@ -11,19 +11,19 @@ function getHomeFeedListAPI(u_id) {
  * --------------------------------------------------
  */
 function getFlightPickRequestCreateAPI() {
-    return "/pickup/api/flight/create/";
+    return "/pickup/api/flight_request/create/";
 }
 
 function getFlightPickRequestMutateAPI(id) {
-    return "/pickup/api/flight/mutate/" + id + "/";
+    return "/pickup/api/flight_request/mutate/" + id + "/";
 }
 
 function getPickRequestCreateAPI() {
-    return "/pickup/api/pick/create/";
+    return "/pickup/api/request/create/";
 }
 
 function getPickRequestMutateAPI(id) {
-    return "/pickup/api/pick/mutate/" + id + "/";
+    return "/pickup/api/request/mutate/" + id + "/";
 }
 
 /*

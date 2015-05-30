@@ -70,6 +70,62 @@ var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
                 )
             );
         } else {
+            return (
+                React.createElement("div", null, 
+                    React.createElement("button", {
+                        type: "button", 
+                        className: "btn btn-success", 
+                        style: {float: 'right'}, 
+                        'data-toggle': "modal", 
+                        'data-target': "#feed-" + feed.id}, 
+                        React.createElement("i", {className: "glyphicon glyphicon-heart"}), " " + ' ' +
+                        "Offer Help"
+                    ), 
+                    React.createElement("button", {
+                        type: "button", 
+                        className: "btn btn-primary", 
+                        style: {float: 'right', marginRight: '10px'}}, 
+                        React.createElement("i", {className: "glyphicon glyphicon-edit"}), " " + ' ' +
+                        "Comment"
+                    ), 
+                    /* Offer Button Modal */
+                    React.createElement("div", {
+                        id: "feed-" + feed.id, 
+                        className: "modal fade", 
+                        tabIndex: "-1", 
+                        role: "dialog", 
+                        'aria-hidden': "true"}, 
+                        React.createElement("div", {className: "modal-dialog modal-sm"}, 
+                            React.createElement("div", {className: "modal-content"}, 
+                                React.createElement("div", {className: "modal-header", style: {backgroundColor: "#4caf50"}}, 
+                                    React.createElement("button", {
+                                        type: "button", 
+                                        className: "close", 
+                                        'data-dismiss': "modal", 
+                                        'aria-label': "Close", 
+                                        style: {color: "white"}}, 
+                                        React.createElement("span", {'aria-hidden': "true"}, "×")
+                                    ), 
+                                    React.createElement("h5", {className: "modal-title", style: {color: "white"}}, 
+                                        "Offer Confirmation"
+                                    )
+                                ), 
+                                React.createElement("div", {className: "modal-body"}, 
+                                    React.createElement("p", null, "Are you sure want to take this request?")
+                                ), 
+                                React.createElement("div", {className: "modal-footer"}, 
+                                    React.createElement("button", {type: "button", className: "btn btn-default", 'data-dismiss': "modal"}, "Cancel"), 
+                                    React.createElement("button", {
+                                        type: "button", 
+                                        className: "btn btn-primary"}, 
+                                        "Confirm"
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            );
         }
     },
     getContentBody: function() {
@@ -105,7 +161,7 @@ var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
                             
                             style: {width: '40px', height: '40px'}})
                     ), 
-                    React.createElement("b", {className: "home-feed-title"}, feed.requester.first_name, " ", feed.requester.last_name, " ", layout.heading.verb, " ", React.createElement("span", {className: "label label-success", style: {fontSize: "95%"}}, layout.heading.action)), 
+                    React.createElement("b", {className: "home-feed-title"}, feed.requester.first_name, " ", feed.requester.last_name, " ", layout.heading.verb, " ", React.createElement("span", {className: "label label-danger", style: {fontSize: "95%"}}, layout.heading.action)), 
                     React.createElement("div", {style: {float: "right"}}, 
                         React.createElement("span", {style: {fontSize: "80%", marginRight: "15px", marginTop: "3px"}}, moment(feed.created).format("YYYY-MM-DD HH:mm")), 
                         React.createElement("i", {className: layout.heading.icon, style: {marginRight: "10px"}})
