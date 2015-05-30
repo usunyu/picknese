@@ -57,6 +57,15 @@ class FlightPickUpCreate(generics.CreateAPIView):
     serializer_class = serializers.FlightPickUpMutateSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
+    def perform_create(self, serializer):
+        # update flight pick request
+        request_id = serializer.data['flight_pick_request']
+        request = models.FlightPickRequest.objects.get(id=request_id)
+        request.confirmed = True
+        request.save()
+        # create flight pick up
+        serializer.save()
+
 class FlightPickUpMutate(generics.RetrieveUpdateDestroyAPIView):
     """
     Retrieve, Update, Delete FlightPickUp

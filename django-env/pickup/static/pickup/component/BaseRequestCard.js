@@ -8,6 +8,14 @@ var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
         var feed = this.props.feed;
         this.props.onCancel(feed);
     },
+    handleRequestSubmit: function() {
+        var feed = this.props.feed;
+        this.props.onSubmit({
+            flight_pick_request : feed.id,
+            picker              : current_user.id,
+            description         : $("#pick-up-desc-textarea").val().trim(),
+        });
+    },
     getActionButton: function() {
         var feed = this.props.feed;
         {/* If it is user's own request */}
@@ -95,7 +103,7 @@ var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
                         tabIndex: "-1", 
                         role: "dialog", 
                         'aria-hidden': "true"}, 
-                        React.createElement("div", {className: "modal-dialog modal-sm"}, 
+                        React.createElement("div", {className: "modal-dialog"}, 
                             React.createElement("div", {className: "modal-content"}, 
                                 React.createElement("div", {className: "modal-header", style: {backgroundColor: "#4caf50"}}, 
                                     React.createElement("button", {
@@ -111,13 +119,21 @@ var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
                                     )
                                 ), 
                                 React.createElement("div", {className: "modal-body"}, 
-                                    React.createElement("p", null, "Are you sure want to take this request?")
+                                    React.createElement("div", {className: "form-group"}, 
+                                        React.createElement("textarea", {
+                                            id: "pick-up-desc-textarea", 
+                                            className: "form-control", 
+                                            rows: "3", 
+                                            placeholder: "Thanks for taking this request, anything you want to mention?"}
+                                        )
+                                    )
                                 ), 
                                 React.createElement("div", {className: "modal-footer"}, 
                                     React.createElement("button", {type: "button", className: "btn btn-default", 'data-dismiss': "modal"}, "Cancel"), 
                                     React.createElement("button", {
                                         type: "button", 
-                                        className: "btn btn-primary"}, 
+                                        className: "btn btn-primary", 
+                                        onClick: this.handleRequestSubmit}, 
                                         "Confirm"
                                     )
                                 )

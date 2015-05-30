@@ -8,6 +8,14 @@ var BaseRequestCard = React.createClass({
         var feed = this.props.feed;
         this.props.onCancel(feed);
     },
+    handleRequestSubmit: function() {
+        var feed = this.props.feed;
+        this.props.onSubmit({
+            flight_pick_request : feed.id,
+            picker              : current_user.id,
+            description         : $("#pick-up-desc-textarea").val().trim(),
+        });
+    },
     getActionButton: function() {
         var feed = this.props.feed;
         {/* If it is user's own request */}
@@ -95,7 +103,7 @@ var BaseRequestCard = React.createClass({
                         tabIndex="-1"
                         role="dialog"
                         aria-hidden="true">
-                        <div className="modal-dialog modal-sm">
+                        <div className="modal-dialog">
                             <div className="modal-content">
                                 <div className="modal-header" style={{backgroundColor: "#4caf50"}}>
                                     <button
@@ -111,13 +119,21 @@ var BaseRequestCard = React.createClass({
                                     </h5>
                                 </div>
                                 <div className="modal-body">
-                                    <p>Are you sure want to take this request?</p>
+                                    <div className="form-group">
+                                        <textarea
+                                            id="pick-up-desc-textarea"
+                                            className="form-control"
+                                            rows="3"
+                                            placeholder="Thanks for taking this request, anything you want to mention?">
+                                        </textarea>
+                                    </div>
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
                                     <button
                                         type="button"
-                                        className="btn btn-primary">
+                                        className="btn btn-primary"
+                                        onClick={this.handleRequestSubmit}>
                                         Confirm
                                     </button>
                                 </div>

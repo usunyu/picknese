@@ -29,6 +29,7 @@ var HomePanel = React.createClass({displayName: 'HomePanel',
                         React.createElement(FlightPickRequestCard, {
                             key: i, 
                             feed: feed, 
+                            onSubmit: this.handleFlightPickUpSubmit, 
                             onCancel: this.handleFlightPickRequestCancel})
                     );
                     break;

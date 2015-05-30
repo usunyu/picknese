@@ -61,6 +61,7 @@ var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCa
         return (
             React.createElement(BaseRequestCard, {
                 feed: this.props.feed, 
+                onSubmit: this.props.onSubmit, 
                 onCancel: this.props.onCancel, 
                 layout: layout})
         );

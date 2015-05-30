@@ -62,7 +62,7 @@ var HomeFeedActionMixin = {
     handleFlightPickRequestCancel: function(data) {
         var id = data.id;
         $.ajax({
-            url: getFlightPickRequestMutateAPI(data.id),
+            url: getFlightPickRequestMutateAPI(id),
             dataType: 'json',
             type: 'DELETE',
             success: function(data) {
@@ -75,8 +75,35 @@ var HomeFeedActionMixin = {
                 this.loadHomeFeedFromServer();
             }.bind(this),
             error: function(xhr, status, err) {
-                $("#feed-" + data.id).modal('hide');
+                $("#feed-" + id).modal('hide');
                 console.error(getFlightPickRequestMutateAPI(), status, err.toString());
+                preparePopupMessage(
+                    "Oops, some errors happen, please try again later.",
+                    "danger"
+                );
+                popupMessage();
+            }.bind(this)
+        });
+    },
+    handleFlightPickUpSubmit: function(data) {
+        var id = data.flight_pick_request;
+        $.ajax({
+            url: getFlightPickUpCreateAPI(),
+            dataType: 'json',
+            type: 'POST',
+            data: data,
+            success: function(data) {
+                $("#feed-" + id).modal('hide');
+                preparePopupMessage(
+                    "Thanks for taking the request. Please contact the requester for confirmation!",
+                    "success"
+                );
+                popupMessage();
+                this.loadHomeFeedFromServer();
+            }.bind(this),
+            error: function(xhr, status, err) {
+                $("#feed-" + id).modal('hide');
+                console.error(getFlightPickUpCreateAPI(), status, err.toString());
                 preparePopupMessage(
                     "Oops, some errors happen, please try again later.",
                     "danger"
@@ -111,7 +138,7 @@ var HomeFeedActionMixin = {
     handlePickRequestCancel: function(data) {
         var id = data.id;
         $.ajax({
-            url: getPickRequestMutateAPI(data.id),
+            url: getPickRequestMutateAPI(id),
             dataType: 'json',
             type: 'DELETE',
             success: function(data) {
@@ -124,7 +151,7 @@ var HomeFeedActionMixin = {
                 this.loadHomeFeedFromServer();
             }.bind(this),
             error: function(xhr, status, err) {
-                $("#feed-" + data.id).modal('hide');
+                $("#feed-" + id).modal('hide');
                 console.error(getPickRequestMutateAPI(), status, err.toString());
                 preparePopupMessage(
                     "Oops, some errors happen, please try again later.",
