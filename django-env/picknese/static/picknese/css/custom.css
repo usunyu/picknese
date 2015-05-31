@@ -826,6 +826,12 @@ div.show-image button.btn-on-image {
     }
 }
 
+@media (max-width: 768px ) {
+    .home-feed-panel-div {
+        margin-bottom: 5px;
+    }
+}
+
 .home-feed-title {
     margin-left: 65px;
 }
