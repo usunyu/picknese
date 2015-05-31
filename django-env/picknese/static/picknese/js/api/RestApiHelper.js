@@ -11,7 +11,35 @@ function getHomeFeedListAPI(u_id) {
  * --------------------------------------------------
  */
 function getFlightPickRequestCreateAPI() {
-    return "/pickup/api/flight/create/";
+    return "/pickup/api/flight_request/create/";
+}
+
+function getFlightPickRequestMutateAPI(id) {
+    return "/pickup/api/flight_request/mutate/" + id + "/";
+}
+
+function getFlightPickUpCreateAPI() {
+    return "/pickup/api/flight_pickup/create/";
+}
+
+function getFlightPickUpMutateAPI(id) {
+    return "/pickup/api/flight_pickup/mutate/" + id + "/";
+}
+
+function getPickRequestCreateAPI() {
+    return "/pickup/api/request/create/";
+}
+
+function getPickRequestMutateAPI(id) {
+    return "/pickup/api/request/mutate/" + id + "/";
+}
+
+function getPickUpCreateAPI() {
+    return "/pickup/api/pickup/create/";
+}
+
+function getPickUpMutateAPI(id) {
+    return "/pickup/api/pickup/mutate/" + id + "/";
 }
 
 /*
@@ -67,9 +95,9 @@ function getMyAllPickUpListAPI() {
     return "/pickup/api/mylist/all/";
 }
 
-function getPickUpCreateAPI() {
-    return "/pickup/api/create/";
-}
+// function getPickUpCreateAPI() {
+//     return "/pickup/api/create/";
+// }
 
 function getUniversityAPI(u_id) {
     return "/universities/api/" + u_id + "/";

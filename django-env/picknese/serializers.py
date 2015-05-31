@@ -10,15 +10,17 @@ class HomeFeedSerializer(serializers.Serializer):
     """
     id = serializers.IntegerField(read_only=True)
 
-    requester = UserSerializer(read_only=True)
-    university = UniversitySerializer(read_only=True)
-
-    price = serializers.IntegerField(default=20)
-    flight = serializers.CharField(max_length=30)
-    date_time = serializers.DateTimeField()
-    destination = serializers.CharField(max_length=200)
-    bags = serializers.IntegerField()
     feed_type = serializers.IntegerField()
-    description = serializers.CharField()
-    confirmed = serializers.BooleanField()
-    created = serializers.DateTimeField()
+
+    requester = UserSerializer(read_only=True, required=False)
+    university = UniversitySerializer(read_only=True, required=False)
+
+    price = serializers.IntegerField(default=20, required=False)
+    start = serializers.CharField(max_length=200, required=False)
+    flight = serializers.CharField(max_length=30, required=False)
+    date_time = serializers.DateTimeField(required=False)
+    destination = serializers.CharField(max_length=200, required=False)
+    bags = serializers.IntegerField(required=False)
+    description = serializers.CharField(required=False)
+    confirmed = serializers.BooleanField(required=False)
+    created = serializers.DateTimeField(required=False)

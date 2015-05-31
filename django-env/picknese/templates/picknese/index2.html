@@ -15,7 +15,7 @@ Welcome |
             <div class="header-search">
                 <h2>Need a pick up from your schoolmate?</h2>
                 <h5>We think that should be easy :)</h5>
-                <form class="form-wrapper cf" onsubmit="indexUniversitySubmit()">
+                <form class="form-wrapper cf">
                     <input
                         id="index-university-input"
                         type="text"
@@ -116,59 +116,27 @@ Welcome |
         </div>
     </div>
     <div class="container-fluid">
-    <div class="row">
-    <ul class="gallery">
-        {% for university in universities %}
-        <li>
-            <a href="{% url 'pickup.views.pick_requester_list' university.id %}">
-                <img
-                    class="img-responsive"
-                    src="{% get_static_prefix %}university/images/{{university.shorthand}}/thumbnail.jpg"/>
-                <span class="name"><b>{{ university.name }}</b><span class="title">{{ university.description|truncatechars:250}}</span></span>
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
-    </div>
+        <div class="row">
+            <ul class="gallery">
+                {% for university in universities %}
+                <li>
+                    <a href="{% url 'picknese.views.home' university.id %}">
+                        <img
+                            class="img-responsive"
+                            src="{% get_static_prefix %}university/images/{{university.shorthand}}/thumbnail.jpg"/>
+                        <span class="name"><b>{{ university.name }}</b><span class="title">{{ university.description|truncatechars:250}}</span></span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 </section>
 {% endblock %}
 
-{% block extra_js %}
+{% block extra %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">
 <script type="text/javascript">
-    // bind unversity auto complete
-    $.ajax({
-        url: getUniversitySimpleListAPI(),
-        dataType: 'json',
-        type: 'GET',
-        success: function(data) {
-            var formatData = [];
-            for (var i = 0; i < data.length; i++) {
-                formatData.push({
-                    value : data[i].shorthand.toUpperCase() + " | " + data[i].name,
-                    data  : data[i].id,
-                });
-            }
-            $('#index-university-input').autocomplete({
-                lookup: formatData,
-                onSelect: function (suggestion) {
-                    window.location = getHomeFeedURL(suggestion.data);
-                }
-            });
-        }.bind(this),
-        error: function(xhr, status, err) {
-            console.error(
-                getUniversitySimpleListAPI(),
-                status,
-                err.toString()
-            );
-        }.bind(this)
-    });
-
-    function indexUniversitySubmit() {
-        return false;
-    }
-
     if (production) {
         var indexEvent = {
             referrer: document.referrer,

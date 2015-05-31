@@ -4,28 +4,22 @@
  * @current_user
  * @university
  */
-var FlightPickRequestCard = React.createClass({
+var PickRequestCard = React.createClass({
     getCustomLayout: function() {
         var feed = this.props.feed;
         var layoutMap = {};
 
         layoutMap['heading'] = {};
         layoutMap['heading']['verb'] = "is looking for";
-        layoutMap['heading']['action'] = "flight pick up";
-        layoutMap['heading']['icon'] = "glyphicon glyphicon-plane";
+        layoutMap['heading']['action'] = "pick up";
+        layoutMap['heading']['icon'] = "glyphicon glyphicon-tag";
 
         layoutMap['body'] = {}
-        layoutMap['body']['flight'] = {}
-        layoutMap['body']['flight']['class'] = 'col-md-5';
-        layoutMap['body']['flight']['title'] = 'Flight Number';
-        layoutMap['body']['flight']['content'] = feed.flight;
-        layoutMap['body']['flight']['icon'] = 'glyphicon glyphicon-tag';
-
-        layoutMap['body']['time'] = {}
-        layoutMap['body']['time']['class'] = 'col-md-5';
-        layoutMap['body']['time']['title'] = 'Arrival Time';
-        layoutMap['body']['time']['content'] = moment(feed.date_time).format("YYYY-MM-DD HH:mm");
-        layoutMap['body']['time']['icon'] = 'glyphicon glyphicon-time';
+        layoutMap['body']['start'] = {}
+        layoutMap['body']['start']['class'] = 'col-md-10';
+        layoutMap['body']['start']['title'] = 'Start';
+        layoutMap['body']['start']['content'] = feed.start;
+        layoutMap['body']['start']['icon'] = 'glyphicon glyphicon-tag';
 
         layoutMap['body']['dest'] = {}
         layoutMap['body']['dest']['class'] = 'col-md-10';
@@ -33,17 +27,17 @@ var FlightPickRequestCard = React.createClass({
         layoutMap['body']['dest']['content'] = feed.destination;
         layoutMap['body']['dest']['icon'] = 'glyphicon glyphicon-map-marker';
 
+        layoutMap['body']['time'] = {}
+        layoutMap['body']['time']['class'] = 'col-md-5';
+        layoutMap['body']['time']['title'] = 'Pick Time';
+        layoutMap['body']['time']['content'] = moment(feed.date_time).format("YYYY-MM-DD HH:mm");
+        layoutMap['body']['time']['icon'] = 'glyphicon glyphicon-time';
+
         layoutMap['body']['tip'] = {}
         layoutMap['body']['tip']['class'] = 'col-md-5';
         layoutMap['body']['tip']['title'] = 'Remuneration';
         layoutMap['body']['tip']['content'] = '$'.concat(feed.price);
         layoutMap['body']['tip']['icon'] = 'glyphicon glyphicon-credit-card';
-
-        layoutMap['body']['bags'] = {}
-        layoutMap['body']['bags']['class'] = 'col-md-5';
-        layoutMap['body']['bags']['title'] = 'Baggage Number';
-        layoutMap['body']['bags']['content'] = feed.bags;
-        layoutMap['body']['bags']['icon'] = 'glyphicon glyphicon-briefcase';
 
         if (feed.description) {
             layoutMap['body']['message'] = {}
@@ -58,7 +52,7 @@ var FlightPickRequestCard = React.createClass({
     onSubmit: function() {
         var feed = this.props.feed;
         this.props.onSubmit({
-            flight_pick_request : feed.id,
+            pick_request : feed.id,
             picker              : current_user.id,
             description         : $("#pick-up-desc-textarea").val().trim(),
         });

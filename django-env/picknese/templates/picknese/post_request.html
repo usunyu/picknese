@@ -8,7 +8,7 @@ Post Request |
 {% endblock %}
 
 {% block extra_head %}
-<script type="text/javascript" src="{% static 'pickup/mixin/PostRequestActionMixin.js' %}"></script>
+<script type="text/javascript" src="{% static 'picknese/mixin/HomeFeedActionMixin.js' %}"></script>
 <script type="text/javascript" src="{% static 'university/mixin/UniversityActionMixin.js' %}"></script>
 {% endblock %}
 
@@ -32,7 +32,7 @@ Post Request |
     </div>
 </div>
 <!-- template val pass to react -->
-<script type="text/javascript"> 
+<script type="text/javascript">
     var current_user = {};
     if ("{{current_user}}" !== "AnonymousUser") {
         current_user = {

@@ -1,7 +1,9 @@
+import itertools
+from django.db.models import Q
 from rest_framework import generics, permissions
 
 from picknese.serializers import HomeFeedSerializer
-from pickup.models import FlightPickRequest
+from pickup.models import FlightPickRequest, PickRequest
 
 class HomeFeedList(generics.ListAPIView):
     """
@@ -14,5 +16,8 @@ class HomeFeedList(generics.ListAPIView):
 
     def get_queryset(self):
         university_id = self.kwargs['university_id']
-        # return list(itertools.chain(Tweet.objects.all(), Article.objects.all()))
-        return FlightPickRequest.objects.filter(university=university_id)
+
+        return list(itertools.chain(
+            FlightPickRequest.objects.filter(Q(university=university_id) & Q(confirmed=False)), 
+            PickRequest.objects.filter(Q(university=university_id) & Q(confirmed=False)), 
+        ))

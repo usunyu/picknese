@@ -1,81 +1,77 @@
+/*
+ * Template Parameters
+ * --------------------------------------------------
+ * @current_user
+ * @university
+ */
 var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCard',
-    componentDidUpdate: function() {
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip();
+    getCustomLayout: function() {
+        var feed = this.props.feed;
+        var layoutMap = {};
+
+        layoutMap['heading'] = {};
+        layoutMap['heading']['verb'] = "is looking for";
+        layoutMap['heading']['action'] = "flight pick up";
+        layoutMap['heading']['icon'] = "glyphicon glyphicon-plane";
+
+        layoutMap['body'] = {}
+        layoutMap['body']['flight'] = {}
+        layoutMap['body']['flight']['class'] = 'col-md-5';
+        layoutMap['body']['flight']['title'] = 'Flight Number';
+        layoutMap['body']['flight']['content'] = feed.flight;
+        layoutMap['body']['flight']['icon'] = 'glyphicon glyphicon-tag';
+
+        layoutMap['body']['time'] = {}
+        layoutMap['body']['time']['class'] = 'col-md-5';
+        layoutMap['body']['time']['title'] = 'Arrival Time';
+        layoutMap['body']['time']['content'] = moment(feed.date_time).format("YYYY-MM-DD HH:mm");
+        layoutMap['body']['time']['icon'] = 'glyphicon glyphicon-time';
+
+        layoutMap['body']['dest'] = {}
+        layoutMap['body']['dest']['class'] = 'col-md-10';
+        layoutMap['body']['dest']['title'] = 'Destination';
+        layoutMap['body']['dest']['content'] = feed.destination;
+        layoutMap['body']['dest']['icon'] = 'glyphicon glyphicon-map-marker';
+
+        layoutMap['body']['tip'] = {}
+        layoutMap['body']['tip']['class'] = 'col-md-5';
+        layoutMap['body']['tip']['title'] = 'Remuneration';
+        layoutMap['body']['tip']['content'] = '$'.concat(feed.price);
+        layoutMap['body']['tip']['icon'] = 'glyphicon glyphicon-credit-card';
+
+        layoutMap['body']['bags'] = {}
+        layoutMap['body']['bags']['class'] = 'col-md-5';
+        layoutMap['body']['bags']['title'] = 'Baggage Number';
+        layoutMap['body']['bags']['content'] = feed.bags;
+        layoutMap['body']['bags']['icon'] = 'glyphicon glyphicon-briefcase';
+
+        if (feed.description) {
+            layoutMap['body']['message'] = {}
+            layoutMap['body']['message']['class'] = 'col-md-10';
+            layoutMap['body']['message']['title'] = 'Message';
+            layoutMap['body']['message']['content'] = feed.description;
+            layoutMap['body']['message']['icon'] = 'glyphicon glyphicon-comment';
+        }
+
+        return layoutMap;
+    },
+    onSubmit: function() {
+        var feed = this.props.feed;
+        this.props.onSubmit({
+            flight_pick_request : feed.id,
+            picker              : current_user.id,
+            description         : $("#pick-up-desc-textarea").val().trim(),
         });
     },
     render: function() {
         var feed = this.props.feed;
-        var moment_datetime = moment(feed.date_time, "YYYY-MM-DD HH:mm");
-
+        var layout = this.getCustomLayout();
         return (
-            React.createElement("div", {className: "panel panel-primary clearfix fadein-effect"}, 
-                React.createElement("h6", {
-                    style: {marginLeft: '85px'}}, 
-                    React.createElement("a", {href: "#"}, 
-                        React.createElement("b", null, feed.requester.first_name, " ", feed.requester.last_name)
-                    ), " is asking for a flight pick up"
-                ), 
-                React.createElement("hr", {style: {marginTop: '9px', marginBottom: '0px'}}), 
-                React.createElement("div", {className: "panel-body"}, 
-                    React.createElement("div", {className: "media"}, 
-                        React.createElement("div", {className: "media-left"}, 
-                            React.createElement("a", {href: "#"}, 
-                                React.createElement("img", {
-                                    className: "image-circular", 
-                                    src: 
-                                        feed.requester.profile.avatar ? 
-                                        feed.requester.profile.avatar : getProfileDefaultPic(), 
-                                    
-                                    style: {width: '60px', height: '60px', marginTop: '-60px', marginLeft: '-7px'}})
-                            )
-                        ), 
-                        React.createElement("div", {className: "media-body"}, 
-                            React.createElement("div", {className: "row"}, 
-                                React.createElement("div", null, 
-                                    React.createElement("p", {className: "col-md-5", 
-                                       'data-toggle': "tooltip", 
-                                       'data-placement': "left", 
-                                       title: "Flight Number"}, 
-                                        React.createElement("i", {className: "glyphicon glyphicon-plane"}), " ", feed.flight
-                                    ), 
-                                    React.createElement("p", {className: "col-md-5", 
-                                       'data-toggle': "tooltip", 
-                                       'data-placement': "left", 
-                                       title: "Arrival Time"}, 
-                                        React.createElement("i", {className: "glyphicon glyphicon-time"}), " ", moment_datetime.format("YYYY-MM-DD HH:mm")
-                                    ), 
-                                    React.createElement("p", {className: "col-md-12", 
-                                       'data-toggle': "tooltip", 
-                                       'data-placement': "left", 
-                                       title: "Destination"}, 
-                                        React.createElement("i", {className: "glyphicon glyphicon-map-marker"}), " ", feed.destination
-                                    ), 
-                                    React.createElement("p", {className: "col-md-5", 
-                                       'data-toggle': "tooltip", 
-                                       'data-placement': "left", 
-                                       title: "Pay"}, 
-                                        React.createElement("i", {className: "glyphicon glyphicon-credit-card"}), " $", feed.price
-                                    ), 
-                                    React.createElement("p", {className: "col-md-5", 
-                                       'data-toggle': "tooltip", 
-                                       'data-placement': "left", 
-                                       title: "Baggage Number"}, 
-                                        React.createElement("i", {className: "glyphicon glyphicon-briefcase"}), " ", feed.bags
-                                    )
-                                ), 
-                                React.createElement("p", {className: "col-md-12", 
-                                   'data-toggle': "tooltip", 
-                                   'data-placement': "left", 
-                                   title: "Message"}, 
-                                    React.createElement("i", {className: feed.description ? "glyphicon glyphicon-comment" : ""}), " ", feed.description
-                                )
-                            )
-                        )
-                    ), 
-                    React.createElement("hr", {style: {marginTop: '5px', marginBottom: '15px'}})
-                )
-            )
+            React.createElement(BaseRequestCard, {
+                feed: this.props.feed, 
+                onSubmit: this.onSubmit, 
+                onCancel: this.props.onCancel, 
+                layout: layout})
         );
     }
 });

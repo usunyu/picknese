@@ -3,6 +3,11 @@
  * --------------------------------------------------
  * @current_user
  * @university
+ *
+ * Required Mixin
+ * --------------------------------------------------
+ * UniversityActionMixin
+ * HomeFeedActionMixin
  */
 var CURRENT_REQUEST = PICK_REQUEST;
 
@@ -11,6 +16,7 @@ var RequestTypeInputMap = {};
 RequestTypeInputMap[PICK_REQUEST] = [
     "pick-request-university-select",
     "pick-request-start-input",
+    "pick-request-time-input",
     "pick-request-dest-input",
     "pick-request-tip-input",
 ];
@@ -30,7 +36,7 @@ InputValidTypeMap["pick-request-tip-input"] = "Integer";
 
 function enablePostRequestSubmit() {
     var enableSubmit = true;
-    var requiredInputs = RequestTypeInputMap[FLIGHT_PICK_REQUEST];
+    var requiredInputs = RequestTypeInputMap[CURRENT_REQUEST];
     for (var i = 0; i < requiredInputs.length && enableSubmit; i++) {
         var value = $("#" + requiredInputs[i]).val().trim();
         if (!value) { enableSubmit = false; }
@@ -53,7 +59,7 @@ function enablePostRequestSubmit() {
 
 var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
     mixins: [UniversityActionMixin,
-             PostRequestActionMixin],
+             HomeFeedActionMixin],
     componentDidUpdate: function() {
         var universities = [];
         var selected = [];
@@ -105,13 +111,19 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
 
             for (var i = 0; i < showInputs.length; i++) {
                 var element = $("#" + showInputs[i]);
-                element.parent().parent().addClass("fadein-effect");
-                element.parent().parent().show();
+                while (element.attr('class').indexOf("form-group") == -1) {
+                    element = element.parent();
+                }
+                element.addClass("fadein-effect");
+                element.show();
             }
             for (var i = 0; i < hideInputs.length; i++) {
                 var element = $("#" + hideInputs[i]);
-                element.parent().parent().addClass("fadein-effect");
-                element.parent().parent().hide();
+                while (element.attr('class').indexOf("form-group") == -1) {
+                    element = element.parent();
+                }
+                element.addClass("fadein-effect");
+                element.hide();
             }
             enablePostRequestSubmit();
         });
@@ -121,11 +133,14 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
         var mapOptions = {componentRestrictions: {country: 'us'}};
         new google.maps.places.Autocomplete(pickRequestStartInput, mapOptions);
         new google.maps.places.Autocomplete(pickRequestDestInput, mapOptions);
-        // Prepare date selector
+        // Prepare date time selector
         var nowDate = new Date();
         var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
         $('#flight-pick-request-date-div').datetimepicker({
             format: 'MM/DD/YYYY',
+            minDate: today,
+        });
+        $('#pick-request-time-div').datetimepicker({
             minDate: today,
         });
     },
@@ -155,11 +170,23 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
         $("#post-request-submit-button").button('loading');
         switch(CURRENT_REQUEST) {
             case PICK_REQUEST:
+                this.handlePickRequestSubmit({
+                    requester   : current_user.id,
+                    university  : $("#pick-request-university-select").val().trim(),
+                    price       : $("#pick-request-tip-input").val().trim(),
+                    date_time   : moment($("#pick-request-time-input").val().trim(), 'MM/DD/YYYY HH:mm').format(),
+                    start       : $("#pick-request-start-input").val().trim(),
+                    destination : $("#pick-request-dest-input").val().trim(),
+                    bags        : $("#pick-request-baggages-input").val().trim(),
+                    feed_type   : PICK_REQUEST,
+                    description : $("#pick-request-desc-textarea").val().trim(),
+                });
+                $("#post-request-submit-button").button('reset');
                 break;
             case FLIGHT_PICK_REQUEST:
                 var flight = $("#flight-pick-request-flight-input").val().trim().toUpperCase();
                 // month is 0 indexed, http://momentjs.com/docs/#/get-set/month/
-                var momentDate  = moment($("#flight-pick-request-date-input").val().trim(), 'MM/DD/YYYY');
+                var momentDate = moment($("#flight-pick-request-date-input").val().trim(), 'MM/DD/YYYY');
                 // load scheduled flight
                 $.ajax({
                     url: getFlightStatusScheduledFlightAPI(flight, momentDate.year(), momentDate.month() + 1, momentDate.date()),
@@ -180,7 +207,7 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                             });
                             $("#post-request-submit-button").button('reset');
                         } else {
-                            $('#flight-pick-request-error-modal-title').text("Cannot find schedule for " + flight);
+                            $('#flight-pick-request-error-modal-title').text("Cannot Find Flight Schedule For " + flight);
                             $('#flight-pick-request-error-modal').modal('show');
                             $("#post-request-submit-button").button('reset');
                         }
@@ -203,7 +230,7 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
             React.createElement("form", {className: "form-horizontal", onSubmit: this.handlePostRequestSubmit}, 
                 /* Request Type Tab */
                 React.createElement("div", {className: "form-group"}, 
-                    React.createElement("label", {className: "col-sm-2 control-label"}, "I want to"), 
+                    React.createElement("label", {className: "col-sm-2 control-label"}, "Request"), 
                     React.createElement("div", {className: "btn-group col-sm-10", 'data-toggle': "buttons"}, 
                         React.createElement("label", {className: "btn btn-white active"}, 
                             React.createElement("input", {
@@ -226,14 +253,14 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                 ), 
                 /* University Select */
                 React.createElement("div", {className: "form-group"}, 
-                    React.createElement("label", {className: "col-sm-2 control-label"}, "I study at"), 
+                    React.createElement("label", {className: "col-sm-2 control-label"}, "University"), 
                     React.createElement("div", {className: "col-sm-10"}, 
                         React.createElement("select", {id: "pick-request-university-select"})
                     )
                 ), 
                 /* Flight Number Input */
                 React.createElement("div", {className: "form-group", style: {display: 'none'}}, 
-                    React.createElement("label", {className: "col-sm-2 control-label"}, "I will take the flight"), 
+                    React.createElement("label", {className: "col-sm-2 control-label"}, "Flight"), 
                     React.createElement("div", {className: "col-sm-10"}, 
                         React.createElement("input", {
                             id: "flight-pick-request-flight-input", 
@@ -245,17 +272,7 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                 ), 
                 /* Flight Baggages & Date Input */
                 React.createElement("div", {className: "form-group", style: {display: 'none'}}, 
-                    React.createElement("label", {className: "col-sm-2 control-label"}, "I have baggages"), 
-                    React.createElement("div", {className: "col-sm-4"}, 
-                        React.createElement("input", {
-                            id: "pick-request-baggages-input", 
-                            type: "number", 
-                            className: "form-control", 
-                            defaultValue: 1, 
-                            onBlur: this.onInputFocusLose, 
-                            placeholder: "How many bags do you have?"})
-                    ), 
-                    React.createElement("label", {className: "col-sm-2 control-label"}, "I will arrive at"), 
+                    React.createElement("label", {className: "col-sm-2 control-label"}, "Arrival Date"), 
                     React.createElement("div", {className: "col-sm-4"}, 
                         React.createElement("div", {className: "input-group date", id: "flight-pick-request-date-div"}, 
                             React.createElement("input", {
@@ -266,14 +283,21 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                                 placeholder: "What's your arrival date?"}), 
                             React.createElement("span", {className: "input-group-addon"}, React.createElement("span", {className: "glyphicon glyphicon-calendar"}))
                         )
+                    ), 
+                    React.createElement("label", {className: "col-sm-2 control-label"}, "Baggages"), 
+                    React.createElement("div", {className: "col-sm-4"}, 
+                        React.createElement("input", {
+                            id: "pick-request-baggages-input", 
+                            type: "number", 
+                            className: "form-control", 
+                            defaultValue: 1, 
+                            onBlur: this.onInputFocusLose, 
+                            placeholder: "How many bags do you have?"})
                     )
-                ), 
-                React.createElement("div", {className: "form-group", style: {display: 'none'}}
-
                 ), 
                 /* Pick Location Input */
                 React.createElement("div", {className: "form-group"}, 
-                    React.createElement("label", {className: "col-sm-2 control-label"}, "I need be picked at"), 
+                    React.createElement("label", {className: "col-sm-2 control-label"}, "Pick location"), 
                     React.createElement("div", {className: "col-sm-10"}, 
                         React.createElement("input", {
                             id: "pick-request-start-input", 
@@ -282,9 +306,24 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                             placeholder: "Where you want to be picked up?"})
                     )
                 ), 
+                /* Pick Time Input */
+                React.createElement("div", {className: "form-group"}, 
+                    React.createElement("label", {className: "col-sm-2 control-label"}, "Pick Time"), 
+                    React.createElement("div", {className: "col-sm-4"}, 
+                        React.createElement("div", {className: "input-group date", id: "pick-request-time-div"}, 
+                            React.createElement("input", {
+                                id: "pick-request-time-input", 
+                                type: "text", 
+                                className: "form-control", 
+                                onBlur: this.onInputFocusLose, 
+                                placeholder: "What's your pick time?"}), 
+                            React.createElement("span", {className: "input-group-addon"}, React.createElement("span", {className: "glyphicon glyphicon-calendar"}))
+                        )
+                    )
+                ), 
                 /* Pick Dest Input */
                 React.createElement("div", {className: "form-group"}, 
-                    React.createElement("label", {className: "col-sm-2 control-label"}, "I want to go to"), 
+                    React.createElement("label", {className: "col-sm-2 control-label"}, "Destination"), 
                     React.createElement("div", {className: "col-sm-10"}, 
                         React.createElement("input", {
                             id: "pick-request-dest-input", 
@@ -296,7 +335,7 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                 ), 
                 /* Pick Tip Input */
                 React.createElement("div", {className: "form-group"}, 
-                    React.createElement("label", {className: "col-sm-2 control-label"}, "I can pay tip"), 
+                    React.createElement("label", {className: "col-sm-2 control-label"}, "Tip"), 
                     React.createElement("div", {className: "col-sm-4"}, 
                         React.createElement("input", {
                             id: "pick-request-tip-input", 
@@ -309,7 +348,7 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                 ), 
                 /* Message Input */
                 React.createElement("div", {className: "form-group"}, 
-                    React.createElement("label", {className: "col-sm-2 control-label"}, "I have note"), 
+                    React.createElement("label", {className: "col-sm-2 control-label"}, "Note"), 
                     React.createElement("div", {className: "col-sm-10"}, 
                         React.createElement("textarea", {
                             id: "pick-request-desc-textarea", 
@@ -348,7 +387,7 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                                     id: "flight-pick-request-error-modal-title", 
                                     className: "modal-title", 
                                     style: {color: "white"}}, 
-                                    "Cannot find flight schedule"
+                                    "Cannot Find Flight Schedule"
                                 )
                             ), 
                             React.createElement("div", {className: "modal-body"}, 
