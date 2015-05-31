@@ -26,8 +26,6 @@
         <!-- http://facebook.github.io/react/ -->
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script type="text/javascript" src="{% static 'js/jquery/jquery.min.js' %}"></script>
-        <!-- http://learn.jquery.com/jquery-ui/ -->
-        <script type="text/javascript" src="{% static 'js/jquery-ui/jquery-ui.min.js' %}"></script>
         <!-- http://mynameismatthieu.com/WOW/docs.html -->
         <script type="text/javascript" src="{% static 'js/wow/wow.min.js' %}"></script>
         <!-- http://brianreavis.github.io/selectize.js/ -->
@@ -50,7 +48,6 @@
         <script type="text/javascript" src="{% static 'picknese/constant.js' %}"></script>
         <!-- <script type="text/javascript" src="{% static 'js/react/react.min.js' %}"></script> -->
         <script type="text/javascript" src="{% static 'js/react/react.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/react/JSXTransformer.js' %}"></script>
         <!-- http://momentjs.com/ -->
         <script type="text/javascript" src="{% static 'js/moment/moment.min.js' %}"></script>
         <!-- http://eonasdan.github.io/bootstrap-datetimepicker/ -->
@@ -82,13 +79,11 @@
         </div>
         <!-- Latest compiled and minified JavaScript -->
         <script type="text/javascript" src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
-        <!-- http://bootswatch.com/paper/ -->
-        <script type="text/javascript" src="{% static 'js/bootstrap/bootswatch.js' %}"></script>
         <!-- https://github.com/tapmodo/Jcrop -->
         <script type="text/javascript" src="{% static 'js/Jcrop/jquery.Jcrop.min.js' %}"></script>
         <!-- Flight Status API Helper -->
         <script type="text/javascript" src="{% static 'picknese/js/api/FlightStatusAPIHelper.js' %}"></script>
-        {% block extra %}
+        {% block extra_end %}
         {% endblock %}
     </body>
 </html>
