@@ -819,11 +819,9 @@ div.show-image button.btn-on-image {
  * Home Feed Card
  * --------------------------------------------------
  */
-@media (max-width: 768px ) {
-    .home-feed-card-div {
-        padding-left: 0px;
-        padding-right: 0px;
-    }
+.home-feed-card-div {
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 @media (max-width: 768px ) {
