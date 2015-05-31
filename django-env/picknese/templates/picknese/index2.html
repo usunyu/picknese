@@ -15,7 +15,7 @@ Welcome |
             <div class="header-search">
                 <h2>Need a pick up from your schoolmate?</h2>
                 <h5>We think that should be easy :)</h5>
-                <form class="form-wrapper cf" onsubmit="indexUniversitySubmit()">
+                <form class="form-wrapper cf">
                     <input
                         id="index-university-input"
                         type="text"
@@ -137,39 +137,6 @@ Welcome |
 {% block extra %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">
 <script type="text/javascript">
-    // bind unversity auto complete
-    $.ajax({
-        url: getUniversitySimpleListAPI(),
-        dataType: 'json',
-        type: 'GET',
-        success: function(data) {
-            var formatData = [];
-            for (var i = 0; i < data.length; i++) {
-                formatData.push({
-                    value : data[i].shorthand.toUpperCase() + " | " + data[i].name,
-                    data  : data[i].id,
-                });
-            }
-            $('#index-university-input').autocomplete({
-                lookup: formatData,
-                onSelect: function (suggestion) {
-                    window.location = getHomeFeedURL(suggestion.data);
-                }
-            });
-        }.bind(this),
-        error: function(xhr, status, err) {
-            console.error(
-                getUniversitySimpleListAPI(),
-                status,
-                err.toString()
-            );
-        }.bind(this)
-    });
-
-    function indexUniversitySubmit() {
-        return false;
-    }
-
     if (production) {
         var indexEvent = {
             referrer: document.referrer,

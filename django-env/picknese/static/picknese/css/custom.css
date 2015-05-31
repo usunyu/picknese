@@ -802,6 +802,21 @@ div.show-image button.btn-on-image {
 }
 
 /*
+ * Nav Search Bar
+ * --------------------------------------------------
+ */
+#nav-search-bar-input {
+    width: 450px;
+    height: 36px;
+}
+
+@media (max-width: 1200px ) {
+    #nav-search-bar-input {
+        width: 100%;
+    }
+}
+
+/*
  * Home Feed Card
  * --------------------------------------------------
  */
