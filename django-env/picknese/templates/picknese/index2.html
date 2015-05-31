@@ -117,7 +117,7 @@ Welcome |
     </div>
     <div class="container-fluid">
         <div class="row">
-            <ul class="gallery">
+            <ul class="gallery" style="padding: 0px;">
                 {% for university in universities %}
                 <li>
                     <a href="{% url 'picknese.views.home' university.id %}">

@@ -39,7 +39,7 @@ var HomePanel = React.createClass({displayName: 'HomePanel',
             }
         }
         return (
-            React.createElement("div", null, 
+            React.createElement("div", {className: "col-sm-12 col-md-10 home-feed-card-div"}, 
                 homeFeedList
             )
         );

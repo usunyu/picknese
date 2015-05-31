@@ -676,7 +676,6 @@ div.show-image button.btn-on-image {
     margin: 0 auto;
     text-align: center;
     width: 100%;
-    padding: 20px;
 }
 .gallery li {
     /*width: 421px;*/
@@ -820,6 +819,13 @@ div.show-image button.btn-on-image {
  * Home Feed Card
  * --------------------------------------------------
  */
+@media (max-width: 768px ) {
+    .home-feed-card-div {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
+
 .home-feed-title {
     margin-left: 65px;
 }
