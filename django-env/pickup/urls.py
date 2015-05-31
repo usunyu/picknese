@@ -20,6 +20,13 @@ urlpatterns = patterns('',
     url(r'^api/request/(?P<university_id>\d+)/$', apis.PickRequestList.as_view()),
     url(r'^api/request/create/$', apis.PickRequestCreate.as_view()),
     url(r'^api/request/mutate/(?P<pk>\d+)/$', apis.PickRequestMutate.as_view()),
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    #                                 PickUp                                        #
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    url(r'^api/pickup/(?P<pk>\d+)/$', apis.PickUpList.as_view()),
+    url(r'^api/pickup/create/$', apis.PickUpCreate.as_view()),
+    url(r'^api/pickup/mutate/(?P<pk>\d+)/$', apis.PickUpMutate.as_view()),
+
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
     #                               Legacy Code                                     #
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 

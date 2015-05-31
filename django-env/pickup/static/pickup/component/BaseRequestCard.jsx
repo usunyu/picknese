@@ -8,14 +8,6 @@ var BaseRequestCard = React.createClass({
         var feed = this.props.feed;
         this.props.onCancel(feed);
     },
-    handleRequestSubmit: function() {
-        var feed = this.props.feed;
-        this.props.onSubmit({
-            flight_pick_request : feed.id,
-            picker              : current_user.id,
-            description         : $("#pick-up-desc-textarea").val().trim(),
-        });
-    },
     getActionButton: function() {
         var feed = this.props.feed;
         {/* If it is user's own request */}
@@ -133,7 +125,7 @@ var BaseRequestCard = React.createClass({
                                     <button
                                         type="button"
                                         className="btn btn-primary"
-                                        onClick={this.handleRequestSubmit}>
+                                        onClick={this.props.onSubmit}>
                                         Confirm
                                     </button>
                                 </div>

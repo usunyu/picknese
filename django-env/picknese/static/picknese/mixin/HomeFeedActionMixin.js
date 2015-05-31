@@ -161,4 +161,31 @@ var HomeFeedActionMixin = {
             }.bind(this)
         });
     },
+    handlePickUpSubmit: function(data) {
+        var id = data.pick_request;
+        $.ajax({
+            url: getPickUpCreateAPI(),
+            dataType: 'json',
+            type: 'POST',
+            data: data,
+            success: function(data) {
+                $("#feed-" + id).modal('hide');
+                preparePopupMessage(
+                    "Thanks for taking the request. Please contact the requester for confirmation!",
+                    "success"
+                );
+                popupMessage();
+                this.loadHomeFeedFromServer();
+            }.bind(this),
+            error: function(xhr, status, err) {
+                $("#feed-" + id).modal('hide');
+                console.error(getPickUpCreateAPI(), status, err.toString());
+                preparePopupMessage(
+                    "Oops, some errors happen, please try again later.",
+                    "danger"
+                );
+                popupMessage();
+            }.bind(this)
+        });
+    },
 }

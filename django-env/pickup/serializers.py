@@ -60,6 +60,25 @@ class PickRequestMutateSerializer(ModelSerializer):
     class Meta:
         model = PickRequest
 
+class PickUpListSerializer(ModelSerializer):
+    """
+    Read Only Endpoint for PickUp
+    Support nested Serializer
+    """
+    pick_request = PickRequestListSerializer(read_only=True)
+    picker = UserSerializer(read_only=True)
+
+    class Meta:
+        model = PickUp
+
+class PickUpMutateSerializer(ModelSerializer):
+    """
+    Create, Update, Delete Endpoint for PickUp
+    Flat Serializer
+    """
+    class Meta:
+        model = PickUp
+
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 #                               Legacy Code                                     #

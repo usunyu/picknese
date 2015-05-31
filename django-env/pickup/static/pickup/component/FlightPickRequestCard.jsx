@@ -55,13 +55,21 @@ var FlightPickRequestCard = React.createClass({
 
         return layoutMap;
     },
+    onSubmit: function() {
+        var feed = this.props.feed;
+        this.props.onSubmit({
+            flight_pick_request : feed.id,
+            picker              : current_user.id,
+            description         : $("#pick-up-desc-textarea").val().trim(),
+        });
+    },
     render: function() {
         var feed = this.props.feed;
         var layout = this.getCustomLayout();
         return (
             <BaseRequestCard
                 feed={this.props.feed}
-                onSubmit={this.props.onSubmit}
+                onSubmit={this.onSubmit}
                 onCancel={this.props.onCancel}
                 layout={layout} />
         );

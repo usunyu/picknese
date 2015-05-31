@@ -34,6 +34,14 @@ function getPickRequestMutateAPI(id) {
     return "/pickup/api/request/mutate/" + id + "/";
 }
 
+function getPickUpCreateAPI() {
+    return "/pickup/api/pickup/create/";
+}
+
+function getPickUpMutateAPI(id) {
+    return "/pickup/api/pickup/mutate/" + id + "/";
+}
+
 /*
  * Legacy
  * --------------------------------------------------
@@ -87,9 +95,9 @@ function getMyAllPickUpListAPI() {
     return "/pickup/api/mylist/all/";
 }
 
-function getPickUpCreateAPI() {
-    return "/pickup/api/create/";
-}
+// function getPickUpCreateAPI() {
+//     return "/pickup/api/create/";
+// }
 
 function getUniversityAPI(u_id) {
     return "/universities/api/" + u_id + "/";

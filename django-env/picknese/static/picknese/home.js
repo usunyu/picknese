@@ -21,6 +21,7 @@ var HomePanel = React.createClass({displayName: 'HomePanel',
                         React.createElement(PickRequestCard, {
                             key: i, 
                             feed: feed, 
+                            onSubmit: this.handlePickUpSubmit, 
                             onCancel: this.handlePickRequestCancel})
                     );
                     break;
