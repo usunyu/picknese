@@ -167,6 +167,11 @@ var PostRequestForm = React.createClass({
     },
     handlePostRequestSubmit: function(event) {
         event.preventDefault();
+        // need login to complete the request
+        if (jQuery.isEmptyObject(current_user)) {
+            $("#login-modal").modal('show');
+            return;
+        }
         $("#post-request-submit-button").button('loading');
         switch(CURRENT_REQUEST) {
             case PICK_REQUEST:
