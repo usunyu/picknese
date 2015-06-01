@@ -158,7 +158,7 @@ var BaseRequestCard = React.createClass({
         var feed = this.props.feed;
         var layout = this.props.layout;
         return (
-            <div className="panel clearfix fadein-effect">
+            <div className="panel clearfix fadein-effect home-feed-panel-div">
                 <div className="panel-heading" style={{overflow: "auto"}}>
                     <a  href="#" className="home-feed-sm-profile">
                         <img

@@ -22,7 +22,7 @@
                         class="form-control"
                         placeholder="Search your school...">
                     <div class="input-group-btn">
-                        <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                        <button class="btn btn-red" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                     </div>
                 </div>
             </form>
@@ -121,12 +121,14 @@
             }
             $('#index-university-input').autocomplete({
                 lookup: formatData,
+                autoSelectFirst: true,
                 onSelect: function (suggestion) {
                     window.location = getHomeFeedURL(suggestion.data);
                 }
             });
             $('#nav-search-bar-input').autocomplete({
                 lookup: formatData,
+                autoSelectFirst: true,
                 onSelect: function (suggestion) {
                     window.location = getHomeFeedURL(suggestion.data);
                 }

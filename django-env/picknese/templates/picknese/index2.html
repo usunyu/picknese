@@ -7,6 +7,12 @@
 Welcome |
 {% endblock %}
 
+{% block extra_head %}
+<!-- https://jqueryui.com/ -->
+<script type="text/javascript" src="{% static 'js/jquery-ui/jquery-ui.min.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">
+{% endblock %}
+
 {% block jumbotron %}
 <header class="box-shadow">
     <div class="header-content">
@@ -117,7 +123,7 @@ Welcome |
     </div>
     <div class="container-fluid">
         <div class="row">
-            <ul class="gallery">
+            <ul class="gallery" style="padding: 0px;">
                 {% for university in universities %}
                 <li>
                     <a href="{% url 'picknese.views.home' university.id %}">
@@ -134,8 +140,7 @@ Welcome |
 </section>
 {% endblock %}
 
-{% block extra %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">
+{% block extra_end %}
 <script type="text/javascript">
     if (production) {
         var indexEvent = {

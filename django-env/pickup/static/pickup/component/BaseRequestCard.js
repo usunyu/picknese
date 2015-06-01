@@ -158,7 +158,7 @@ var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
         var feed = this.props.feed;
         var layout = this.props.layout;
         return (
-            React.createElement("div", {className: "panel clearfix fadein-effect"}, 
+            React.createElement("div", {className: "panel clearfix fadein-effect home-feed-panel-div"}, 
                 React.createElement("div", {className: "panel-heading", style: {overflow: "auto"}}, 
                     React.createElement("a", {href: "#", className: "home-feed-sm-profile"}, 
                         React.createElement("img", {
