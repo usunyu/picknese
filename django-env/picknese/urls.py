@@ -10,7 +10,7 @@ urlpatterns = patterns('',
     url(r'^$', 'picknese.views.index'),
     # home urls
     url(r'^home/(?P<university_id>\d+)/$', views.home),
-    url(r'^home/api/(?P<university_id>\d+)/$', apis.HomeFeedList.as_view()),
+    url(r'^home/api/(?P<university_id>\d+)/(?P<feed_type>\d+)/$', apis.HomeFeedList.as_view()),
     # post request
     url(r'^home/(?P<university_id>\d+)/new/$', views.post_request),
     # pickup urls

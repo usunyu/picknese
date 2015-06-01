@@ -10,6 +10,39 @@ var HomePanel = React.createClass({
         if (hasPopupMessage()) {
             setTimeout(function() { popupMessage(); }, 500);
         }
+        // enable Bootstrap-Select
+        $('.selectpicker').selectpicker();
+    },
+    onFeedTypeChange: function(event) {
+        CURRENT_FEED_TYPE = event.target.value;
+        this.loadHomeFeedFromServer();
+    },
+    getFeedTypeSelect: function() {
+        return (
+            <select
+                className="selectpicker"
+                data-style="btn-primary"
+                onChange={this.onFeedTypeChange}>
+                <option
+                    data-icon="glyphicon-th-large"
+                    key={ALL_POST}
+                    value={ALL_POST}>
+                    All Post
+                </option>
+                <option
+                    data-icon="glyphicon-plane"
+                    key={FLIGHT_PICK_REQUEST}
+                    value={FLIGHT_PICK_REQUEST}>
+                    Flight Pick Request
+                </option>
+                <option
+                    data-icon="glyphicon-tag"
+                    key={PICK_REQUEST}
+                    value={PICK_REQUEST}>
+                    Pick Request
+                </option>
+            </select>
+        );
     },
     render: function() {
         var homeFeedList = [];
@@ -39,8 +72,17 @@ var HomePanel = React.createClass({
             }
         }
         return (
-            <div className="col-sm-12 col-md-10 home-feed-card-div">
-                {homeFeedList}
+            <div className="col-sm-12 col-md-9 home-feed-card-div">
+                <div className="hidden-sm hidden-md hidden-lg col-sm-12"
+                     style={{paddingBottom: "5px"}}>
+                    {this.getFeedTypeSelect()}
+                </div>
+                <div className="col-sm-9 col-md-10 home-feed-card-div">
+                    {homeFeedList}
+                </div>
+                <div className="hidden-xs col-sm-2 col-md-2">
+                    {this.getFeedTypeSelect()}
+                </div>
             </div>
         );
     }

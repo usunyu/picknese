@@ -6,8 +6,13 @@
  */
 
 .bootstrap-select {
-  width: 220px \0;
+  /*width: 220px \0;*/
   /*IE9 and below*/
+}
+@media (max-width: 768px ) {
+  .bootstrap-select {
+    width: 100%;
+  }
 }
 .bootstrap-select > .dropdown-toggle {
   width: 100%;
@@ -21,7 +26,7 @@
   width: auto !important;
 }
 .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
-  width: 220px;
+  /*width: 220px;*/
 }
 .bootstrap-select .dropdown-toggle:focus {
   outline: thin dotted #333333 !important;

@@ -9,6 +9,9 @@ Home |
 
 {% block extra_head %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/geosuggest/geosuggest.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-select/bootstrap-select.css' %}" />
+<script type="text/javascript" src="{% static 'js/bootstrap-select/bootstrap-select.min.js' %}"></script>
+
 <script type="text/javascript" src="{% static 'picknese/mixin/HomeFeedActionMixin.js' %}"></script>
 <script type="text/javascript" src="{% static 'pickup/component/BaseRequestCard.js' %}"></script>
 <script type="text/javascript" src="{% static 'pickup/component/FlightPickRequestCard.js' %}"></script>
@@ -61,8 +64,8 @@ Home |
             {% include 'picknese/current_user.html' %}
         </div>
         <!-- Loading Panel -->
-        <div id="loading" class="col-xs-12 col-sm-8 col-md-9 home-feed-card-div">
-            <div class="col-sm-12 col-md-10 home-feed-card-div">
+        <div id="loading" class="col-sm-12 col-md-9 home-feed-card-div">
+            <div class="col-sm-9 col-md-10 home-feed-card-div">
                 <div class="panel panel-primary clearfix">
                     <h6 style="margin-left: 85px;">Loading ...</h6>
                     <hr style="margin-top: 9px; margin-bottom: 0px;"/>
@@ -82,7 +85,7 @@ Home |
                 </div>
             </div>
         </div>
-        <div id="content" class="col-xs-12 col-sm-8 col-md-9 home-feed-card-div"></div>
+        <div id="content"></div>
     </div>
 </div>
 <!-- template val pass to react -->

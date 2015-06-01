@@ -8,25 +8,26 @@
  * @homeFeedActionMixinLoadHomeFeedInterval
  * @pollInterval
  */
-var homeFeedCategory = "All";
+var CURRENT_FEED_TYPE = ALL_POST;
 
 var HomeFeedActionMixin = {
     loadHomeFeedFromServer: function() {
         $.ajax({
-            url: getHomeFeedListAPI(university.id),
+            url: getHomeFeedListAPI(university.id, CURRENT_FEED_TYPE),
             dataType: 'json',
             success: function(data) {
                 this.setState({feeds: data});
                 dismissLoadingEffect();
-                this.forceUpdate();
+                // this.forceUpdate();
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(getHomeFeedListAPI(university.id), status, err.toString());
+                console.error(getHomeFeedListAPI(university.id, CURRENT_FEED_TYPE), status, err.toString());
             }.bind(this)
         });
     },
     getInitialState: function() {
         return {
+            feedType: ALL_POST,
             feeds: [],
         };
     },

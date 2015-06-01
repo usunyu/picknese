@@ -2,8 +2,12 @@
  * REST API helper
  * --------------------------------------------------
  */
-function getHomeFeedListAPI(u_id) {
-    return "/home/api/" + u_id + "/";
+// function getHomeFeedListAPI(u_id) {
+//     return "/home/api/" + u_id + "/";
+// }
+
+function getHomeFeedListAPI(u_id, type) {
+    return "/home/api/" + u_id + "/" + type + "/";
 }
 
 /*
