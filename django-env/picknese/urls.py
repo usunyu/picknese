@@ -13,6 +13,8 @@ urlpatterns = patterns('',
     url(r'^home/api/(?P<university_id>\d+)/(?P<feed_type>\d+)/$', apis.HomeFeedList.as_view()),
     # post request
     url(r'^home/(?P<university_id>\d+)/new/$', views.post_request),
+    # auth api
+    url(r'^api/account/login/$', apis.auth_api_view),
     # pickup urls
     url(r'^pickup/', include('pickup.urls')),
     # admin usrls

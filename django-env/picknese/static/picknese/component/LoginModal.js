@@ -7,6 +7,47 @@ var LoginModal = React.createClass({displayName: 'LoginModal',
         $('#signup-box').hide();
         $('#login-box').show();
     },
+    onLogInSubmit: function(event) {
+        event.preventDefault();
+        var auth_with_data = "";
+        if (typeof request_data !== 'undefined') {
+            auth_with_data = JSON.stringify(request_data);
+            // clear request_data
+            request_data = ""
+        }
+        $.ajax({
+            url: getAuthAPI(),
+            dataType: 'json',
+            type: 'POST',
+            data: {
+                username : $("#login-username").val().trim(),
+                password : $("#login-password").val().trim(),
+                auth_with_data : auth_with_data,
+            },
+            success: function(data) {
+                if (data.success) {
+                    $("#login-modal").modal('hide');
+
+                    switch(data.request_type) {
+                        case PICK_REQUEST:
+                            preparePopupMessage(
+                                "You have successfully post your request. Please waiting for your picker to contact you!",
+                                "success"
+                            );
+                            window.location = data.redirect_url;
+                            break;
+                        default:
+                            break;
+                    }
+                } else {
+                    // error hint
+                }
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(getAuthAPI(), status, err.toString());
+            }.bind(this)
+        });
+    },
     render: function() {
         return (
             React.createElement("div", {className: "modal fade", id: "login-modal", tabIndex: "-1", role: "dialog", 'aria-hidden': "true"}, 
@@ -21,12 +62,16 @@ var LoginModal = React.createClass({displayName: 'LoginModal',
                                         React.createElement("div", {className: "panel-heading", style: {borderRadius: "0px"}}, 
                                             React.createElement("div", {className: "panel-title"}, "Sign In"), 
                                             React.createElement("div", {style: {float: "right", fontSize: "80%", position: "relative", top: "-10px"}}, 
-                                                React.createElement("a", {href: "#"}, "Forgot password?")
+                                                React.createElement("a", {href: "#", style: {color: "white"}}, "Forgot password?")
                                             )
                                         ), 
                                         React.createElement("div", {style: {paddingTop: "30px"}, className: "panel-body"}, 
                                             React.createElement("div", {style: {display: "none"}, id: "login-alert", className: "alert alert-danger col-sm-12"}), 
-                                            React.createElement("form", {id: "login-form", className: "form-horizontal", role: "form"}, 
+                                            React.createElement("form", {
+                                                id: "login-form", 
+                                                className: "form-horizontal", 
+                                                role: "form", 
+                                                onSubmit: this.onLogInSubmit}, 
                                                 React.createElement("div", {style: {marginBottom: "25px"}, className: "input-group"}, 
                                                     React.createElement("span", {className: "input-group-addon"}, React.createElement("i", {className: "glyphicon glyphicon-user"})), 
                                                     React.createElement("input", {
@@ -34,7 +79,6 @@ var LoginModal = React.createClass({displayName: 'LoginModal',
                                                         type: "text", 
                                                         className: "form-control", 
                                                         name: "username", 
-                                                        value: "", 
                                                         placeholder: "username or email"})
                                                 ), 
                                                 React.createElement("div", {style: {marginBottom: "25px"}, className: "input-group"}, 
@@ -55,17 +99,20 @@ var LoginModal = React.createClass({displayName: 'LoginModal',
                                                 ), 
                                                 React.createElement("div", {style: {marginTop: "10px"}, className: "form-group"}, 
                                                     React.createElement("div", {className: "col-sm-12 controls"}, 
-                                                        React.createElement("a", {id: "btn-login", href: "#", className: "btn btn-success"}, "Login  "), 
+                                                        React.createElement("button", {
+                                                            id: "btn-login", 
+                                                            type: "submit", 
+                                                            className: "btn btn-success", 
+                                                            style: {marginRight: "10px"}}, 
+                                                            React.createElement("i", {className: "glyphicon glyphicon-log-in"}), " Login"
+                                                        ), 
                                                         React.createElement("a", {id: "btn-fblogin", href: "#", className: "btn btn-primary"}, "Login with Facebook")
                                                     )
                                                 ), 
                                                 React.createElement("div", {className: "form-group"}, 
                                                     React.createElement("div", {className: "col-md-12 control"}, 
                                                         React.createElement("div", {style: {borderTop: "1px solid#888", paddingTop: "15px", fontSize: "85%"}}, 
-                                                                "Dont have an account!",  
-                                                            React.createElement("a", {href: "#", onClick: this.onSignUpClick}, 
-                                                                "Sign Up Here"
-                                                            )
+                                                                "Dont have an account! ", React.createElement("a", {href: "#", onClick: this.onSignUpClick}, "Sign Up Here")
                                                         )
                                                     )
                                                 )
@@ -81,7 +128,13 @@ var LoginModal = React.createClass({displayName: 'LoginModal',
                                         React.createElement("div", {className: "panel-heading", style: {borderRadius: "0px"}}, 
                                             React.createElement("div", {className: "panel-title"}, "Sign Up"), 
                                             React.createElement("div", {style: {float: "right", fontSize: "85%", position: "relative", top: "-10px"}}, 
-                                                React.createElement("a", {id: "signinlink", href: "#", onClick: this.onLogInClick}, "Sign In")
+                                                React.createElement("a", {
+                                                    id: "signinlink", 
+                                                    style: {color: "white"}, 
+                                                    href: "#", 
+                                                    onClick: this.onLogInClick}, 
+                                                    "Sign In"
+                                                )
                                             )
                                         ), 
                                         React.createElement("div", {className: "panel-body"}, 

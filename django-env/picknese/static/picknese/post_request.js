@@ -167,28 +167,34 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
     },
     handlePostRequestSubmit: function(event) {
         event.preventDefault();
-        // need login to complete the request
-        if (jQuery.isEmptyObject(current_user)) {
-            $("#login-modal").modal('show');
-            return;
-        }
         $("#post-request-submit-button").button('loading');
         switch(CURRENT_REQUEST) {
             case PICK_REQUEST:
-                this.handlePickRequestSubmit({
-                    requester   : current_user.id,
+                request_data = {
                     university  : $("#pick-request-university-select").val().trim(),
                     price       : $("#pick-request-tip-input").val().trim(),
                     date_time   : moment($("#pick-request-time-input").val().trim(), 'MM/DD/YYYY HH:mm').format(),
                     start       : $("#pick-request-start-input").val().trim(),
                     destination : $("#pick-request-dest-input").val().trim(),
-                    bags        : $("#pick-request-baggages-input").val().trim(),
                     feed_type   : PICK_REQUEST,
                     description : $("#pick-request-desc-textarea").val().trim(),
-                });
+                };
+                if (jQuery.isEmptyObject(current_user)) {
+                    // need login to complete the request
+                    $("#login-modal").modal('show');
+                    return;
+                }
+                request_data.requester = current_user.id;
+                this.handlePickRequestSubmit(request_data);
                 $("#post-request-submit-button").button('reset');
                 break;
             case FLIGHT_PICK_REQUEST:
+                // need login to complete the request
+                if (jQuery.isEmptyObject(current_user)) {
+                    $("#login-modal").modal('show');
+                    return;
+                }
+
                 var flight = $("#flight-pick-request-flight-input").val().trim().toUpperCase();
                 // month is 0 indexed, http://momentjs.com/docs/#/get-set/month/
                 var momentDate = moment($("#flight-pick-request-date-input").val().trim(), 'MM/DD/YYYY');
