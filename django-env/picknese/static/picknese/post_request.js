@@ -181,6 +181,7 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                 };
                 if (jQuery.isEmptyObject(current_user)) {
                     // need login to complete the request
+                    $("#post-request-submit-button").button('reset');
                     $("#login-modal").modal('show');
                     return;
                 }
@@ -189,12 +190,6 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                 $("#post-request-submit-button").button('reset');
                 break;
             case FLIGHT_PICK_REQUEST:
-                // need login to complete the request
-                if (jQuery.isEmptyObject(current_user)) {
-                    $("#login-modal").modal('show');
-                    return;
-                }
-
                 var flight = $("#flight-pick-request-flight-input").val().trim().toUpperCase();
                 // month is 0 indexed, http://momentjs.com/docs/#/get-set/month/
                 var momentDate = moment($("#flight-pick-request-date-input").val().trim(), 'MM/DD/YYYY');
@@ -205,7 +200,7 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                     type: 'GET',
                     success: function(data) {
                         if (!isFlightStatusResultHasError(data)) {
-                            this.handleFlightPickRequestSubmit({
+                            request_data = {
                                 requester   : current_user.id,
                                 university  : $("#pick-request-university-select").val().trim(),
                                 price       : $("#pick-request-tip-input").val().trim(),
@@ -215,7 +210,16 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                                 bags        : $("#pick-request-baggages-input").val().trim(),
                                 feed_type   : FLIGHT_PICK_REQUEST,
                                 description : $("#pick-request-desc-textarea").val().trim(),
-                            });
+                            }
+                            if (jQuery.isEmptyObject(current_user)) {
+                                // need login to complete the request
+                                $("#post-request-submit-button").button('reset');
+                                $("#login-modal").modal('show');
+                                return;
+                            }
+                            request_data.requester = current_user.id;
+
+                            this.handleFlightPickRequestSubmit(request_data);
                             $("#post-request-submit-button").button('reset');
                         } else {
                             $('#flight-pick-request-error-modal-title').text("Cannot Find Flight Schedule For " + flight);

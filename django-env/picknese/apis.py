@@ -44,6 +44,7 @@ class HomeFeedList(generics.ListAPIView):
 def auth_api_view(request):
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
+    # if auth with request data, finish the request
     auth_with_data = request.POST.get('auth_with_data', '')
     auth_data_object = ast.literal_eval(auth_with_data)
     user = auth.authenticate(username=username, password=password)
@@ -55,6 +56,11 @@ def auth_api_view(request):
         auth_data_object['university'] = University.objects.get(id=university_id)
         request_type = auth_data_object.get('feed_type')
         redirect_url = '/'
+
+        if request_type == constants.FLIGHT_PICK_REQUEST:
+            instance = FlightPickRequest(**auth_data_object)
+            instance.save()
+            redirect_url = reverse('picknese.views.home', args=[university_id])
 
         if request_type == constants.PICK_REQUEST:
             instance = PickRequest(**auth_data_object)

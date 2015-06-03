@@ -30,6 +30,7 @@ var LoginModal = React.createClass({displayName: 'LoginModal',
 
                     switch(data.request_type) {
                         case PICK_REQUEST:
+                        case FLIGHT_PICK_REQUEST:
                             preparePopupMessage(
                                 "You have successfully post your request. Please waiting for your picker to contact you!",
                                 "success"
