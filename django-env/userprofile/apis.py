@@ -8,9 +8,7 @@ from rest_framework.parsers import FileUploadParser, JSONParser
 
 from userprofile.models import User, UserProfile
 from userprofile.serializers import (UserSerializer, 
-                                     UserProfileSerializer,
-                                     UserToUniversityListSerializer,
-                                     UserToUniversityMutateSerializer)
+                                     UserProfileSerializer)
 
 class CurrentUserView(views.APIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
@@ -65,22 +63,22 @@ class MyProfileDetail(views.APIView):
             return response.Response(serializer.data)
         return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class UserToUniversityCreate(views.APIView):
-    """
-    UserToUniversityCreate APIView
-    Create UserToUniversity
-    UserToUniversityCreate.as_view() => accounts/api/touniversity/create/
-    """
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+# class UserToUniversityCreate(views.APIView):
+#     """
+#     UserToUniversityCreate APIView
+#     Create UserToUniversity
+#     UserToUniversityCreate.as_view() => accounts/api/touniversity/create/
+#     """
+#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
-    def post(self, request, university_id, format=None):
-        user = request.user
-        data = JSONParser().parse(request)
-        # Test those two params
-        print university_id
-        print data
-        # if serializer.is_valid():
-            # serializer.save()
-            # return response.Response(serializer.data)
-        return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     def post(self, request, university_id, format=None):
+#         user = request.user
+#         data = JSONParser().parse(request)
+#         # Test those two params
+#         print university_id
+#         print data
+#         # if serializer.is_valid():
+#             # serializer.save()
+#             # return response.Response(serializer.data)
+#         return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

@@ -12,5 +12,5 @@ urlpatterns = patterns('',
     # Upload Image
     url(r'^api/uploadimage/$', apis.ProfileImageUploadView.as_view()),
     # User to University info
-    url(r'^api/touniversity/create/(?P<university_id>\d+)/$', apis.UserToUniversityCreate.as_view()),
+    # url(r'^api/touniversity/create/(?P<university_id>\d+)/$', apis.UserToUniversityCreate.as_view()),
 )
