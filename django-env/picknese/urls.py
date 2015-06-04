@@ -27,7 +27,7 @@ urlpatterns = patterns('',
     url(r'^accounts/logout/$', 'picknese.views.logout'),
     url(r'^accounts/signup/$', 'picknese.views.signup'),
     # user profile urls
-    url(r'^accounts/', include('userprofile.urls')),
+    url(r'^profile/', include('userprofile.urls')),
     # rest framework urls
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

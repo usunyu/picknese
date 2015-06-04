@@ -851,3 +851,21 @@ div.show-image button.btn-on-image {
         display: none;
     }
 }
+
+/*
+ * Profile Page
+ * --------------------------------------------------
+ */
+.profile-jumbotron {
+    background-color: #222222;
+}
+
+.profile-picture {
+    width: 225px;
+    height: 225px;
+}
+
+.profile-info {
+    color: white;
+    margin-top: 10px;
+}
