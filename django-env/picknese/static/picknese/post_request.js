@@ -75,6 +75,10 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                 selected.push(data.id);
             }
         }
+        // Check if user already set up university
+        if (selected.length == 0 && !jQuery.isEmptyObject(current_user)) {
+            selected.push(current_user.university_id);
+        }
         // Bind university type hint
         $('#pick-request-university-select').selectize({
             items : selected,
@@ -318,6 +322,7 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                             id: "pick-request-start-input", 
                             type: "text", 
                             className: "form-control", 
+                            onBlur: this.onInputFocusLose, 
                             placeholder: "Where you want to be picked up?"})
                     )
                 ), 
