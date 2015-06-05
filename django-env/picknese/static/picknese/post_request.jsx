@@ -247,7 +247,7 @@ var PostRequestForm = React.createClass({
                 <div className="form-group">
                     <label className="col-sm-2 control-label">Request</label>
                     <div className="btn-group col-sm-10" data-toggle="buttons">
-                        <label className="btn btn-white active">
+                        <label className="btn btn-white btn-post-tab active">
                             <input
                                 id={PICK_REQUEST}
                                 type="radio"
@@ -256,7 +256,7 @@ var PostRequestForm = React.createClass({
                                 <i className="glyphicon glyphicon-bookmark"></i>&nbsp;Asking for Pick Up
                             </input>
                         </label>
-                        <label className="btn btn-white">
+                        <label className="btn btn-white btn-post-tab">
                             <input
                                 id={FLIGHT_PICK_REQUEST}
                                 type="radio"

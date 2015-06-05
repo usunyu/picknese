@@ -861,6 +861,28 @@ div.show-image button.btn-on-image {
 }
 
 /*
+ * Post Request Page
+ * --------------------------------------------------
+ */
+@media (max-width: 480px ) {
+    .btn-post-tab {
+        text-align: left;
+        width: 100%;
+    }
+}
+
+/*
+ * Navbar
+ * --------------------------------------------------
+ */
+@media (max-width: 768px ) {
+    .post-request-btn-div {
+        padding-left: 13px;
+        padding-right: 13px;
+    }
+}
+
+/*
  * Profile Page
  * --------------------------------------------------
  */

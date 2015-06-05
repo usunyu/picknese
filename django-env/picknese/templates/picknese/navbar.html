@@ -81,6 +81,7 @@
                 <!-- Post Request Button -->
                 {% if university %}
                 <li>
+                    <div class="post-request-btn-div">
                     <button
                         type="button"
                         class="btn btn-red col-xs-12"
@@ -88,9 +89,11 @@
                         onclick="location.href = '{% url 'picknese.views.post_request' university.id %}';">
                         Post Your Request
                     </button>
+                    </div>
                 </li>
                 {% else %}
                 <li>
+                    <div class="post-request-btn-div">
                     <button
                         type="button"
                         class="btn btn-red col-xs-12"
@@ -98,6 +101,7 @@
                         onclick="location.href = '{% url 'picknese.views.post_request' 0 %}';">
                         Post Your Request
                     </button>
+                    </div>
                 </li>
                 {% endif %}
             </ul>

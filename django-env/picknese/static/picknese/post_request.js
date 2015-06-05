@@ -247,7 +247,7 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                 React.createElement("div", {className: "form-group"}, 
                     React.createElement("label", {className: "col-sm-2 control-label"}, "Request"), 
                     React.createElement("div", {className: "btn-group col-sm-10", 'data-toggle': "buttons"}, 
-                        React.createElement("label", {className: "btn btn-white active"}, 
+                        React.createElement("label", {className: "btn btn-white btn-post-tab active"}, 
                             React.createElement("input", {
                                 id: PICK_REQUEST, 
                                 type: "radio", 
@@ -256,7 +256,7 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                                 React.createElement("i", {className: "glyphicon glyphicon-bookmark"}), " Asking for Pick Up"
                             )
                         ), 
-                        React.createElement("label", {className: "btn btn-white"}, 
+                        React.createElement("label", {className: "btn btn-white btn-post-tab"}, 
                             React.createElement("input", {
                                 id: FLIGHT_PICK_REQUEST, 
                                 type: "radio", 
