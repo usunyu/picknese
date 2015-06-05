@@ -73,8 +73,7 @@ var HomePanel = React.createClass({
         }
         return (
             <div className="col-sm-12 col-md-9 home-feed-card-div">
-                <div className="hidden-sm hidden-md hidden-lg col-sm-12"
-                     style={{paddingBottom: "5px"}}>
+                <div className="feed-type-select-xs-div hidden-sm hidden-md hidden-lg col-sm-12">
                     {this.getFeedTypeSelect()}
                 </div>
                 <div className="col-sm-9 col-md-10 home-feed-card-div">

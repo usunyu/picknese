@@ -97,6 +97,14 @@
     background-color: #ff9800;
 }
 
+.no-bottom-margin {
+    margin-bottom: 0px;
+}
+
+.no-left-padding {
+    padding-left: 0px;
+}
+
 #alert-messages {
     position: fixed;
     top: 63px;
@@ -824,7 +832,7 @@ div.show-image button.btn-on-image {
 }
 
 /*
- * Home Feed Card
+ * Home Feed
  * --------------------------------------------------
  */
 .home-feed-card-div {
@@ -858,6 +866,12 @@ div.show-image button.btn-on-image {
     .home-feed-md-profile {
         display: none;
     }
+}
+
+.feed-type-select-xs-div {
+    padding-bottom: 5px;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 /*
@@ -904,4 +918,8 @@ div.show-image button.btn-on-image {
 .profile-info-div {
     padding-left: 0px;
     padding-right: 0px;
+}
+
+.profile-nav-ul {
+    float: left;
 }

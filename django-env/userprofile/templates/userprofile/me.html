@@ -9,10 +9,10 @@ Me |
 {% endblock %}
 
 {% block jumbotron %}
-<div class="jumbotron profile-jumbotron box-shadow" >
+<div class="jumbotron profile-jumbotron box-shadow no-bottom-margin" >
     <div class="container" >
         <div class="media">
-            <div class="media-left col-xs-12 col-sm-4 col-md-3">
+            <div class="media-left no-left-padding col-xs-12 col-sm-4 col-md-3">
                 <div class="show-image">
                     <img
                         class="media-object profile-picture img-thumbnail"
@@ -90,7 +90,18 @@ Me |
 {% endblock %}
 
 {% block content %}
-
+<div class="container">
+    <div class="row">
+        <ul class="nav nav-tabs nav-justified">
+            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-envelope"></span> Inbox <span class="badge">7</span></a></li>
+            <li role="presentation" class="active"><a href="#"><span class="glyphicon glyphicon-list-alt"></span> Your Requests <span class="badge">2</span></a></li>
+            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-heart"></span> Your Offers <span class="badge">3</span></a></li>
+            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-calendar"></span> Calendar</a></li>
+            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-picture"></span> Your Photos</a></li>
+            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-cog"></span> Account Settings</a></li>
+        </ul>
+    </div>
+</div>
 {% endblock %}
 
 {% block extra_end %}

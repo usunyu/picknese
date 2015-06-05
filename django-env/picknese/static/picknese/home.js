@@ -73,8 +73,7 @@ var HomePanel = React.createClass({displayName: 'HomePanel',
         }
         return (
             React.createElement("div", {className: "col-sm-12 col-md-9 home-feed-card-div"}, 
-                React.createElement("div", {className: "hidden-sm hidden-md hidden-lg col-sm-12", 
-                     style: {paddingBottom: "5px"}}, 
+                React.createElement("div", {className: "feed-type-select-xs-div hidden-sm hidden-md hidden-lg col-sm-12"}, 
                     this.getFeedTypeSelect()
                 ), 
                 React.createElement("div", {className: "col-sm-9 col-md-10 home-feed-card-div"}, 
