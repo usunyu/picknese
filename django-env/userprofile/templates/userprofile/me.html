@@ -12,10 +12,10 @@ Me |
 <div class="jumbotron profile-jumbotron box-shadow" >
     <div class="container" >
         <div class="media">
-            <div class="media-left col-sm-4 col-md-3">
+            <div class="media-left col-xs-12 col-sm-4 col-md-3">
                 <div class="show-image">
                     <img
-                        class="media-object profile-picture img-thumbnail hidden-xs"
+                        class="media-object profile-picture img-thumbnail"
                         src="{% get_media_prefix %}{{current_user.profile.get_avatar}}" />
                         <button
                             type="button"
@@ -25,10 +25,7 @@ Me |
                             <i class="glyphicon glyphicon-camera"></i> Change Photo
                         </button>
                     </div>
-                    <img
-                        class="media-object box-shadow hidden-sm hidden-md hidden-lg"
-                        src="{% get_media_prefix %}{{current_user.profile.get_avatar}}"
-                        style="width: 100px; height: 100px" />
+                    
                     <div
                         id="image-upload-modal"
                         class="modal fade"
@@ -37,11 +34,11 @@ Me |
                         aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <div class="modal-header">
+                                <div class="modal-header background-color-primary">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
+                                        <span aria-hidden="true" class="color-white">&times;</span>
                                     </button>
-                                    <h4 class="modal-title">Change Profile Photo</h4>
+                                    <h4 class="modal-title color-white">Change Profile Photo</h4>
                                 </div>
                                 <div class="modal-body">
                                     <div id="image-upload-input">
@@ -49,7 +46,6 @@ Me |
                                             class="media-object box-shadow profile-picture"
                                             src="{% get_media_prefix %}{{current_user.profile.get_avatar}}" />
                                     </div>
-                                    <div id="image-upload-code" />
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -57,13 +53,13 @@ Me |
                                         Browse
                                         <input
                                             type="file" id="image-upload-file" 
-                                            onclick=""
-                                            onchange="" />
+                                            onclick="onClickUploadImage(event)"
+                                            onchange="onChangeUploadImage(event)" />
                                     </span>
                                     <button
                                         type="button"
                                         class="btn btn-primary" 
-                                        onclick="" >
+                                        onclick="onSubmitUploadImage(event)" >
                                         Save Changes
                                     </button>
                                 </div>
@@ -72,9 +68,21 @@ Me |
                     </div>
                 </div>
             </div>
-            <div
-                class="media-body col-sm-8 col-md-9 profile-info">
-                Profile Info Test
+            <div class="media-body col-sm-8 col-md-9 profile-info">
+                <h3 class="media-heading color-white">
+                    {{current_user.first_name}} {{current_user.last_name}}
+                </h3>
+                <div class="col-md-12 color-white profile-info-div">
+                    <div class="col-md-12 profile-info-div">
+                        <span class="glyphicon glyphicon-home"></span> {{current_user.profile.university}}
+                    </div>
+                    <div class="col-md-6 profile-info-div">
+                        <span class="glyphicon glyphicon-phone"></span> {{current_user.profile.phone}}
+                    </div>
+                    <div class="col-md-6 profile-info-div">
+                        <span class="glyphicon glyphicon-envelope"></span> {{current_user.profile.wechat}}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -83,4 +91,82 @@ Me |
 
 {% block content %}
 
+{% endblock %}
+
+{% block extra_end %}
+<script type="text/javascript"> 
+var imageUploadCode = null;
+
+function onClickUploadImage(event) {
+    $( "#image-upload-file" ).val(null);
+}
+
+function onChangeUploadImage(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    var file = event.dataTransfer !== undefined ? event.dataTransfer.files[0] : event.target.files[0];
+    var reader = new FileReader();
+    reader.onload = (function(theFile) {
+        return function(e) {
+            var image = new Image();
+            image.src = e.target.result;
+            image.onload = function() {
+                var canvas = document.createElement('canvas');
+                canvas.width = 300;
+                canvas.height = image.height * (300 / image.width);
+                var ctx = canvas.getContext('2d');
+                ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+                $('#image-upload-input')
+                    .html(['<img class="media-object box-shadow" src="', canvas.toDataURL(), '"/>'].join(''));
+
+                var img = $('#image-upload-input img')[0];
+                var canvas = document.createElement('canvas');
+
+                $('#image-upload-input img').Jcrop({
+                    bgColor: 'black',
+                    bgOpacity: .6,
+                    setSelect: [0, 0, 225, 225],
+                    aspectRatio: 1,
+                    onSelect: imgSelect,
+                    onChange: imgSelect
+                });
+
+                function imgSelect(selection) {
+                    canvas.width = canvas.height = 225;
+
+                    var ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, selection.x, selection.y, selection.w, selection.h, 0, 0, canvas.width, canvas.height);
+                
+                    imageUploadCode = canvas.toDataURL();
+                }
+            }
+        }
+    })(file);
+    reader.readAsDataURL(file);
+}
+
+function onSubmitUploadImage(event) {
+    if (imageUploadCode == null) {
+        // $( "#image-upload-input" ).effect("shake");
+        $("#image-upload-input").effect("shake", {times:3, distance: 5}, 500);
+        return;
+    }
+    $.ajax({
+        url: getProfileImageUploadAPI(),
+        dataType: 'json',
+        type: 'PUT',
+        data: {image_code : imageUploadCode},
+        success: function(data) {
+            // close dialog on success
+            $('#image-upload-modal').modal('hide');
+            // reload data
+            location.reload();
+        }.bind(this),
+        error: function(xhr, status, err) {
+            console.error(getProfileImageUploadAPI(), status, err.toString());
+        }.bind(this)
+    });
+}
+</script>
 {% endblock %}

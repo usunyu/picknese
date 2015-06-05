@@ -389,19 +389,17 @@ var PostRequestForm = React.createClass({
                 <div className="modal fade" id="flight-pick-request-error-modal" tabIndex="-1" role="dialog" aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
-                            <div className="modal-header" style={{backgroundColor: "#ff9800"}}>
+                            <div className="modal-header background-color-warning">
                                 <button
                                     type="button"
-                                    className="close"
+                                    className="close color-white"
                                     data-dismiss="modal"
-                                    style={{color: "white"}}
                                     aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                                 <h5
                                     id="flight-pick-request-error-modal-title"
-                                    className="modal-title"
-                                    style={{color: "white"}}>
+                                    className="modal-title color-white">
                                     Cannot Find Flight Schedule
                                 </h5>
                             </div>

@@ -31,20 +31,23 @@ Post Request |
         <div id="content" ></div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_end %}
 <!-- template val pass to react -->
 <script type="text/javascript">
-    var current_user = {};
-    if ("{{current_user}}" !== "AnonymousUser") {
-        current_user = {
-            id: "{{current_user.id}}",
-            first_name: "{{current_user.first_name}}",
-            last_name: "{{current_user.last_name}}",
-            avatar: "{{current_user.profile.avatar}}",
-        };
-    }
-    var university = {
-        id: "{{university_id}}",
+var current_user = {};
+if ("{{current_user.is_authenticated}}" == "True") {
+    current_user = {
+        id: "{{current_user.id}}",
+        first_name: "{{current_user.first_name}}",
+        last_name: "{{current_user.last_name}}",
+        avatar: "{{current_user.profile.avatar}}",
     };
+}
+var university = {
+    id: "{{university_id}}",
+};
 </script>
 
 <!-- https://developers.google.com/maps/documentation/javascript/examples/places-searchbox -->

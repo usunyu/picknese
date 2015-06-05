@@ -389,19 +389,17 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                 React.createElement("div", {className: "modal fade", id: "flight-pick-request-error-modal", tabIndex: "-1", role: "dialog", 'aria-hidden': "true"}, 
                     React.createElement("div", {className: "modal-dialog"}, 
                         React.createElement("div", {className: "modal-content"}, 
-                            React.createElement("div", {className: "modal-header", style: {backgroundColor: "#ff9800"}}, 
+                            React.createElement("div", {className: "modal-header background-color-warning"}, 
                                 React.createElement("button", {
                                     type: "button", 
-                                    className: "close", 
+                                    className: "close color-white", 
                                     'data-dismiss': "modal", 
-                                    style: {color: "white"}, 
                                     'aria-label': "Close"}, 
                                     React.createElement("span", {'aria-hidden': "true"}, "×")
                                 ), 
                                 React.createElement("h5", {
                                     id: "flight-pick-request-error-modal-title", 
-                                    className: "modal-title", 
-                                    style: {color: "white"}}, 
+                                    className: "modal-title color-white"}, 
                                     "Cannot Find Flight Schedule"
                                 )
                             ), 

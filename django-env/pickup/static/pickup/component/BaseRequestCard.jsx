@@ -39,7 +39,7 @@ var BaseRequestCard = React.createClass({
                         aria-hidden="true">
                         <div className="modal-dialog modal-sm">
                             <div className="modal-content">
-                                <div className="modal-header" style={{backgroundColor: "#ff9800"}}>
+                                <div className="modal-header background-color-warning">
                                     <button
                                         type="button"
                                         className="close"
