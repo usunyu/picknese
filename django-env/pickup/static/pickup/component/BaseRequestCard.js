@@ -8,6 +8,14 @@ var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
         var feed = this.props.feed;
         this.props.onCancel(feed);
     },
+    getOfferActionButtonModalID: function() {
+        if (jQuery.isEmptyObject(current_user)) {
+            return "#login-modal";
+        } else {
+            var feed = this.props.feed;
+            return "#feed-" + feed.id;
+        }
+    },
     getActionButton: function() {
         var feed = this.props.feed;
         {/* If it is user's own request */}
@@ -39,7 +47,7 @@ var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
                         'aria-hidden': "true"}, 
                         React.createElement("div", {className: "modal-dialog modal-sm"}, 
                             React.createElement("div", {className: "modal-content"}, 
-                                React.createElement("div", {className: "modal-header", style: {backgroundColor: "#ff9800"}}, 
+                                React.createElement("div", {className: "modal-header background-color-warning"}, 
                                     React.createElement("button", {
                                         type: "button", 
                                         className: "close", 
@@ -77,7 +85,7 @@ var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
                         className: "btn btn-success", 
                         style: {float: 'right'}, 
                         'data-toggle': "modal", 
-                        'data-target': "#feed-" + feed.id}, 
+                        'data-target': this.getOfferActionButtonModalID()}, 
                         React.createElement("i", {className: "glyphicon glyphicon-heart"}), " " + ' ' +
                         "Offer Help"
                     ), 

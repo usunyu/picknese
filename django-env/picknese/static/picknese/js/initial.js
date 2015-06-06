@@ -4,14 +4,6 @@
  */
 $(document).ready(function() {
     "use strict"; // Start of use strict
-
-    // Prevent Enter Submit, TODO: improve user experence
-    $(window).keydown(function(event){
-        if(event.keyCode == 13) {
-            event.preventDefault();
-            return false;
-        }
-    });
     
     // Start Bootstrap - Creative Bootstrap Theme (http://startbootstrap.com)
     // jQuery for page scrolling feature - requires jQuery Easing plugin

@@ -1,4 +1,119 @@
 /*
+ * Custom Element Style
+ * --------------------------------------------------
+ */
+.box-shadow {
+    -moz-box-shadow: 0 0 5px black;
+    -webkit-box-shadow: 0 0 5px black;
+    box-shadow: 0 0 5px black;
+}
+
+.box-shadow-light {
+    -moz-box-shadow: 0 0 2px grey;
+    -webkit-box-shadow: 0 0 2px grey;
+    box-shadow: 0 0 2px grey;
+}
+
+.box-blur {
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.box-blur-overlay {
+    -webkit-filter: blur(3px) opacity(70%);
+    -moz-filter: blur(3px) opacity(70%);
+    -o-filter: blur(3px) opacity(70%);
+    -ms-filter: blur(3px) opacity(70%);
+    filter: blur(3px) opacity(70%);
+}
+
+.box-blur-wrapper {
+    position: relative;
+}
+
+.box-wrapper {
+    width: 100%;
+    height: 230px;
+}
+
+.text-shadow {
+    text-shadow: 0 0 0.2em black;
+}
+
+.color-white {
+    color: white;
+}
+
+.color-yellow {
+    color: yellow;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.normal-font-size {
+    font-size: 100% !important;
+}
+
+.image-thumbnail {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    /*margin: 5px;*/
+    border: 3px solid white;
+    background-position: center center;
+    background-size: cover;
+}
+
+.image-circular {
+    border:2px solid #dcdbd7;
+    border-radius: 500px;
+    -webkit-border-radius: 500px;
+    -moz-border-radius: 500px;
+}
+
+.invisible-hr {
+    visibility: hidden;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.pick-requester-note {
+    margin-top: 20px;
+}
+
+.background-color-primary {
+    background-color: #0084B4;
+}
+
+.background-color-warning {
+    background-color: #ff9800;
+}
+
+.no-bottom-margin {
+    margin-bottom: 0px;
+}
+
+.no-left-padding {
+    padding-left: 0px;
+}
+
+#alert-messages {
+    position: fixed;
+    top: 63px;
+    opacity: 1.0;
+    z-index: 100;
+    width: 100%;
+}
+
+/*
  * Landing Page
  * http://jordanhollinger.com/2014/01/29/css-gaussian-blur-behind-a-translucent-box/
  * ---------------------------------------------------------------------------------
@@ -359,105 +474,6 @@ img::-moz-selection {
 }
 
 /*
- * Custom Element Style
- * --------------------------------------------------
- */
-.box-shadow {
-    -moz-box-shadow: 0 0 5px black;
-    -webkit-box-shadow: 0 0 5px black;
-    box-shadow: 0 0 5px black;
-}
-
-.box-shadow-light {
-    -moz-box-shadow: 0 0 2px grey;
-    -webkit-box-shadow: 0 0 2px grey;
-    box-shadow: 0 0 2px grey;
-}
-
-.box-blur {
-    background-repeat: no-repeat;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
-.box-blur-overlay {
-    -webkit-filter: blur(3px) opacity(70%);
-    -moz-filter: blur(3px) opacity(70%);
-    -o-filter: blur(3px) opacity(70%);
-    -ms-filter: blur(3px) opacity(70%);
-    filter: blur(3px) opacity(70%);
-}
-
-.box-blur-wrapper {
-    position: relative;
-}
-
-.box-wrapper {
-    width: 100%;
-    height: 230px;
-}
-
-.text-shadow {
-    text-shadow: 0 0 0.2em black;
-}
-
-.color-white {
-    color: white;
-}
-
-.color-yellow {
-    color: yellow;
-}
-
-.text-center {
-    text-align: center;
-}
-
-.text-right {
-    text-align: right;
-}
-
-.normal-font-size {
-    font-size: 100% !important;
-}
-
-.image-thumbnail {
-    display: inline-block;
-    width: 100px;
-    height: 100px;
-    /*margin: 5px;*/
-    border: 3px solid white;
-    background-position: center center;
-    background-size: cover;
-}
-
-.image-circular {
-    border:2px solid #dcdbd7;
-    border-radius: 500px;
-    -webkit-border-radius: 500px;
-    -moz-border-radius: 500px;
-}
-
-.invisible-hr {
-    visibility: hidden;
-    margin-top: 3px;
-    margin-bottom: 3px;
-}
-
-.pick-requester-note {
-    margin-top: 20px;
-}
-
-#alert-messages {
-    position: fixed;
-    top: 63px;
-    opacity: 1.0;
-    z-index: 100;
-    width: 100%;
-}
-
-/*
  * Inline List Style
  * --------------------------------------------------
  */
@@ -593,7 +609,7 @@ div.show-image button {
     display:none;
 }
 div.show-image button.btn-on-image {
-    width: 225px;
+    width: 200px;
     margin-top: -43px;
 }
 
@@ -816,7 +832,7 @@ div.show-image button.btn-on-image {
 }
 
 /*
- * Home Feed Card
+ * Home Feed
  * --------------------------------------------------
  */
 .home-feed-card-div {
@@ -850,4 +866,60 @@ div.show-image button.btn-on-image {
     .home-feed-md-profile {
         display: none;
     }
+}
+
+.feed-type-select-xs-div {
+    padding-bottom: 5px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+/*
+ * Post Request Page
+ * --------------------------------------------------
+ */
+@media (max-width: 480px ) {
+    .btn-post-tab {
+        text-align: left;
+        width: 100%;
+    }
+}
+
+/*
+ * Navbar
+ * --------------------------------------------------
+ */
+@media (max-width: 768px ) {
+    .post-request-btn-div {
+        padding-left: 13px;
+        padding-right: 13px;
+    }
+}
+
+/*
+ * Profile Page
+ * --------------------------------------------------
+ */
+.profile-jumbotron {
+    background-color: #222222;
+}
+
+.profile-picture {
+    width: 200px;
+    height: 200px;
+}
+
+@media (max-width: 768px ) {
+    .profile-info {
+        padding-top: 15px;
+    }
+}
+
+.profile-info-div {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.profile-nav-ul {
+    float: left;
 }

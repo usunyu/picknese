@@ -7,6 +7,52 @@ var LoginModal = React.createClass({
         $('#signup-box').hide();
         $('#login-box').show();
     },
+    onLogInSubmit: function(event) {
+        event.preventDefault();
+        var auth_with_data = "";
+        if (typeof request_data !== 'undefined') {
+            auth_with_data = JSON.stringify(request_data);
+            // clear request_data
+            request_data = ""
+        }
+        $.ajax({
+            url: getAuthAPI(),
+            dataType: 'json',
+            type: 'POST',
+            data: {
+                username : $("#login-username").val().trim(),
+                password : $("#login-password").val().trim(),
+                current_url : window.location.pathname,
+                auth_with_data : auth_with_data,
+            },
+            success: function(data) {
+                if (data.success) {
+                    $("#login-modal").modal('hide');
+
+                    if (typeof data.request_type !== 'undefined') {
+                        switch(data.request_type) {
+                            case PICK_REQUEST:
+                            case FLIGHT_PICK_REQUEST:
+                                preparePopupMessage(
+                                    "You have successfully post your request. Please waiting for your picker to contact you!",
+                                    "success"
+                                );
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    window.location = data.redirect_url;
+                } else {
+                    $("#login-form").addClass("has-error");
+                }
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(getAuthAPI(), status, err.toString());
+            }.bind(this)
+        });
+    },
     render: function() {
         return (
             <div className="modal fade" id="login-modal" tabIndex="-1" role="dialog" aria-hidden="true">
@@ -21,12 +67,16 @@ var LoginModal = React.createClass({
                                         <div className="panel-heading" style={{borderRadius: "0px"}}>
                                             <div className="panel-title">Sign In</div>
                                             <div style={{float: "right", fontSize: "80%", position: "relative", top: "-10px"}}>
-                                                <a href="#">Forgot password?</a>
+                                                <a href="#" style={{color: "white"}}>Forgot password?</a>
                                             </div>
                                         </div>
                                         <div style={{paddingTop: "30px"}} className="panel-body" >
                                             <div style={{display: "none"}} id="login-alert" className="alert alert-danger col-sm-12"></div>
-                                            <form id="login-form" className="form-horizontal" role="form">
+                                            <form
+                                                id="login-form"
+                                                className="form-horizontal"
+                                                role="form"
+                                                onSubmit={this.onLogInSubmit}>
                                                 <div style={{marginBottom: "25px"}} className="input-group">
                                                     <span className="input-group-addon"><i className="glyphicon glyphicon-user"></i></span>
                                                     <input
@@ -34,7 +84,6 @@ var LoginModal = React.createClass({
                                                         type="text"
                                                         className="form-control"
                                                         name="username"
-                                                        value=""
                                                         placeholder="username or email" />
                                                 </div>
                                                 <div style={{marginBottom: "25px"}} className="input-group">
@@ -55,17 +104,20 @@ var LoginModal = React.createClass({
                                                 </div>
                                                 <div style={{marginTop: "10px"}} className="form-group">
                                                     <div className="col-sm-12 controls">
-                                                        <a id="btn-login" href="#" className="btn btn-success">Login  </a>
+                                                        <button
+                                                            id="btn-login"
+                                                            type="submit"
+                                                            className="btn btn-success"
+                                                            style={{marginRight: "10px"}}>
+                                                            <i className="glyphicon glyphicon-log-in"></i> Login
+                                                        </button>
                                                         <a id="btn-fblogin" href="#" className="btn btn-primary">Login with Facebook</a>
                                                     </div>
                                                 </div>
                                                 <div className="form-group">
                                                     <div className="col-md-12 control">
                                                         <div style={{borderTop: "1px solid#888", paddingTop: "15px", fontSize: "85%"}} >
-                                                                Dont have an account! 
-                                                            <a href="#" onClick={this.onSignUpClick}>
-                                                                Sign Up Here
-                                                            </a>
+                                                                Dont have an account! <a href="#" onClick={this.onSignUpClick}>Sign Up Here</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -81,7 +133,13 @@ var LoginModal = React.createClass({
                                         <div className="panel-heading" style={{borderRadius: "0px"}}>
                                             <div className="panel-title">Sign Up</div>
                                             <div style={{float: "right", fontSize: "85%", position: "relative", top: "-10px"}}>
-                                                <a id="signinlink" href="#" onClick={this.onLogInClick}>Sign In</a>
+                                                <a
+                                                    id="signinlink"
+                                                    style={{color: "white"}}
+                                                    href="#"
+                                                    onClick={this.onLogInClick}>
+                                                    Sign In
+                                                </a>
                                             </div>
                                         </div>
                                         <div className="panel-body" >

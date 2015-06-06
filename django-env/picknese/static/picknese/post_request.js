@@ -75,6 +75,10 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                 selected.push(data.id);
             }
         }
+        // Check if user already set up university
+        if (selected.length == 0 && !jQuery.isEmptyObject(current_user)) {
+            selected.push(current_user.university_id);
+        }
         // Bind university type hint
         $('#pick-request-university-select').selectize({
             items : selected,
@@ -167,25 +171,26 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
     },
     handlePostRequestSubmit: function(event) {
         event.preventDefault();
-        // need login to complete the request
-        if (jQuery.isEmptyObject(current_user)) {
-            $("#login-modal").modal('show');
-            return;
-        }
         $("#post-request-submit-button").button('loading');
         switch(CURRENT_REQUEST) {
             case PICK_REQUEST:
-                this.handlePickRequestSubmit({
-                    requester   : current_user.id,
+                request_data = {
                     university  : $("#pick-request-university-select").val().trim(),
                     price       : $("#pick-request-tip-input").val().trim(),
                     date_time   : moment($("#pick-request-time-input").val().trim(), 'MM/DD/YYYY HH:mm').format(),
                     start       : $("#pick-request-start-input").val().trim(),
                     destination : $("#pick-request-dest-input").val().trim(),
-                    bags        : $("#pick-request-baggages-input").val().trim(),
                     feed_type   : PICK_REQUEST,
                     description : $("#pick-request-desc-textarea").val().trim(),
-                });
+                };
+                if (jQuery.isEmptyObject(current_user)) {
+                    // need login to complete the request
+                    $("#post-request-submit-button").button('reset');
+                    $("#login-modal").modal('show');
+                    return;
+                }
+                request_data.requester = current_user.id;
+                this.handlePickRequestSubmit(request_data);
                 $("#post-request-submit-button").button('reset');
                 break;
             case FLIGHT_PICK_REQUEST:
@@ -199,7 +204,7 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                     type: 'GET',
                     success: function(data) {
                         if (!isFlightStatusResultHasError(data)) {
-                            this.handleFlightPickRequestSubmit({
+                            request_data = {
                                 requester   : current_user.id,
                                 university  : $("#pick-request-university-select").val().trim(),
                                 price       : $("#pick-request-tip-input").val().trim(),
@@ -209,7 +214,16 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                                 bags        : $("#pick-request-baggages-input").val().trim(),
                                 feed_type   : FLIGHT_PICK_REQUEST,
                                 description : $("#pick-request-desc-textarea").val().trim(),
-                            });
+                            }
+                            if (jQuery.isEmptyObject(current_user)) {
+                                // need login to complete the request
+                                $("#post-request-submit-button").button('reset');
+                                $("#login-modal").modal('show');
+                                return;
+                            }
+                            request_data.requester = current_user.id;
+
+                            this.handleFlightPickRequestSubmit(request_data);
                             $("#post-request-submit-button").button('reset');
                         } else {
                             $('#flight-pick-request-error-modal-title').text("Cannot Find Flight Schedule For " + flight);
@@ -237,16 +251,16 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                 React.createElement("div", {className: "form-group"}, 
                     React.createElement("label", {className: "col-sm-2 control-label"}, "Request"), 
                     React.createElement("div", {className: "btn-group col-sm-10", 'data-toggle': "buttons"}, 
-                        React.createElement("label", {className: "btn btn-white active"}, 
+                        React.createElement("label", {className: "btn btn-white btn-post-tab active"}, 
                             React.createElement("input", {
                                 id: PICK_REQUEST, 
                                 type: "radio", 
                                 name: "request-type", 
                                 defaultChecked: true}, 
-                                React.createElement("i", {className: "glyphicon glyphicon-bookmark"}), " Asking for Pick Up"
+                                React.createElement("i", {className: "glyphicon glyphicon-bookmark"}), " Asking for Carpool"
                             )
                         ), 
-                        React.createElement("label", {className: "btn btn-white"}, 
+                        React.createElement("label", {className: "btn btn-white btn-post-tab"}, 
                             React.createElement("input", {
                                 id: FLIGHT_PICK_REQUEST, 
                                 type: "radio", 
@@ -308,6 +322,7 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                             id: "pick-request-start-input", 
                             type: "text", 
                             className: "form-control", 
+                            onBlur: this.onInputFocusLose, 
                             placeholder: "Where you want to be picked up?"})
                     )
                 ), 
@@ -379,19 +394,17 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                 React.createElement("div", {className: "modal fade", id: "flight-pick-request-error-modal", tabIndex: "-1", role: "dialog", 'aria-hidden': "true"}, 
                     React.createElement("div", {className: "modal-dialog"}, 
                         React.createElement("div", {className: "modal-content"}, 
-                            React.createElement("div", {className: "modal-header", style: {backgroundColor: "#ff9800"}}, 
+                            React.createElement("div", {className: "modal-header background-color-warning"}, 
                                 React.createElement("button", {
                                     type: "button", 
-                                    className: "close", 
+                                    className: "close color-white", 
                                     'data-dismiss': "modal", 
-                                    style: {color: "white"}, 
                                     'aria-label': "Close"}, 
                                     React.createElement("span", {'aria-hidden': "true"}, "×")
                                 ), 
                                 React.createElement("h5", {
                                     id: "flight-pick-request-error-modal-title", 
-                                    className: "modal-title", 
-                                    style: {color: "white"}}, 
+                                    className: "modal-title color-white"}, 
                                     "Cannot Find Flight Schedule"
                                 )
                             ), 

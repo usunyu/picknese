@@ -30,16 +30,16 @@ var HomePanel = React.createClass({displayName: 'HomePanel',
                     "All Post"
                 ), 
                 React.createElement("option", {
+                    'data-icon': "glyphicon-tag", 
+                    key: PICK_REQUEST, 
+                    value: PICK_REQUEST}, 
+                    "Carpool Request"
+                ), 
+                React.createElement("option", {
                     'data-icon': "glyphicon-plane", 
                     key: FLIGHT_PICK_REQUEST, 
                     value: FLIGHT_PICK_REQUEST}, 
                     "Flight Pick Request"
-                ), 
-                React.createElement("option", {
-                    'data-icon': "glyphicon-tag", 
-                    key: PICK_REQUEST, 
-                    value: PICK_REQUEST}, 
-                    "Pick Request"
                 )
             )
         );
@@ -73,8 +73,7 @@ var HomePanel = React.createClass({displayName: 'HomePanel',
         }
         return (
             React.createElement("div", {className: "col-sm-12 col-md-9 home-feed-card-div"}, 
-                React.createElement("div", {className: "hidden-sm hidden-md hidden-lg col-sm-12", 
-                     style: {paddingBottom: "5px"}}, 
+                React.createElement("div", {className: "feed-type-select-xs-div hidden-sm hidden-md hidden-lg col-sm-12"}, 
                     this.getFeedTypeSelect()
                 ), 
                 React.createElement("div", {className: "col-sm-9 col-md-10 home-feed-card-div"}, 

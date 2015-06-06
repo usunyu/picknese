@@ -3903,7 +3903,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs>li.active>a:focus {
     color: #666666;
     background-color: transparent;
-    border: 1px solid transparent;
+    /*border: 1px solid transparent;*/
     border-bottom-color: transparent;
     cursor: default;
 }
@@ -3938,7 +3938,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs.nav-justified>.active>a,
 .nav-tabs.nav-justified>.active>a:hover,
 .nav-tabs.nav-justified>.active>a:focus {
-    border: 1px solid transparent;
+    /*border: 1px solid transparent;*/
 }
 @media (min-width: 768px) {
     .nav-tabs.nav-justified>li>a {

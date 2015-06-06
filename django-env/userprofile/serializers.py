@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 
 # userprofile app
-from userprofile.models import UserProfile, UserToUniversity
+from userprofile.models import UserProfile
 
 # university app
 from university.serializers import UniversitySerializer
@@ -22,23 +22,21 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'last_login', 'username', 'first_name', 'last_name', 'email', 'profile')
 
-"""
-Read Only Endpoint for UserToUniversity
-Support nested Serializer
-"""
-class UserToUniversityListSerializer(serializers.ModelSerializer):
-    requester = UserSerializer(read_only=True)
-    university = UniversitySerializer(read_only=True)
+# class UserToUniversityListSerializer(serializers.ModelSerializer):
+#     """
+#     Read Only Endpoint for UserToUniversity
+#     Support nested Serializer
+#     """
+#     requester = UserSerializer(read_only=True)
+#     university = UniversitySerializer(read_only=True)
 
-    class Meta:
-        model = UserToUniversity
+#     class Meta:
+#         model = UserToUniversity
 
-
-"""
-Create, Update, Delete Endpoint for UserToUniversity
-Flat Serializer
-"""
-class UserToUniversityMutateSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = UserToUniversity
+# class UserToUniversityMutateSerializer(serializers.ModelSerializer):
+#     """
+#     Create, Update, Delete Endpoint for UserToUniversity
+#     Flat Serializer
+#     """
+#     class Meta:
+#         model = UserToUniversity

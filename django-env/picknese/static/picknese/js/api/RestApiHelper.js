@@ -2,12 +2,12 @@
  * REST API helper
  * --------------------------------------------------
  */
-// function getHomeFeedListAPI(u_id) {
-//     return "/home/api/" + u_id + "/";
-// }
-
 function getHomeFeedListAPI(u_id, type) {
     return "/home/api/" + u_id + "/" + type + "/";
+}
+
+function getAuthAPI() {
+    return "/api/account/login/";
 }
 
 /*
@@ -47,16 +47,20 @@ function getPickUpMutateAPI(id) {
 }
 
 /*
+ * Profile Module
+ * --------------------------------------------------
+ */
+function getProfileImageUploadAPI() {
+    return "/profile/api/uploadimage/"
+}
+
+/*
  * Legacy
  * --------------------------------------------------
  */
 // @deprecated
 function getCurrentUserAPI() {
     return "/accounts/api/me/";
-}
-
-function getProfileImageUploadAPI() {
-    return "/accounts/api/uploadimage/"
 }
 
 function getCurrentUserPickCountAPI(u_id) {

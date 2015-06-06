@@ -8,6 +8,14 @@ var BaseRequestCard = React.createClass({
         var feed = this.props.feed;
         this.props.onCancel(feed);
     },
+    getOfferActionButtonModalID: function() {
+        if (jQuery.isEmptyObject(current_user)) {
+            return "#login-modal";
+        } else {
+            var feed = this.props.feed;
+            return "#feed-" + feed.id;
+        }
+    },
     getActionButton: function() {
         var feed = this.props.feed;
         {/* If it is user's own request */}
@@ -39,7 +47,7 @@ var BaseRequestCard = React.createClass({
                         aria-hidden="true">
                         <div className="modal-dialog modal-sm">
                             <div className="modal-content">
-                                <div className="modal-header" style={{backgroundColor: "#ff9800"}}>
+                                <div className="modal-header background-color-warning">
                                     <button
                                         type="button"
                                         className="close"
@@ -77,7 +85,7 @@ var BaseRequestCard = React.createClass({
                         className="btn btn-success"
                         style={{float: 'right'}}
                         data-toggle="modal"
-                        data-target={"#feed-" + feed.id}>
+                        data-target={this.getOfferActionButtonModalID()}>
                         <i className="glyphicon glyphicon-heart"></i>&nbsp;
                         Offer Help
                     </button>

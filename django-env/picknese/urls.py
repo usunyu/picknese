@@ -13,6 +13,8 @@ urlpatterns = patterns('',
     url(r'^home/api/(?P<university_id>\d+)/(?P<feed_type>\d+)/$', apis.HomeFeedList.as_view()),
     # post request
     url(r'^home/(?P<university_id>\d+)/new/$', views.post_request),
+    # auth api
+    url(r'^api/account/login/$', apis.auth_api_view),
     # pickup urls
     url(r'^pickup/', include('pickup.urls')),
     # admin usrls
@@ -25,7 +27,7 @@ urlpatterns = patterns('',
     url(r'^accounts/logout/$', 'picknese.views.logout'),
     url(r'^accounts/signup/$', 'picknese.views.signup'),
     # user profile urls
-    url(r'^accounts/', include('userprofile.urls')),
+    url(r'^profile/', include('userprofile.urls')),
     # rest framework urls
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

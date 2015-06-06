@@ -30,16 +30,16 @@ var HomePanel = React.createClass({
                     All Post
                 </option>
                 <option
+                    data-icon="glyphicon-tag"
+                    key={PICK_REQUEST}
+                    value={PICK_REQUEST}>
+                    Carpool Request
+                </option>
+                <option
                     data-icon="glyphicon-plane"
                     key={FLIGHT_PICK_REQUEST}
                     value={FLIGHT_PICK_REQUEST}>
                     Flight Pick Request
-                </option>
-                <option
-                    data-icon="glyphicon-tag"
-                    key={PICK_REQUEST}
-                    value={PICK_REQUEST}>
-                    Pick Request
                 </option>
             </select>
         );
@@ -73,8 +73,7 @@ var HomePanel = React.createClass({
         }
         return (
             <div className="col-sm-12 col-md-9 home-feed-card-div">
-                <div className="hidden-sm hidden-md hidden-lg col-sm-12"
-                     style={{paddingBottom: "5px"}}>
+                <div className="feed-type-select-xs-div hidden-sm hidden-md hidden-lg col-sm-12">
                     {this.getFeedTypeSelect()}
                 </div>
                 <div className="col-sm-9 col-md-10 home-feed-card-div">
