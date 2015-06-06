@@ -22,26 +22,31 @@ var LoginModal = React.createClass({displayName: 'LoginModal',
             data: {
                 username : $("#login-username").val().trim(),
                 password : $("#login-password").val().trim(),
+                current_url : window.location.pathname,
                 auth_with_data : auth_with_data,
             },
             success: function(data) {
+                console.log(data);
                 if (data.success) {
                     $("#login-modal").modal('hide');
 
-                    switch(data.request_type) {
-                        case PICK_REQUEST:
-                        case FLIGHT_PICK_REQUEST:
-                            preparePopupMessage(
-                                "You have successfully post your request. Please waiting for your picker to contact you!",
-                                "success"
-                            );
-                            window.location = data.redirect_url;
-                            break;
-                        default:
-                            break;
+                    if (typeof data.request_type !== 'undefined') {
+                        switch(data.request_type) {
+                            case PICK_REQUEST:
+                            case FLIGHT_PICK_REQUEST:
+                                preparePopupMessage(
+                                    "You have successfully post your request. Please waiting for your picker to contact you!",
+                                    "success"
+                                );
+                                break;
+                            default:
+                                break;
+                        }
                     }
+
+                    window.location = data.redirect_url;
                 } else {
-                    // error hint
+                    $("#login-form").addClass("has-error");
                 }
             }.bind(this),
             error: function(xhr, status, err) {

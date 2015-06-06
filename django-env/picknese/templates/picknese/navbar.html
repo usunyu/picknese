@@ -47,6 +47,13 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
+                        {% if user.profile.university %}
+                        <li>
+                            <a href="{% url 'picknese.views.home' user.profile.university.id %}">
+                                <i class="glyphicon glyphicon-home"></i>&nbsp; {{user.profile.university.shorthand|upper }}
+                            </a>
+                        </li>
+                        {% endif %}
                         <li>
                             <a href="{% url 'userprofile.views.me' %}">
                                 <i class="glyphicon glyphicon-user"></i>&nbsp; Profile
@@ -110,40 +117,40 @@
 </nav>
 
 <script type="text/javascript">
-    // bind unversity auto complete
-    $.ajax({
-        url: getUniversitySimpleListAPI(),
-        dataType: 'json',
-        type: 'GET',
-        success: function(data) {
-            var formatData = [];
-            for (var i = 0; i < data.length; i++) {
-                formatData.push({
-                    value : data[i].shorthand.toUpperCase() + " | " + data[i].name,
-                    data  : data[i].id,
-                });
+// bind unversity auto complete
+$.ajax({
+    url: getUniversitySimpleListAPI(),
+    dataType: 'json',
+    type: 'GET',
+    success: function(data) {
+        var formatData = [];
+        for (var i = 0; i < data.length; i++) {
+            formatData.push({
+                value : data[i].shorthand.toUpperCase() + " | " + data[i].name,
+                data  : data[i].id,
+            });
+        }
+        $('#index-university-input').autocomplete({
+            lookup: formatData,
+            autoSelectFirst: true,
+            onSelect: function (suggestion) {
+                window.location = getHomeFeedURL(suggestion.data);
             }
-            $('#index-university-input').autocomplete({
-                lookup: formatData,
-                autoSelectFirst: true,
-                onSelect: function (suggestion) {
-                    window.location = getHomeFeedURL(suggestion.data);
-                }
-            });
-            $('#nav-search-bar-input').autocomplete({
-                lookup: formatData,
-                autoSelectFirst: true,
-                onSelect: function (suggestion) {
-                    window.location = getHomeFeedURL(suggestion.data);
-                }
-            });
-        }.bind(this),
-        error: function(xhr, status, err) {
-            console.error(
-                getUniversitySimpleListAPI(),
-                status,
-                err.toString()
-            );
-        }.bind(this)
-    });
+        });
+        $('#nav-search-bar-input').autocomplete({
+            lookup: formatData,
+            autoSelectFirst: true,
+            onSelect: function (suggestion) {
+                window.location = getHomeFeedURL(suggestion.data);
+            }
+        });
+    }.bind(this),
+    error: function(xhr, status, err) {
+        console.error(
+            getUniversitySimpleListAPI(),
+            status,
+            err.toString()
+        );
+    }.bind(this)
+});
 </script>

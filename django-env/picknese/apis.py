@@ -46,32 +46,39 @@ def auth_api_view(request):
     password = request.POST.get('password', '')
     # if auth with request data, finish the request
     auth_with_data = request.POST.get('auth_with_data', '')
-    auth_data_object = ast.literal_eval(auth_with_data)
+    redirect_url = request.POST.get('current_url', '/')
     user = auth.authenticate(username=username, password=password)
 
     if user is not None:
         auth.login(request, user)
-        auth_data_object['requester'] = user
-        university_id = auth_data_object.get('university')
-        auth_data_object['university'] = University.objects.get(id=university_id)
-        request_type = auth_data_object.get('feed_type')
-        redirect_url = '/'
-
-        if request_type == constants.FLIGHT_PICK_REQUEST:
-            instance = FlightPickRequest(**auth_data_object)
-            instance.save()
-            redirect_url = reverse('picknese.views.home', args=[university_id])
-
-        if request_type == constants.PICK_REQUEST:
-            instance = PickRequest(**auth_data_object)
-            instance.save()
-            redirect_url = reverse('picknese.views.home', args=[university_id])
-
         serializer = AuthSerializer(data={
             'success': True,
             'redirect_url': redirect_url,
-            'request_type': request_type,
         })
+
+        if auth_with_data != '':
+            auth_data_object = ast.literal_eval(auth_with_data)
+            auth_data_object['requester'] = user
+            university_id = auth_data_object.get('university')
+            auth_data_object['university'] = University.objects.get(id=university_id)
+            request_type = auth_data_object.get('feed_type')
+
+            if request_type == constants.FLIGHT_PICK_REQUEST:
+                instance = FlightPickRequest(**auth_data_object)
+                instance.save()
+                redirect_url = reverse('picknese.views.home', args=[university_id])
+
+            if request_type == constants.PICK_REQUEST:
+                instance = PickRequest(**auth_data_object)
+                instance.save()
+                redirect_url = reverse('picknese.views.home', args=[university_id])
+
+            serializer = AuthSerializer(data={
+                'success': True,
+                'redirect_url': redirect_url,
+                'request_type': request_type,
+            })
+
         if serializer.is_valid():
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
