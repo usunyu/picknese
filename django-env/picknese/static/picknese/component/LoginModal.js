@@ -26,7 +26,6 @@ var LoginModal = React.createClass({displayName: 'LoginModal',
                 auth_with_data : auth_with_data,
             },
             success: function(data) {
-                console.log(data);
                 if (data.success) {
                     $("#login-modal").modal('hide');
 

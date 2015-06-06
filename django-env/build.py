@@ -1,8 +1,9 @@
 import os
 from react import jsx
 
-PICKNESE_PATH 	= '/picknese/static/picknese/'
-PICKUP_PATH 	= '/pickup/static/pickup/'
+PICKNESE_PATH 		= '/picknese/static/picknese/'
+PICKUP_PATH 		= '/pickup/static/pickup/'
+USERPROFILE_PATH 	= '/userprofile/static/userprofile/'
 
 sub_paths = [
     PICKNESE_PATH + 'home.jsx',
@@ -13,6 +14,8 @@ sub_paths = [
     PICKUP_PATH + 'component/BaseRequestCard.jsx',
     PICKUP_PATH + 'component/FlightPickRequestCard.jsx',
     PICKUP_PATH + 'component/PickRequestCard.jsx',
+
+    USERPROFILE_PATH + 'me.jsx',
 ]
 
 for sub_path in sub_paths:

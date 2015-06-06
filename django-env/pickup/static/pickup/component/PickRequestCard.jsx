@@ -11,7 +11,7 @@ var PickRequestCard = React.createClass({
 
         layoutMap['heading'] = {};
         layoutMap['heading']['verb'] = "is looking for";
-        layoutMap['heading']['action'] = "pick up";
+        layoutMap['heading']['action'] = "carpool";
         layoutMap['heading']['icon'] = "glyphicon glyphicon-tag";
 
         layoutMap['body'] = {}

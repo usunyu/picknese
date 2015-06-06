@@ -92,14 +92,7 @@ Me |
 {% block content %}
 <div class="container">
     <div class="row">
-        <ul class="nav nav-tabs nav-justified">
-            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-envelope"></span>&nbsp; Inbox &nbsp;<span class="badge">7</span></a></li>
-            <li role="presentation" class="active"><a href="#"><span class="glyphicon glyphicon-list-alt"></span>&nbsp; Your Requests &nbsp;<span class="badge">2</span></a></li>
-            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-heart"></span>&nbsp; Your Offers &nbsp;<span class="badge">3</span></a></li>
-            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-calendar"></span>&nbsp; Calendar</a></li>
-            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-picture"></span>&nbsp; Your Photos</a></li>
-            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-cog"></span>&nbsp; Account Settings</a></li>
-        </ul>
+        <div id="content"></div>
     </div>
 </div>
 {% endblock %}
@@ -179,4 +172,5 @@ function onSubmitUploadImage(event) {
     });
 }
 </script>
+<script type="text/javascript" src="{% static 'userprofile/me.js' %}"></script>
 {% endblock %}

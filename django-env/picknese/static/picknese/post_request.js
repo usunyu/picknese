@@ -257,7 +257,7 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                                 type: "radio", 
                                 name: "request-type", 
                                 defaultChecked: true}, 
-                                React.createElement("i", {className: "glyphicon glyphicon-bookmark"}), " Asking for Pick Up"
+                                React.createElement("i", {className: "glyphicon glyphicon-bookmark"}), " Asking for Carpool"
                             )
                         ), 
                         React.createElement("label", {className: "btn btn-white btn-post-tab"}, 

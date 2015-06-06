@@ -30,16 +30,16 @@ var HomePanel = React.createClass({
                     All Post
                 </option>
                 <option
+                    data-icon="glyphicon-tag"
+                    key={PICK_REQUEST}
+                    value={PICK_REQUEST}>
+                    Carpool Request
+                </option>
+                <option
                     data-icon="glyphicon-plane"
                     key={FLIGHT_PICK_REQUEST}
                     value={FLIGHT_PICK_REQUEST}>
                     Flight Pick Request
-                </option>
-                <option
-                    data-icon="glyphicon-tag"
-                    key={PICK_REQUEST}
-                    value={PICK_REQUEST}>
-                    Pick Request
                 </option>
             </select>
         );
