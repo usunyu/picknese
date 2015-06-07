@@ -50,6 +50,10 @@ function getPickUpMutateAPI(id) {
  * Profile Module
  * --------------------------------------------------
  */
+function getProfileRequestAPI(id, type) {
+    return "/profile/api/request/" + id +"/" + type + "/";
+}
+
 function getProfileImageUploadAPI() {
     return "/profile/api/uploadimage/"
 }

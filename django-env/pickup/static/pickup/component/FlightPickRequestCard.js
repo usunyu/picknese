@@ -12,7 +12,7 @@ var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCa
         layoutMap['heading'] = {};
         layoutMap['heading']['verb'] = "is looking for";
         layoutMap['heading']['action'] = "flight pick up";
-        layoutMap['heading']['icon'] = "glyphicon glyphicon-plane";
+        layoutMap['heading']['icon'] = "fontello-icon icon-flight";
 
         layoutMap['body'] = {}
         layoutMap['body']['flight'] = {}
@@ -60,6 +60,7 @@ var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCa
         this.props.onSubmit({
             flight_pick_request : feed.id,
             picker              : current_user.id,
+            requester           : feed.requester.id,
             description         : $("#pick-up-desc-textarea").val().trim(),
         });
     },
@@ -71,6 +72,7 @@ var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCa
                 feed: this.props.feed, 
                 onSubmit: this.onSubmit, 
                 onCancel: this.props.onCancel, 
+                cancelCallback: this.props.cancelCallback, 
                 layout: layout})
         );
     }

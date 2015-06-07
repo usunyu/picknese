@@ -14,6 +14,7 @@ sub_paths = [
     PICKUP_PATH + 'component/BaseRequestCard.jsx',
     PICKUP_PATH + 'component/FlightPickRequestCard.jsx',
     PICKUP_PATH + 'component/PickRequestCard.jsx',
+    PICKUP_PATH + 'component/FlightPickUpCard.jsx',
 
     USERPROFILE_PATH + 'me.jsx',
 ]

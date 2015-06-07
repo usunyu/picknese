@@ -21,7 +21,7 @@ urlpatterns = patterns('',
     url(r'^api/request/create/$', apis.PickRequestCreate.as_view()),
     url(r'^api/request/mutate/(?P<pk>\d+)/$', apis.PickRequestMutate.as_view()),
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-    #                                 PickUp                                        #
+    #                             PickUp (Carpool)                                  #
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     url(r'^api/pickup/(?P<pk>\d+)/$', apis.PickUpList.as_view()),
     url(r'^api/pickup/create/$', apis.PickUpCreate.as_view()),

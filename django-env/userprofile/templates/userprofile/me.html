@@ -1,11 +1,21 @@
 <!-- @current_user -->
-
 {% extends "picknese/base.html" %}
 
 {% load static %}
 
 {% block title %}
 Me |
+{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-select/bootstrap-select.css' %}" />
+<script type="text/javascript" src="{% static 'js/bootstrap-select/bootstrap-select.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'picknese/mixin/HomeFeedActionMixin.js' %}"></script>
+<script type="text/javascript" src="{% static 'pickup/component/BaseRequestCard.js' %}"></script>
+<script type="text/javascript" src="{% static 'pickup/component/FlightPickRequestCard.js' %}"></script>
+<script type="text/javascript" src="{% static 'pickup/component/PickRequestCard.js' %}"></script>
+<script type="text/javascript" src="{% static 'pickup/component/FlightPickUpCard.js' %}"></script>
 {% endblock %}
 
 {% block jumbotron %}
@@ -99,6 +109,18 @@ Me |
 
 {% block extra_end %}
 <script type="text/javascript"> 
+var current_user = {};
+if ("{{current_user.is_authenticated}}" == "True") {
+    current_user = {
+        id: "{{current_user.id}}",
+        first_name: "{{current_user.first_name}}",
+        last_name: "{{current_user.last_name}}",
+        avatar: "{{current_user.profile.avatar}}",
+    };
+}
+
+var profile_user = current_user;
+
 var imageUploadCode = null;
 
 function onClickUploadImage(event) {
@@ -116,8 +138,9 @@ function onChangeUploadImage(event) {
             image.src = e.target.result;
             image.onload = function() {
                 var canvas = document.createElement('canvas');
-                canvas.width = 300;
-                canvas.height = image.height * (300 / image.width);
+                var image_max_size = 550;
+                canvas.width = Math.min(image.width, image_max_size);
+                canvas.height = image.height * (canvas.width / image.width);
                 var ctx = canvas.getContext('2d');
                 ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 

@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from userprofile.serializers import UserSerializer
 from university.serializers import UniversitySerializer
+from pickup.serializers import FlightPickRequestListSerializer, PickRequestListSerializer
 
 class HomeFeedSerializer(serializers.Serializer):
     """
@@ -12,10 +13,14 @@ class HomeFeedSerializer(serializers.Serializer):
 
     feed_type = serializers.IntegerField()
 
+    picker = UserSerializer(read_only=True, required=False)
     requester = UserSerializer(read_only=True, required=False)
     university = UniversitySerializer(read_only=True, required=False)
 
-    price = serializers.IntegerField(default=20, required=False)
+    flight_pick_request = FlightPickRequestListSerializer(read_only=True, required=False)
+    pick_request = PickRequestListSerializer(read_only=True, required=False)
+
+    price = serializers.IntegerField(required=False)
     start = serializers.CharField(max_length=200, required=False)
     flight = serializers.CharField(max_length=30, required=False)
     date_time = serializers.DateTimeField(required=False)

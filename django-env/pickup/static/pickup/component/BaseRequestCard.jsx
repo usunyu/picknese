@@ -5,8 +5,7 @@ var BaseRequestCard = React.createClass({
         });
     },
     handleRequestCancel: function() {
-        var feed = this.props.feed;
-        this.props.onCancel(feed);
+        this.props.onCancel(this.props.feed, this.props.cancelCallback);
     },
     getOfferActionButtonModalID: function() {
         if (jQuery.isEmptyObject(current_user)) {
@@ -20,8 +19,12 @@ var BaseRequestCard = React.createClass({
         var feed = this.props.feed;
         {/* If it is user's own request */}
         if (current_user.id == feed.requester.id) {
+            if (feed.confirmed) {
+                return (null);
+            }
             return (
                 <div>
+                    <hr style={{marginTop: '5px', marginBottom: '15px'}} />
                     <button
                         type="button"
                         className="btn btn-warning"
@@ -78,8 +81,12 @@ var BaseRequestCard = React.createClass({
                 </div>
             );
         } else {
+            if (feed.confirmed) {
+                return (null);
+            }
             return (
                 <div>
+                    <hr style={{marginTop: '5px', marginBottom: '15px'}} />
                     <button
                         type="button"
                         className="btn btn-success"
@@ -168,7 +175,7 @@ var BaseRequestCard = React.createClass({
         return (
             <div className="panel clearfix fadein-effect home-feed-panel-div">
                 <div className="panel-heading" style={{overflow: "auto"}}>
-                    <a  href="#" className="home-feed-sm-profile">
+                    <a href="#" className="home-feed-sm-profile">
                         <img
                             className="image-circular"
                             src={
@@ -179,8 +186,14 @@ var BaseRequestCard = React.createClass({
                     </a>
                     <b className="home-feed-title">{feed.requester.first_name} {feed.requester.last_name} {layout.heading.verb} <span className="label label-danger" style={{fontSize: "95%"}}>{layout.heading.action}</span></b>
                     <div style={{float: "right"}}>
-                        <span style={{fontSize: "80%", marginRight: "15px", marginTop: "3px"}}>{moment(feed.created).format("YYYY-MM-DD HH:mm")}</span>
-                        <i className={layout.heading.icon} style={{marginRight: "10px"}}></i>
+                        <span style={{fontSize: "80%", marginRight: "8px", marginTop: "3px"}}>{moment(feed.created).format("YYYY-MM-DD HH:mm")}</span>
+                        <i className={layout.heading.icon} style={{marginRight: "15px", marginTop: "3px"}}></i>
+                        <a href={getHomeFeedURL(feed.university.id)}>
+                            <img
+                                className="image-circular"
+                                src={getUniversityLogo(feed.university.shorthand)}
+                                style={{width: '25px', height: '25px'}} />
+                        </a>
                     </div>
                 </div>
                 <hr style={{marginTop: "0px", marginBottom: "0px"}}/>
@@ -205,7 +218,6 @@ var BaseRequestCard = React.createClass({
                             </div>
                         </div>
                     </div>
-                    <hr style={{marginTop: '5px', marginBottom: '15px'}} />
                     {this.getActionButton()}
                 </div>
             </div>

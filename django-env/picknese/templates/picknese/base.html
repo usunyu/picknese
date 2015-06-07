@@ -21,6 +21,8 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/selectize/selectize.css' %}" />
         <!-- http://mynameismatthieu.com/WOW/docs.html -->
         <link rel="stylesheet" type="text/css" href="{% static 'css/wow/animate.min.css' %}" />
+        <!-- http://fontello.com/ -->
+        <link rel="stylesheet" type="text/css" href="{% static 'css/fontello/css/fontello.css' %}" />
         <!-- Custom CSS -->
         <link rel="stylesheet" type="text/css" href="{% static 'picknese/css/custom.css' %}" />
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -55,8 +57,8 @@
         <!-- http://eonasdan.github.io/bootstrap-datetimepicker/ -->
         <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js' %}"></script>
         <!-- https://github.com/keen/keen-js -->
-        <script type="text/javascript" src="https://d26b395fwzu5fz.cloudfront.net/3.2.4/keen.min.js"></script>
-        <script type="text/javascript" src="{% static 'picknese/js/keen.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/keen/keen.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/keen/keen_client.js' %}"></script>
         <!-- Used for load common React component -->
         {% block extra_head %}
         {% endblock %}
@@ -70,8 +72,10 @@
         {% block jumbotron %}
         {% endblock %}
         <!-- Main -->
+        <div style="min-height: 300px;">
         {% block content %}
         {% endblock %}
+        </div>
         <!-- Footer -->
         <hr />
         <div class="container">

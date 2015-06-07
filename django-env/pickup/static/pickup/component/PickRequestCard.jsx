@@ -12,7 +12,7 @@ var PickRequestCard = React.createClass({
         layoutMap['heading'] = {};
         layoutMap['heading']['verb'] = "is looking for";
         layoutMap['heading']['action'] = "carpool";
-        layoutMap['heading']['icon'] = "glyphicon glyphicon-tag";
+        layoutMap['heading']['icon'] = "fontello-icon icon-cab";
 
         layoutMap['body'] = {}
         layoutMap['body']['start'] = {}
@@ -52,8 +52,9 @@ var PickRequestCard = React.createClass({
     onSubmit: function() {
         var feed = this.props.feed;
         this.props.onSubmit({
-            pick_request : feed.id,
+            pick_request        : feed.id,
             picker              : current_user.id,
+            requester           : feed.requester.id,
             description         : $("#pick-up-desc-textarea").val().trim(),
         });
     },
@@ -65,6 +66,7 @@ var PickRequestCard = React.createClass({
                 feed={this.props.feed}
                 onSubmit={this.onSubmit}
                 onCancel={this.props.onCancel}
+                cancelCallback={this.props.cancelCallback}
                 layout={layout} />
         );
     }

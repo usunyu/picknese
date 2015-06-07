@@ -6,6 +6,7 @@
  * React Parameters
  * --------------------------------------------------
  * @homeFeedActionMixinLoadHomeFeedInterval
+ * @homeFeedActionMixinLoadProfileRequestFeed
  * @pollInterval
  */
 var CURRENT_FEED_TYPE = ALL_POST;
@@ -27,14 +28,20 @@ var HomeFeedActionMixin = {
     },
     getInitialState: function() {
         return {
-            feedType: ALL_POST,
-            feeds: [],
+            feedType: ALL_POST, // home
+            feeds: [],          // home
+            messages: [],       // profile
+            requests: [],       // profile
+            offers: [],         // profile
         };
     },
     componentDidMount: function() {
         if (this.props.homeFeedActionMixinLoadHomeFeedInterval) {
             this.loadHomeFeedFromServer();
             setInterval(this.loadHomeFeedFromServer, this.props.pollInterval);
+        }
+        if (this.props.homeFeedActionMixinLoadProfileRequestFeed) {
+            this.loadProfileRequestFromServer();
         }
     },
     handleFlightPickRequestSubmit: function(data) {
@@ -60,7 +67,7 @@ var HomeFeedActionMixin = {
             }.bind(this)
         });
     },
-    handleFlightPickRequestCancel: function(data) {
+    handleFlightPickRequestCancel: function(data, callback) {
         var id = data.id;
         $.ajax({
             url: getFlightPickRequestMutateAPI(id),
@@ -73,7 +80,7 @@ var HomeFeedActionMixin = {
                     "success"
                 );
                 popupMessage();
-                this.loadHomeFeedFromServer();
+                callback();
             }.bind(this),
             error: function(xhr, status, err) {
                 $("#feed-" + id).modal('hide');
@@ -136,7 +143,7 @@ var HomeFeedActionMixin = {
             }.bind(this)
         });
     },
-    handlePickRequestCancel: function(data) {
+    handlePickRequestCancel: function(data, callback) {
         var id = data.id;
         $.ajax({
             url: getPickRequestMutateAPI(id),
@@ -149,7 +156,7 @@ var HomeFeedActionMixin = {
                     "success"
                 );
                 popupMessage();
-                this.loadHomeFeedFromServer();
+                callback();
             }.bind(this),
             error: function(xhr, status, err) {
                 $("#feed-" + id).modal('hide');
@@ -186,6 +193,18 @@ var HomeFeedActionMixin = {
                     "danger"
                 );
                 popupMessage();
+            }.bind(this)
+        });
+    },
+    loadProfileRequestFromServer: function() {
+        $.ajax({
+            url: getProfileRequestAPI(profile_user.id, CURRENT_FEED_TYPE),
+            dataType: 'json',
+            success: function(data) {
+                this.setState({requests: data});
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(getProfileRequestAPI(profile_user.id, CURRENT_FEED_TYPE), status, err.toString());
             }.bind(this)
         });
     },

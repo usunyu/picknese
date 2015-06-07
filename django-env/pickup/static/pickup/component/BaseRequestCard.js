@@ -5,8 +5,7 @@ var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
         });
     },
     handleRequestCancel: function() {
-        var feed = this.props.feed;
-        this.props.onCancel(feed);
+        this.props.onCancel(this.props.feed, this.props.cancelCallback);
     },
     getOfferActionButtonModalID: function() {
         if (jQuery.isEmptyObject(current_user)) {
@@ -20,8 +19,12 @@ var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
         var feed = this.props.feed;
         {/* If it is user's own request */}
         if (current_user.id == feed.requester.id) {
+            if (feed.confirmed) {
+                return (null);
+            }
             return (
                 React.createElement("div", null, 
+                    React.createElement("hr", {style: {marginTop: '5px', marginBottom: '15px'}}), 
                     React.createElement("button", {
                         type: "button", 
                         className: "btn btn-warning", 
@@ -78,8 +81,12 @@ var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
                 )
             );
         } else {
+            if (feed.confirmed) {
+                return (null);
+            }
             return (
                 React.createElement("div", null, 
+                    React.createElement("hr", {style: {marginTop: '5px', marginBottom: '15px'}}), 
                     React.createElement("button", {
                         type: "button", 
                         className: "btn btn-success", 
@@ -179,8 +186,14 @@ var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
                     ), 
                     React.createElement("b", {className: "home-feed-title"}, feed.requester.first_name, " ", feed.requester.last_name, " ", layout.heading.verb, " ", React.createElement("span", {className: "label label-danger", style: {fontSize: "95%"}}, layout.heading.action)), 
                     React.createElement("div", {style: {float: "right"}}, 
-                        React.createElement("span", {style: {fontSize: "80%", marginRight: "15px", marginTop: "3px"}}, moment(feed.created).format("YYYY-MM-DD HH:mm")), 
-                        React.createElement("i", {className: layout.heading.icon, style: {marginRight: "10px"}})
+                        React.createElement("span", {style: {fontSize: "80%", marginRight: "8px", marginTop: "3px"}}, moment(feed.created).format("YYYY-MM-DD HH:mm")), 
+                        React.createElement("i", {className: layout.heading.icon, style: {marginRight: "15px", marginTop: "3px"}}), 
+                        React.createElement("a", {href: getHomeFeedURL(feed.university.id)}, 
+                            React.createElement("img", {
+                                className: "image-circular", 
+                                src: getUniversityLogo(feed.university.shorthand), 
+                                style: {width: '25px', height: '25px'}})
+                        )
                     )
                 ), 
                 React.createElement("hr", {style: {marginTop: "0px", marginBottom: "0px"}}), 
@@ -205,7 +218,6 @@ var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
                             )
                         )
                     ), 
-                    React.createElement("hr", {style: {marginTop: '5px', marginBottom: '15px'}}), 
                     this.getActionButton()
                 )
             )

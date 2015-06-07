@@ -29,7 +29,8 @@ class FlightPickUp(models.Model):
     Data for user provide a flight pick up
     """
     flight_pick_request = models.ForeignKey(FlightPickRequest)
-    picker = models.ForeignKey(User)
+    requester = models.ForeignKey(User, related_name='flightpickup_requester')
+    picker = models.ForeignKey(User, related_name='flightpickup_picker')
     feed_type = models.IntegerField(default=constants.FLIGHT_PICK_UP)
     description = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -62,7 +63,8 @@ class PickUp(models.Model):
     Data for user provide a normal pick up
     """
     pick_request = models.ForeignKey(PickRequest)
-    picker = models.ForeignKey(User)
+    requester = models.ForeignKey(User, related_name='pickup_requester')
+    picker = models.ForeignKey(User, related_name='pickup_picker')
     feed_type = models.IntegerField(default=constants.PICK_UP)
     description = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)

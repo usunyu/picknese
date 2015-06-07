@@ -24,19 +24,19 @@ var HomePanel = React.createClass({displayName: 'HomePanel',
                 'data-style': "btn-primary", 
                 onChange: this.onFeedTypeChange}, 
                 React.createElement("option", {
-                    'data-icon': "glyphicon-th-large", 
+                    'data-icon': "icon-th", 
                     key: ALL_POST, 
                     value: ALL_POST}, 
                     "All Post"
                 ), 
                 React.createElement("option", {
-                    'data-icon': "glyphicon-tag", 
+                    'data-icon': "icon-cab", 
                     key: PICK_REQUEST, 
                     value: PICK_REQUEST}, 
                     "Carpool Request"
                 ), 
                 React.createElement("option", {
-                    'data-icon': "glyphicon-plane", 
+                    'data-icon': "icon-flight", 
                     key: FLIGHT_PICK_REQUEST, 
                     value: FLIGHT_PICK_REQUEST}, 
                     "Flight Pick Request"
@@ -55,7 +55,8 @@ var HomePanel = React.createClass({displayName: 'HomePanel',
                             key: i, 
                             feed: feed, 
                             onSubmit: this.handlePickUpSubmit, 
-                            onCancel: this.handlePickRequestCancel})
+                            onCancel: this.handlePickRequestCancel, 
+                            cancelCallback: this.loadHomeFeedFromServer})
                     );
                     break;
                 case FLIGHT_PICK_REQUEST:
@@ -64,7 +65,8 @@ var HomePanel = React.createClass({displayName: 'HomePanel',
                             key: i, 
                             feed: feed, 
                             onSubmit: this.handleFlightPickUpSubmit, 
-                            onCancel: this.handleFlightPickRequestCancel})
+                            onCancel: this.handleFlightPickRequestCancel, 
+                            cancelCallback: this.loadHomeFeedFromServer})
                     );
                     break;
                 default:

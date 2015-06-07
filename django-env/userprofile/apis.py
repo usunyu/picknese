@@ -1,27 +1,60 @@
+import itertools
+from django.db.models import Q
 from base64 import b64decode
 
 from django.http import Http404
 from django.core.files.base import ContentFile
 
 from rest_framework import permissions, response, generics, views, status
-from rest_framework.parsers import FileUploadParser, JSONParser
+# from rest_framework.parsers import FileUploadParser, JSONParser
 
+from picknese import constants
+
+from picknese.serializers import HomeFeedSerializer
 from userprofile.models import User, UserProfile
 from userprofile.serializers import (UserSerializer, 
-                                     UserProfileSerializer)
+                                     UserProfileSerializer,)
 
-class CurrentUserView(views.APIView):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+from pickup.models import FlightPickRequest, PickRequest, FlightPickUp, PickUp
 
-    def get(self, request):
-        serializer = UserSerializer(request.user)
-        return response.Response(serializer.data)
+class ProfileRequestList(generics.ListAPIView):
+    """
+    ProfileRequestList ListAPIView\n
+    Retrieve Requests based on User ID\n
+    profile/api/request/1/ => ProfileRequestList.as_view() 
+    """
+    serializer_class = HomeFeedSerializer
+    permission_classes = (permissions.AllowAny,)
 
-class UserDetail(generics.RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        feed_type = int(self.kwargs['feed_type'])
+
+        if feed_type == constants.CONFIRMED_POST:
+            return list(itertools.chain(
+                FlightPickUp.objects.filter(requester=user_id),
+                PickUp.objects.filter(requester=user_id),
+            ))
+
+        if feed_type == constants.UNCONFIRMED_POST:
+            return list(itertools.chain(
+                FlightPickRequest.objects.filter(Q(requester=user_id) & Q(confirmed=False)), 
+                PickRequest.objects.filter(Q(requester=user_id) & Q(confirmed=False)), 
+            ))
+
+        if feed_type == constants.ALL_POST:
+            return list(itertools.chain(
+                FlightPickRequest.objects.filter(Q(requester=user_id) & Q(confirmed=False)),
+                PickRequest.objects.filter(Q(requester=user_id) & Q(confirmed=False)),
+                FlightPickUp.objects.filter(requester=user_id),
+                PickUp.objects.filter(requester=user_id),
+            ))
 
 class ProfileImageUploadView(views.APIView):
+    """
+    ProfileImageUploadView APIView\n
+    Update User Profile Picture
+    """
     # parser_classes = (FileUploadParser,)
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
@@ -38,6 +71,16 @@ class ProfileImageUploadView(views.APIView):
         profile.save()
         return response.Response(status=status.HTTP_204_NO_CONTENT)
 
+class CurrentUserView(views.APIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return response.Response(serializer.data)
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 class MyProfileDetail(views.APIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
