@@ -71,11 +71,3 @@ function getProfileDefaultPic() {
 function getPusheenSadnessGif() {
     return getStaticURL() + 'picknese/images/pusheen/pusheen_sadness.gif';
 }
-
-// function getGlyphiconsCarIcon() {
-//     return getStaticURL() + 'images/glyphicons/png/glyphicons-6-car.png';
-// }
-
-// function getGlyphiconsAirplaneIcon() {
-//     return getStaticURL() + 'images/glyphicons/png/glyphicons-39-airplane.png';
-// }

@@ -132,22 +132,20 @@ REST_FRAMEWORK = {
 # Try load local sttings
 if PRODUCTION:
     print "Loading production settings..."
-else:
-    try:
-        from local_settings import *
-        print "Loading local settings..."
-    except ImportError as e:
-        print "No local settings found..."
-
-AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
-AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-AWS_PRELOAD_METADATA = True
-
-#Storage on S3 settings are stored as os.environs to keep settings.py clean
-if PRODUCTION:
+    AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+    AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+    AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+    AWS_PRELOAD_METADATA = True
+    AWS_QUERYSTRING_AUTH = False
+    #Storage on S3 settings are stored as os.environs to keep settings.py clean
     STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
     S3_URL = 'https://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
     STATIC_URL = S3_URL
     MEDIA_URL = S3_URL + 'media/'
+else:
+    try:
+        print "Loading local settings..."
+        from local_settings import *
+    except ImportError as e:
+        print "No local settings found..."
