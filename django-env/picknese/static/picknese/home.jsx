@@ -4,6 +4,8 @@
  * @current_user
  * @university
  */
+var FIRST_LOAD_HOME_FEED_FINISH = false;
+
 var HomePanel = React.createClass({
     mixins: [HomeFeedActionMixin],
     componentDidMount: function() {
@@ -76,7 +78,8 @@ var HomePanel = React.createClass({
                     break;
             }
         }
-        if (homeFeedList.length == 0) {
+        if (homeFeedList.length == 0 && FIRST_LOAD_HOME_FEED_FINISH) {
+            // add a dummy post if we have no feed
             homeFeedList.push(
                 <div className="panel clearfix fadein-effect home-feed-panel-div" key='no post card'>
                     <div className="panel-heading" style={{overflow: "auto"}}>

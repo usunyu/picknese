@@ -17,6 +17,7 @@ var HomeFeedActionMixin = {
             url: getHomeFeedListAPI(university.id, CURRENT_FEED_TYPE),
             dataType: 'json',
             success: function(data) {
+                FIRST_LOAD_HOME_FEED_FINISH = true;
                 this.setState({feeds: data});
                 dismissLoadingEffect();
                 // this.forceUpdate();
