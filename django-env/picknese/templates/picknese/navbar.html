@@ -89,25 +89,25 @@
                 {% if university %}
                 <li>
                     <div class="post-request-btn-div">
-                    <button
-                        type="button"
-                        class="btn btn-red col-xs-12"
-                        style="margin-top: 14px;"
-                        onclick="location.href = '{% url 'picknese.views.post_request' university.id %}';">
-                        Post Your Request
-                    </button>
+                        <button
+                            type="button"
+                            class="btn btn-red col-xs-12"
+                            style="margin-top: 14px;"
+                            onclick="location.href = '{% url 'picknese.views.post_request' university.id %}';">
+                            Post Your Request
+                        </button>
                     </div>
                 </li>
                 {% else %}
                 <li>
                     <div class="post-request-btn-div">
-                    <button
-                        type="button"
-                        class="btn btn-red col-xs-12"
-                        style="margin-top: 14px;"
-                        onclick="location.href = '{% url 'picknese.views.post_request' 0 %}';">
-                        Post Your Request
-                    </button>
+                        <button
+                            type="button"
+                            class="btn btn-red col-xs-12"
+                            style="margin-top: 14px;"
+                            onclick="location.href = '{% url 'picknese.views.post_request' 0 %}';">
+                            Post Your Request
+                        </button>
                     </div>
                 </li>
                 {% endif %}

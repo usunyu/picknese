@@ -44,6 +44,9 @@ var HomePanel = React.createClass({
             </select>
         );
     },
+    onNoPostRequestButtonClick: function() {
+        location.href = getPostRequestURL(university.id);
+    },
     render: function() {
         var homeFeedList = [];
         for (var i = 0; i < this.state.feeds.length; i++) {
@@ -72,6 +75,27 @@ var HomePanel = React.createClass({
                 default:
                     break;
             }
+        }
+        if (homeFeedList.length == 0) {
+            homeFeedList.push(
+                <div className="panel clearfix fadein-effect home-feed-panel-div" key='no post card'>
+                    <div className="panel-heading" style={{overflow: "auto"}}>
+                        <b>Current No Post To Show Yet! Be the first one to post:)</b>
+                    </div>
+                    <hr style={{marginTop: "0px", marginBottom: "0px"}}/>
+                    <div className="panel-body" style={{backgroundColor: "#fcf0e4"}}>
+                        <div className="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
+                            <img src={getPusheenSadnessGif()} />
+                        </div>
+                        <button
+                            type="button"
+                            className="btn btn-red col-xs-12"
+                            onClick={this.onNoPostRequestButtonClick} >
+                            Post Your Request
+                        </button>
+                    </div>
+                </div>
+            );
         }
         return (
             <div className="col-sm-12 col-md-9 home-feed-card-div">

@@ -28,6 +28,10 @@ function getHomeFeedURL(u_id) {
     return "/home/" + u_id + "/";
 }
 
+function getPostRequestURL(u_id) {
+    return "/home/" + u_id + "/new/";
+}
+
 function getUniversityBaseURL() {
     return "/universities/";
 }
@@ -62,6 +66,10 @@ function getUniversityWide(u_short) {
 
 function getProfileDefaultPic() {
     return getMediaURL() + 'media/default_pic.png';
+}
+
+function getPusheenSadnessGif() {
+    return getStaticURL() + 'picknese/images/pusheen/pusheen_sadness.gif';
 }
 
 // function getGlyphiconsCarIcon() {

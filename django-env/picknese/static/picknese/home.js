@@ -44,6 +44,9 @@ var HomePanel = React.createClass({displayName: 'HomePanel',
             )
         );
     },
+    onNoPostRequestButtonClick: function() {
+        location.href = getPostRequestURL(university.id);
+    },
     render: function() {
         var homeFeedList = [];
         for (var i = 0; i < this.state.feeds.length; i++) {
@@ -72,6 +75,27 @@ var HomePanel = React.createClass({displayName: 'HomePanel',
                 default:
                     break;
             }
+        }
+        if (homeFeedList.length == 0) {
+            homeFeedList.push(
+                React.createElement("div", {className: "panel clearfix fadein-effect home-feed-panel-div", key: "no post card"}, 
+                    React.createElement("div", {className: "panel-heading", style: {overflow: "auto"}}, 
+                        React.createElement("b", null, "Current No Post To Show Yet! Be the first one to post:)")
+                    ), 
+                    React.createElement("hr", {style: {marginTop: "0px", marginBottom: "0px"}}), 
+                    React.createElement("div", {className: "panel-body", style: {backgroundColor: "#fcf0e4"}}, 
+                        React.createElement("div", {className: "col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4"}, 
+                            React.createElement("img", {src: getPusheenSadnessGif()})
+                        ), 
+                        React.createElement("button", {
+                            type: "button", 
+                            className: "btn btn-red col-xs-12", 
+                            onClick: this.onNoPostRequestButtonClick}, 
+                            "Post Your Request"
+                        )
+                    )
+                )
+            );
         }
         return (
             React.createElement("div", {className: "col-sm-12 col-md-9 home-feed-card-div"}, 
