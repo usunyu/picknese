@@ -3,10 +3,11 @@
  * --------------------------------------------------
  * @current_user
  */
-var FlightPickUpCard = React.createClass({
+var PickUpCard = React.createClass({displayName: 'PickUpCard',
     getCustomLayout: function() {
         var feed = this.props.feed;
         var layoutMap = {};
+
         layoutMap['heading'] = {};
         if (feed.picker.id == current_user.id) {
             layoutMap['heading']['user'] = "You";
@@ -15,11 +16,11 @@ var FlightPickUpCard = React.createClass({
             layoutMap['heading']['user'] = feed.picker.first_name + " " + feed.picker.last_name;
             layoutMap['heading']['verb'] = "is taking this";
         }
-        layoutMap['heading']['action'] = "flight pick request";
+        layoutMap['heading']['action'] = "carpool request";
         layoutMap['heading']['icon'] = "fontello-icon icon-ok-circled";
 
         layoutMap['body'] = {}
-        layoutMap['body']['sub_type'] = FLIGHT_PICK_REQUEST;
+        layoutMap['body']['sub_type'] = PICK_REQUEST;
         if (feed.description) {
             layoutMap['body']['message'] = {}
             layoutMap['body']['message']['class'] = 'col-md-12';
@@ -32,13 +33,13 @@ var FlightPickUpCard = React.createClass({
     },
     render: function() {
         return (
-            <BasePickUpCard
-                feed={this.props.feed}
-                onCancel={this.props.onCancel}
-                cancelCallback={this.props.cancelCallback}
-                onReject={this.props.onReject}
-                rejectCallback={this.props.rejectCallback}
-                layout={this.getCustomLayout()} />
+            React.createElement(BasePickUpCard, {
+                feed: this.props.feed, 
+                onCancel: this.props.onCancel, 
+                cancelCallback: this.props.cancelCallback, 
+                onReject: this.props.onReject, 
+                rejectCallback: this.props.rejectCallback, 
+                layout: this.getCustomLayout()})
         );
     }
 });

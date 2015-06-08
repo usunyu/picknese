@@ -50,6 +50,31 @@ class ProfileRequestList(generics.ListAPIView):
                 PickUp.objects.filter(requester=user_id),
             ))
 
+class ProfileOfferList(generics.ListAPIView):
+    """
+    ProfileOfferList ListAPIView\n
+    Retrieve Offers based on User ID\n
+    profile/api/offer/1/ => ProfileOfferList.as_view() 
+    """
+    serializer_class = HomeFeedSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        feed_type = int(self.kwargs['feed_type'])
+
+        if feed_type == constants.PICK_UP:
+            return PickUp.objects.filter(picker=user_id)
+
+        if feed_type == constants.FLIGHT_PICK_UP:
+            return FlightPickUp.objects.filter(picker=user_id)
+
+        if feed_type == constants.ALL_POST:
+            return list(itertools.chain(
+                PickUp.objects.filter(picker=user_id),
+                FlightPickUp.objects.filter(picker=user_id),
+            ))
+
 class ProfileImageUploadView(views.APIView):
     """
     ProfileImageUploadView APIView\n

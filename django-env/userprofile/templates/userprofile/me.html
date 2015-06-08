@@ -12,10 +12,13 @@ Me |
 <script type="text/javascript" src="{% static 'js/bootstrap-select/bootstrap-select.min.js' %}"></script>
 
 <script type="text/javascript" src="{% static 'picknese/mixin/HomeFeedActionMixin.js' %}"></script>
+<script type="text/javascript" src="{% static 'pickup/component/BaseContentBody.js' %}"></script>
 <script type="text/javascript" src="{% static 'pickup/component/BaseRequestCard.js' %}"></script>
 <script type="text/javascript" src="{% static 'pickup/component/FlightPickRequestCard.js' %}"></script>
 <script type="text/javascript" src="{% static 'pickup/component/PickRequestCard.js' %}"></script>
+<script type="text/javascript" src="{% static 'pickup/component/BasePickUpCard.js' %}"></script>
 <script type="text/javascript" src="{% static 'pickup/component/FlightPickUpCard.js' %}"></script>
+<script type="text/javascript" src="{% static 'pickup/component/PickUpCard.js' %}"></script>
 {% endblock %}
 
 {% block jumbotron %}
@@ -138,7 +141,7 @@ function onChangeUploadImage(event) {
             image.src = e.target.result;
             image.onload = function() {
                 var canvas = document.createElement('canvas');
-                var image_max_size = 550;
+                var image_max_size = Math.min(550, $(window).width() - 50);
                 canvas.width = Math.min(image.width, image_max_size);
                 canvas.height = image.height * (canvas.width / image.width);
                 var ctx = canvas.getContext('2d');

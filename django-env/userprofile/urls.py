@@ -6,6 +6,7 @@ urlpatterns = patterns('',
     url(r'^me/$', views.me),
     # api
     url(r'^api/request/(?P<user_id>\d+)/(?P<feed_type>\d+)/$', apis.ProfileRequestList.as_view()),
+    url(r'^api/offer/(?P<user_id>\d+)/(?P<feed_type>\d+)/$', apis.ProfileOfferList.as_view()),
     # upload image
     url(r'^api/uploadimage/$', apis.ProfileImageUploadView.as_view()),
 

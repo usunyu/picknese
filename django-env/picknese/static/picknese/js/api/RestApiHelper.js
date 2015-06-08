@@ -54,6 +54,10 @@ function getProfileRequestAPI(id, type) {
     return "/profile/api/request/" + id +"/" + type + "/";
 }
 
+function getProfileOfferAPI(id, type) {
+    return "/profile/api/offer/" + id +"/" + type + "/";
+}
+
 function getProfileImageUploadAPI() {
     return "/profile/api/uploadimage/"
 }

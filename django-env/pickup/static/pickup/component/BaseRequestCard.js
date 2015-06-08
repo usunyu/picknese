@@ -1,9 +1,4 @@
 var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
-    componentDidUpdate: function() {
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-    },
     handleRequestCancel: function() {
         this.props.onCancel(this.props.feed, this.props.cancelCallback);
     },
@@ -151,24 +146,6 @@ var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
             );
         }
     },
-    getContentBody: function() {
-        var layout = this.props.layout;
-        var content = [];
-        for (var key in layout.body) {
-            var value = layout.body[key];
-            content.push(
-                React.createElement("p", {
-                    key: key, 
-                    className: layout.body[key].class, 
-                    'data-toggle': "tooltip", 
-                    'data-placement': "left", 
-                    title: layout.body[key].title}, 
-                    React.createElement("i", {className: layout.body[key].icon}), " ", layout.body[key].content
-                )
-            );
-        }
-        return content;
-    },
     render: function() {
         var feed = this.props.feed;
         var layout = this.props.layout;
@@ -184,7 +161,7 @@ var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
                             
                             style: {width: '40px', height: '40px'}})
                     ), 
-                    React.createElement("b", {className: "home-feed-title"}, feed.requester.first_name, " ", feed.requester.last_name, " ", layout.heading.verb, " ", React.createElement("span", {className: "label label-danger", style: {fontSize: "95%"}}, layout.heading.action)), 
+                    React.createElement("b", {className: "home-feed-title"}, layout.heading.user, " ", layout.heading.verb, " ", React.createElement("span", {className: "label label-danger", style: {fontSize: "95%"}}, layout.heading.action)), 
                     React.createElement("div", {style: {float: "right"}}, 
                         React.createElement("span", {style: {fontSize: "80%", marginRight: "8px", marginTop: "3px"}}, moment(feed.created).format("YYYY-MM-DD HH:mm")), 
                         React.createElement("i", {className: layout.heading.icon, style: {marginRight: "15px", marginTop: "3px"}}), 
@@ -212,9 +189,8 @@ var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
                         ), 
                         React.createElement("div", {className: "media-body"}, 
                             React.createElement("div", {className: "row"}, 
-                                React.createElement("div", null, 
-                                    this.getContentBody()
-                                )
+                                React.createElement(BaseContentBody, {
+                                    layout: layout})
                             )
                         )
                     ), 

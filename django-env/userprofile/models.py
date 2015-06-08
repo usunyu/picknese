@@ -8,7 +8,7 @@ from picknese.utils import get_upload_file_name
 
 class UserProfile(models.Model):
 	user = models.OneToOneField(User)
-	university = models.ForeignKey(University)
+	university = models.ForeignKey(University, null=True, blank=True)
 	gender_choices = (
 		('M', 'Male'),
 		('F', 'Female'),

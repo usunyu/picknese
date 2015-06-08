@@ -11,10 +11,13 @@ sub_paths = [
     PICKNESE_PATH + 'component/JumbotronPanel.jsx',
     PICKNESE_PATH + 'component/LoginModal.jsx',
 
+    PICKUP_PATH + 'component/BaseContentBody.jsx',
     PICKUP_PATH + 'component/BaseRequestCard.jsx',
     PICKUP_PATH + 'component/FlightPickRequestCard.jsx',
     PICKUP_PATH + 'component/PickRequestCard.jsx',
+    PICKUP_PATH + 'component/BasePickUpCard.jsx',
     PICKUP_PATH + 'component/FlightPickUpCard.jsx',
+    PICKUP_PATH + 'component/PickUpCard.jsx',
 
     USERPROFILE_PATH + 'me.jsx',
 ]

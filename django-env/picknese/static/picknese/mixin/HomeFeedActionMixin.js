@@ -208,4 +208,16 @@ var HomeFeedActionMixin = {
             }.bind(this)
         });
     },
+    loadProfileOfferFromServer: function() {
+        $.ajax({
+            url: getProfileOfferAPI(profile_user.id, CURRENT_FEED_TYPE),
+            dataType: 'json',
+            success: function(data) {
+                this.setState({offers: data});
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(getProfileOfferAPI(profile_user.id, CURRENT_FEED_TYPE), status, err.toString());
+            }.bind(this)
+        });
+    },
 }

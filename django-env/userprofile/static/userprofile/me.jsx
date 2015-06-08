@@ -23,11 +23,14 @@ var MePanel = React.createClass({
         CURRENT_PANEL = INBOX_PANEL;
     },
     onProfileRequestClick: function(event) {
+        if (CURRENT_PANEL == REQUEST_PANEL) {return;}
         CURRENT_PANEL = REQUEST_PANEL;
         this.loadProfileRequestFromServer();
     },
     onProfileOfferClick: function(event) {
+        if (CURRENT_PANEL == OFFER_PANEL) {return;}
         CURRENT_PANEL = OFFER_PANEL;
+        this.loadProfileOfferFromServer();
     },
     onProfileCalendarClick: function(event) {
         CURRENT_PANEL = CALENDAR_PANEL;
@@ -63,6 +66,17 @@ var MePanel = React.createClass({
                             cancelCallback={this.loadProfileRequestFromServer} />
                     );
                     break;
+                case PICK_UP:
+                    profileFeedList.push(
+                        <PickUpCard
+                            key={i}
+                            feed={feed}
+                            onCancel={null}
+                            cancelCallback={this.loadProfileRequestFromServer}
+                            onReject={null}
+                            rejectCallback={this.loadProfileRequestFromServer} />
+                    );
+                    break;
                 case FLIGHT_PICK_UP:
                     profileFeedList.push(
                         <FlightPickUpCard
@@ -80,13 +94,57 @@ var MePanel = React.createClass({
         return (
             <div className="col-sm-12 col-md-offset-2 col-md-9 home-feed-card-div">
                 <div className="feed-type-select-xs-div hidden-sm hidden-md hidden-lg col-sm-12">
-                    {this.getFeedTypeSelect()}
+                    {this.getFeedRequestTypeSelect()}
                 </div>
                 <div className="col-sm-9 col-md-10 home-feed-card-div">
                     {profileFeedList}
                 </div>
                 <div className="hidden-xs col-sm-2 col-md-2">
-                    {this.getFeedTypeSelect()}
+                    {this.getFeedRequestTypeSelect()}
+                </div>
+            </div>
+        );
+    },
+    getProfileOfferFeedList: function() {
+        var profileFeedList = [];
+        for (var i = 0; i < this.state.offers.length; i++) {
+            var feed = this.state.offers[i];
+            switch(feed.feed_type) {
+                case PICK_UP:
+                    profileFeedList.push(
+                        <PickUpCard
+                            key={i}
+                            feed={feed}
+                            onCancel={null}
+                            cancelCallback={this.loadProfileOfferFromServer}
+                            onReject={null}
+                            rejectCallback={this.loadProfileOfferFromServer} />
+                    );
+                    break;
+                case FLIGHT_PICK_UP:
+                    profileFeedList.push(
+                        <FlightPickUpCard
+                            key={i}
+                            feed={feed}
+                            onCancel={null}
+                            cancelCallback={this.loadProfileOfferFromServer}
+                            onReject={null}
+                            rejectCallback={this.loadProfileOfferFromServer} />
+                    );
+                default:
+                    break;
+            }
+        }
+        return (
+            <div className="col-sm-12 col-md-offset-2 col-md-9 home-feed-card-div">
+                <div className="feed-type-select-xs-div hidden-sm hidden-md hidden-lg col-sm-12">
+                    {this.getFeedOfferTypeSelect()}
+                </div>
+                <div className="col-sm-9 col-md-10 home-feed-card-div">
+                    {profileFeedList}
+                </div>
+                <div className="hidden-xs col-sm-2 col-md-2">
+                    {this.getFeedOfferTypeSelect()}
                 </div>
             </div>
         );
@@ -98,13 +156,40 @@ var MePanel = React.createClass({
                 this.loadProfileRequestFromServer();
                 break;
             case OFFER_PANEL:
-                
+                this.loadProfileOfferFromServer();
                 break;
             default:
                 break;
         }
     },
-    getFeedTypeSelect: function() {
+    getFeedOfferTypeSelect: function() {
+        return (
+            <select
+                className="selectpicker"
+                data-style="btn-primary"
+                onChange={this.onFeedTypeChange}>
+                <option
+                    data-icon="icon-th"
+                    key={ALL_POST}
+                    value={ALL_POST}>
+                    All Post
+                </option>
+                <option
+                    data-icon="icon-cab"
+                    key={PICK_UP}
+                    value={PICK_UP}>
+                    Carpool
+                </option>
+                <option
+                    data-icon="icon-flight"
+                    key={FLIGHT_PICK_UP}
+                    value={FLIGHT_PICK_UP}>
+                    Flight Pick Up
+                </option>
+            </select>
+        );
+    },
+    getFeedRequestTypeSelect: function() {
         return (
             <select
                 className="selectpicker"
@@ -175,7 +260,7 @@ var MePanel = React.createClass({
                         {this.getProfileRequestFeedList()}
                     </div>
                     <div className="tab-pane fade" id="profile-offer">
-                        <p>offer</p>
+                        {this.getProfileOfferFeedList()}
                     </div>
                     <div className="tab-pane fade" id="profile-calendar">
                         <p>calendar</p>

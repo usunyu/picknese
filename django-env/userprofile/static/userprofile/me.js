@@ -23,11 +23,14 @@ var MePanel = React.createClass({displayName: 'MePanel',
         CURRENT_PANEL = INBOX_PANEL;
     },
     onProfileRequestClick: function(event) {
+        if (CURRENT_PANEL == REQUEST_PANEL) {return;}
         CURRENT_PANEL = REQUEST_PANEL;
         this.loadProfileRequestFromServer();
     },
     onProfileOfferClick: function(event) {
+        if (CURRENT_PANEL == OFFER_PANEL) {return;}
         CURRENT_PANEL = OFFER_PANEL;
+        this.loadProfileOfferFromServer();
     },
     onProfileCalendarClick: function(event) {
         CURRENT_PANEL = CALENDAR_PANEL;
@@ -63,6 +66,17 @@ var MePanel = React.createClass({displayName: 'MePanel',
                             cancelCallback: this.loadProfileRequestFromServer})
                     );
                     break;
+                case PICK_UP:
+                    profileFeedList.push(
+                        React.createElement(PickUpCard, {
+                            key: i, 
+                            feed: feed, 
+                            onCancel: null, 
+                            cancelCallback: this.loadProfileRequestFromServer, 
+                            onReject: null, 
+                            rejectCallback: this.loadProfileRequestFromServer})
+                    );
+                    break;
                 case FLIGHT_PICK_UP:
                     profileFeedList.push(
                         React.createElement(FlightPickUpCard, {
@@ -80,13 +94,57 @@ var MePanel = React.createClass({displayName: 'MePanel',
         return (
             React.createElement("div", {className: "col-sm-12 col-md-offset-2 col-md-9 home-feed-card-div"}, 
                 React.createElement("div", {className: "feed-type-select-xs-div hidden-sm hidden-md hidden-lg col-sm-12"}, 
-                    this.getFeedTypeSelect()
+                    this.getFeedRequestTypeSelect()
                 ), 
                 React.createElement("div", {className: "col-sm-9 col-md-10 home-feed-card-div"}, 
                     profileFeedList
                 ), 
                 React.createElement("div", {className: "hidden-xs col-sm-2 col-md-2"}, 
-                    this.getFeedTypeSelect()
+                    this.getFeedRequestTypeSelect()
+                )
+            )
+        );
+    },
+    getProfileOfferFeedList: function() {
+        var profileFeedList = [];
+        for (var i = 0; i < this.state.offers.length; i++) {
+            var feed = this.state.offers[i];
+            switch(feed.feed_type) {
+                case PICK_UP:
+                    profileFeedList.push(
+                        React.createElement(PickUpCard, {
+                            key: i, 
+                            feed: feed, 
+                            onCancel: null, 
+                            cancelCallback: this.loadProfileOfferFromServer, 
+                            onReject: null, 
+                            rejectCallback: this.loadProfileOfferFromServer})
+                    );
+                    break;
+                case FLIGHT_PICK_UP:
+                    profileFeedList.push(
+                        React.createElement(FlightPickUpCard, {
+                            key: i, 
+                            feed: feed, 
+                            onCancel: null, 
+                            cancelCallback: this.loadProfileOfferFromServer, 
+                            onReject: null, 
+                            rejectCallback: this.loadProfileOfferFromServer})
+                    );
+                default:
+                    break;
+            }
+        }
+        return (
+            React.createElement("div", {className: "col-sm-12 col-md-offset-2 col-md-9 home-feed-card-div"}, 
+                React.createElement("div", {className: "feed-type-select-xs-div hidden-sm hidden-md hidden-lg col-sm-12"}, 
+                    this.getFeedOfferTypeSelect()
+                ), 
+                React.createElement("div", {className: "col-sm-9 col-md-10 home-feed-card-div"}, 
+                    profileFeedList
+                ), 
+                React.createElement("div", {className: "hidden-xs col-sm-2 col-md-2"}, 
+                    this.getFeedOfferTypeSelect()
                 )
             )
         );
@@ -98,13 +156,40 @@ var MePanel = React.createClass({displayName: 'MePanel',
                 this.loadProfileRequestFromServer();
                 break;
             case OFFER_PANEL:
-                
+                this.loadProfileOfferFromServer();
                 break;
             default:
                 break;
         }
     },
-    getFeedTypeSelect: function() {
+    getFeedOfferTypeSelect: function() {
+        return (
+            React.createElement("select", {
+                className: "selectpicker", 
+                'data-style': "btn-primary", 
+                onChange: this.onFeedTypeChange}, 
+                React.createElement("option", {
+                    'data-icon': "icon-th", 
+                    key: ALL_POST, 
+                    value: ALL_POST}, 
+                    "All Post"
+                ), 
+                React.createElement("option", {
+                    'data-icon': "icon-cab", 
+                    key: PICK_UP, 
+                    value: PICK_UP}, 
+                    "Carpool"
+                ), 
+                React.createElement("option", {
+                    'data-icon': "icon-flight", 
+                    key: FLIGHT_PICK_UP, 
+                    value: FLIGHT_PICK_UP}, 
+                    "Flight Pick Up"
+                )
+            )
+        );
+    },
+    getFeedRequestTypeSelect: function() {
         return (
             React.createElement("select", {
                 className: "selectpicker", 
@@ -175,7 +260,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
                         this.getProfileRequestFeedList()
                     ), 
                     React.createElement("div", {className: "tab-pane fade", id: "profile-offer"}, 
-                        React.createElement("p", null, "offer")
+                        this.getProfileOfferFeedList()
                     ), 
                     React.createElement("div", {className: "tab-pane fade", id: "profile-calendar"}, 
                         React.createElement("p", null, "calendar")

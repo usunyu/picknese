@@ -1,9 +1,4 @@
 var BaseRequestCard = React.createClass({
-    componentDidUpdate: function() {
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-    },
     handleRequestCancel: function() {
         this.props.onCancel(this.props.feed, this.props.cancelCallback);
     },
@@ -151,24 +146,6 @@ var BaseRequestCard = React.createClass({
             );
         }
     },
-    getContentBody: function() {
-        var layout = this.props.layout;
-        var content = [];
-        for (var key in layout.body) {
-            var value = layout.body[key];
-            content.push(
-                <p
-                    key={key}
-                    className={layout.body[key].class}
-                    data-toggle="tooltip"
-                    data-placement="left"
-                    title={layout.body[key].title} >
-                    <i className={layout.body[key].icon}></i> {layout.body[key].content}
-                </p>
-            );
-        }
-        return content;
-    },
     render: function() {
         var feed = this.props.feed;
         var layout = this.props.layout;
@@ -184,7 +161,7 @@ var BaseRequestCard = React.createClass({
                             }
                             style={{width: '40px', height: '40px'}} />
                     </a>
-                    <b className="home-feed-title">{feed.requester.first_name} {feed.requester.last_name} {layout.heading.verb} <span className="label label-danger" style={{fontSize: "95%"}}>{layout.heading.action}</span></b>
+                    <b className="home-feed-title">{layout.heading.user} {layout.heading.verb} <span className="label label-danger" style={{fontSize: "95%"}}>{layout.heading.action}</span></b>
                     <div style={{float: "right"}}>
                         <span style={{fontSize: "80%", marginRight: "8px", marginTop: "3px"}}>{moment(feed.created).format("YYYY-MM-DD HH:mm")}</span>
                         <i className={layout.heading.icon} style={{marginRight: "15px", marginTop: "3px"}}></i>
@@ -212,9 +189,8 @@ var BaseRequestCard = React.createClass({
                         </div>
                         <div className="media-body">
                             <div className="row">
-                                <div>
-                                    {this.getContentBody()}
-                                </div>
+                                <BaseContentBody
+                                    layout={layout} />
                             </div>
                         </div>
                     </div>
