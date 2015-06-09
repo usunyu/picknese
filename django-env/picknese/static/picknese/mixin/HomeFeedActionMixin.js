@@ -19,7 +19,7 @@ var HomeFeedActionMixin = {
             success: function(data) {
                 FIRST_LOAD_HOME_FEED_FINISH = true;
                 this.setState({feeds: data});
-                dismissLoadingEffect();
+                // dismissLoadingEffect();
                 // this.forceUpdate();
             }.bind(this),
             error: function(xhr, status, err) {

@@ -81,7 +81,7 @@ var HomePanel = React.createClass({
         if (homeFeedList.length == 0 && FIRST_LOAD_HOME_FEED_FINISH) {
             // add a dummy post if we have no feed
             homeFeedList.push(
-                <div className="panel clearfix fadein-effect home-feed-panel-div" key='no post card'>
+                <div className="panel clearfix fadein-effect home-feed-panel-div" key='dummy card'>
                     <div className="panel-heading" style={{overflow: "auto"}}>
                         <b>Current No Post To Show Yet! Be the first one to post:)</b>
                     </div>
@@ -96,6 +96,28 @@ var HomePanel = React.createClass({
                             onClick={this.onNoPostRequestButtonClick} >
                             Post Your Request
                         </button>
+                    </div>
+                </div>
+            );
+        }
+        if (homeFeedList.length == 0 && !FIRST_LOAD_HOME_FEED_FINISH) {
+            // add a loading panel if we havn't finish the request
+            homeFeedList.push(
+                <div className="panel clearfix home-feed-panel-div" key='loading card'>
+                    <h6 style={{marginLeft: "85px"}}>Loading ...</h6>
+                    <hr style={{marginTop: "9px", marginBottom: "0px"}}/>
+                    <div className="panel-body">
+                        <div className="media">
+                            <div className="media-left">
+                                <img
+                                    className="image-circular"
+                                    src={getProfileDefaultPic()}
+                                    style={{width: "60px", height: "60px", marginTop: "-60px", marginLeft: "-7px"}} />
+                            </div>
+                            <div className="media-body col-md-12" style={{textAlign: "center"}}>
+                                <div className="spinner" style={{marginTop: "20px", marginBottom: "40px"}}></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             );
