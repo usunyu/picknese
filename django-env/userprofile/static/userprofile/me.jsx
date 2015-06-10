@@ -13,6 +13,9 @@ var SETTINGS_PANEL  = 6;
 
 var CURRENT_PANEL = REQUEST_PANEL;
 
+var FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH = false;
+var FIRST_LOAD_PROFILE_OFFER_FEED_FINISH = false;
+
 var MePanel = React.createClass({
     mixins: [HomeFeedActionMixin],
     componentDidMount: function() {
@@ -91,6 +94,14 @@ var MePanel = React.createClass({
                     break;
             }
         }
+        if (profileFeedList.length == 0 && FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH) {
+            // add a dummy post if we have no feed
+            profileFeedList.push(<PusheenCard key={0} />);
+        }
+        if (profileFeedList.length == 0 && !FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH) {
+            // add a loading panel if we havn't finish the request
+            profileFeedList.push(<LoadingCard key={0} />);
+        }
         return (
             <div className="col-sm-12 col-md-offset-2 col-md-9 home-feed-card-div">
                 <div className="feed-type-select-xs-div hidden-sm hidden-md hidden-lg col-sm-12">
@@ -134,6 +145,14 @@ var MePanel = React.createClass({
                 default:
                     break;
             }
+        }
+        if (profileFeedList.length == 0 && FIRST_LOAD_PROFILE_OFFER_FEED_FINISH) {
+            // add a dummy post if we have no feed
+            profileFeedList.push(<PusheenCard key={0} />);
+        }
+        if (profileFeedList.length == 0 && !FIRST_LOAD_PROFILE_OFFER_FEED_FINISH) {
+            // add a loading panel if we havn't finish the request
+            profileFeedList.push(<LoadingCard key={0} />);
         }
         return (
             <div className="col-sm-12 col-md-offset-2 col-md-9 home-feed-card-div">

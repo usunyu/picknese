@@ -8,8 +8,8 @@ USERPROFILE_PATH 	= '/userprofile/static/userprofile/'
 sub_paths = [
     PICKNESE_PATH + 'home.jsx',
     PICKNESE_PATH + 'post_request.jsx',
-    PICKNESE_PATH + 'component/JumbotronPanel.jsx',
     PICKNESE_PATH + 'component/LoginModal.jsx',
+    PICKNESE_PATH + 'component/DummyCard.jsx',
 
     PICKUP_PATH + 'component/BaseContentBody.jsx',
     PICKUP_PATH + 'component/BaseRequestCard.jsx',

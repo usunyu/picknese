@@ -202,6 +202,7 @@ var HomeFeedActionMixin = {
             url: getProfileRequestAPI(profile_user.id, CURRENT_FEED_TYPE),
             dataType: 'json',
             success: function(data) {
+                FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH = true;
                 this.setState({requests: data});
             }.bind(this),
             error: function(xhr, status, err) {
@@ -214,6 +215,7 @@ var HomeFeedActionMixin = {
             url: getProfileOfferAPI(profile_user.id, CURRENT_FEED_TYPE),
             dataType: 'json',
             success: function(data) {
+                FIRST_LOAD_PROFILE_OFFER_FEED_FINISH = true;
                 this.setState({offers: data});
             }.bind(this),
             error: function(xhr, status, err) {
