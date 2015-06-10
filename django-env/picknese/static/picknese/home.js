@@ -77,7 +77,7 @@ var HomePanel = React.createClass({displayName: 'HomePanel',
         }
         if (homeFeedList.length == 0 && FIRST_LOAD_HOME_FEED_FINISH) {
             // add a dummy post if we have no feed
-            homeFeedList.push(React.createElement(PusheenCard, {key: 0}));
+            homeFeedList.push(React.createElement(PusheenSadnessCard, {key: 0}));
         }
         if (homeFeedList.length == 0 && !FIRST_LOAD_HOME_FEED_FINISH) {
             // add a loading panel if we havn't finish the request

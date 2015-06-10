@@ -71,3 +71,11 @@ function getProfileDefaultPic() {
 function getPusheenSadnessGif() {
     return getStaticURL() + 'picknese/images/pusheen/pusheen_sadness.gif';
 }
+
+function getPusheenHappyGif() {
+    return getStaticURL() + 'picknese/images/pusheen/pusheen_happy.gif';
+}
+
+function getPusheenLazyGif() {
+    return getStaticURL() + 'picknese/images/pusheen/pusheen_lazy.gif';
+}

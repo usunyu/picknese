@@ -96,7 +96,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
         }
         if (profileFeedList.length == 0 && FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH) {
             // add a dummy post if we have no feed
-            profileFeedList.push(React.createElement(PusheenCard, {key: 0}));
+            profileFeedList.push(React.createElement(PusheenHappyCard, {key: 0}));
         }
         if (profileFeedList.length == 0 && !FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH) {
             // add a loading panel if we havn't finish the request
@@ -148,7 +148,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
         }
         if (profileFeedList.length == 0 && FIRST_LOAD_PROFILE_OFFER_FEED_FINISH) {
             // add a dummy post if we have no feed
-            profileFeedList.push(React.createElement(PusheenCard, {key: 0}));
+            profileFeedList.push(React.createElement(PusheenLazyCard, {key: 0}));
         }
         if (profileFeedList.length == 0 && !FIRST_LOAD_PROFILE_OFFER_FEED_FINISH) {
             // add a loading panel if we havn't finish the request
