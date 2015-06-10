@@ -44,6 +44,15 @@ var MePanel = React.createClass({displayName: 'MePanel',
     onProfileSettingsClick: function(event) {
         CURRENT_PANEL = SETTINGS_PANEL;
     },
+    getProfileInboxList: function() {
+        return (
+            React.createElement("div", {className: "col-sm-12 col-md-offset-2 col-md-9 home-feed-card-div"}, 
+                React.createElement("div", {className: "col-sm-9 col-md-10 home-feed-card-div"}, 
+                    React.createElement(PusheenGangnamStyleCard, {key: 0})
+                )
+            )
+        );
+    },
     getProfileRequestFeedList: function() {
         var profileFeedList = [];
         for (var i = 0; i < this.state.requests.length; i++) {
@@ -235,6 +244,33 @@ var MePanel = React.createClass({displayName: 'MePanel',
             )
         );
     },
+    getProfileCalendar: function() {
+        return (
+            React.createElement("div", {className: "col-sm-12 col-md-offset-2 col-md-9 home-feed-card-div"}, 
+                React.createElement("div", {className: "col-sm-9 col-md-10 home-feed-card-div"}, 
+                    React.createElement(PusheenGangnamStyleCard, {key: 0})
+                )
+            )
+        );
+    },
+    getProfilePhoto: function() {
+        return (
+            React.createElement("div", {className: "col-sm-12 col-md-offset-2 col-md-9 home-feed-card-div"}, 
+                React.createElement("div", {className: "col-sm-9 col-md-10 home-feed-card-div"}, 
+                    React.createElement(PusheenGangnamStyleCard, {key: 0})
+                )
+            )
+        );
+    },
+    getProfileSettings: function() {
+        return (
+            React.createElement("div", {className: "col-sm-12 col-md-offset-2 col-md-9 home-feed-card-div"}, 
+                React.createElement("div", {className: "col-sm-9 col-md-10 home-feed-card-div"}, 
+                    React.createElement(PusheenGangnamStyleCard, {key: 0})
+                )
+            )
+        );
+    },
     render: function() {
         return (
             React.createElement("div", null, 
@@ -273,7 +309,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
 
                 React.createElement("div", {id: "profile-tab-content", className: "tab-content", style: {marginTop: "15px"}}, 
                     React.createElement("div", {className: "tab-pane fade", id: "profile-inbox"}, 
-                        React.createElement("p", null, "inbox")
+                        this.getProfileInboxList()
                     ), 
                     React.createElement("div", {className: "tab-pane fade active in", id: "profile-request"}, 
                         this.getProfileRequestFeedList()
@@ -282,13 +318,13 @@ var MePanel = React.createClass({displayName: 'MePanel',
                         this.getProfileOfferFeedList()
                     ), 
                     React.createElement("div", {className: "tab-pane fade", id: "profile-calendar"}, 
-                        React.createElement("p", null, "calendar")
+                        this.getProfileCalendar()
                     ), 
                     React.createElement("div", {className: "tab-pane fade", id: "profile-photo"}, 
-                        React.createElement("p", null, "photo")
+                        this.getProfilePhoto()
                     ), 
                     React.createElement("div", {className: "tab-pane fade", id: "profile-settings"}, 
-                        React.createElement("p", null, "settings")
+                        this.getProfileSettings()
                     )
                 )
             )

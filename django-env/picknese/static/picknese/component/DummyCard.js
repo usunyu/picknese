@@ -80,6 +80,24 @@ var PusheenLazyCard = React.createClass({displayName: 'PusheenLazyCard',
     }
 });
 
+var PusheenGangnamStyleCard = React.createClass({displayName: 'PusheenGangnamStyleCard',
+    render: function() {
+        return (
+            React.createElement("div", {className: "panel clearfix fadein-effect home-feed-panel-div"}, 
+                React.createElement("div", {className: "panel-heading", style: {overflow: "auto"}}, 
+                    React.createElement("b", null, "This function has not implemented yet, please have a little faith:)")
+                ), 
+                React.createElement("hr", {style: {marginTop: "0px", marginBottom: "0px"}}), 
+                React.createElement("div", {className: "panel-body", style: {backgroundColor: "#fcf0e4"}}, 
+                    React.createElement("div", {className: "col-xs-12 col-md-offset-3 col-md-6"}, 
+                        React.createElement("img", {src: getPusheenGangnamStyleGif(), style: {width: "100%"}})
+                    )
+                )
+            )
+        );
+    }
+});
+
 var LoadingCard = React.createClass({displayName: 'LoadingCard',
     render: function() {
         return (

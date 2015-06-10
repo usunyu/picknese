@@ -80,6 +80,24 @@ var PusheenLazyCard = React.createClass({
     }
 });
 
+var PusheenGangnamStyleCard = React.createClass({
+    render: function() {
+        return (
+            <div className="panel clearfix fadein-effect home-feed-panel-div">
+                <div className="panel-heading" style={{overflow: "auto"}}>
+                    <b>This function has not implemented yet, please have a little faith:)</b>
+                </div>
+                <hr style={{marginTop: "0px", marginBottom: "0px"}}/>
+                <div className="panel-body" style={{backgroundColor: "#fcf0e4"}}>
+                    <div className="col-xs-12 col-md-offset-3 col-md-6">
+                        <img src={getPusheenGangnamStyleGif()} style={{width: "100%"}} />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+});
+
 var LoadingCard = React.createClass({
     render: function() {
         return (

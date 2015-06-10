@@ -79,3 +79,7 @@ function getPusheenHappyGif() {
 function getPusheenLazyGif() {
     return getStaticURL() + 'picknese/images/pusheen/pusheen_lazy.gif';
 }
+
+function getPusheenGangnamStyleGif() {
+    return getStaticURL() + 'picknese/images/pusheen/pusheen_gangnam_style.gif';
+}

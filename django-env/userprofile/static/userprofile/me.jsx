@@ -44,6 +44,15 @@ var MePanel = React.createClass({
     onProfileSettingsClick: function(event) {
         CURRENT_PANEL = SETTINGS_PANEL;
     },
+    getProfileInboxList: function() {
+        return (
+            <div className="col-sm-12 col-md-offset-2 col-md-9 home-feed-card-div">
+                <div className="col-sm-9 col-md-10 home-feed-card-div">
+                    <PusheenGangnamStyleCard key={0} />
+                </div>
+            </div>
+        );
+    },
     getProfileRequestFeedList: function() {
         var profileFeedList = [];
         for (var i = 0; i < this.state.requests.length; i++) {
@@ -235,6 +244,33 @@ var MePanel = React.createClass({
             </select>
         );
     },
+    getProfileCalendar: function() {
+        return (
+            <div className="col-sm-12 col-md-offset-2 col-md-9 home-feed-card-div">
+                <div className="col-sm-9 col-md-10 home-feed-card-div">
+                    <PusheenGangnamStyleCard key={0} />
+                </div>
+            </div>
+        );
+    },
+    getProfilePhoto: function() {
+        return (
+            <div className="col-sm-12 col-md-offset-2 col-md-9 home-feed-card-div">
+                <div className="col-sm-9 col-md-10 home-feed-card-div">
+                    <PusheenGangnamStyleCard key={0} />
+                </div>
+            </div>
+        );
+    },
+    getProfileSettings: function() {
+        return (
+            <div className="col-sm-12 col-md-offset-2 col-md-9 home-feed-card-div">
+                <div className="col-sm-9 col-md-10 home-feed-card-div">
+                    <PusheenGangnamStyleCard key={0} />
+                </div>
+            </div>
+        );
+    },
     render: function() {
         return (
             <div>
@@ -273,7 +309,7 @@ var MePanel = React.createClass({
 
                 <div id="profile-tab-content" className="tab-content" style={{marginTop: "15px"}}>
                     <div className="tab-pane fade" id="profile-inbox">
-                        <p>inbox</p>
+                        {this.getProfileInboxList()}
                     </div>
                     <div className="tab-pane fade active in" id="profile-request">
                         {this.getProfileRequestFeedList()}
@@ -282,13 +318,13 @@ var MePanel = React.createClass({
                         {this.getProfileOfferFeedList()}
                     </div>
                     <div className="tab-pane fade" id="profile-calendar">
-                        <p>calendar</p>
+                        {this.getProfileCalendar()}
                     </div>
                     <div className="tab-pane fade" id="profile-photo">
-                        <p>photo</p>
+                        {this.getProfilePhoto()}
                     </div>
                     <div className="tab-pane fade" id="profile-settings">
-                        <p>settings</p>
+                        {this.getProfileSettings()}
                     </div>
                 </div>
             </div>
