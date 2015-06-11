@@ -191,6 +191,18 @@
       "css": "mobile",
       "code": 59420,
       "src": "entypo"
+    },
+    {
+      "uid": "10b2be8b48bebc1974d6f94bac9de71d",
+      "css": "female",
+      "code": 59423,
+      "src": "mfglabs"
+    },
+    {
+      "uid": "23c2239369a69f752e790de95123b9e9",
+      "css": "male",
+      "code": 59424,
+      "src": "mfglabs"
     }
   ]
 }

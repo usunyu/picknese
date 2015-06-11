@@ -829,7 +829,7 @@ div.show-image button.btn-on-image {
     display: inline-block;
     text-decoration: inherit;
     width: 1em;
-    margin-right: .2em;
+    margin-right: .5em;
     text-align: center;
     /* opacity: .8; */
      
@@ -842,7 +842,7 @@ div.show-image button.btn-on-image {
      
     /* Animation center compensation - margins should be symmetric */
     /* remove if not needed */
-    margin-left: .2em;
+    /*margin-left: .2em;*/
      
     /* You can be more comfortable with increased icons size */
     font-size: 120%; 

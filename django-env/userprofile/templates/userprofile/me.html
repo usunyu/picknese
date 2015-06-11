@@ -88,15 +88,41 @@ Me |
                     {{current_user.first_name}} {{current_user.last_name}}
                 </h3>
                 <div class="col-md-12 color-white profile-info-div">
-                    <div class="col-md-12 profile-info-div">
-                        <span class="glyphicon glyphicon-home"></span> {{current_user.profile.university}}
+                    <div class="col-xs-12 col-md-6 profile-info-div">
+                        <div class="profile-info-div" data-toggle="tooltip" data-placement="left" title="Gender">
+                            {% if current_user.profile.gender == "M" %}
+                            <span class="fontello-icon icon-male"></span> Male
+                            {% else %}
+                            <span class="fontello-icon icon-female"></span> Female
+                            {% endif %}
+                        </div>
+                        <div class="profile-info-div" data-toggle="tooltip" data-placement="left" title="University">
+                            <span class="fontello-icon icon-bank"></span> {{current_user.profile.university}}
+                        </div>
                     </div>
-                    <div class="col-md-6 profile-info-div">
+                    <div class="col-xs-12 col-md-6 profile-info-div">
+                        {% if current_user.profile.phone %}
+                        <div class="profile-info-div" data-toggle="tooltip" data-placement="left" title="Phone">
+                            <span class="fontello-icon icon-mobile"></span> {{current_user.profile.phone}}
+                        </div>
+                        {% endif %}
+                        {% if current_user.profile.qq %}
+                        <div class="profile-info-div" data-toggle="tooltip" data-placement="left" title="QQ">
+                            <span class="fontello-icon icon-qq"></span> {{current_user.profile.qq}}
+                        </div>
+                        {% endif %}
+                        {% if current_user.profile.wechat %}
+                        <div class="profile-info-div" data-toggle="tooltip" data-placement="left" title="Wechat">
+                            <span class="fontello-icon icon-wechat"></span> {{current_user.profile.wechat}}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <!-- <div class="col-md-6 profile-info-div">
                         <span class="glyphicon glyphicon-phone"></span> {{current_user.profile.phone}}
                     </div>
                     <div class="col-md-6 profile-info-div">
                         <span class="glyphicon glyphicon-envelope"></span> {{current_user.profile.wechat}}
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -127,6 +153,9 @@ if ("{{current_user.is_authenticated}}" == "True") {
 var profile_user = current_user;
 
 var imageUploadCode = null;
+
+// this would be called in react
+$('[data-toggle="tooltip"]').tooltip();
 
 function onClickUploadImage(event) {
     $( "#image-upload-file" ).val(null);

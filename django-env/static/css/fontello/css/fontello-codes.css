@@ -30,3 +30,5 @@
 .icon-mobile:before { content: '\e81c'; } /* '' */
 .icon-mail-alt:before { content: '\e81d'; } /* '' */
 .icon-th:before { content: '\e81e'; } /* '' */
+.icon-female:before { content: '\e81f'; } /* '' */
+.icon-male:before { content: '\e820'; } /* '' */
