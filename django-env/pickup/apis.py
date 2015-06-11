@@ -75,6 +75,12 @@ class FlightPickUpMutate(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = models.FlightPickUp.objects.all()
 
+    def perform_destroy(self, instance):
+        flight_pick_request = instance.flight_pick_request
+        flight_pick_request.confirmed = False
+        flight_pick_request.save()
+        instance.delete()
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #                               PickRequest                                     #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -148,6 +154,12 @@ class PickUpMutate(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.PickUpMutateSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = models.PickUp.objects.all()
+
+    def perform_destroy(self, instance):
+        pick_request = instance.pick_request
+        pick_request.confirmed = False
+        pick_request.save()
+        instance.delete()
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 #                               Legacy Code                                     #

@@ -73,7 +73,7 @@ class PickUp(models.Model):
         return 'Request: %s, Picker: %s' % (self.pick_request, self.picker.username)
 
 
-# TODO: deprecate PickRequester and PickUp
+# TODO: deprecate PickRequester
 class PickRequester(models.Model):
     requester = models.ForeignKey(User, related_name='pick_pequester')
     university = models.ForeignKey(University)

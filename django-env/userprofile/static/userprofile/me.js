@@ -85,7 +85,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
                             feed: feed, 
                             onCancel: null, 
                             cancelCallback: this.loadProfileRequestFromServer, 
-                            onReject: null, 
+                            onReject: this.handlePickUpReject, 
                             rejectCallback: this.loadProfileRequestFromServer})
                     );
                     break;
@@ -96,7 +96,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
                             feed: feed, 
                             onCancel: null, 
                             cancelCallback: this.loadProfileRequestFromServer, 
-                            onReject: null, 
+                            onReject: this.handleFlightPickUpReject, 
                             rejectCallback: this.loadProfileRequestFromServer})
                     );
                 default:

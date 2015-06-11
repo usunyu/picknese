@@ -54,9 +54,6 @@ var PusheenHappyCard = React.createClass({displayName: 'PusheenHappyCard',
 });
 
 var PusheenLazyCard = React.createClass({displayName: 'PusheenLazyCard',
-    onPusheenPostRequestButtonClick: function() {
-        location.href = getPostRequestURL(0);
-    },
     render: function() {
         return (
             React.createElement("div", {className: "panel clearfix fadein-effect home-feed-panel-div"}, 
@@ -67,12 +64,6 @@ var PusheenLazyCard = React.createClass({displayName: 'PusheenLazyCard',
                 React.createElement("div", {className: "panel-body", style: {backgroundColor: "#fcf0e4"}}, 
                     React.createElement("div", {className: "col-xs-12 col-md-offset-3 col-md-6"}, 
                         React.createElement("img", {src: getPusheenLazyGif(), style: {width: "100%"}})
-                    ), 
-                    React.createElement("button", {
-                        type: "button", 
-                        className: "btn btn-red col-xs-12", 
-                        onClick: this.onPusheenPostRequestButtonClick}, 
-                        "Post Your Request"
                     )
                 )
             )

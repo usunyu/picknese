@@ -37,42 +37,11 @@ var BaseRequestCard = React.createClass({
                         Update
                     </button>
                     {/* Cancel Button Modal */}
-                    <div
-                        id={"feed-" + feed.id}
-                        className="modal fade"
-                        tabIndex="-1"
-                        role="dialog"
-                        aria-hidden="true">
-                        <div className="modal-dialog modal-sm">
-                            <div className="modal-content">
-                                <div className="modal-header background-color-warning">
-                                    <button
-                                        type="button"
-                                        className="close"
-                                        data-dismiss="modal"
-                                        aria-label="Close"
-                                        style={{color: "white"}}>
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    <h5 className="modal-title" style={{color: "white"}}>
-                                        Cancel Confirmation
-                                    </h5>
-                                </div>
-                                <div className="modal-body">
-                                    <p>Are you sure want to cancel this request?</p>
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
-                                    <button
-                                        type="button"
-                                        className="btn btn-primary"
-                                        onClick={this.handleRequestCancel}>
-                                        Confirm
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <WarningConfirmationModal
+                        feed={feed}
+                        title={"Cancel Confirmation"}
+                        text={"Are you sure want to cancel this request?"}
+                        onConfirm={this.handleRequestCancel} />
                 </div>
             );
         } else {

@@ -54,9 +54,6 @@ var PusheenHappyCard = React.createClass({
 });
 
 var PusheenLazyCard = React.createClass({
-    onPusheenPostRequestButtonClick: function() {
-        location.href = getPostRequestURL(0);
-    },
     render: function() {
         return (
             <div className="panel clearfix fadein-effect home-feed-panel-div">
@@ -68,12 +65,6 @@ var PusheenLazyCard = React.createClass({
                     <div className="col-xs-12 col-md-offset-3 col-md-6">
                         <img src={getPusheenLazyGif()} style={{width: "100%"}} />
                     </div>
-                    <button
-                        type="button"
-                        className="btn btn-red col-xs-12"
-                        onClick={this.onPusheenPostRequestButtonClick} >
-                        Post Your Request
-                    </button>
                 </div>
             </div>
         );

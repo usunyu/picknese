@@ -13,6 +13,7 @@ var CURRENT_FEED_TYPE = ALL_POST;
 
 var HomeFeedActionMixin = {
     loadHomeFeedFromServer: function() {
+        // load home feed for home.jsx
         $.ajax({
             url: getHomeFeedListAPI(university.id, CURRENT_FEED_TYPE),
             dataType: 'json',
@@ -46,6 +47,7 @@ var HomeFeedActionMixin = {
         }
     },
     handleFlightPickRequestSubmit: function(data) {
+        // requester post flight pick request
         $.ajax({
             url: getFlightPickRequestCreateAPI(),
             dataType: 'json',
@@ -69,6 +71,7 @@ var HomeFeedActionMixin = {
         });
     },
     handleFlightPickRequestCancel: function(data, callback) {
+        // requester cancel flight pick request
         var id = data.id;
         $.ajax({
             url: getFlightPickRequestMutateAPI(id),
@@ -95,6 +98,7 @@ var HomeFeedActionMixin = {
         });
     },
     handleFlightPickUpSubmit: function(data) {
+        // picker provide flight pick up
         var id = data.flight_pick_request;
         $.ajax({
             url: getFlightPickUpCreateAPI(),
@@ -121,7 +125,36 @@ var HomeFeedActionMixin = {
             }.bind(this)
         });
     },
+    handleFlightPickUpReject: function(data, callback) {
+        // requester reject the flight pick up offer
+        var id = data.id;
+        $.ajax({
+            url: getFlightPickUpMutateAPI(id),
+            dataType: 'json',
+            type: 'DELETE',
+            data: data,
+            success: function(data) {
+                $("#feed-" + id).modal('hide');
+                preparePopupMessage(
+                    "You have successfully reject this offer.",
+                    "success"
+                );
+                popupMessage();
+                callback();
+            }.bind(this),
+            error: function(xhr, status, err) {
+                $("#feed-" + id).modal('hide');
+                console.error(getFlightPickUpMutateAPI(id), status, err.toString());
+                preparePopupMessage(
+                    "Oops, some errors happen, please try again later.",
+                    "danger"
+                );
+                popupMessage();
+            }.bind(this)
+        });
+    },
     handlePickRequestSubmit: function(data) {
+        // requester post pick request
         $.ajax({
             url: getPickRequestCreateAPI(),
             dataType: 'json',
@@ -145,6 +178,7 @@ var HomeFeedActionMixin = {
         });
     },
     handlePickRequestCancel: function(data, callback) {
+        // requester cancel pick request
         var id = data.id;
         $.ajax({
             url: getPickRequestMutateAPI(id),
@@ -171,6 +205,7 @@ var HomeFeedActionMixin = {
         });
     },
     handlePickUpSubmit: function(data) {
+        // picker provide pick up
         var id = data.pick_request;
         $.ajax({
             url: getPickUpCreateAPI(),
@@ -197,7 +232,36 @@ var HomeFeedActionMixin = {
             }.bind(this)
         });
     },
+    handlePickUpReject: function(data, callback) {
+        // requester reject the pick up offer
+        var id = data.id;
+        $.ajax({
+            url: getPickUpMutateAPI(id),
+            dataType: 'json',
+            type: 'DELETE',
+            data: data,
+            success: function(data) {
+                $("#feed-" + id).modal('hide');
+                preparePopupMessage(
+                    "You have successfully reject this offer.",
+                    "success"
+                );
+                popupMessage();
+                callback();
+            }.bind(this),
+            error: function(xhr, status, err) {
+                $("#feed-" + id).modal('hide');
+                console.error(getPickUpMutateAPI(id), status, err.toString());
+                preparePopupMessage(
+                    "Oops, some errors happen, please try again later.",
+                    "danger"
+                );
+                popupMessage();
+            }.bind(this)
+        });
+    },
     loadProfileRequestFromServer: function() {
+        // load profile request feed for me.jsx
         $.ajax({
             url: getProfileRequestAPI(profile_user.id, CURRENT_FEED_TYPE),
             dataType: 'json',
@@ -211,6 +275,7 @@ var HomeFeedActionMixin = {
         });
     },
     loadProfileOfferFromServer: function() {
+        // load profile offer feed for me.jsx
         $.ajax({
             url: getProfileOfferAPI(profile_user.id, CURRENT_FEED_TYPE),
             dataType: 'json',

@@ -10,6 +10,7 @@ sub_paths = [
     PICKNESE_PATH + 'post_request.jsx',
     PICKNESE_PATH + 'component/LoginModal.jsx',
     PICKNESE_PATH + 'component/DummyCard.jsx',
+    PICKNESE_PATH + 'component/ConfirmationModal.jsx',
 
     PICKUP_PATH + 'component/BaseContentBody.jsx',
     PICKUP_PATH + 'component/BaseRequestCard.jsx',

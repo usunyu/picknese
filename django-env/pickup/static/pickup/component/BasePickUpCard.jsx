@@ -1,4 +1,7 @@
 var BasePickUpCard = React.createClass({
+    handlePickUpReject: function() {
+        this.props.onReject(this.props.feed, this.props.rejectCallback);
+    },
     getSubCard: function() {
         var feed = this.props.feed;
         var layout = this.props.layout;
@@ -47,6 +50,12 @@ var BasePickUpCard = React.createClass({
                         <i className="glyphicon glyphicon-remove"></i>&nbsp;
                         Reject
                     </button>
+                    {/* Reject Button Modal */}
+                    <WarningConfirmationModal
+                        feed={feed}
+                        title={"Reject Confirmation"}
+                        text={"Are you sure want to reject this offer?"}
+                        onConfirm={this.handlePickUpReject} />
                 </div>
             );
         }
