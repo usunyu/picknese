@@ -46,7 +46,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
     },
     getProfileInboxList: function() {
         return (
-            React.createElement("div", {className: "col-sm-12 col-md-offset-2 col-md-9 home-feed-card-div"}, 
+            React.createElement("div", {className: "col-sm-12 home-feed-card-div"}, 
                 React.createElement("div", {className: "col-sm-9 col-md-10 home-feed-card-div"}, 
                     React.createElement(PusheenGangnamStyleCard, {key: 0})
                 )
@@ -112,7 +112,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
             profileFeedList.push(React.createElement(LoadingCard, {key: 0}));
         }
         return (
-            React.createElement("div", {className: "col-sm-12 col-md-offset-2 col-md-9 home-feed-card-div"}, 
+            React.createElement("div", {className: "col-sm-12 home-feed-card-div"}, 
                 React.createElement("div", {className: "feed-type-select-xs-div hidden-sm hidden-md hidden-lg col-sm-12"}, 
                     this.getFeedRequestTypeSelect()
                 ), 
@@ -164,7 +164,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
             profileFeedList.push(React.createElement(LoadingCard, {key: 0}));
         }
         return (
-            React.createElement("div", {className: "col-sm-12 col-md-offset-2 col-md-9 home-feed-card-div"}, 
+            React.createElement("div", {className: "col-sm-12 home-feed-card-div"}, 
                 React.createElement("div", {className: "feed-type-select-xs-div hidden-sm hidden-md hidden-lg col-sm-12"}, 
                     this.getFeedOfferTypeSelect()
                 ), 
@@ -246,7 +246,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
     },
     getProfileCalendar: function() {
         return (
-            React.createElement("div", {className: "col-sm-12 col-md-offset-2 col-md-9 home-feed-card-div"}, 
+            React.createElement("div", {className: "col-sm-12 home-feed-card-div"}, 
                 React.createElement("div", {className: "col-sm-9 col-md-10 home-feed-card-div"}, 
                     React.createElement(PusheenGangnamStyleCard, {key: 0})
                 )
@@ -255,7 +255,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
     },
     getProfilePhoto: function() {
         return (
-            React.createElement("div", {className: "col-sm-12 col-md-offset-2 col-md-9 home-feed-card-div"}, 
+            React.createElement("div", {className: "col-sm-12 home-feed-card-div"}, 
                 React.createElement("div", {className: "col-sm-9 col-md-10 home-feed-card-div"}, 
                     React.createElement(PusheenGangnamStyleCard, {key: 0})
                 )
@@ -264,7 +264,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
     },
     getProfileSettings: function() {
         return (
-            React.createElement("div", {className: "col-sm-12 col-md-offset-2 col-md-9 home-feed-card-div"}, 
+            React.createElement("div", {className: "col-sm-12 home-feed-card-div"}, 
                 React.createElement("div", {className: "col-sm-9 col-md-10 home-feed-card-div"}, 
                     React.createElement(PusheenGangnamStyleCard, {key: 0})
                 )
@@ -272,6 +272,44 @@ var MePanel = React.createClass({displayName: 'MePanel',
         );
     },
     render: function() {
+
+        var backup = (React.createElement("div", null, 
+                React.createElement("ul", {className: "nav nav-tabs nav-justified"}, 
+                    React.createElement("li", null, 
+                        React.createElement("a", {href: "#profile-inbox", onClick: this.onProfileInboxClick, 'data-toggle': "tab", 'aria-expanded': "false"}, 
+                            React.createElement("span", {className: "glyphicon glyphicon-envelope"}), "  Inbox  ", React.createElement("span", {className: "badge"}, "7")
+                        )
+                    ), 
+                    React.createElement("li", {className: "active"}, 
+                        React.createElement("a", {href: "#profile-request", onClick: this.onProfileRequestClick, 'data-toggle': "tab", 'aria-expanded': "true"}, 
+                            React.createElement("span", {className: "glyphicon glyphicon-list-alt"}), "  Your Requests"
+                        )
+                    ), 
+                    React.createElement("li", null, 
+                        React.createElement("a", {href: "#profile-offer", onClick: this.onProfileOfferClick, 'data-toggle': "tab", 'aria-expanded': "false"}, 
+                            React.createElement("span", {className: "glyphicon glyphicon-heart"}), "  Your Offers"
+                        )
+                    ), 
+                    React.createElement("li", null, 
+                        React.createElement("a", {href: "#profile-calendar", onClick: this.onProfileCalendarClick, 'data-toggle': "tab", 'aria-expanded': "false"}, 
+                            React.createElement("span", {className: "glyphicon glyphicon-calendar"}), "  Calendar"
+                        )
+                    ), 
+                    React.createElement("li", null, 
+                        React.createElement("a", {href: "#profile-photo", onClick: this.onProfilePictureClick, 'data-toggle': "tab", 'aria-expanded': "false"}, 
+                            React.createElement("span", {className: "glyphicon glyphicon-picture"}), "  Your Photos"
+                        )
+                    ), 
+                    React.createElement("li", null, 
+                        React.createElement("a", {href: "#profile-settings", onClick: this.onProfileSettingsClick, 'data-toggle': "tab", 'aria-expanded': "false"}, 
+                            React.createElement("span", {className: "glyphicon glyphicon-cog"}), "  Account Settings"
+                        )
+                    )
+                )
+
+                
+            ));
+
         return (
             React.createElement("div", null, 
                 React.createElement("ul", {className: "nav nav-tabs nav-justified"}, 

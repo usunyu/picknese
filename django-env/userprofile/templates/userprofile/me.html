@@ -24,111 +24,103 @@ Me |
 <script type="text/javascript" src="{% static 'pickup/component/PickUpCard.js' %}"></script>
 {% endblock %}
 
-{% block jumbotron %}
-<div class="jumbotron profile-jumbotron box-shadow no-bottom-margin" >
-    <div class="container" >
-        <div class="media">
-            <div class="media-left no-left-padding col-xs-12 col-sm-4 col-md-3">
-                <div class="show-image">
-                    <img
-                        class="media-object profile-picture img-thumbnail"
-                        src="{% get_media_prefix %}{{current_user.profile.get_avatar}}" />
-                        <button
-                            type="button"
-                            class="btn btn-default btn-lg btn-on-image"
-                            data-toggle="modal"
-                            data-target="#image-upload-modal">
-                            <i class="glyphicon glyphicon-camera"></i> Change Photo
-                        </button>
-                    </div>
-                    
-                    <div
-                        id="image-upload-modal"
-                        class="modal fade"
-                        tabIndex="-1"
-                        role="dialog"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header background-color-primary">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true" class="color-white">&times;</span>
-                                    </button>
-                                    <h4 class="modal-title color-white">Change Profile Photo</h4>
+{% block content %}
+<div class="container main-content">
+    <div class="row">
+        <div class="col-sm-12 col-md-3">
+            <!-- Profile User Thumbnail -->
+            <div class="thumbnail">
+                <img
+                    src="{% get_media_prefix %}{{current_user.profile.get_avatar}}"
+                    width="100%" />
+                    <button
+                        type="button"
+                        class="btn btn-primary btn-lg profile-picture-button full-width"
+                        data-toggle="modal"
+                        data-target="#image-upload-modal">
+                        <i class="glyphicon glyphicon-camera"></i> Change Photo
+                    </button>
+                <div
+                    id="image-upload-modal"
+                    class="modal fade"
+                    tabIndex="-1"
+                    role="dialog"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header background-color-primary">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" class="color-white">&times;</span>
+                                </button>
+                                <h4 class="modal-title color-white">Change Profile Photo</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div id="image-upload-input">
+                                    <img
+                                        class="media-object box-shadow profile-picture"
+                                        src="{% get_media_prefix %}{{current_user.profile.get_avatar}}" />
                                 </div>
-                                <div class="modal-body">
-                                    <div id="image-upload-input">
-                                        <img
-                                            class="media-object box-shadow profile-picture"
-                                            src="{% get_media_prefix %}{{current_user.profile.get_avatar}}" />
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                    <span class="btn btn-default btn-file">
-                                        Browse
-                                        <input
-                                            type="file" id="image-upload-file" 
-                                            onclick="onClickUploadImage(event)"
-                                            onchange="onChangeUploadImage(event)" />
-                                    </span>
-                                    <button
-                                        type="button"
-                                        class="btn btn-primary" 
-                                        onclick="onSubmitUploadImage(event)" >
-                                        Save
-                                    </button>
-                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <span class="btn btn-default btn-file">
+                                    Browse
+                                    <input
+                                        type="file" id="image-upload-file" 
+                                        onclick="onClickUploadImage(event)"
+                                        onchange="onChangeUploadImage(event)" />
+                                </span>
+                                <button
+                                    type="button"
+                                    class="btn btn-primary" 
+                                    onclick="onSubmitUploadImage(event)" >
+                                    Save
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="caption">
+                    <h4>{{current_user.first_name}} {{current_user.last_name}}</h4>
+                    <img
+                        class="image-circular"
+                        src="{% get_static_prefix %}university/images/{{current_user.profile.university.shorthand}}/logo.jpg"
+                        width="25px"
+                        height="25px" />
+                    <b>{{current_user.profile.university}}</b>
+                </div>
             </div>
-            <div class="media-body col-sm-8 col-md-9 profile-info">
-                <h3 class="media-heading color-white">
-                    {{current_user.first_name}} {{current_user.last_name}}
-                </h3>
-                <div class="col-md-12 color-white profile-info-div">
-                    <div class="col-xs-12 col-md-6 profile-info-div">
-                        <div class="profile-info-div" data-toggle="tooltip" data-placement="left" title="Gender">
-                            {% if current_user.profile.gender == "M" %}
-                            <span class="fontello-icon icon-male"></span> Male
-                            {% else %}
-                            <span class="fontello-icon icon-female"></span> Female
-                            {% endif %}
-                        </div>
-                        <div class="profile-info-div" data-toggle="tooltip" data-placement="left" title="University">
-                            <span class="fontello-icon icon-bank"></span> {{current_user.profile.university}}
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-md-6 profile-info-div">
-                        {% if current_user.profile.phone %}
-                        <div class="profile-info-div" data-toggle="tooltip" data-placement="left" title="Phone">
-                            <span class="fontello-icon icon-mobile"></span> {{current_user.profile.phone}}
-                        </div>
-                        {% endif %}
-                        {% if current_user.profile.qq %}
-                        <div class="profile-info-div" data-toggle="tooltip" data-placement="left" title="QQ">
-                            <span class="fontello-icon icon-qq"></span> {{current_user.profile.qq}}
-                        </div>
-                        {% endif %}
-                        {% if current_user.profile.wechat %}
-                        <div class="profile-info-div" data-toggle="tooltip" data-placement="left" title="Wechat">
-                            <span class="fontello-icon icon-wechat"></span> {{current_user.profile.wechat}}
-                        </div>
+
+            <p><b>Information</b></p>
+
+            <div class="thumbnail">
+                <div class="caption">
+                    <div>
+                        {% if current_user.profile.gender == "M" %}
+                        <span class="fontello-icon icon-male" data-toggle="tooltip" data-placement="left" title="Gender"></span> Male
+                        {% else %}
+                        <span class="fontello-icon icon-female"></span> Female
                         {% endif %}
                     </div>
+                    {% if current_user.profile.phone %}
+                    <div>
+                        <span class="fontello-icon icon-mobile" data-toggle="tooltip" data-placement="left" title="Phone"></span> {{current_user.profile.phone}}
+                    </div>
+                    {% endif %}
+                    {% if current_user.profile.qq %}
+                    <div>
+                        <span class="fontello-icon icon-qq" data-toggle="tooltip" data-placement="left" title="QQ"></span> {{current_user.profile.qq}}
+                    </div>
+                    {% endif %}
+                    {% if current_user.profile.wechat %}
+                    <div>
+                        <span class="fontello-icon icon-wechat" data-toggle="tooltip" data-placement="left" title="Wechat"></span> {{current_user.profile.wechat}}
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
-    </div>
-</div>
-{% endblock %}
-
-{% block content %}
-<div class="container">
-    <div class="row">
-        <div id="content"></div>
+        <div id="content" class="col-sm-12 col-md-9 no-left-padding no-right-padding"></div>
     </div>
 </div>
 {% endblock %}
