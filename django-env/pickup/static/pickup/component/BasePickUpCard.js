@@ -2,6 +2,9 @@ var BasePickUpCard = React.createClass({displayName: 'BasePickUpCard',
     handlePickUpReject: function() {
         this.props.onReject(this.props.feed, this.props.rejectCallback);
     },
+    handlePickUpCancel: function() {
+        this.props.onCancel(this.props.feed, this.props.cancelCallback);
+    },
     getSubCard: function() {
         var feed = this.props.feed;
         var layout = this.props.layout;
@@ -35,7 +38,13 @@ var BasePickUpCard = React.createClass({displayName: 'BasePickUpCard',
                         'data-target': "#feed-" + feed.id}, 
                         React.createElement("i", {className: "glyphicon glyphicon-remove"}), " " + ' ' +
                         "Cancel"
-                    )
+                    ), 
+                    /* Cancel Button Modal */
+                    React.createElement(WarningConfirmationModal, {
+                        feed: feed, 
+                        title: "Cancel Confirmation", 
+                        text: "Are you sure want to cancel this offer?", 
+                        onConfirm: this.handlePickUpCancel})
                 )
             );
         } else {

@@ -153,6 +153,34 @@ var HomeFeedActionMixin = {
             }.bind(this)
         });
     },
+    handleFlightPickUpCancel: function(data, callback) {
+        // picker cancel the flight pick up offer
+        var id = data.id;
+        $.ajax({
+            url: getFlightPickUpMutateAPI(id),
+            dataType: 'json',
+            type: 'DELETE',
+            data: data,
+            success: function(data) {
+                $("#feed-" + id).modal('hide');
+                preparePopupMessage(
+                    "You have successfully cancel your offer.",
+                    "success"
+                );
+                popupMessage();
+                callback();
+            }.bind(this),
+            error: function(xhr, status, err) {
+                $("#feed-" + id).modal('hide');
+                console.error(getFlightPickUpMutateAPI(id), status, err.toString());
+                preparePopupMessage(
+                    "Oops, some errors happen, please try again later.",
+                    "danger"
+                );
+                popupMessage();
+            }.bind(this)
+        });
+    },
     handlePickRequestSubmit: function(data) {
         // requester post pick request
         $.ajax({
@@ -244,6 +272,34 @@ var HomeFeedActionMixin = {
                 $("#feed-" + id).modal('hide');
                 preparePopupMessage(
                     "You have successfully reject this offer.",
+                    "success"
+                );
+                popupMessage();
+                callback();
+            }.bind(this),
+            error: function(xhr, status, err) {
+                $("#feed-" + id).modal('hide');
+                console.error(getPickUpMutateAPI(id), status, err.toString());
+                preparePopupMessage(
+                    "Oops, some errors happen, please try again later.",
+                    "danger"
+                );
+                popupMessage();
+            }.bind(this)
+        });
+    },
+    handlePickUpCancel: function(data, callback) {
+        // picker cancel the pick up offer
+        var id = data.id;
+        $.ajax({
+            url: getPickUpMutateAPI(id),
+            dataType: 'json',
+            type: 'DELETE',
+            data: data,
+            success: function(data) {
+                $("#feed-" + id).modal('hide');
+                preparePopupMessage(
+                    "You have successfully cancel this offer.",
                     "success"
                 );
                 popupMessage();

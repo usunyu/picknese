@@ -135,7 +135,7 @@ var MePanel = React.createClass({
                         <PickUpCard
                             key={i}
                             feed={feed}
-                            onCancel={null}
+                            onCancel={this.handlePickUpCancel}
                             cancelCallback={this.loadProfileOfferFromServer}
                             onReject={null}
                             rejectCallback={this.loadProfileOfferFromServer} />
@@ -146,7 +146,7 @@ var MePanel = React.createClass({
                         <FlightPickUpCard
                             key={i}
                             feed={feed}
-                            onCancel={null}
+                            onCancel={this.handleFlightPickUpCancel}
                             cancelCallback={this.loadProfileOfferFromServer}
                             onReject={null}
                             rejectCallback={this.loadProfileOfferFromServer} />

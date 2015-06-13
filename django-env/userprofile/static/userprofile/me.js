@@ -135,7 +135,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
                         React.createElement(PickUpCard, {
                             key: i, 
                             feed: feed, 
-                            onCancel: null, 
+                            onCancel: this.handlePickUpCancel, 
                             cancelCallback: this.loadProfileOfferFromServer, 
                             onReject: null, 
                             rejectCallback: this.loadProfileOfferFromServer})
@@ -146,7 +146,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
                         React.createElement(FlightPickUpCard, {
                             key: i, 
                             feed: feed, 
-                            onCancel: null, 
+                            onCancel: this.handleFlightPickUpCancel, 
                             cancelCallback: this.loadProfileOfferFromServer, 
                             onReject: null, 
                             rejectCallback: this.loadProfileOfferFromServer})
@@ -272,44 +272,6 @@ var MePanel = React.createClass({displayName: 'MePanel',
         );
     },
     render: function() {
-
-        var backup = (React.createElement("div", null, 
-                React.createElement("ul", {className: "nav nav-tabs nav-justified"}, 
-                    React.createElement("li", null, 
-                        React.createElement("a", {href: "#profile-inbox", onClick: this.onProfileInboxClick, 'data-toggle': "tab", 'aria-expanded': "false"}, 
-                            React.createElement("span", {className: "glyphicon glyphicon-envelope"}), "  Inbox  ", React.createElement("span", {className: "badge"}, "7")
-                        )
-                    ), 
-                    React.createElement("li", {className: "active"}, 
-                        React.createElement("a", {href: "#profile-request", onClick: this.onProfileRequestClick, 'data-toggle': "tab", 'aria-expanded': "true"}, 
-                            React.createElement("span", {className: "glyphicon glyphicon-list-alt"}), "  Your Requests"
-                        )
-                    ), 
-                    React.createElement("li", null, 
-                        React.createElement("a", {href: "#profile-offer", onClick: this.onProfileOfferClick, 'data-toggle': "tab", 'aria-expanded': "false"}, 
-                            React.createElement("span", {className: "glyphicon glyphicon-heart"}), "  Your Offers"
-                        )
-                    ), 
-                    React.createElement("li", null, 
-                        React.createElement("a", {href: "#profile-calendar", onClick: this.onProfileCalendarClick, 'data-toggle': "tab", 'aria-expanded': "false"}, 
-                            React.createElement("span", {className: "glyphicon glyphicon-calendar"}), "  Calendar"
-                        )
-                    ), 
-                    React.createElement("li", null, 
-                        React.createElement("a", {href: "#profile-photo", onClick: this.onProfilePictureClick, 'data-toggle': "tab", 'aria-expanded': "false"}, 
-                            React.createElement("span", {className: "glyphicon glyphicon-picture"}), "  Your Photos"
-                        )
-                    ), 
-                    React.createElement("li", null, 
-                        React.createElement("a", {href: "#profile-settings", onClick: this.onProfileSettingsClick, 'data-toggle': "tab", 'aria-expanded': "false"}, 
-                            React.createElement("span", {className: "glyphicon glyphicon-cog"}), "  Account Settings"
-                        )
-                    )
-                )
-
-                
-            ));
-
         return (
             React.createElement("div", null, 
                 React.createElement("ul", {className: "nav nav-tabs nav-justified"}, 
