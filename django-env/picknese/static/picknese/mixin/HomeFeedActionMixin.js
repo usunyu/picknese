@@ -10,6 +10,7 @@
  * @pollInterval
  */
 var CURRENT_FEED_TYPE = ALL_POST;
+var ERROR_MESSAGE = "Oops, some errors happen, please try again later.";
 
 var HomeFeedActionMixin = {
     loadHomeFeedFromServer: function() {
@@ -55,17 +56,11 @@ var HomeFeedActionMixin = {
             data: data,
             success: function(data) {
                 window.location = getHomeFeedURL(data.university);
-                preparePopupMessage(
-                    "You have successfully post your request. Please waiting for your picker to contact you!",
-                    "success"
-                );
+                preparePopupMessage("You have successfully post your request. Please waiting for your picker to contact you!", "success");
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(getFlightPickRequestCreateAPI(), status, err.toString());
-                preparePopupMessage(
-                    "Oops, some errors happen, please try again later.",
-                    "danger"
-                );
+                preparePopupMessage(ERROR_MESSAGE, "danger");
                 popupMessage();
             }.bind(this)
         });
@@ -79,20 +74,14 @@ var HomeFeedActionMixin = {
             type: 'DELETE',
             success: function(data) {
                 $("#feed-" + id).modal('hide');
-                preparePopupMessage(
-                    "You have successfully cancel your request.",
-                    "success"
-                );
+                preparePopupMessage("You have successfully cancel your request.", "success");
                 popupMessage();
                 callback();
             }.bind(this),
             error: function(xhr, status, err) {
                 $("#feed-" + id).modal('hide');
                 console.error(getFlightPickRequestMutateAPI(), status, err.toString());
-                preparePopupMessage(
-                    "Oops, some errors happen, please try again later.",
-                    "danger"
-                );
+                preparePopupMessage(ERROR_MESSAGE, "danger");
                 popupMessage();
             }.bind(this)
         });
@@ -107,20 +96,14 @@ var HomeFeedActionMixin = {
             data: data,
             success: function(data) {
                 $("#feed-" + id).modal('hide');
-                preparePopupMessage(
-                    "Thanks for taking the request. Please contact the requester for confirmation!",
-                    "success"
-                );
+                preparePopupMessage("Thanks for taking the request. Please contact the requester for confirmation!", "success");
                 popupMessage();
                 this.loadHomeFeedFromServer();
             }.bind(this),
             error: function(xhr, status, err) {
                 $("#feed-" + id).modal('hide');
                 console.error(getFlightPickUpCreateAPI(), status, err.toString());
-                preparePopupMessage(
-                    "Oops, some errors happen, please try again later.",
-                    "danger"
-                );
+                preparePopupMessage(ERROR_MESSAGE, "danger");
                 popupMessage();
             }.bind(this)
         });
@@ -135,20 +118,14 @@ var HomeFeedActionMixin = {
             data: data,
             success: function(data) {
                 $("#feed-" + id).modal('hide');
-                preparePopupMessage(
-                    "You have successfully reject this offer.",
-                    "success"
-                );
+                preparePopupMessage("You have successfully reject this offer.", "success");
                 popupMessage();
                 callback();
             }.bind(this),
             error: function(xhr, status, err) {
                 $("#feed-" + id).modal('hide');
                 console.error(getFlightPickUpMutateAPI(id), status, err.toString());
-                preparePopupMessage(
-                    "Oops, some errors happen, please try again later.",
-                    "danger"
-                );
+                preparePopupMessage(ERROR_MESSAGE, "danger");
                 popupMessage();
             }.bind(this)
         });
@@ -163,20 +140,14 @@ var HomeFeedActionMixin = {
             data: data,
             success: function(data) {
                 $("#feed-" + id).modal('hide');
-                preparePopupMessage(
-                    "You have successfully cancel your offer.",
-                    "success"
-                );
+                preparePopupMessage("You have successfully cancel your offer.", "success");
                 popupMessage();
                 callback();
             }.bind(this),
             error: function(xhr, status, err) {
                 $("#feed-" + id).modal('hide');
                 console.error(getFlightPickUpMutateAPI(id), status, err.toString());
-                preparePopupMessage(
-                    "Oops, some errors happen, please try again later.",
-                    "danger"
-                );
+                preparePopupMessage(ERROR_MESSAGE, "danger");
                 popupMessage();
             }.bind(this)
         });
@@ -190,17 +161,11 @@ var HomeFeedActionMixin = {
             data: data,
             success: function(data) {
                 window.location = getHomeFeedURL(data.university);
-                preparePopupMessage(
-                    "You have successfully post your request. Please waiting for your picker to contact you!",
-                    "success"
-                );
+                preparePopupMessage("You have successfully post your request. Please waiting for your picker to contact you!", "success");
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(getPickRequestCreateAPI(), status, err.toString());
-                preparePopupMessage(
-                    "Oops, some errors happen, please try again later.",
-                    "danger"
-                );
+                preparePopupMessage(ERROR_MESSAGE, "danger");
                 popupMessage();
             }.bind(this)
         });
@@ -214,20 +179,14 @@ var HomeFeedActionMixin = {
             type: 'DELETE',
             success: function(data) {
                 $("#feed-" + id).modal('hide');
-                preparePopupMessage(
-                    "You have successfully cancel your request.",
-                    "success"
-                );
+                preparePopupMessage("You have successfully cancel your request.", "success");
                 popupMessage();
                 callback();
             }.bind(this),
             error: function(xhr, status, err) {
                 $("#feed-" + id).modal('hide');
                 console.error(getPickRequestMutateAPI(), status, err.toString());
-                preparePopupMessage(
-                    "Oops, some errors happen, please try again later.",
-                    "danger"
-                );
+                preparePopupMessage(ERROR_MESSAGE, "danger");
                 popupMessage();
             }.bind(this)
         });
@@ -242,20 +201,14 @@ var HomeFeedActionMixin = {
             data: data,
             success: function(data) {
                 $("#feed-" + id).modal('hide');
-                preparePopupMessage(
-                    "Thanks for taking the request. Please contact the requester for confirmation!",
-                    "success"
-                );
+                preparePopupMessage("Thanks for taking the request. Please contact the requester for confirmation!", "success");
                 popupMessage();
                 this.loadHomeFeedFromServer();
             }.bind(this),
             error: function(xhr, status, err) {
                 $("#feed-" + id).modal('hide');
                 console.error(getPickUpCreateAPI(), status, err.toString());
-                preparePopupMessage(
-                    "Oops, some errors happen, please try again later.",
-                    "danger"
-                );
+                preparePopupMessage(ERROR_MESSAGE, "danger");
                 popupMessage();
             }.bind(this)
         });
@@ -270,20 +223,14 @@ var HomeFeedActionMixin = {
             data: data,
             success: function(data) {
                 $("#feed-" + id).modal('hide');
-                preparePopupMessage(
-                    "You have successfully reject this offer.",
-                    "success"
-                );
+                preparePopupMessage("You have successfully reject this offer.", "success");
                 popupMessage();
                 callback();
             }.bind(this),
             error: function(xhr, status, err) {
                 $("#feed-" + id).modal('hide');
                 console.error(getPickUpMutateAPI(id), status, err.toString());
-                preparePopupMessage(
-                    "Oops, some errors happen, please try again later.",
-                    "danger"
-                );
+                preparePopupMessage(ERROR_MESSAGE, "danger");
                 popupMessage();
             }.bind(this)
         });
@@ -298,20 +245,14 @@ var HomeFeedActionMixin = {
             data: data,
             success: function(data) {
                 $("#feed-" + id).modal('hide');
-                preparePopupMessage(
-                    "You have successfully cancel this offer.",
-                    "success"
-                );
+                preparePopupMessage("You have successfully cancel this offer.", "success");
                 popupMessage();
                 callback();
             }.bind(this),
             error: function(xhr, status, err) {
                 $("#feed-" + id).modal('hide');
                 console.error(getPickUpMutateAPI(id), status, err.toString());
-                preparePopupMessage(
-                    "Oops, some errors happen, please try again later.",
-                    "danger"
-                );
+                preparePopupMessage(ERROR_MESSAGE, "danger");
                 popupMessage();
             }.bind(this)
         });
