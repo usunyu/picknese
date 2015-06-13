@@ -83,11 +83,13 @@ Me |
                 <div class="caption">
                     <h4>{{current_user.first_name}} {{current_user.last_name}}</h4>
                     {% if current_user.profile.university %}
-                    <img
-                        class="image-circular"
-                        src="{% get_static_prefix %}university/images/{{current_user.profile.university.shorthand}}/logo.jpg"
-                        width="25px"
-                        height="25px" />
+                    <a href="{% url 'picknese.views.home' current_user.profile.university.id %}" style="float: left; margin-right: 5px;">
+                        <img
+                            class="image-circular"
+                            src="{% get_static_prefix %}university/images/{{current_user.profile.university.shorthand}}/logo.jpg"
+                            width="25px"
+                            height="25px" />
+                    </a>
                     <b>{{current_user.profile.university}}</b>
                     {% endif %}
                 </div>

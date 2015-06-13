@@ -12,9 +12,12 @@ function popupMessage() {
     var popupMessageType = localStorage.getItem("PopupMessageType");
     var alertType = 'alert-' + popupMessageType;
     $("#alert-messages").remove();
-    var alertDom = "<div id='alert-messages' class='alert " + alertType + " text-center' role='alert'></div>";
+    var alertDom =
+        "<div id='alert-messages' class='alert " + alertType + " text-center' role='alert'>" +
+        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" +
+        "</div>";
     $("#messages").append(alertDom);
-    $("#alert-messages").stop(false, true).hide().text(popupMessage)
+    $("#alert-messages").stop(false, true).hide().append(popupMessage)
     .slideDown("fast").delay(5000).slideUp('slow', function() {
         $(this).remove();
     });
