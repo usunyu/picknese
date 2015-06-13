@@ -82,43 +82,52 @@ Me |
                 </div>
                 <div class="caption">
                     <h4>{{current_user.first_name}} {{current_user.last_name}}</h4>
+                    {% if current_user.profile.university %}
                     <img
                         class="image-circular"
                         src="{% get_static_prefix %}university/images/{{current_user.profile.university.shorthand}}/logo.jpg"
                         width="25px"
                         height="25px" />
                     <b>{{current_user.profile.university}}</b>
+                    {% endif %}
                 </div>
             </div>
 
+            {% if current_user.profile.gender or current_user.profile.phone or current_user.profile.qq or current_user.profile.wechat %}
             <p><b>Information</b></p>
-
             <div class="thumbnail">
                 <div class="caption">
                     <div>
-                        {% if current_user.profile.gender == "M" %}
-                        <span class="fontello-icon icon-male" data-toggle="tooltip" data-placement="left" title="Gender"></span> Male
-                        {% else %}
-                        <span class="fontello-icon icon-female"></span> Female
+                        {% if current_user.profile.gender %}
+                        <span class="fontello-icon icon-male" data-toggle="tooltip" data-placement="left" title="Gender"></span>
+                            {% if current_user.profile.gender == "M" %}
+                            Male
+                            {% else %}
+                            Female
+                            {% endif %}
                         {% endif %}
                     </div>
-                    {% if current_user.profile.phone %}
                     <div>
-                        <span class="fontello-icon icon-mobile" data-toggle="tooltip" data-placement="left" title="Phone"></span> {{current_user.profile.phone}}
+                        {% if current_user.profile.phone %}
+                        <span class="fontello-icon icon-mobile" data-toggle="tooltip" data-placement="left" title="Phone"></span>
+                        {{current_user.profile.phone}}
+                        {% endif %}
                     </div>
-                    {% endif %}
-                    {% if current_user.profile.qq %}
                     <div>
-                        <span class="fontello-icon icon-qq" data-toggle="tooltip" data-placement="left" title="QQ"></span> {{current_user.profile.qq}}
+                        {% if current_user.profile.qq %}
+                        <span class="fontello-icon icon-qq" data-toggle="tooltip" data-placement="left" title="QQ"></span>
+                        {{current_user.profile.qq}}
+                        {% endif %}
                     </div>
-                    {% endif %}
-                    {% if current_user.profile.wechat %}
                     <div>
-                        <span class="fontello-icon icon-wechat" data-toggle="tooltip" data-placement="left" title="Wechat"></span> {{current_user.profile.wechat}}
+                        {% if current_user.profile.wechat %}
+                        <span class="fontello-icon icon-wechat" data-toggle="tooltip" data-placement="left" title="Wechat"></span>
+                        {{current_user.profile.wechat}}
+                        {% endif %}
                     </div>
-                    {% endif %}
                 </div>
             </div>
+            {% endif %}
         </div>
         <div id="content" class="col-sm-12 col-md-9 no-left-padding no-right-padding"></div>
     </div>

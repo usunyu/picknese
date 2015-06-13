@@ -1,11 +1,11 @@
-var production = false;
+var PRODUCTION = false;
 
 /*
  * Static, Media, URL helper
  * --------------------------------------------------
  */
 function getStaticURL() {
-    if (production) {
+    if (PRODUCTION) {
         // set for production
         return 'https://picknese-s3.s3.amazonaws.com/';
     } else {
@@ -15,7 +15,7 @@ function getStaticURL() {
 }
 
 function getMediaURL() {
-    if (production) {
+    if (PRODUCTION) {
         // set for production
         return 'https://picknese-s3.s3.amazonaws.com/';
     } else {

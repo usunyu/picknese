@@ -272,44 +272,6 @@ var MePanel = React.createClass({
         );
     },
     render: function() {
-
-        var backup = (<div>
-                <ul className="nav nav-tabs nav-justified">
-                    <li>
-                        <a href="#profile-inbox" onClick={this.onProfileInboxClick} data-toggle="tab" aria-expanded="false">
-                            <span className="glyphicon glyphicon-envelope"></span>&nbsp; Inbox &nbsp;<span className="badge">7</span>
-                        </a>
-                    </li>
-                    <li className="active">
-                        <a href="#profile-request" onClick={this.onProfileRequestClick} data-toggle="tab" aria-expanded="true">
-                            <span className="glyphicon glyphicon-list-alt"></span>&nbsp; Your Requests
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#profile-offer" onClick={this.onProfileOfferClick} data-toggle="tab" aria-expanded="false">
-                            <span className="glyphicon glyphicon-heart"></span>&nbsp; Your Offers
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#profile-calendar" onClick={this.onProfileCalendarClick} data-toggle="tab" aria-expanded="false">
-                            <span className="glyphicon glyphicon-calendar"></span>&nbsp; Calendar
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#profile-photo" onClick={this.onProfilePictureClick} data-toggle="tab" aria-expanded="false">
-                            <span className="glyphicon glyphicon-picture"></span>&nbsp; Your Photos
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#profile-settings" onClick={this.onProfileSettingsClick} data-toggle="tab" aria-expanded="false">
-                            <span className="glyphicon glyphicon-cog"></span>&nbsp; Account Settings
-                        </a>
-                    </li>
-                </ul>
-
-                
-            </div>);
-
         return (
             <div>
                 <ul className="nav nav-tabs nav-justified">
