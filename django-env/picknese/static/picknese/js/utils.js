@@ -49,3 +49,6 @@ function arrayDiff(arr1, arr2) {
     return diff;
 }
 
+function trueValue(v) {
+    return typeof v !== 'undefined' ? v : '';
+}

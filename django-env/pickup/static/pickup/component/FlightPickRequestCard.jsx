@@ -70,12 +70,59 @@ var FlightPickRequestCard = React.createClass({
             description         : $("#pick-up-desc-textarea").val().trim(),
         });
     },
+    getRequestUpdateForm: function() {
+        var feed = this.props.feed;
+        var additional_id = feed.feed_type + "-" + feed.id;
+        return (
+            <form className="form-horizontal" onSubmit={this.handlePostRequestSubmit}>
+                {/* University Select */}
+                <UniversitySelectInput
+                    id={additional_id}
+                    defaultValue={feed.university.id}
+                    universitySimpleList={this.props.universitySimpleList} />
+                {/* Flight Number Input */}
+                <FlightNumberTextInput
+                    id={additional_id}
+                    defaultValue={feed.flight} />
+                {/* Flight Baggages & Date Input */}
+                <FlightBaggagesAndDateInput
+                    id={additional_id}
+                    defaultDate={moment(feed.date_time).format("MM/DD/YYYY")}
+                    defaultBaggages={feed.bags} />
+                {/* Pick Dest Input */}
+                <PickDestTextInput
+                    id={additional_id}
+                    defaultValue={feed.destination} />
+                {/* Pick Tip Input */}
+                <PickTipNumberInput
+                    id={additional_id}
+                    defaultValue={feed.price} />
+                {/* Message Input */}
+                <MessageTextareaInput
+                    id={additional_id}
+                    defaultValue={feed.description} />
+                {/* Submit Button */}
+                <div className="form-group">
+                    <div className="col-sm-offset-2 col-sm-10">
+                        <button
+                            id={"post-request-submit-button" + additional_id}
+                            type="submit"
+                            disabled="disabled"
+                            className="btn btn-primary">
+                            Update
+                        </button>
+                    </div>
+                </div>
+            </form>
+        );
+    },
     render: function() {
         var feed = this.props.feed;
         var layout = this.getCustomLayout();
         return (
             <BaseRequestCard
                 feed={this.props.feed}
+                updateForm={this.getRequestUpdateForm()}
                 onSubmit={this.onSubmit}
                 onCancel={this.props.onCancel}
                 cancelCallback={this.props.cancelCallback}

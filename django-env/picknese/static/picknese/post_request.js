@@ -11,52 +11,6 @@
  */
 var CURRENT_REQUEST = PICK_REQUEST;
 
-// Request Type => [Inputs Required]
-var RequestTypeInputMap = {};
-RequestTypeInputMap[PICK_REQUEST] = [
-    "pick-request-university-select",
-    "pick-request-start-input",
-    "pick-request-time-input",
-    "pick-request-dest-input",
-    "pick-request-tip-input",
-];
-RequestTypeInputMap[FLIGHT_PICK_REQUEST] = [
-    "pick-request-university-select",
-    "flight-pick-request-flight-input",
-    "pick-request-baggages-input",
-    "flight-pick-request-date-input",
-    "pick-request-dest-input",
-    "pick-request-tip-input",
-];
-
-// Input => Input Valid Type
-var InputValidTypeMap = {};
-InputValidTypeMap["pick-request-baggages-input"] = "Integer";
-InputValidTypeMap["pick-request-tip-input"] = "Integer";
-
-function enablePostRequestSubmit() {
-    var enableSubmit = true;
-    var requiredInputs = RequestTypeInputMap[CURRENT_REQUEST];
-    for (var i = 0; i < requiredInputs.length && enableSubmit; i++) {
-        var value = $("#" + requiredInputs[i]).val().trim();
-        if (!value) { enableSubmit = false; }
-        var validType = InputValidTypeMap[requiredInputs[i]];
-        switch(validType) {
-            case "Integer":
-                if (!isInt(value)) { enableSubmit = false; }
-                break;
-            default:
-                break;
-        };
-    }
-    var submitButton = document.getElementById("post-request-submit-button");
-    if (enableSubmit) {
-        submitButton.disabled = "";
-    } else {
-        submitButton.disabled = "disabled";
-    }
-}
-
 var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
     mixins: [UniversityActionMixin,
              HomeFeedActionMixin],
@@ -90,29 +44,8 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                 element.addClass("fadein-effect");
                 element.hide();
             }
-            enablePostRequestSubmit();
+            enablePostRequestSubmit('');
         });
-    },
-    onInputFocusLose: function(event) {
-        var targetID = event.target.id;
-        var element = $('#' + targetID);
-        // Check input error
-        var value = $("#" + targetID).val().trim();
-        var inputError = value == "";
-        var validType = InputValidTypeMap[targetID];
-        switch(validType) {
-            case "Integer":
-                if (!isInt(value)) { inputError = true; }
-                break;
-            default:
-                break;
-        };
-        if (inputError) {
-            element.parent().addClass("has-error");
-        } else {
-            element.parent().removeClass("has-error");
-        }
-        enablePostRequestSubmit();
     },
     handlePostRequestSubmit: function(event) {
         event.preventDefault();
@@ -120,13 +53,13 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
         switch(CURRENT_REQUEST) {
             case PICK_REQUEST:
                 request_data = {
-                    university  : $("#pick-request-university-select").val().trim(),
-                    price       : $("#pick-request-tip-input").val().trim(),
-                    date_time   : moment($("#pick-request-time-input").val().trim(), 'MM/DD/YYYY hh:mm A').format(),
-                    start       : $("#pick-request-start-input").val().trim(),
-                    destination : $("#pick-request-dest-input").val().trim(),
+                    university  : $("#" + UNIVERSITY_SELECT_ID).val().trim(),
+                    price       : $("#" + TIP_INPUT_ID).val().trim(),
+                    date_time   : moment($("#" + TIME_INPUT_ID).val().trim(), 'MM/DD/YYYY hh:mm A').format(),
+                    start       : $("#" + START_INPUT_ID).val().trim(),
+                    destination : $("#" + DEST_INPUT_ID).val().trim(),
                     feed_type   : PICK_REQUEST,
-                    description : $("#pick-request-desc-textarea").val().trim(),
+                    description : $("#" + DESC_TEXT_ID).val().trim(),
                 };
                 if (jQuery.isEmptyObject(current_user)) {
                     // need login to complete the request
@@ -151,14 +84,14 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                         if (!isFlightStatusResultHasError(data)) {
                             request_data = {
                                 requester   : current_user.id,
-                                university  : $("#pick-request-university-select").val().trim(),
-                                price       : $("#pick-request-tip-input").val().trim(),
+                                university  : $("#" + UNIVERSITY_SELECT_ID).val().trim(),
+                                price       : $("#" + TIP_INPUT_ID).val().trim(),
                                 flight      : flight,
                                 date_time   : getScheduledArrivalTimeFromResult(data),
-                                destination : $("#pick-request-dest-input").val().trim(),
+                                destination : $("#" + DEST_INPUT_ID).val().trim(),
                                 bags        : $("#pick-request-baggages-input").val().trim(),
                                 feed_type   : FLIGHT_PICK_REQUEST,
-                                description : $("#pick-request-desc-textarea").val().trim(),
+                                description : $("#" + DESC_TEXT_ID).val().trim(),
                             }
                             if (jQuery.isEmptyObject(current_user)) {
                                 // need login to complete the request
@@ -222,30 +155,24 @@ var PostRequestForm = React.createClass({displayName: 'PostRequestForm',
                 /* Flight Number Input */
                 React.createElement(FlightNumberTextInput, {
                     display: 'none', 
-                    defaultValue: null, 
-                    onBlur: this.onInputFocusLose}), 
+                    defaultValue: null}), 
                 /* Flight Baggages & Date Input */
                 React.createElement(FlightBaggagesAndDateInput, {
                     display: 'none', 
                     defaultDate: null, 
-                    defaultBaggages: 1, 
-                    onBlur: this.onInputFocusLose}), 
+                    defaultBaggages: 1}), 
                 /* Pick Location Input */
                 React.createElement(PickLocationTextInput, {
-                    defaultValue: null, 
-                    onBlur: this.onInputFocusLose}), 
+                    defaultValue: null}), 
                 /* Pick Time Input */
                 React.createElement(PickTimeTextInput, {
-                    defaultValue: null, 
-                    onBlur: this.onInputFocusLose}), 
+                    defaultValue: null}), 
                 /* Pick Dest Input */
                 React.createElement(PickDestTextInput, {
-                    defaultValue: null, 
-                    onBlur: this.onInputFocusLose}), 
+                    defaultValue: null}), 
                 /* Pick Tip Input */
                 React.createElement(PickTipNumberInput, {
-                    defaultValue: 20, 
-                    onBlur: this.onInputFocusLose}), 
+                    defaultValue: 20}), 
                 /* Message Input */
                 React.createElement(MessageTextareaInput, {
                     defaultValue: null}), 

@@ -80,7 +80,8 @@ var MePanel = React.createClass({
                             feed={feed}
                             onSubmit={this.handleFlightPickUpSubmit}
                             onCancel={this.handleFlightPickRequestCancel}
-                            cancelCallback={this.loadProfileRequestFromServer} />
+                            cancelCallback={this.loadProfileRequestFromServer}
+                            universitySimpleList={this.state.universitySimpleList} />
                     );
                     break;
                 case PICK_UP:

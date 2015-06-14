@@ -70,12 +70,59 @@ var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCa
             description         : $("#pick-up-desc-textarea").val().trim(),
         });
     },
+    getRequestUpdateForm: function() {
+        var feed = this.props.feed;
+        var additional_id = feed.feed_type + "-" + feed.id;
+        return (
+            React.createElement("form", {className: "form-horizontal", onSubmit: this.handlePostRequestSubmit}, 
+                /* University Select */
+                React.createElement(UniversitySelectInput, {
+                    id: additional_id, 
+                    defaultValue: feed.university.id, 
+                    universitySimpleList: this.props.universitySimpleList}), 
+                /* Flight Number Input */
+                React.createElement(FlightNumberTextInput, {
+                    id: additional_id, 
+                    defaultValue: feed.flight}), 
+                /* Flight Baggages & Date Input */
+                React.createElement(FlightBaggagesAndDateInput, {
+                    id: additional_id, 
+                    defaultDate: moment(feed.date_time).format("MM/DD/YYYY"), 
+                    defaultBaggages: feed.bags}), 
+                /* Pick Dest Input */
+                React.createElement(PickDestTextInput, {
+                    id: additional_id, 
+                    defaultValue: feed.destination}), 
+                /* Pick Tip Input */
+                React.createElement(PickTipNumberInput, {
+                    id: additional_id, 
+                    defaultValue: feed.price}), 
+                /* Message Input */
+                React.createElement(MessageTextareaInput, {
+                    id: additional_id, 
+                    defaultValue: feed.description}), 
+                /* Submit Button */
+                React.createElement("div", {className: "form-group"}, 
+                    React.createElement("div", {className: "col-sm-offset-2 col-sm-10"}, 
+                        React.createElement("button", {
+                            id: "post-request-submit-button" + additional_id, 
+                            type: "submit", 
+                            disabled: "disabled", 
+                            className: "btn btn-primary"}, 
+                            "Update"
+                        )
+                    )
+                )
+            )
+        );
+    },
     render: function() {
         var feed = this.props.feed;
         var layout = this.getCustomLayout();
         return (
             React.createElement(BaseRequestCard, {
                 feed: this.props.feed, 
+                updateForm: this.getRequestUpdateForm(), 
                 onSubmit: this.onSubmit, 
                 onCancel: this.props.onCancel, 
                 cancelCallback: this.props.cancelCallback, 

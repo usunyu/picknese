@@ -71,6 +71,7 @@ var HomePanel = React.createClass({displayName: 'HomePanel',
                         React.createElement(FlightPickRequestCard, {
                             key: i, 
                             feed: feed, 
+                            universitySimpleList: this.state.universitySimpleList, 
                             onSubmit: this.handleFlightPickUpSubmit, 
                             onCancel: this.handleFlightPickRequestCancel, 
                             cancelCallback: this.loadHomeFeedFromServer})

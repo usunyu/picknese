@@ -77,23 +77,19 @@ var PickRequestCard = React.createClass({
                 {/* Pick Location Input */}
                 <PickLocationTextInput
                     id={additional_id}
-                    defaultValue={feed.start}
-                    onBlur={this.onInputFocusLose} />
+                    defaultValue={feed.start} />
                 {/* Pick Time Input */}
                 <PickTimeTextInput
                     id={additional_id}
-                    defaultValue={moment(feed.date_time).format("MM/DD/YYYY hh:mm A")}
-                    onBlur={this.onInputFocusLose} />
+                    defaultValue={moment(feed.date_time).format("MM/DD/YYYY hh:mm A")} />
                 {/* Pick Dest Input */}
                 <PickDestTextInput
                     id={additional_id}
-                    defaultValue={feed.destination}
-                    onBlur={this.onInputFocusLose} />
+                    defaultValue={feed.destination} />
                 {/* Pick Tip Input */}
                 <PickTipNumberInput
                     id={additional_id}
-                    defaultValue={feed.price}
-                    onBlur={this.onInputFocusLose} />
+                    defaultValue={feed.price} />
                 {/* Message Input */}
                 <MessageTextareaInput
                     id={additional_id}
@@ -102,7 +98,7 @@ var PickRequestCard = React.createClass({
                 <div className="form-group">
                     <div className="col-sm-offset-2 col-sm-10">
                         <button
-                            id="post-request-submit-button"
+                            id={"post-request-submit-button" + additional_id}
                             type="submit"
                             disabled="disabled"
                             className="btn btn-primary">
