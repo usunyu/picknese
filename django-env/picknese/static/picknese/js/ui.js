@@ -33,7 +33,7 @@ function preparePopupMessage(message, type) {
 }
 
 function hasPopupMessage() {
-    if (!supportLocalStorage()) { return; }
+    if (!supportLocalStorage()) { return false; }
     var message = localStorage.getItem("PopupMessage");
-    return message != "" || message != null;
+    return message !== "" && message !== null;
 }
