@@ -986,3 +986,10 @@ div.show-image button.btn-on-image {
     }
 }
 
+/*
+ * Google Map API
+ * --------------------------------------------------
+ */
+.pac-container {
+    z-index: 1041 !important; /* larger than modal */
+}

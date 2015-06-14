@@ -6,7 +6,7 @@ PICK_REQUEST                = 1
 PICK_UP                     = 2
 FLIGHT_PICK_REQUEST         = 3
 FLIGHT_PICK_UP              = 4
-CARPOOL_POST                = 5
+# CARPOOL_POST                = 5
 
 # PROFILE
 CONFIRMED_POST              = 7

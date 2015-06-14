@@ -36,7 +36,7 @@ var PickRequestCard = React.createClass({
         layoutMap['body']['time'] = {}
         layoutMap['body']['time']['class'] = 'col-md-5';
         layoutMap['body']['time']['title'] = 'Pick Time';
-        layoutMap['body']['time']['content'] = moment(feed.date_time).format("YYYY-MM-DD HH:mm");
+        layoutMap['body']['time']['content'] = moment(feed.date_time).format("YYYY-MM-DD hh:mm A");
         layoutMap['body']['time']['icon'] = 'glyphicon glyphicon-time';
 
         layoutMap['body']['tip'] = {}
@@ -64,12 +64,62 @@ var PickRequestCard = React.createClass({
             description         : $("#pick-up-desc-textarea").val().trim(),
         });
     },
+    getRequestUpdateForm: function() {
+        var feed = this.props.feed;
+        var additional_id = feed.feed_type + "-" + feed.id;
+        return (
+            <form className="form-horizontal" onSubmit={this.handlePostRequestSubmit}>
+                {/* University Select */}
+                <UniversitySelectInput
+                    id={additional_id}
+                    defaultValue={feed.university.id}
+                    universitySimpleList={this.props.universitySimpleList} />
+                {/* Pick Location Input */}
+                <PickLocationTextInput
+                    id={additional_id}
+                    defaultValue={feed.start}
+                    onBlur={this.onInputFocusLose} />
+                {/* Pick Time Input */}
+                <PickTimeTextInput
+                    id={additional_id}
+                    defaultValue={moment(feed.date_time).format("MM/DD/YYYY hh:mm A")}
+                    onBlur={this.onInputFocusLose} />
+                {/* Pick Dest Input */}
+                <PickDestTextInput
+                    id={additional_id}
+                    defaultValue={feed.destination}
+                    onBlur={this.onInputFocusLose} />
+                {/* Pick Tip Input */}
+                <PickTipNumberInput
+                    id={additional_id}
+                    defaultValue={feed.price}
+                    onBlur={this.onInputFocusLose} />
+                {/* Message Input */}
+                <MessageTextareaInput
+                    id={additional_id}
+                    defaultValue={feed.description} />
+                {/* Submit Button */}
+                <div className="form-group">
+                    <div className="col-sm-offset-2 col-sm-10">
+                        <button
+                            id="post-request-submit-button"
+                            type="submit"
+                            disabled="disabled"
+                            className="btn btn-primary">
+                            Update
+                        </button>
+                    </div>
+                </div>
+            </form>
+        );
+    },
     render: function() {
         var feed = this.props.feed;
         var layout = this.getCustomLayout();
         return (
             <BaseRequestCard
                 feed={this.props.feed}
+                updateForm={this.getRequestUpdateForm()}
                 onSubmit={this.onSubmit}
                 onCancel={this.props.onCancel}
                 cancelCallback={this.props.cancelCallback}

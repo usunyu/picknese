@@ -8,13 +8,13 @@ var BaseContentBody = React.createClass({displayName: 'BaseContentBody',
         for (var key in layout.body) {
             var value = layout.body[key];
             content.push(
-                React.createElement("p", {
-                    key: key, 
-                    className: layout.body[key].class, 
-                    'data-toggle': "tooltip", 
-                    'data-placement': "left", 
-                    title: layout.body[key].title}, 
-                    React.createElement("i", {className: layout.body[key].icon}), " ", layout.body[key].content
+                React.createElement("p", {key: key, className: layout.body[key].class}, 
+                    React.createElement("i", {
+                        className: layout.body[key].icon, 
+                        'data-toggle': "tooltip", 
+                        'data-placement': "left", 
+                        title: layout.body[key].title}
+                    ), " ", layout.body[key].content
                 )
             );
         }

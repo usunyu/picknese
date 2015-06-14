@@ -60,49 +60,10 @@ function enablePostRequestSubmit() {
 var PostRequestForm = React.createClass({
     mixins: [UniversityActionMixin,
              HomeFeedActionMixin],
-    componentDidUpdate: function() {
-        var universities = [];
-        var selected = [];
-        for (var i = 0; i < this.state.universitySimpleList.length; i++) {
-            var data = this.state.universitySimpleList[i];
-            var u = {
-                id: data.id,
-                title: data.name,
-                search: data.shorthand + data.name,
-            };
-            universities.push(u);
-            if (data.id == university.id) {
-                selected.push(data.id);
-            }
-        }
-        // Check if user already set up university
-        if (selected.length == 0 && !jQuery.isEmptyObject(current_user)) {
-            selected.push(current_user.university_id);
-        }
-        // Bind university type hint
-        $('#pick-request-university-select').selectize({
-            items : selected,
-            maxItems: 1,
-            valueField: 'id',
-            labelField: 'title',
-            searchField: 'search',
-            options: universities,
-            create: false,
-            onBlur: function() {
-                // Hack! Selectize not work well with Bootstrap
-                var element = $('#pick-request-university-select');
-                var value = element.val();
-                var borderDiv = element.parent().children()[1].children[0];
-                if (!value) {
-                    element.parent().addClass("has-error");
-                    borderDiv.style.borderColor = "#a94442";
-                } else {
-                    element.parent().removeClass("has-error");
-                    borderDiv.style.borderColor = "";
-                }
-                enablePostRequestSubmit();
-            },
-        });
+    componentWillMount: function() {
+        CURRENT_PAGE = POST_REQUEST_PAGE;
+    },
+    componentDidMount: function() {
         // Hack! Have to bind change event like this way, since
         // Bootstrap data-toggle="buttons" is conflict with onChange
         $('input[name="request-type"]').change(function() {
@@ -130,22 +91,6 @@ var PostRequestForm = React.createClass({
                 element.hide();
             }
             enablePostRequestSubmit();
-        });
-        // Prepare google map api
-        var pickRequestStartInput = document.getElementById("pick-request-start-input");
-        var pickRequestDestInput = document.getElementById("pick-request-dest-input");
-        var mapOptions = {componentRestrictions: {country: 'us'}};
-        new google.maps.places.Autocomplete(pickRequestStartInput, mapOptions);
-        new google.maps.places.Autocomplete(pickRequestDestInput, mapOptions);
-        // Prepare date time selector
-        var nowDate = new Date();
-        var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
-        $('#flight-pick-request-date-div').datetimepicker({
-            format: 'MM/DD/YYYY',
-            minDate: today,
-        });
-        $('#pick-request-time-div').datetimepicker({
-            minDate: today,
         });
     },
     onInputFocusLose: function(event) {
@@ -177,7 +122,7 @@ var PostRequestForm = React.createClass({
                 request_data = {
                     university  : $("#pick-request-university-select").val().trim(),
                     price       : $("#pick-request-tip-input").val().trim(),
-                    date_time   : moment($("#pick-request-time-input").val().trim(), 'MM/DD/YYYY HH:mm').format(),
+                    date_time   : moment($("#pick-request-time-input").val().trim(), 'MM/DD/YYYY hh:mm A').format(),
                     start       : $("#pick-request-start-input").val().trim(),
                     destination : $("#pick-request-dest-input").val().trim(),
                     feed_type   : PICK_REQUEST,
@@ -271,113 +216,39 @@ var PostRequestForm = React.createClass({
                     </div>
                 </div>
                 {/* University Select */}
-                <div className="form-group">
-                    <label className="col-sm-2 control-label">University</label>
-                    <div className="col-sm-10">
-                        <select id="pick-request-university-select" />
-                    </div>
-                </div>
+                <UniversitySelectInput
+                    defaultValue={null}
+                    universitySimpleList={this.state.universitySimpleList} />
                 {/* Flight Number Input */}
-                <div className="form-group" style={{display: 'none'}}>
-                    <label className="col-sm-2 control-label">Flight</label>
-                    <div className="col-sm-10">
-                        <input
-                            id="flight-pick-request-flight-input"
-                            type="text"
-                            className="form-control"
-                            onBlur={this.onInputFocusLose}
-                            placeholder="What's your flight number?" />
-                    </div>
-                </div>
+                <FlightNumberTextInput
+                    display={'none'}
+                    defaultValue={null}
+                    onBlur={this.onInputFocusLose} />
                 {/* Flight Baggages & Date Input */}
-                <div className="form-group" style={{display: 'none'}}>
-                    <label className="col-sm-2 control-label">Arrival Date</label>
-                    <div className="col-sm-4">
-                        <div className='input-group date' id='flight-pick-request-date-div'>
-                            <input
-                                id="flight-pick-request-date-input"
-                                type='text'
-                                className="form-control"
-                                onBlur={this.onInputFocusLose}
-                                placeholder="What's your arrival date?" />
-                            <span className="input-group-addon"><span className="glyphicon glyphicon-calendar"></span></span>
-                        </div>
-                    </div>
-                    <label className="col-sm-2 control-label">Baggages</label>
-                    <div className="col-sm-4">
-                        <input 
-                            id="pick-request-baggages-input"
-                            type="number"
-                            className="form-control"
-                            defaultValue={1}
-                            onBlur={this.onInputFocusLose}
-                            placeholder="How many bags do you have?" />
-                    </div>
-                </div>
+                <FlightBaggagesAndDateInput
+                    display={'none'}
+                    defaultDate={null}
+                    defaultBaggages={1}
+                    onBlur={this.onInputFocusLose} />
                 {/* Pick Location Input */}
-                <div className="form-group">
-                    <label className="col-sm-2 control-label">Pick location</label>
-                    <div className="col-sm-10">
-                        <input
-                            id="pick-request-start-input"
-                            type="text"
-                            className="form-control"
-                            onBlur={this.onInputFocusLose}
-                            placeholder="Where you want to be picked up?" />
-                    </div>
-                </div>
+                <PickLocationTextInput
+                    defaultValue={null}
+                    onBlur={this.onInputFocusLose} />
                 {/* Pick Time Input */}
-                <div className="form-group">
-                    <label className="col-sm-2 control-label">Pick Time</label>
-                    <div className="col-sm-4">
-                        <div className='input-group date' id='pick-request-time-div'>
-                            <input
-                                id="pick-request-time-input"
-                                type='text'
-                                className="form-control"
-                                onBlur={this.onInputFocusLose}
-                                placeholder="What's your pick time?" />
-                            <span className="input-group-addon"><span className="glyphicon glyphicon-calendar"></span></span>
-                        </div>
-                    </div>
-                </div>
+                <PickTimeTextInput
+                    defaultValue={null}
+                    onBlur={this.onInputFocusLose} />
                 {/* Pick Dest Input */}
-                <div className="form-group">
-                    <label className="col-sm-2 control-label">Destination</label>
-                    <div className="col-sm-10">
-                        <input
-                            id="pick-request-dest-input"
-                            type="text"
-                            className="form-control"
-                            onBlur={this.onInputFocusLose}
-                            placeholder="Where you want to go?" />
-                    </div>
-                </div>
+                <PickDestTextInput
+                    defaultValue={null}
+                    onBlur={this.onInputFocusLose} />
                 {/* Pick Tip Input */}
-                <div className="form-group">
-                    <label className="col-sm-2 control-label">Tip</label>
-                    <div className="col-sm-4">
-                        <input
-                            id="pick-request-tip-input"
-                            type="number"
-                            defaultValue={20}
-                            className="form-control"
-                            onBlur={this.onInputFocusLose}
-                            placeholder="Remunerated is good :)" />
-                    </div>
-                </div>
+                <PickTipNumberInput
+                    defaultValue={20}
+                    onBlur={this.onInputFocusLose} />
                 {/* Message Input */}
-                <div className="form-group">
-                    <label className="col-sm-2 control-label">Note</label>
-                    <div className="col-sm-10">
-                        <textarea
-                            id="pick-request-desc-textarea"
-                            className="form-control"
-                            rows="3"
-                            placeholder="Anything you want to mention?">
-                        </textarea>
-                    </div>
-                </div>
+                <MessageTextareaInput
+                    defaultValue={null} />
                 {/* Submit Button */}
                 <div className="form-group">
                     <div className="col-sm-offset-2 col-sm-10">

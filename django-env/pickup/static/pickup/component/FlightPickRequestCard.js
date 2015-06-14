@@ -30,7 +30,7 @@ var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCa
         layoutMap['body']['time'] = {}
         layoutMap['body']['time']['class'] = 'col-md-5';
         layoutMap['body']['time']['title'] = 'Arrival Time';
-        layoutMap['body']['time']['content'] = moment(feed.date_time).format("YYYY-MM-DD HH:mm");
+        layoutMap['body']['time']['content'] = moment(feed.date_time).format("YYYY-MM-DD hh:mm A");
         layoutMap['body']['time']['icon'] = 'glyphicon glyphicon-time';
 
         layoutMap['body']['dest'] = {}

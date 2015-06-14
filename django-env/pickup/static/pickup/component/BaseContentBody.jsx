@@ -8,13 +8,13 @@ var BaseContentBody = React.createClass({
         for (var key in layout.body) {
             var value = layout.body[key];
             content.push(
-                <p
-                    key={key}
-                    className={layout.body[key].class}
-                    data-toggle="tooltip"
-                    data-placement="left"
-                    title={layout.body[key].title} >
-                    <i className={layout.body[key].icon}></i> {layout.body[key].content}
+                <p key={key} className={layout.body[key].class} >
+                    <i 
+                        className={layout.body[key].icon}
+                        data-toggle="tooltip"
+                        data-placement="left"
+                        title={layout.body[key].title}>
+                    </i> {layout.body[key].content}
                 </p>
             );
         }

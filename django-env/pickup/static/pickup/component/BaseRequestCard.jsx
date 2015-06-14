@@ -32,7 +32,9 @@ var BaseRequestCard = React.createClass({
                     <button
                         type="button"
                         className="btn btn-primary"
-                        style={{float: 'right', marginRight: '10px'}} >
+                        style={{float: 'right', marginRight: '10px'}}
+                        data-toggle="modal"
+                        data-target={"#update-modal-" + feed.feed_type + "-" + feed.id} >
                         <i className="glyphicon glyphicon-edit"></i>&nbsp;
                         Update
                     </button>
@@ -42,6 +44,34 @@ var BaseRequestCard = React.createClass({
                         title={"Cancel Confirmation"}
                         text={"Are you sure want to cancel this request?"}
                         onConfirm={this.handleRequestCancel} />
+                    {/* Update Button Modal */}
+                    <div
+                        id={"update-modal-" + feed.feed_type + "-" + feed.id}
+                        className="modal fade"
+                        tabIndex="-1"
+                        role="dialog"
+                        aria-hidden="true">
+                        <div className="modal-dialog modal-lg">
+                            <div className="modal-content">
+                                <div className="modal-header" style={{backgroundColor: "#0084B4"}}>
+                                    <button
+                                        type="button"
+                                        className="close"
+                                        data-dismiss="modal"
+                                        aria-label="Close"
+                                        style={{color: "white"}}>
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h5 className="modal-title" style={{color: "white"}}>
+                                        Update Your Request
+                                    </h5>
+                                </div>
+                                <div className="modal-body">
+                                    {this.props.updateForm}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             );
         } else {
@@ -132,7 +162,7 @@ var BaseRequestCard = React.createClass({
                     </a>
                     <b className="home-feed-title">{layout.heading.user} {layout.heading.verb} <span className="label label-danger" style={{fontSize: "95%"}}>{layout.heading.action}</span></b>
                     <div style={{float: "right"}}>
-                        <span style={{fontSize: "80%", marginRight: "8px", marginTop: "3px"}}>{moment(feed.created).format("YYYY-MM-DD HH:mm")}</span>
+                        <span style={{fontSize: "80%", marginRight: "8px", marginTop: "3px"}}>{moment(feed.created).format("YYYY-MM-DD hh:mm A")}</span>
                         <i className={layout.heading.icon} style={{marginRight: "15px", marginTop: "3px"}}></i>
                         <a href={getHomeFeedURL(feed.university.id)}>
                             <img

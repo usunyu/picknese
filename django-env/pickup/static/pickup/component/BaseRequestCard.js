@@ -32,7 +32,9 @@ var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
                     React.createElement("button", {
                         type: "button", 
                         className: "btn btn-primary", 
-                        style: {float: 'right', marginRight: '10px'}}, 
+                        style: {float: 'right', marginRight: '10px'}, 
+                        'data-toggle': "modal", 
+                        'data-target': "#update-modal-" + feed.feed_type + "-" + feed.id}, 
                         React.createElement("i", {className: "glyphicon glyphicon-edit"}), " " + ' ' +
                         "Update"
                     ), 
@@ -41,7 +43,35 @@ var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
                         feed: feed, 
                         title: "Cancel Confirmation", 
                         text: "Are you sure want to cancel this request?", 
-                        onConfirm: this.handleRequestCancel})
+                        onConfirm: this.handleRequestCancel}), 
+                    /* Update Button Modal */
+                    React.createElement("div", {
+                        id: "update-modal-" + feed.feed_type + "-" + feed.id, 
+                        className: "modal fade", 
+                        tabIndex: "-1", 
+                        role: "dialog", 
+                        'aria-hidden': "true"}, 
+                        React.createElement("div", {className: "modal-dialog modal-lg"}, 
+                            React.createElement("div", {className: "modal-content"}, 
+                                React.createElement("div", {className: "modal-header", style: {backgroundColor: "#0084B4"}}, 
+                                    React.createElement("button", {
+                                        type: "button", 
+                                        className: "close", 
+                                        'data-dismiss': "modal", 
+                                        'aria-label': "Close", 
+                                        style: {color: "white"}}, 
+                                        React.createElement("span", {'aria-hidden': "true"}, "×")
+                                    ), 
+                                    React.createElement("h5", {className: "modal-title", style: {color: "white"}}, 
+                                        "Update Your Request"
+                                    )
+                                ), 
+                                React.createElement("div", {className: "modal-body"}, 
+                                    this.props.updateForm
+                                )
+                            )
+                        )
+                    )
                 )
             );
         } else {
@@ -132,7 +162,7 @@ var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
                     ), 
                     React.createElement("b", {className: "home-feed-title"}, layout.heading.user, " ", layout.heading.verb, " ", React.createElement("span", {className: "label label-danger", style: {fontSize: "95%"}}, layout.heading.action)), 
                     React.createElement("div", {style: {float: "right"}}, 
-                        React.createElement("span", {style: {fontSize: "80%", marginRight: "8px", marginTop: "3px"}}, moment(feed.created).format("YYYY-MM-DD HH:mm")), 
+                        React.createElement("span", {style: {fontSize: "80%", marginRight: "8px", marginTop: "3px"}}, moment(feed.created).format("YYYY-MM-DD hh:mm A")), 
                         React.createElement("i", {className: layout.heading.icon, style: {marginRight: "15px", marginTop: "3px"}}), 
                         React.createElement("a", {href: getHomeFeedURL(feed.university.id)}, 
                             React.createElement("img", {

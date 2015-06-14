@@ -7,7 +7,11 @@
 var FIRST_LOAD_HOME_FEED_FINISH = false;
 
 var HomePanel = React.createClass({
-    mixins: [HomeFeedActionMixin],
+    mixins: [HomeFeedActionMixin,
+             UniversityActionMixin],
+    componentWillMount: function() {
+        CURRENT_PAGE = UPDATE_REQUEST_PAGE;
+    },
     componentDidMount: function() {
         if (hasPopupMessage()) {
             setTimeout(function() { popupMessage(); }, 500);
@@ -56,6 +60,7 @@ var HomePanel = React.createClass({
                         <PickRequestCard
                             key={i}
                             feed={feed}
+                            universitySimpleList={this.state.universitySimpleList}
                             onSubmit={this.handlePickUpSubmit}
                             onCancel={this.handlePickRequestCancel}
                             cancelCallback={this.loadHomeFeedFromServer} />
@@ -102,6 +107,7 @@ var HomePanel = React.createClass({
 React.render(
     <HomePanel
         homeFeedActionMixinLoadHomeFeedInterval={true}
+        universityActionMinxinLoadSimpleList={true}
         pollInterval={20000}/>,
     document.getElementById('content')
 );
