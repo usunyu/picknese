@@ -14,6 +14,8 @@ var FLIGHT_INPUT_ID         = "flight-pick-request-flight-input";
 var BAGS_INPUT_ID           = "pick-request-baggages-input";
 var DATE_INPUT_ID           = "flight-pick-request-date-input";
 
+var REQUEST_SUBMIT_BUTTON_ID = "post-request-submit-button";
+
 // Request Type => [Inputs Required]
 var RequestTypeInputMap = {};
 RequestTypeInputMap[PICK_REQUEST] = [
@@ -78,7 +80,7 @@ function enablePostRequestSubmit(id) {
                 break;
         };
     }
-    var submitButton = document.getElementById("post-request-submit-button" + id);
+    var submitButton = document.getElementById(REQUEST_SUBMIT_BUTTON_ID + id);
     if (enableSubmit) {
         submitButton.disabled = "";
     } else {

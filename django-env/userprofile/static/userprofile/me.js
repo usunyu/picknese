@@ -17,7 +17,7 @@ var FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH = false;
 var FIRST_LOAD_PROFILE_OFFER_FEED_FINISH = false;
 
 var MePanel = React.createClass({displayName: 'MePanel',
-    mixins: [HomeFeedActionMixin,
+    mixins: [FeedActionMixin,
              UniversityActionMixin],
     componentWillMount: function() {
         CURRENT_PAGE = UPDATE_REQUEST_PAGE;
@@ -69,7 +69,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
                             feed: feed, 
                             onSubmit: this.handlePickUpSubmit, 
                             onCancel: this.handlePickRequestCancel, 
-                            cancelCallback: this.loadProfileRequestFromServer, 
+                            mutateCallback: this.loadProfileRequestFromServer, 
                             universitySimpleList: this.state.universitySimpleList})
                     );
                     break;
@@ -79,8 +79,9 @@ var MePanel = React.createClass({displayName: 'MePanel',
                             key: i, 
                             feed: feed, 
                             onSubmit: this.handleFlightPickUpSubmit, 
+                            onUpdate: this.handleFlightPickRequestUpdate, 
                             onCancel: this.handleFlightPickRequestCancel, 
-                            cancelCallback: this.loadProfileRequestFromServer, 
+                            mutateCallback: this.loadProfileRequestFromServer, 
                             universitySimpleList: this.state.universitySimpleList})
                     );
                     break;
@@ -90,7 +91,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
                             key: i, 
                             feed: feed, 
                             onReject: this.handlePickUpReject, 
-                            rejectCallback: this.loadProfileRequestFromServer})
+                            mutateCallback: this.loadProfileRequestFromServer})
                     );
                     break;
                 case FLIGHT_PICK_UP:
@@ -99,7 +100,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
                             key: i, 
                             feed: feed, 
                             onReject: this.handleFlightPickUpReject, 
-                            rejectCallback: this.loadProfileRequestFromServer})
+                            mutateCallback: this.loadProfileRequestFromServer})
                     );
                 default:
                     break;
@@ -138,7 +139,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
                             key: i, 
                             feed: feed, 
                             onCancel: this.handlePickUpCancel, 
-                            cancelCallback: this.loadProfileOfferFromServer})
+                            mutateCallback: this.loadProfileOfferFromServer})
                     );
                     break;
                 case FLIGHT_PICK_UP:
@@ -147,7 +148,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
                             key: i, 
                             feed: feed, 
                             onCancel: this.handleFlightPickUpCancel, 
-                            cancelCallback: this.loadProfileOfferFromServer})
+                            mutateCallback: this.loadProfileOfferFromServer})
                     );
                 default:
                     break;
@@ -332,7 +333,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
 
 React.render(
     React.createElement(MePanel, {
-        homeFeedActionMixinLoadProfileRequestFeed: true, 
+        feedActionMixinLoadProfileRequestFeed: true, 
         universityActionMinxinLoadSimpleList: true}),
     document.getElementById('content')
 );

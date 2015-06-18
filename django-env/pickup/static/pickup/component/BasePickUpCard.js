@@ -1,9 +1,9 @@
 var BasePickUpCard = React.createClass({displayName: 'BasePickUpCard',
     handlePickUpReject: function() {
-        this.props.onReject(this.props.feed, this.props.rejectCallback);
+        this.props.onReject(this.props.feed, this.props.mutateCallback);
     },
     handlePickUpCancel: function() {
-        this.props.onCancel(this.props.feed, this.props.cancelCallback);
+        this.props.onCancel(this.props.feed, this.props.mutateCallback);
     },
     getSubCard: function() {
         var feed = this.props.feed;

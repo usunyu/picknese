@@ -1,6 +1,6 @@
 var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
     handleRequestCancel: function() {
-        this.props.onCancel(this.props.feed, this.props.cancelCallback);
+        this.props.onCancel(this.props.feed, this.props.mutateCallback);
     },
     getOfferActionButtonModalID: function() {
         if (jQuery.isEmptyObject(current_user)) {

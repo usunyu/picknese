@@ -98,7 +98,7 @@ var PickRequestCard = React.createClass({displayName: 'PickRequestCard',
                 React.createElement("div", {className: "form-group"}, 
                     React.createElement("div", {className: "col-sm-offset-2 col-sm-10"}, 
                         React.createElement("button", {
-                            id: "post-request-submit-button" + additional_id, 
+                            id: REQUEST_SUBMIT_BUTTON_ID + additional_id, 
                             type: "submit", 
                             disabled: "disabled", 
                             className: "btn btn-primary"}, 
@@ -118,7 +118,7 @@ var PickRequestCard = React.createClass({displayName: 'PickRequestCard',
                 updateForm: this.getRequestUpdateForm(), 
                 onSubmit: this.onSubmit, 
                 onCancel: this.props.onCancel, 
-                cancelCallback: this.props.cancelCallback, 
+                mutateCallback: this.props.mutateCallback, 
                 layout: layout})
         );
     }
