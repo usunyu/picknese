@@ -31,13 +31,20 @@ class ProfileInfoUpdateView(views.APIView):
         user.first_name = request.data['first_name']
         user.last_name = request.data['last_name']
         profile = user.profile
-        profile.university = University.objects.get(pk=request.data['university'])
-        profile.birthday = request.data['birthday']
-        profile.introduction = request.data['introduction']
-        profile.gender = request.data['gender']
-        profile.phone = request.data['phone']
-        profile.qq = request.data['qq']
-        profile.wechat = request.data['wechat']
+        if request.data['university']:
+            profile.university = University.objects.get(pk=request.data['university'])
+        if request.data['birthday'] != "Invalid date":
+            profile.birthday = request.data['birthday']
+        if request.data['introduction']:
+            profile.introduction = request.data['introduction']
+        if request.data['gender']:
+            profile.gender = request.data['gender']
+        if request.data['phone']:
+            profile.phone = request.data['phone']
+        if request.data['qq']:
+            profile.qq = request.data['qq']
+        if request.data['wechat']:
+            profile.wechat = request.data['wechat']
 
         profile.save()
         user.save()

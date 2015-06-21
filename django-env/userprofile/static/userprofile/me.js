@@ -16,7 +16,17 @@ var CURRENT_PANEL = REQUEST_PANEL;
 var FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH = false;
 var FIRST_LOAD_PROFILE_OFFER_FEED_FINISH = false;
 
-var PROFILE_FIRST_NAME_INPUT = "profile-first-name-input";
+var PROFILE_FIRST_NAME_INPUT    = "profile-first-name-input";
+var PROFILE_LAST_NAME_INPUT     = "profile-last-name-input";
+var PROFILE_UNIVERSITY_SELECT   = "profile-univsersity-select";
+var PROFILE_GENDER_SELECT       = "profile-gender-select";
+var PROFILE_BIRTHDAY_INPUT      = "profile-birthday-input";
+var PROFILE_INTRO_TEXTAREA      = "profile-intro-textarea";
+var PROFILE_PHONE_INPUT         = "profile-phone-input";
+var PROFILE_QQ_INPUT            = "profile-qq-input";
+var PROFILE_WECHAT_INPUT        = "profile-wechat-input";
+
+var PROFILE_UPDATE_BUTTON = "profile-update-button";
 
 var MePanel = React.createClass({displayName: 'MePanel',
     mixins: [FeedActionMixin,
@@ -28,6 +38,12 @@ var MePanel = React.createClass({displayName: 'MePanel',
     componentDidMount: function() {
         // enable Bootstrap-Select
         $('.selectpicker').selectpicker();
+
+        $('.selectpicker').on('change', function(){
+            // Hack
+            var submitButton = document.getElementById(PROFILE_UPDATE_BUTTON);
+            submitButton.disabled = "";
+        });
     },
     onProfileInboxClick: function(event) {
         CURRENT_PANEL = INBOX_PANEL;
@@ -65,7 +81,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
         if (current_user.university_id) {
             selected = [current_user.university_id];
         }
-        $("#profile-univsersity-select").selectize({
+        $("#" + PROFILE_UNIVERSITY_SELECT).selectize({
             items : selected,
             maxItems: 1,
             valueField: 'id',
@@ -73,6 +89,14 @@ var MePanel = React.createClass({displayName: 'MePanel',
             searchField: 'search',
             options: universities,
             create: false,
+            onBlur: function() {
+                // Hack! Selectize not work well with Bootstrap
+                var new_value = $("#" + PROFILE_UNIVERSITY_SELECT).val().trim();
+                if (new_value !== current_user.university_id) {
+                    var submitButton = document.getElementById(PROFILE_UPDATE_BUTTON);
+                    submitButton.disabled = "";
+                }
+            },
         });
 
         $('#profile-birthday-input-div').datetimepicker({
@@ -81,8 +105,8 @@ var MePanel = React.createClass({displayName: 'MePanel',
             useCurrent: false,
         });
 
-        $("#profile-gender-select").val(current_user.gender);
-        $('.selectpicker').selectpicker('refresh')
+        $("#" + PROFILE_GENDER_SELECT).val(current_user.gender);
+        $('.selectpicker').selectpicker('refresh');
     },
     getProfileInboxList: function() {
         return (
@@ -300,25 +324,53 @@ var MePanel = React.createClass({displayName: 'MePanel',
     },
     handleProfileUpdate: function() {
         event.preventDefault();
-        $("#profile-update-button").button('loading');
+        // $("#" + PROFILE_UPDATE_BUTTON).button('loading');
+        var submitButton = document.getElementById(PROFILE_UPDATE_BUTTON);
+        submitButton.disabled = "disabled";
 
         var update_data = {
             first_name   : $("#" + PROFILE_FIRST_NAME_INPUT).val().trim(),
-            last_name    : $("#profile-last-name-input").val().trim(),
-            university   : $("#profile-univsersity-select").val().trim(),
-            gender       : $("#profile-gender-select").val().trim(),
-            birthday     : moment(new Date($("#profile-birthday-input").val().trim())).format("YYYY-MM-DD"),
-            introduction : $("#profile-intro-textarea").val().trim(),
-            phone        : $("#profile-phone-input").val().trim(),
-            qq           : $("#profile-qq-input").val().trim(),
-            wechat       : $("#profile-wechat-input").val().trim(),
+            last_name    : $("#" + PROFILE_LAST_NAME_INPUT).val().trim(),
+            university   : $("#" + PROFILE_UNIVERSITY_SELECT).val().trim(),
+            gender       : $("#" + PROFILE_GENDER_SELECT).val().trim(),
+            birthday     : moment(new Date($("#" + PROFILE_BIRTHDAY_INPUT).val().trim())).format("YYYY-MM-DD"),
+            introduction : $("#" + PROFILE_INTRO_TEXTAREA).val().trim(),
+            phone        : $("#" + PROFILE_PHONE_INPUT).val().trim(),
+            qq           : $("#" + PROFILE_QQ_INPUT).val().trim(),
+            wechat       : $("#" + PROFILE_WECHAT_INPUT).val().trim(),
         };
-        // console.log(update_data);
-        this.handleProfileInfoUpdate(update_data, function() {$("#profile-update-button").button('reset')});
+
+        this.handleProfileInfoUpdate(update_data);
+    },
+    onRequiredInputFocusLose: function(id, value) {
+        // Check input error
+        var element = $('#' + id);
+        var new_value = element.val().trim();
+        var inputError = new_value == "";
+        if (inputError) {
+            element.parent().addClass("has-error");
+        } else {
+            element.parent().removeClass("has-error");
+        }
+
+        var submitButton = document.getElementById(PROFILE_UPDATE_BUTTON);
+        if (inputError) {
+            submitButton.disabled = "disabled";
+        } else {
+            this.onInputFocusLose(id, value);
+        }
     },
     onInputFocusLose: function(id, value) {
-        console.log(id);
+        var new_value = $('#' + id).val().trim();
+        console.log(new_value);
         console.log(value);
+        if (id === PROFILE_BIRTHDAY_INPUT) {
+            value = moment(new Date(current_user.birthday)).format('MM/DD/YYYY');
+        }
+        if (value !== new_value) {
+            var submitButton = document.getElementById(PROFILE_UPDATE_BUTTON);
+            submitButton.disabled = "";
+        }
     },
     getProfileSettings: function() {
         return (
@@ -333,22 +385,24 @@ var MePanel = React.createClass({displayName: 'MePanel',
                                 id: PROFILE_FIRST_NAME_INPUT, 
                                 type: "text", 
                                 defaultValue: current_user.first_name, 
-                                onBlur: this.onInputFocusLose.bind(this, PROFILE_FIRST_NAME_INPUT, current_user.first_name), 
+                                onBlur: this.onRequiredInputFocusLose.bind(this, PROFILE_FIRST_NAME_INPUT, current_user.first_name), 
                                 className: "form-control"})
                         ), 
                         React.createElement("label", {className: "col-sm-2 control-label"}, "Last Name"), 
                         React.createElement("div", {className: "col-sm-4"}, 
                             React.createElement("input", {
-                                id: "profile-last-name-input", 
+                                id: PROFILE_LAST_NAME_INPUT, 
                                 type: "text", 
                                 defaultValue: current_user.last_name, 
+                                onBlur: this.onRequiredInputFocusLose.bind(this, PROFILE_LAST_NAME_INPUT, current_user.last_name), 
                                 className: "form-control"})
                         )
                     ), 
                     React.createElement("div", {className: "form-group"}, 
                         React.createElement("label", {className: "col-sm-2 control-label"}, "University"), 
                         React.createElement("div", {className: "col-sm-10"}, 
-                            React.createElement("select", {id: "profile-univsersity-select"})
+                            React.createElement("select", {
+                                id: PROFILE_UNIVERSITY_SELECT})
                         )
                     ), 
                     React.createElement("div", {className: "form-group"}, 
@@ -356,16 +410,21 @@ var MePanel = React.createClass({displayName: 'MePanel',
                         React.createElement("div", {className: "col-sm-4"}, 
                             React.createElement("div", {className: "input-group date", id: "profile-birthday-input-div"}, 
                                 React.createElement("input", {
-                                    id: "profile-birthday-input", 
+                                    id: PROFILE_BIRTHDAY_INPUT, 
                                     type: "text", 
                                     defaultValue: moment(new Date(current_user.birthday)).format('MM/DD/YYYY'), 
+                                    onBlur: this.onInputFocusLose.bind(this, PROFILE_BIRTHDAY_INPUT, current_user.birthday), 
                                     className: "form-control"}), 
                                 React.createElement("span", {className: "input-group-addon"}, React.createElement("span", {className: "glyphicon glyphicon-calendar"}))
                             )
                         ), 
                         React.createElement("label", {className: "col-sm-2 control-label"}, "Gender"), 
                         React.createElement("div", {className: "col-sm-4"}, 
-                            React.createElement("select", {id: "profile-gender-select", className: "selectpicker", 'data-style': "btn-default", style: {display: "none"}}, 
+                            React.createElement("select", {
+                                id: PROFILE_GENDER_SELECT, 
+                                className: "selectpicker", 
+                                'data-style': "btn-default", 
+                                style: {display: "none"}}, 
                                 React.createElement("option", null), 
                                 React.createElement("option", {value: "M"}, "Male"), 
                                 React.createElement("option", {value: "F"}, "Female")
@@ -376,25 +435,28 @@ var MePanel = React.createClass({displayName: 'MePanel',
                         React.createElement("label", {className: "col-sm-2 control-label"}, "Introduction"), 
                         React.createElement("div", {className: "col-sm-10"}, 
                             React.createElement("textarea", {
-                                id: "profile-intro-textarea", 
+                                id: PROFILE_INTRO_TEXTAREA, 
                                 className: "form-control", 
                                 rows: "3", 
                                 defaultValue: current_user.introduction, 
+                                onBlur: this.onInputFocusLose.bind(this, PROFILE_INTRO_TEXTAREA, current_user.introduction), 
                                 placeholder: "Tell about yourself, let others know you better :)"}
                             )
                         )
                     ), 
                     React.createElement("hr", null), 
-                    React.createElement("h5", {className: "text-center"}, "Contact Infomation ", React.createElement("span", {style: {fontSize: "80%", color: "#e51c23"}}, "(your contact infomation will not be public)")), 
+                    React.createElement("h5", {className: "text-center"}, "Contact Infomation"), 
+                    React.createElement("p", {className: "text-center", style: {color: "#e51c23"}}, "(your contact infomation will not be public)"), 
                     React.createElement("hr", null), 
                     React.createElement("div", {className: "form-group"}, 
                         React.createElement("label", {className: "col-sm-2 control-label"}, "Phone"), 
                         React.createElement("div", {className: "col-sm-4"}, 
                             React.createElement("div", {className: "input-group"}, 
                                 React.createElement("input", {
-                                    id: "profile-phone-input", 
+                                    id: PROFILE_PHONE_INPUT, 
                                     type: "text", 
                                     defaultValue: current_user.phone, 
+                                    onBlur: this.onInputFocusLose.bind(this, PROFILE_PHONE_INPUT, current_user.phone), 
                                     className: "form-control"}), 
                                 React.createElement("span", {className: "input-group-btn"}, 
                                     React.createElement("button", {className: "btn btn-success", type: "button"}, "Verify")
@@ -404,9 +466,10 @@ var MePanel = React.createClass({displayName: 'MePanel',
                         React.createElement("label", {className: "col-sm-2 control-label"}, "QQ"), 
                         React.createElement("div", {className: "col-sm-4"}, 
                             React.createElement("input", {
-                                id: "profile-qq-input", 
+                                id: PROFILE_QQ_INPUT, 
                                 type: "text", 
                                 defaultValue: current_user.qq, 
+                                onBlur: this.onInputFocusLose.bind(this, PROFILE_QQ_INPUT, current_user.qq), 
                                 className: "form-control"})
                         )
                     ), 
@@ -414,18 +477,19 @@ var MePanel = React.createClass({displayName: 'MePanel',
                         React.createElement("label", {className: "col-sm-2 control-label"}, "Wechat"), 
                         React.createElement("div", {className: "col-sm-4"}, 
                             React.createElement("input", {
-                                id: "profile-wechat-input", 
+                                id: PROFILE_WECHAT_INPUT, 
                                 type: "text", 
                                 defaultValue: current_user.wechat, 
+                                onBlur: this.onInputFocusLose.bind(this, PROFILE_WECHAT_INPUT, current_user.wechat), 
                                 className: "form-control"})
                         )
                     ), 
                     React.createElement("div", {className: "form-group"}, 
                         React.createElement("div", {className: "col-sm-offset-2 col-sm-10"}, 
                             React.createElement("button", {
-                                id: "profile-update-button", 
+                                id: PROFILE_UPDATE_BUTTON, 
                                 type: "submit", 
-                                /*disabled="disabled"*/
+                                disabled: "disabled", 
                                 className: "btn btn-primary"}, 
                                 "Save"
                             )

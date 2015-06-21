@@ -100,7 +100,6 @@ Me |
                 </div>
             </div>
 
-            {% if current_user.profile.gender or current_user.profile.phone or current_user.profile.qq or current_user.profile.wechat %}
             <p><b>Information</b></p>
             <div class="thumbnail">
                 <div class="caption">
@@ -139,7 +138,6 @@ Me |
                     </div>
                 </div>
             </div>
-            {% endif %}
         </div>
         <div id="content" class="col-sm-12 col-md-9 no-left-padding no-right-padding"></div>
     </div>
@@ -152,16 +150,16 @@ var current_user = {};
 if ("{{current_user.is_authenticated}}" == "True") {
     current_user = {
         id: "{{current_user.id}}",
-        first_name: "{{current_user.first_name}}",
-        last_name: "{{current_user.last_name}}",
-        avatar: "{{current_user.profile.avatar}}",
-        gender: "{{current_user.profile.gender}}",
-        birthday: "{{current_user.profile.birthday}}",
-        phone: "{{current_user.profile.phone}}",
-        qq: "{{current_user.profile.qq}}",
-        wechat: "{{current_user.profile.wechat}}",
-        introduction: "{{current_user.profile.introduction}}",
-        university_id: "{{current_user.profile.university.id}}",
+        first_name: trueValue("{{current_user.first_name}}"),
+        last_name: trueValue("{{current_user.last_name}}"),
+        avatar: trueValue("{{current_user.profile.avatar}}"),
+        gender: trueValue("{{current_user.profile.gender}}"),
+        birthday: trueValue("{{current_user.profile.birthday}}"),
+        phone: trueValue("{{current_user.profile.phone}}"),
+        qq: trueValue("{{current_user.profile.qq}}"),
+        wechat: trueValue("{{current_user.profile.wechat}}"),
+        introduction: trueValue("{{current_user.profile.introduction}}"),
+        university_id: trueValue("{{current_user.profile.university.id}}"),
     };
 }
 
