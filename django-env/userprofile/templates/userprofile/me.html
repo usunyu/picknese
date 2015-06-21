@@ -104,12 +104,17 @@ Me |
                 <div class="caption">
                     <div>
                         {% if current_user.profile.gender %}
-                        <span class="fontello-icon icon-male" data-toggle="tooltip" data-placement="left" title="Gender"></span>
-                            {% if current_user.profile.gender == "M" %}
-                            Male
-                            {% else %}
-                            Female
-                            {% endif %}
+                        {% if current_user.profile.gender == "M" %}
+                        <span class="fontello-icon icon-male" data-toggle="tooltip" data-placement="left" title="Gender"></span> Male
+                        {% else %}
+                        <span class="fontello-icon icon-female" data-toggle="tooltip" data-placement="left" title="Gender"></span> Female
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {% if current_user.profile.birthday %}
+                        <span class="fontello-icon icon-birthday" data-toggle="tooltip" data-placement="left" title="Birthday"></span>
+                            {{current_user.profile.birthday}}
                         {% endif %}
                     </div>
                     <div>
@@ -149,6 +154,7 @@ if ("{{current_user.is_authenticated}}" == "True") {
         last_name: "{{current_user.last_name}}",
         avatar: "{{current_user.profile.avatar}}",
         gender: "{{current_user.profile.gender}}",
+        birthday: "{{current_user.profile.birthday}}",
         phone: "{{current_user.profile.phone}}",
         qq: "{{current_user.profile.qq}}",
         wechat: "{{current_user.profile.wechat}}",

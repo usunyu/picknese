@@ -332,6 +332,7 @@ var MePanel = React.createClass({
                                 <input
                                     id="profile-birthday-input"
                                     type='text'
+                                    defaultValue={moment(new Date(current_user.birthday)).format('MM/DD/YYYY')}
                                     className="form-control" />
                                 <span className="input-group-addon"><span className="glyphicon glyphicon-calendar"></span></span>
                             </div>

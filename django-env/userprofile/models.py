@@ -27,6 +27,7 @@ class UserProfile(models.Model):
 		blank=True
 	)
 	# contact info
+	birthday = models.DateField(null=True, blank=True)
 	phone = models.CharField(max_length=15, null=True, blank=True)
 	qq = models.CharField(max_length=15, null=True, blank=True)
 	wechat = models.CharField(max_length=30, null=True, blank=True)
