@@ -68,6 +68,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
                             key: i, 
                             feed: feed, 
                             onSubmit: this.handlePickUpSubmit, 
+                            onUpdate: this.handlePickRequestUpdate, 
                             onCancel: this.handlePickRequestCancel, 
                             mutateCallback: this.loadProfileRequestFromServer, 
                             universitySimpleList: this.state.universitySimpleList})
@@ -274,11 +275,13 @@ var MePanel = React.createClass({displayName: 'MePanel',
         return (
             React.createElement("div", null, 
                 React.createElement("ul", {className: "nav nav-tabs nav-justified"}, 
-                    React.createElement("li", null, 
-                        React.createElement("a", {href: "#profile-inbox", onClick: this.onProfileInboxClick, 'data-toggle': "tab", 'aria-expanded': "false"}, 
-                            React.createElement("span", {className: "glyphicon glyphicon-envelope"}), "  Inbox  ", React.createElement("span", {className: "badge"}, "7")
-                        )
-                    ), 
+                    /*
+                    <li>
+                        <a href="#profile-inbox" onClick={this.onProfileInboxClick} data-toggle="tab" aria-expanded="false">
+                            <span className="glyphicon glyphicon-envelope"></span>&nbsp; Inbox &nbsp;<span className="badge">7</span>
+                        </a>
+                    </li>
+                    */
                     React.createElement("li", {className: "active"}, 
                         React.createElement("a", {href: "#profile-request", onClick: this.onProfileRequestClick, 'data-toggle': "tab", 'aria-expanded': "true"}, 
                             React.createElement("span", {className: "glyphicon glyphicon-list-alt"}), "  Your Requests"
@@ -289,16 +292,18 @@ var MePanel = React.createClass({displayName: 'MePanel',
                             React.createElement("span", {className: "glyphicon glyphicon-heart"}), "  Your Offers"
                         )
                     ), 
-                    React.createElement("li", null, 
-                        React.createElement("a", {href: "#profile-calendar", onClick: this.onProfileCalendarClick, 'data-toggle': "tab", 'aria-expanded': "false"}, 
-                            React.createElement("span", {className: "glyphicon glyphicon-calendar"}), "  Calendar"
-                        )
-                    ), 
-                    React.createElement("li", null, 
-                        React.createElement("a", {href: "#profile-photo", onClick: this.onProfilePictureClick, 'data-toggle': "tab", 'aria-expanded': "false"}, 
-                            React.createElement("span", {className: "glyphicon glyphicon-picture"}), "  Your Photos"
-                        )
-                    ), 
+                    /*
+                    <li>
+                        <a href="#profile-calendar" onClick={this.onProfileCalendarClick} data-toggle="tab" aria-expanded="false">
+                            <span className="glyphicon glyphicon-calendar"></span>&nbsp; Calendar
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#profile-photo" onClick={this.onProfilePictureClick} data-toggle="tab" aria-expanded="false">
+                            <span className="glyphicon glyphicon-picture"></span>&nbsp; Your Photos
+                        </a>
+                    </li>
+                    */
                     React.createElement("li", null, 
                         React.createElement("a", {href: "#profile-settings", onClick: this.onProfileSettingsClick, 'data-toggle': "tab", 'aria-expanded': "false"}, 
                             React.createElement("span", {className: "glyphicon glyphicon-cog"}), "  Account Settings"

@@ -17,7 +17,7 @@ var PickRequestCard = React.createClass({displayName: 'PickRequestCard',
             layoutMap['heading']['user'] = feed.requester.first_name + " " + feed.requester.last_name;
             layoutMap['heading']['verb'] = "is looking for";
         }
-        layoutMap['heading']['action'] = "carpool";
+        layoutMap['heading']['action'] = " carpool";
         layoutMap['heading']['icon'] = "fontello-icon icon-cab";
 
         layoutMap['body'] = {}
@@ -64,11 +64,32 @@ var PickRequestCard = React.createClass({displayName: 'PickRequestCard',
             description         : $("#pick-up-desc-textarea").val().trim(),
         });
     },
+    handleRequestUpdate: function(event) {
+        event.preventDefault();
+        var feed = this.props.feed;
+        var additional_id = feed.feed_type + "-" + feed.id;
+        $("#" + REQUEST_SUBMIT_BUTTON_ID + additional_id).button('loading');
+
+        var update_data = {
+            id          : feed.id,
+            requester   : current_user.id,
+            university  : $("#" + UNIVERSITY_SELECT_ID + additional_id).val().trim(),
+            price       : $("#" + TIP_INPUT_ID + additional_id).val().trim(),
+            date_time   : moment($("#" + TIME_INPUT_ID + additional_id).val().trim(), 'MM/DD/YYYY hh:mm A').format(),
+            start       : $("#" + START_INPUT_ID + additional_id).val().trim(),
+            destination : $("#" + DEST_INPUT_ID + additional_id).val().trim(),
+            feed_type   : PICK_REQUEST,
+            description : $("#" + DESC_TEXT_ID + additional_id).val().trim(),
+        }
+
+        this.props.onUpdate(update_data, this.props.mutateCallback);
+        $("#" + REQUEST_SUBMIT_BUTTON_ID + additional_id).button('reset');
+    },
     getRequestUpdateForm: function() {
         var feed = this.props.feed;
         var additional_id = feed.feed_type + "-" + feed.id;
         return (
-            React.createElement("form", {className: "form-horizontal", onSubmit: this.handlePostRequestSubmit}, 
+            React.createElement("form", {className: "form-horizontal", onSubmit: this.handleRequestUpdate}, 
                 /* University Select */
                 React.createElement(UniversitySelectInput, {
                     id: additional_id, 

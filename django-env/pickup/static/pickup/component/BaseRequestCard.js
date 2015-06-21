@@ -160,10 +160,9 @@ var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
                             
                             style: {width: '40px', height: '40px'}})
                     ), 
-                    React.createElement("b", {className: "home-feed-title"}, layout.heading.user, " ", layout.heading.verb, " ", React.createElement("span", {className: "label label-danger", style: {fontSize: "95%"}}, layout.heading.action)), 
+                    React.createElement("span", {className: "home-feed-title"}, layout.heading.user, " ", layout.heading.verb, " ", React.createElement("b", {style: {color: "#286090"}}, React.createElement("i", {className: layout.heading.icon}), layout.heading.action)), 
                     React.createElement("div", {style: {float: "right"}}, 
                         React.createElement("span", {style: {fontSize: "80%", marginRight: "8px", marginTop: "3px"}}, moment(feed.created).format("YYYY-MM-DD hh:mm A")), 
-                        React.createElement("i", {className: layout.heading.icon, style: {marginRight: "15px", marginTop: "3px"}}), 
                         React.createElement("a", {href: getHomeFeedURL(feed.university.id)}, 
                             React.createElement("img", {
                                 className: "image-circular", 

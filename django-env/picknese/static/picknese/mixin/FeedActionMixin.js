@@ -75,6 +75,8 @@ var FeedActionMixin = {
             data: data,
             success: function(data) {
                 $("#update-modal-" + feed_type + "-" + id).modal('hide');
+                preparePopupMessage("You have successfully update your request.", "success");
+                popupMessage();
                 callback();
             }.bind(this),
             error: function(xhr, status, err) {
@@ -185,6 +187,29 @@ var FeedActionMixin = {
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(getPickRequestCreateAPI(), status, err.toString());
+                preparePopupMessage(ERROR_MESSAGE, "danger");
+                popupMessage();
+            }.bind(this)
+        });
+    },
+    handlePickRequestUpdate: function(data, callback) {
+        // requester update pick request
+        var id = data.id;
+        var feed_type = data.feed_type;
+        $.ajax({
+            url: getPickRequestMutateAPI(id),
+            dataType: 'json',
+            type: 'PUT',
+            data: data,
+            success: function(data) {
+                $("#update-modal-" + feed_type + "-" + id).modal('hide');
+                preparePopupMessage("You have successfully update your request.", "success");
+                popupMessage();
+                callback();
+            }.bind(this),
+            error: function(xhr, status, err) {
+                $("#update-modal-" + feed_type + "-" + id).modal('hide');
+                console.error(getPickRequestMutateAPI(id), status, err.toString());
                 preparePopupMessage(ERROR_MESSAGE, "danger");
                 popupMessage();
             }.bind(this)

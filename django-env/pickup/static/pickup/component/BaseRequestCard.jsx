@@ -160,10 +160,9 @@ var BaseRequestCard = React.createClass({
                             }
                             style={{width: '40px', height: '40px'}} />
                     </a>
-                    <b className="home-feed-title">{layout.heading.user} {layout.heading.verb} <span className="label label-danger" style={{fontSize: "95%"}}>{layout.heading.action}</span></b>
+                    <span className="home-feed-title">{layout.heading.user} {layout.heading.verb} <b style={{color: "#286090"}}><i className={layout.heading.icon}></i>{layout.heading.action}</b></span>
                     <div style={{float: "right"}}>
                         <span style={{fontSize: "80%", marginRight: "8px", marginTop: "3px"}}>{moment(feed.created).format("YYYY-MM-DD hh:mm A")}</span>
-                        <i className={layout.heading.icon} style={{marginRight: "15px", marginTop: "3px"}}></i>
                         <a href={getHomeFeedURL(feed.university.id)}>
                             <img
                                 className="image-circular"

@@ -62,6 +62,7 @@ var HomePanel = React.createClass({displayName: 'HomePanel',
                             feed: feed, 
                             universitySimpleList: this.state.universitySimpleList, 
                             onSubmit: this.handlePickUpSubmit, 
+                            onUpdate: this.handlePickRequestUpdate, 
                             onCancel: this.handlePickRequestCancel, 
                             mutateCallback: this.loadHomeFeedFromServer})
                     );
@@ -73,6 +74,7 @@ var HomePanel = React.createClass({displayName: 'HomePanel',
                             feed: feed, 
                             universitySimpleList: this.state.universitySimpleList, 
                             onSubmit: this.handleFlightPickUpSubmit, 
+                            onUpdate: this.handleFlightPickRequestUpdate, 
                             onCancel: this.handleFlightPickRequestCancel, 
                             mutateCallback: this.loadHomeFeedFromServer})
                     );
