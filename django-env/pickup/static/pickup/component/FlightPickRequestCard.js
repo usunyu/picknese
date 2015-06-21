@@ -17,7 +17,7 @@ var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCa
             layoutMap['heading']['user'] = feed.requester.first_name + " " + feed.requester.last_name;
             layoutMap['heading']['verb'] = "is looking for";
         }
-        layoutMap['heading']['action'] = "flight pick up";
+        layoutMap['heading']['action'] = "Flight Pick Up";
         layoutMap['heading']['icon'] = "fontello-icon icon-flight";
 
         layoutMap['body'] = {}

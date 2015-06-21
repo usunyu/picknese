@@ -17,7 +17,7 @@ var PickRequestCard = React.createClass({
             layoutMap['heading']['user'] = feed.requester.first_name + " " + feed.requester.last_name;
             layoutMap['heading']['verb'] = "is looking for";
         }
-        layoutMap['heading']['action'] = " carpool";
+        layoutMap['heading']['action'] = " Carpool";
         layoutMap['heading']['icon'] = "fontello-icon icon-cab";
 
         layoutMap['body'] = {}
