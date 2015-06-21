@@ -80,7 +80,7 @@ var PickRequestCard = React.createClass({displayName: 'PickRequestCard',
             destination : $("#" + DEST_INPUT_ID + additional_id).val().trim(),
             feed_type   : PICK_REQUEST,
             description : $("#" + DESC_TEXT_ID + additional_id).val().trim(),
-        }
+        };
 
         this.props.onUpdate(update_data, this.props.mutateCallback);
         $("#" + REQUEST_SUBMIT_BUTTON_ID + additional_id).button('reset');

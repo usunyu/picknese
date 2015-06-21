@@ -16,8 +16,11 @@ var CURRENT_PANEL = REQUEST_PANEL;
 var FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH = false;
 var FIRST_LOAD_PROFILE_OFFER_FEED_FINISH = false;
 
+var PROFILE_FIRST_NAME_INPUT = "profile-first-name-input";
+
 var MePanel = React.createClass({displayName: 'MePanel',
     mixins: [FeedActionMixin,
+             ProfileActionMixin,
              UniversityActionMixin],
     componentWillMount: function() {
         CURRENT_PAGE = UPDATE_REQUEST_PAGE;
@@ -295,19 +298,42 @@ var MePanel = React.createClass({displayName: 'MePanel',
             )
         );
     },
+    handleProfileUpdate: function() {
+        event.preventDefault();
+        $("#profile-update-button").button('loading');
+
+        var update_data = {
+            first_name   : $("#" + PROFILE_FIRST_NAME_INPUT).val().trim(),
+            last_name    : $("#profile-last-name-input").val().trim(),
+            university   : $("#profile-univsersity-select").val().trim(),
+            gender       : $("#profile-gender-select").val().trim(),
+            birthday     : moment(new Date($("#profile-birthday-input").val().trim())).format("YYYY-MM-DD"),
+            introduction : $("#profile-intro-textarea").val().trim(),
+            phone        : $("#profile-phone-input").val().trim(),
+            qq           : $("#profile-qq-input").val().trim(),
+            wechat       : $("#profile-wechat-input").val().trim(),
+        };
+        // console.log(update_data);
+        this.handleProfileInfoUpdate(update_data, function() {$("#profile-update-button").button('reset')});
+    },
+    onInputFocusLose: function(id, value) {
+        console.log(id);
+        console.log(value);
+    },
     getProfileSettings: function() {
         return (
             React.createElement("div", {className: "col-sm-12"}, 
-                React.createElement("form", {className: "form-horizontal"}, 
+                React.createElement("form", {className: "form-horizontal", onSubmit: this.handleProfileUpdate}, 
                     React.createElement("h5", {className: "text-center"}, "Basic Infomation"), 
                     React.createElement("hr", null), 
                     React.createElement("div", {className: "form-group"}, 
                         React.createElement("label", {className: "col-sm-2 control-label"}, "First Name"), 
                         React.createElement("div", {className: "col-sm-4"}, 
                             React.createElement("input", {
-                                id: "profile-first-name-input", 
+                                id: PROFILE_FIRST_NAME_INPUT, 
                                 type: "text", 
                                 defaultValue: current_user.first_name, 
+                                onBlur: this.onInputFocusLose.bind(this, PROFILE_FIRST_NAME_INPUT, current_user.first_name), 
                                 className: "form-control"})
                         ), 
                         React.createElement("label", {className: "col-sm-2 control-label"}, "Last Name"), 
@@ -396,7 +422,13 @@ var MePanel = React.createClass({displayName: 'MePanel',
                     ), 
                     React.createElement("div", {className: "form-group"}, 
                         React.createElement("div", {className: "col-sm-offset-2 col-sm-10"}, 
-                            React.createElement("button", {type: "submit", className: "btn btn-primary"}, "Save")
+                            React.createElement("button", {
+                                id: "profile-update-button", 
+                                type: "submit", 
+                                /*disabled="disabled"*/
+                                className: "btn btn-primary"}, 
+                                "Save"
+                            )
                         )
                     )
                 )

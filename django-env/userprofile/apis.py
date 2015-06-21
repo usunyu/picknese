@@ -16,6 +16,32 @@ from userprofile.serializers import (UserSerializer,
                                      UserProfileSerializer,)
 
 from pickup.models import FlightPickRequest, PickRequest, FlightPickUp, PickUp
+from university.models import University
+
+class ProfileInfoUpdateView(views.APIView):
+    """
+    ProfileInfoUpdateView APIView\n
+    Update User Profile Information
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def put(self, request, format=None):
+        user = request.user
+
+        user.first_name = request.data['first_name']
+        user.last_name = request.data['last_name']
+        profile = user.profile
+        profile.university = University.objects.get(pk=request.data['university'])
+        profile.birthday = request.data['birthday']
+        profile.introduction = request.data['introduction']
+        profile.gender = request.data['gender']
+        profile.phone = request.data['phone']
+        profile.qq = request.data['qq']
+        profile.wechat = request.data['wechat']
+
+        profile.save()
+        user.save()
+        return response.Response(status=status.HTTP_204_NO_CONTENT)
 
 class ProfileRequestList(generics.ListAPIView):
     """
@@ -96,6 +122,9 @@ class ProfileImageUploadView(views.APIView):
         profile.save()
         return response.Response(status=status.HTTP_204_NO_CONTENT)
 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+#                               Legacy Code                                     #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 class CurrentUserView(views.APIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
