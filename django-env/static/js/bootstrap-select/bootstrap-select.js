@@ -525,7 +525,7 @@
           titleOption.value = '';
           element.insertBefore(titleOption, element.firstChild);
           // Check if selected attribute is already set on an option. If not, select the titleOption option.
-          if (element.options[element.selectedIndex].getAttribute('selected') === null) titleOption.selected = true;
+          if ($(element.options[element.selectedIndex]).attr('selected') === undefined) titleOption.selected = true;
         }
       }
 
@@ -543,7 +543,7 @@
             tokens = $this.data('tokens') ? $this.data('tokens') : null,
             subtext = typeof $this.data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.data('subtext') + '</small>' : '',
             icon = typeof $this.data('icon') !== 'undefined' ? '<span class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></span> ' : '',
-            isDisabled = this.disabled || this.parentElement.tagName === 'OPTGROUP' && this.parentElement.disabled;
+            isDisabled = this.disabled || (this.parentElement.tagName === 'OPTGROUP' && this.parentElement.disabled);
 
         if (icon !== '' && isDisabled) {
           icon = '<span>' + icon + '</span>';
@@ -560,14 +560,15 @@
         }
 
         if (this.parentElement.tagName === 'OPTGROUP' && $this.data('divider') !== true) {
+          var optGroupClass = ' ' + this.parentElement.className || '';
+
           if ($this.index() === 0) { // Is it the first option of the optgroup?
             optID += 1;
 
             // Get the opt group label
             var label = this.parentElement.label,
                 labelSubtext = typeof $this.parent().data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.parent().data('subtext') + '</small>' : '',
-                labelIcon = $this.parent().data('icon') ? '<span class="' + that.options.iconBase + ' ' + $this.parent().data('icon') + '"></span> ' : '',
-                optGroupClass = ' ' + this.parentElement.className || '';
+                labelIcon = $this.parent().data('icon') ? '<span class="' + that.options.iconBase + ' ' + $this.parent().data('icon') + '"></span> ' : '';
             
             label = labelIcon + '<span class="text">' + label + labelSubtext + '</span>';
 
@@ -781,6 +782,10 @@
     setSize: function () {
       this.findLis();
       this.liHeight();
+
+      if (this.options.header) this.$menu.css('padding-top', 0);
+      if (this.options.size === false) return;
+
       var that = this,
           $menu = this.$menu,
           $menuInner = this.$menuInner,
@@ -805,8 +810,6 @@
           };
 
       posVert();
-
-      if (this.options.header) $menu.css('padding-top', 0);
 
       if (this.options.size === 'auto') {
         var getSize = function () {
@@ -1040,7 +1043,7 @@
           } else if (!that.multiple) {
             var selectedIndex = that.liObj[that.$element[0].selectedIndex];
 
-            if (typeof selectedIndex !== 'number') return;
+            if (typeof selectedIndex !== 'number' || that.options.size === false) return;
             
             // scroll to selected option
             var offset = that.$lis.eq(selectedIndex)[0].offsetTop - that.$menuInner[0].offsetTop;
@@ -1230,9 +1233,9 @@
         if (that.$searchbox.val()) {
           var $searchBase = that.$lis.not('.is-hidden').removeClass('hidden').children('a');
           if (that.options.liveSearchNormalize) {
-            $searchBase = $searchBase.not(':a' + that._searchStyle() + '(' + normalizeToBase(that.$searchbox.val()) + ')');
+            $searchBase = $searchBase.not(':a' + that._searchStyle() + '("' + normalizeToBase(that.$searchbox.val()) + '")');
           } else {
-            $searchBase = $searchBase.not(':' + that._searchStyle() + '(' + that.$searchbox.val() + ')');
+            $searchBase = $searchBase.not(':' + that._searchStyle() + '("' + that.$searchbox.val() + '")');
           }
           $searchBase.parent().addClass('hidden');
 
@@ -1278,7 +1281,7 @@
         }
 
         that.$lis.filter('.active').removeClass('active');
-        that.$lis.not('.hidden, .divider, .dropdown-header').eq(0).addClass('active').children('a').focus();
+        if (that.$searchbox.val()) that.$lis.not('.hidden, .divider, .dropdown-header').eq(0).addClass('active').children('a').focus();
         $(this).focus();
       });
     },
@@ -1542,6 +1545,7 @@
 
     refresh: function () {
       this.$lis = null;
+      this.liObj = {};
       this.reloadLi();
       this.render();
       this.checkDisabled();
