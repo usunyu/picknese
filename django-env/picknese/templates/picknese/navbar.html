@@ -47,6 +47,11 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="{% url 'userprofile.views.me' %}">
+                                <i class="fontello-icon icon-user"></i>&nbsp; Me
+                            </a>
+                        </li>
                         {% if user.profile.university %}
                         <li>
                             <a href="{% url 'picknese.views.home' user.profile.university.id %}">
@@ -54,11 +59,6 @@
                             </a>
                         </li>
                         {% endif %}
-                        <li>
-                            <a href="{% url 'userprofile.views.me' %}">
-                                <i class="fontello-icon icon-user"></i>&nbsp; Profile
-                            </a>
-                        </li>
                         <li class="divider"></li>
                         <li>
                             <a href="{% url 'picknese.views.logout' %}">

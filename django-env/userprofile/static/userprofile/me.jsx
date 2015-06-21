@@ -77,6 +77,9 @@ var MePanel = React.createClass({
             // defaultDate: new Date(1990, 0, 1, 0, 0, 0, 0),
             useCurrent: false,
         });
+
+        $("#profile-gender-select").val(current_user.gender);
+        $('.selectpicker').selectpicker('refresh')
     },
     getProfileInboxList: function() {
         return (
@@ -304,6 +307,7 @@ var MePanel = React.createClass({
                             <input
                                 id="profile-first-name-input"
                                 type="text"
+                                defaultValue={current_user.first_name}
                                 className="form-control" />
                         </div>
                         <label className="col-sm-2 control-label">Last Name</label>
@@ -311,6 +315,7 @@ var MePanel = React.createClass({
                             <input
                                 id="profile-last-name-input"
                                 type="text"
+                                defaultValue={current_user.last_name}
                                 className="form-control" />
                         </div>
                     </div>
@@ -334,6 +339,7 @@ var MePanel = React.createClass({
                         <label className="col-sm-2 control-label">Gender</label>
                         <div className="col-sm-4">
                             <select id="profile-gender-select" className="selectpicker" data-style="btn-default" style={{display: "none"}}>
+                                <option ></option>
                                 <option value="M">Male</option>
                                 <option value="F">Female</option>
                             </select>
@@ -346,6 +352,7 @@ var MePanel = React.createClass({
                                 id="profile-intro-textarea"
                                 className="form-control"
                                 rows="3"
+                                defaultValue={current_user.introduction}
                                 placeholder="Tell about yourself, let others know you better :)">
                             </textarea>
                         </div>
@@ -360,6 +367,7 @@ var MePanel = React.createClass({
                                 <input 
                                     id="profile-phone-input"
                                     type="text"
+                                    defaultValue={current_user.phone}
                                     className="form-control" />
                                 <span className="input-group-btn">
                                     <button className="btn btn-success" type="button">Verify</button>
@@ -371,6 +379,7 @@ var MePanel = React.createClass({
                             <input
                                 id="profile-qq-input"
                                 type="text"
+                                defaultValue={current_user.qq}
                                 className="form-control" />
                         </div>
                     </div>
@@ -380,6 +389,7 @@ var MePanel = React.createClass({
                             <input
                                 id="profile-wechat-input"
                                 type="text"
+                                defaultValue={current_user.wechat}
                                 className="form-control" />
                         </div>
                     </div>
@@ -425,7 +435,7 @@ var MePanel = React.createClass({
                     */}
                     <li>
                         <a href="#profile-settings" onClick={this.onProfileSettingsClick} data-toggle="tab" aria-expanded="false">
-                            <span className="glyphicon glyphicon-cog"></span>&nbsp; Account Settings
+                            <span className="glyphicon glyphicon-cog"></span>&nbsp; Profile Settings
                         </a>
                     </li>
                 </ul>

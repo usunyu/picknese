@@ -77,6 +77,9 @@ var MePanel = React.createClass({displayName: 'MePanel',
             // defaultDate: new Date(1990, 0, 1, 0, 0, 0, 0),
             useCurrent: false,
         });
+
+        $("#profile-gender-select").val(current_user.gender);
+        $('.selectpicker').selectpicker('refresh')
     },
     getProfileInboxList: function() {
         return (
@@ -304,6 +307,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
                             React.createElement("input", {
                                 id: "profile-first-name-input", 
                                 type: "text", 
+                                defaultValue: current_user.first_name, 
                                 className: "form-control"})
                         ), 
                         React.createElement("label", {className: "col-sm-2 control-label"}, "Last Name"), 
@@ -311,6 +315,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
                             React.createElement("input", {
                                 id: "profile-last-name-input", 
                                 type: "text", 
+                                defaultValue: current_user.last_name, 
                                 className: "form-control"})
                         )
                     ), 
@@ -334,6 +339,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
                         React.createElement("label", {className: "col-sm-2 control-label"}, "Gender"), 
                         React.createElement("div", {className: "col-sm-4"}, 
                             React.createElement("select", {id: "profile-gender-select", className: "selectpicker", 'data-style': "btn-default", style: {display: "none"}}, 
+                                React.createElement("option", null), 
                                 React.createElement("option", {value: "M"}, "Male"), 
                                 React.createElement("option", {value: "F"}, "Female")
                             )
@@ -346,6 +352,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
                                 id: "profile-intro-textarea", 
                                 className: "form-control", 
                                 rows: "3", 
+                                defaultValue: current_user.introduction, 
                                 placeholder: "Tell about yourself, let others know you better :)"}
                             )
                         )
@@ -360,6 +367,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
                                 React.createElement("input", {
                                     id: "profile-phone-input", 
                                     type: "text", 
+                                    defaultValue: current_user.phone, 
                                     className: "form-control"}), 
                                 React.createElement("span", {className: "input-group-btn"}, 
                                     React.createElement("button", {className: "btn btn-success", type: "button"}, "Verify")
@@ -371,6 +379,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
                             React.createElement("input", {
                                 id: "profile-qq-input", 
                                 type: "text", 
+                                defaultValue: current_user.qq, 
                                 className: "form-control"})
                         )
                     ), 
@@ -380,6 +389,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
                             React.createElement("input", {
                                 id: "profile-wechat-input", 
                                 type: "text", 
+                                defaultValue: current_user.wechat, 
                                 className: "form-control"})
                         )
                     ), 
@@ -425,7 +435,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
                     */
                     React.createElement("li", null, 
                         React.createElement("a", {href: "#profile-settings", onClick: this.onProfileSettingsClick, 'data-toggle': "tab", 'aria-expanded': "false"}, 
-                            React.createElement("span", {className: "glyphicon glyphicon-cog"}), "  Account Settings"
+                            React.createElement("span", {className: "glyphicon glyphicon-cog"}), "  Profile Settings"
                         )
                     )
                 ), 

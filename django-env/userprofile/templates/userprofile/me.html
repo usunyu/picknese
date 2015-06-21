@@ -113,21 +113,21 @@ Me |
                         {% endif %}
                     </div>
                     <div>
-                        {% if current_user.profile.phone %}
-                        <span class="fontello-icon icon-mobile" data-toggle="tooltip" data-placement="left" title="Phone"></span>
-                        {{current_user.profile.phone}}
+                        {% if not current_user.profile.gender and not current_user.profile.introduction %}
+                        You haven't wrote anything yet...
                         {% endif %}
+
                     </div>
+                </div>
+            </div>
+            <p><b>About Me</b></p>
+            <div class="thumbnail">
+                <div class="caption">
                     <div>
-                        {% if current_user.profile.qq %}
-                        <span class="fontello-icon icon-qq" data-toggle="tooltip" data-placement="left" title="QQ"></span>
-                        {{current_user.profile.qq}}
-                        {% endif %}
-                    </div>
-                    <div>
-                        {% if current_user.profile.wechat %}
-                        <span class="fontello-icon icon-wechat" data-toggle="tooltip" data-placement="left" title="Wechat"></span>
-                        {{current_user.profile.wechat}}
+                        {% if current_user.profile.introduction %}
+                        {{current_user.profile.introduction}}
+                        {% else %}
+                        You haven't said anything yet...
                         {% endif %}
                     </div>
                 </div>
@@ -148,6 +148,11 @@ if ("{{current_user.is_authenticated}}" == "True") {
         first_name: "{{current_user.first_name}}",
         last_name: "{{current_user.last_name}}",
         avatar: "{{current_user.profile.avatar}}",
+        gender: "{{current_user.profile.gender}}",
+        phone: "{{current_user.profile.phone}}",
+        qq: "{{current_user.profile.qq}}",
+        wechat: "{{current_user.profile.wechat}}",
+        introduction: "{{current_user.profile.introduction}}",
         university_id: "{{current_user.profile.university.id}}",
     };
 }
