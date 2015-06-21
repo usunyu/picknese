@@ -47,6 +47,36 @@ var MePanel = React.createClass({
     },
     onProfileSettingsClick: function(event) {
         CURRENT_PANEL = SETTINGS_PANEL;
+        var universities = [];
+        var selected = [];
+        for (var i = 0; i < this.state.universitySimpleList.length; i++) {
+            var data = this.state.universitySimpleList[i];
+            var u = {
+                id: data.id,
+                title: data.name,
+                search: data.shorthand + data.name,
+            };
+            universities.push(u);
+        }
+        // Check if user already set up university
+        if (current_user.university_id) {
+            selected = [current_user.university_id];
+        }
+        $("#profile-univsersity-select").selectize({
+            items : selected,
+            maxItems: 1,
+            valueField: 'id',
+            labelField: 'title',
+            searchField: 'search',
+            options: universities,
+            create: false,
+        });
+
+        $('#profile-birthday-input-div').datetimepicker({
+            format: 'MM/DD/YYYY',
+            // defaultDate: new Date(1990, 0, 1, 0, 0, 0, 0),
+            useCurrent: false,
+        });
     },
     getProfileInboxList: function() {
         return (
@@ -264,10 +294,101 @@ var MePanel = React.createClass({
     },
     getProfileSettings: function() {
         return (
-            <div className="col-sm-12 home-feed-card-div">
-                <div className="col-sm-9 col-md-10 home-feed-card-div">
-                    <PusheenGangnamStyleCard key={0} />
-                </div>
+            <div className="col-sm-12">
+                <form className="form-horizontal">
+                    <h5 className="text-center">Basic Infomation</h5>
+                    <hr />
+                    <div className="form-group">
+                        <label className="col-sm-2 control-label">First Name</label>
+                        <div className="col-sm-4">
+                            <input
+                                id="profile-first-name-input"
+                                type="text"
+                                className="form-control" />
+                        </div>
+                        <label className="col-sm-2 control-label">Last Name</label>
+                        <div className="col-sm-4">
+                            <input
+                                id="profile-last-name-input"
+                                type="text"
+                                className="form-control" />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="col-sm-2 control-label">University</label>
+                        <div className="col-sm-10">
+                            <select id="profile-univsersity-select" />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="col-sm-2 control-label">Birthday</label>
+                        <div className="col-sm-4">
+                            <div className='input-group date' id='profile-birthday-input-div'>
+                                <input
+                                    id="profile-birthday-input"
+                                    type='text'
+                                    className="form-control" />
+                                <span className="input-group-addon"><span className="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>
+                        <label className="col-sm-2 control-label">Gender</label>
+                        <div className="col-sm-4">
+                            <select id="profile-gender-select" className="selectpicker" data-style="btn-default" style={{display: "none"}}>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="col-sm-2 control-label">Introduction</label>
+                        <div className="col-sm-10">
+                            <textarea
+                                id="profile-intro-textarea"
+                                className="form-control"
+                                rows="3"
+                                placeholder="Tell about yourself, let others know you better :)">
+                            </textarea>
+                        </div>
+                    </div>
+                    <hr />
+                    <h5 className="text-center">Contact Infomation <span style={{fontSize: "80%", color: "#e51c23"}}>(your contact infomation will not be public)</span></h5>
+                    <hr />
+                    <div className="form-group">
+                        <label className="col-sm-2 control-label">Phone</label>
+                        <div className="col-sm-4">
+                            <div className="input-group">
+                                <input 
+                                    id="profile-phone-input"
+                                    type="text"
+                                    className="form-control" />
+                                <span className="input-group-btn">
+                                    <button className="btn btn-success" type="button">Verify</button>
+                                </span>
+                            </div>
+                        </div>
+                        <label className="col-sm-2 control-label">QQ</label>
+                        <div className="col-sm-4">
+                            <input
+                                id="profile-qq-input"
+                                type="text"
+                                className="form-control" />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="col-sm-2 control-label">Wechat</label>
+                        <div className="col-sm-4">
+                            <input
+                                id="profile-wechat-input"
+                                type="text"
+                                className="form-control" />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-sm-offset-2 col-sm-10">
+                            <button type="submit" className="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         );
     },
@@ -275,13 +396,11 @@ var MePanel = React.createClass({
         return (
             <div>
                 <ul className="nav nav-tabs nav-justified">
-                    {/*
                     <li>
                         <a href="#profile-inbox" onClick={this.onProfileInboxClick} data-toggle="tab" aria-expanded="false">
                             <span className="glyphicon glyphicon-envelope"></span>&nbsp; Inbox &nbsp;<span className="badge">7</span>
                         </a>
                     </li>
-                    */}
                     <li className="active">
                         <a href="#profile-request" onClick={this.onProfileRequestClick} data-toggle="tab" aria-expanded="true">
                             <span className="glyphicon glyphicon-list-alt"></span>&nbsp; Your Requests

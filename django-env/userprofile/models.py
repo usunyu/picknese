@@ -47,9 +47,3 @@ class UserProfile(models.Model):
 User.profile = property(
 	lambda u: UserProfile.objects.get_or_create(user=u)[0]
 )
-
-# class UserToUniversity(models.Model):
-# 	user = models.OneToOneField(User)
-# 	university = models.OneToOneField(University)
-# 	start_year = models.IntegerField(default=0)
-# 	end_year = models.IntegerField(default=0)

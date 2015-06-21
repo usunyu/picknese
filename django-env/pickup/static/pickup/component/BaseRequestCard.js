@@ -94,8 +94,8 @@ var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
                         type: "button", 
                         className: "btn btn-primary", 
                         style: {float: 'right', marginRight: '10px'}}, 
-                        React.createElement("i", {className: "glyphicon glyphicon-edit"}), " " + ' ' +
-                        "Comment"
+                        React.createElement("i", {className: "glyphicon glyphicon-envelope"}), " " + ' ' +
+                        "Contact"
                     ), 
                     /* Offer Button Modal */
                     React.createElement("div", {

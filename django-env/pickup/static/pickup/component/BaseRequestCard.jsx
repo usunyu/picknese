@@ -94,8 +94,8 @@ var BaseRequestCard = React.createClass({
                         type="button"
                         className="btn btn-primary"
                         style={{float: 'right', marginRight: '10px'}} >
-                        <i className="glyphicon glyphicon-edit"></i>&nbsp;
-                        Comment
+                        <i className="glyphicon glyphicon-envelope"></i>&nbsp;
+                        Contact
                     </button>
                     {/* Offer Button Modal */}
                     <div

@@ -47,6 +47,36 @@ var MePanel = React.createClass({displayName: 'MePanel',
     },
     onProfileSettingsClick: function(event) {
         CURRENT_PANEL = SETTINGS_PANEL;
+        var universities = [];
+        var selected = [];
+        for (var i = 0; i < this.state.universitySimpleList.length; i++) {
+            var data = this.state.universitySimpleList[i];
+            var u = {
+                id: data.id,
+                title: data.name,
+                search: data.shorthand + data.name,
+            };
+            universities.push(u);
+        }
+        // Check if user already set up university
+        if (current_user.university_id) {
+            selected = [current_user.university_id];
+        }
+        $("#profile-univsersity-select").selectize({
+            items : selected,
+            maxItems: 1,
+            valueField: 'id',
+            labelField: 'title',
+            searchField: 'search',
+            options: universities,
+            create: false,
+        });
+
+        $('#profile-birthday-input-div').datetimepicker({
+            format: 'MM/DD/YYYY',
+            // defaultDate: new Date(1990, 0, 1, 0, 0, 0, 0),
+            useCurrent: false,
+        });
     },
     getProfileInboxList: function() {
         return (
@@ -264,9 +294,100 @@ var MePanel = React.createClass({displayName: 'MePanel',
     },
     getProfileSettings: function() {
         return (
-            React.createElement("div", {className: "col-sm-12 home-feed-card-div"}, 
-                React.createElement("div", {className: "col-sm-9 col-md-10 home-feed-card-div"}, 
-                    React.createElement(PusheenGangnamStyleCard, {key: 0})
+            React.createElement("div", {className: "col-sm-12"}, 
+                React.createElement("form", {className: "form-horizontal"}, 
+                    React.createElement("h5", {className: "text-center"}, "Basic Infomation"), 
+                    React.createElement("hr", null), 
+                    React.createElement("div", {className: "form-group"}, 
+                        React.createElement("label", {className: "col-sm-2 control-label"}, "First Name"), 
+                        React.createElement("div", {className: "col-sm-4"}, 
+                            React.createElement("input", {
+                                id: "profile-first-name-input", 
+                                type: "text", 
+                                className: "form-control"})
+                        ), 
+                        React.createElement("label", {className: "col-sm-2 control-label"}, "Last Name"), 
+                        React.createElement("div", {className: "col-sm-4"}, 
+                            React.createElement("input", {
+                                id: "profile-last-name-input", 
+                                type: "text", 
+                                className: "form-control"})
+                        )
+                    ), 
+                    React.createElement("div", {className: "form-group"}, 
+                        React.createElement("label", {className: "col-sm-2 control-label"}, "University"), 
+                        React.createElement("div", {className: "col-sm-10"}, 
+                            React.createElement("select", {id: "profile-univsersity-select"})
+                        )
+                    ), 
+                    React.createElement("div", {className: "form-group"}, 
+                        React.createElement("label", {className: "col-sm-2 control-label"}, "Birthday"), 
+                        React.createElement("div", {className: "col-sm-4"}, 
+                            React.createElement("div", {className: "input-group date", id: "profile-birthday-input-div"}, 
+                                React.createElement("input", {
+                                    id: "profile-birthday-input", 
+                                    type: "text", 
+                                    className: "form-control"}), 
+                                React.createElement("span", {className: "input-group-addon"}, React.createElement("span", {className: "glyphicon glyphicon-calendar"}))
+                            )
+                        ), 
+                        React.createElement("label", {className: "col-sm-2 control-label"}, "Gender"), 
+                        React.createElement("div", {className: "col-sm-4"}, 
+                            React.createElement("select", {id: "profile-gender-select", className: "selectpicker", 'data-style': "btn-default", style: {display: "none"}}, 
+                                React.createElement("option", {value: "M"}, "Male"), 
+                                React.createElement("option", {value: "F"}, "Female")
+                            )
+                        )
+                    ), 
+                    React.createElement("div", {className: "form-group"}, 
+                        React.createElement("label", {className: "col-sm-2 control-label"}, "Introduction"), 
+                        React.createElement("div", {className: "col-sm-10"}, 
+                            React.createElement("textarea", {
+                                id: "profile-intro-textarea", 
+                                className: "form-control", 
+                                rows: "3", 
+                                placeholder: "Tell about yourself, let others know you better :)"}
+                            )
+                        )
+                    ), 
+                    React.createElement("hr", null), 
+                    React.createElement("h5", {className: "text-center"}, "Contact Infomation ", React.createElement("span", {style: {fontSize: "80%", color: "#e51c23"}}, "(your contact infomation will not be public)")), 
+                    React.createElement("hr", null), 
+                    React.createElement("div", {className: "form-group"}, 
+                        React.createElement("label", {className: "col-sm-2 control-label"}, "Phone"), 
+                        React.createElement("div", {className: "col-sm-4"}, 
+                            React.createElement("div", {className: "input-group"}, 
+                                React.createElement("input", {
+                                    id: "profile-phone-input", 
+                                    type: "text", 
+                                    className: "form-control"}), 
+                                React.createElement("span", {className: "input-group-btn"}, 
+                                    React.createElement("button", {className: "btn btn-success", type: "button"}, "Verify")
+                                )
+                            )
+                        ), 
+                        React.createElement("label", {className: "col-sm-2 control-label"}, "QQ"), 
+                        React.createElement("div", {className: "col-sm-4"}, 
+                            React.createElement("input", {
+                                id: "profile-qq-input", 
+                                type: "text", 
+                                className: "form-control"})
+                        )
+                    ), 
+                    React.createElement("div", {className: "form-group"}, 
+                        React.createElement("label", {className: "col-sm-2 control-label"}, "Wechat"), 
+                        React.createElement("div", {className: "col-sm-4"}, 
+                            React.createElement("input", {
+                                id: "profile-wechat-input", 
+                                type: "text", 
+                                className: "form-control"})
+                        )
+                    ), 
+                    React.createElement("div", {className: "form-group"}, 
+                        React.createElement("div", {className: "col-sm-offset-2 col-sm-10"}, 
+                            React.createElement("button", {type: "submit", className: "btn btn-primary"}, "Save")
+                        )
+                    )
                 )
             )
         );
@@ -275,13 +396,11 @@ var MePanel = React.createClass({displayName: 'MePanel',
         return (
             React.createElement("div", null, 
                 React.createElement("ul", {className: "nav nav-tabs nav-justified"}, 
-                    /*
-                    <li>
-                        <a href="#profile-inbox" onClick={this.onProfileInboxClick} data-toggle="tab" aria-expanded="false">
-                            <span className="glyphicon glyphicon-envelope"></span>&nbsp; Inbox &nbsp;<span className="badge">7</span>
-                        </a>
-                    </li>
-                    */
+                    React.createElement("li", null, 
+                        React.createElement("a", {href: "#profile-inbox", onClick: this.onProfileInboxClick, 'data-toggle': "tab", 'aria-expanded': "false"}, 
+                            React.createElement("span", {className: "glyphicon glyphicon-envelope"}), "  Inbox  ", React.createElement("span", {className: "badge"}, "7")
+                        )
+                    ), 
                     React.createElement("li", {className: "active"}, 
                         React.createElement("a", {href: "#profile-request", onClick: this.onProfileRequestClick, 'data-toggle': "tab", 'aria-expanded': "true"}, 
                             React.createElement("span", {className: "glyphicon glyphicon-list-alt"}), "  Your Requests"
