@@ -96,25 +96,3 @@ class PickRequester(models.Model):
 
     def __str__(self):  # __unicode__ on Python 2
         return 'Requester: %s, University: %s' % (self.requester.username, self.university)
-
-# class PickUp(models.Model):
-#     picker = models.ForeignKey(User, related_name='pickup_picker')
-#     pickee = models.ForeignKey(User, related_name='pickup_pickee')
-#     university = models.ForeignKey(University)
-#     type_choices = ((1, 'Flight'),(2, 'General'))
-#     pick_type = models.IntegerField(choices=type_choices, default=1)
-#     price = models.IntegerField(default=20)
-#     start = models.CharField(max_length=200)
-#     destination = models.CharField(max_length=200)
-#     # for flight
-#     bags = models.IntegerField(default=1)
-#     # for general
-#     round_trip = models.BooleanField(default=False)
-#     time_flexible = models.BooleanField(default=False)
-#     # picker message
-#     description = models.TextField('Message', null=True, blank=True)
-#     date_time = models.DateTimeField()
-#     created = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self):  # __unicode__ on Python 2
-#         return 'Picker: %s, Pickee: %s' % (self.picker.username, self.pickee.username)
