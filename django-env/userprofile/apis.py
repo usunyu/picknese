@@ -16,6 +16,39 @@ from userprofile.serializers import (UserSerializer,
                                      UserProfileSerializer,)
 
 from pickup.models import FlightPickRequest, PickRequest, FlightPickUp, PickUp
+from university.models import University
+
+class ProfileInfoUpdateView(views.APIView):
+    """
+    ProfileInfoUpdateView APIView\n
+    Update User Profile Information
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def put(self, request, format=None):
+        user = request.user
+
+        user.first_name = request.data['first_name']
+        user.last_name = request.data['last_name']
+        profile = user.profile
+        if request.data['university']:
+            profile.university = University.objects.get(pk=request.data['university'])
+        if request.data['birthday'] != "Invalid date":
+            profile.birthday = request.data['birthday']
+        if request.data['introduction']:
+            profile.introduction = request.data['introduction']
+        if request.data['gender']:
+            profile.gender = request.data['gender']
+        if request.data['phone']:
+            profile.phone = request.data['phone']
+        if request.data['qq']:
+            profile.qq = request.data['qq']
+        if request.data['wechat']:
+            profile.wechat = request.data['wechat']
+
+        profile.save()
+        user.save()
+        return response.Response(status=status.HTTP_204_NO_CONTENT)
 
 class ProfileRequestList(generics.ListAPIView):
     """
@@ -96,6 +129,9 @@ class ProfileImageUploadView(views.APIView):
         profile.save()
         return response.Response(status=status.HTTP_204_NO_CONTENT)
 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+#                               Legacy Code                                     #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 class CurrentUserView(views.APIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 

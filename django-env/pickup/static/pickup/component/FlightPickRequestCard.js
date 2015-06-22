@@ -17,7 +17,7 @@ var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCa
             layoutMap['heading']['user'] = feed.requester.first_name + " " + feed.requester.last_name;
             layoutMap['heading']['verb'] = "is looking for";
         }
-        layoutMap['heading']['action'] = "flight pick up";
+        layoutMap['heading']['action'] = "Flight Pick Up";
         layoutMap['heading']['icon'] = "fontello-icon icon-flight";
 
         layoutMap['body'] = {}
@@ -70,11 +70,59 @@ var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCa
             description         : $("#pick-up-desc-textarea").val().trim(),
         });
     },
+    handleRequestUpdate: function(event) {
+        event.preventDefault();
+        var feed = this.props.feed;
+        var additional_id = feed.feed_type + "-" + feed.id;
+        $("#" + REQUEST_SUBMIT_BUTTON_ID + additional_id).button('loading');
+        var flight = $("#" + FLIGHT_INPUT_ID + additional_id).val().trim().toUpperCase();
+        var momentDate = moment($("#" + DATE_INPUT_ID + additional_id).val().trim(), 'MM/DD/YYYY');
+
+        var flight_input = $('#' + FLIGHT_INPUT_ID + additional_id);
+
+        $.ajax({
+            url: getFlightStatusScheduledFlightAPI(flight, momentDate.year(), momentDate.month() + 1, momentDate.date()),
+            dataType: 'jsonp',
+            type: 'GET',
+            success: function(data) {
+                if (!isFlightStatusResultHasError(data)) {
+                    flight_input.parent().removeClass("has-error");
+
+                    var update_data = {
+                        id          : feed.id,
+                        requester   : current_user.id,
+                        university  : $("#" + UNIVERSITY_SELECT_ID + additional_id).val().trim(),
+                        price       : $("#" + TIP_INPUT_ID + additional_id).val().trim(),
+                        flight      : flight,
+                        date_time   : getScheduledArrivalTimeFromResult(data),
+                        destination : $("#" + DEST_INPUT_ID + additional_id).val().trim(),
+                        bags        : $("#" + BAGS_INPUT_ID + additional_id).val().trim(),
+                        feed_type   : FLIGHT_PICK_REQUEST,
+                        description : $("#" + DESC_TEXT_ID + additional_id).val().trim(),
+                    }
+
+                    this.props.onUpdate(update_data, this.props.mutateCallback);
+                    $("#" + REQUEST_SUBMIT_BUTTON_ID + additional_id).button('reset');
+                } else {
+                    flight_input.parent().effect("shake", {times:3, distance: 5}, 500);
+                    flight_input.parent().addClass("has-error");
+                    $("#" + REQUEST_SUBMIT_BUTTON_ID + additional_id).button('reset');
+                }
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(
+                    getFlightStatusScheduledFlightAPI(flight, momentDate.year(), momentDate.month() + 1, momentDate.date()),
+                    status,
+                    err.toString()
+                );
+            }.bind(this)
+        });
+    },
     getRequestUpdateForm: function() {
         var feed = this.props.feed;
         var additional_id = feed.feed_type + "-" + feed.id;
         return (
-            React.createElement("form", {className: "form-horizontal", onSubmit: this.handlePostRequestSubmit}, 
+            React.createElement("form", {className: "form-horizontal", onSubmit: this.handleRequestUpdate}, 
                 /* University Select */
                 React.createElement(UniversitySelectInput, {
                     id: additional_id, 
@@ -105,7 +153,7 @@ var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCa
                 React.createElement("div", {className: "form-group"}, 
                     React.createElement("div", {className: "col-sm-offset-2 col-sm-10"}, 
                         React.createElement("button", {
-                            id: "post-request-submit-button" + additional_id, 
+                            id: REQUEST_SUBMIT_BUTTON_ID + additional_id, 
                             type: "submit", 
                             disabled: "disabled", 
                             className: "btn btn-primary"}, 
@@ -125,7 +173,7 @@ var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCa
                 updateForm: this.getRequestUpdateForm(), 
                 onSubmit: this.onSubmit, 
                 onCancel: this.props.onCancel, 
-                cancelCallback: this.props.cancelCallback, 
+                mutateCallback: this.props.mutateCallback, 
                 layout: layout})
         );
     }

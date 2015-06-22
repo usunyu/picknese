@@ -16,8 +16,21 @@ var CURRENT_PANEL = REQUEST_PANEL;
 var FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH = false;
 var FIRST_LOAD_PROFILE_OFFER_FEED_FINISH = false;
 
+var PROFILE_FIRST_NAME_INPUT    = "profile-first-name-input";
+var PROFILE_LAST_NAME_INPUT     = "profile-last-name-input";
+var PROFILE_UNIVERSITY_SELECT   = "profile-univsersity-select";
+var PROFILE_GENDER_SELECT       = "profile-gender-select";
+var PROFILE_BIRTHDAY_INPUT      = "profile-birthday-input";
+var PROFILE_INTRO_TEXTAREA      = "profile-intro-textarea";
+var PROFILE_PHONE_INPUT         = "profile-phone-input";
+var PROFILE_QQ_INPUT            = "profile-qq-input";
+var PROFILE_WECHAT_INPUT        = "profile-wechat-input";
+
+var PROFILE_UPDATE_BUTTON = "profile-update-button";
+
 var MePanel = React.createClass({
-    mixins: [HomeFeedActionMixin,
+    mixins: [FeedActionMixin,
+             ProfileActionMixin,
              UniversityActionMixin],
     componentWillMount: function() {
         CURRENT_PAGE = UPDATE_REQUEST_PAGE;
@@ -25,6 +38,12 @@ var MePanel = React.createClass({
     componentDidMount: function() {
         // enable Bootstrap-Select
         $('.selectpicker').selectpicker();
+
+        $('.selectpicker').on('change', function(){
+            // Hack
+            var submitButton = document.getElementById(PROFILE_UPDATE_BUTTON);
+            submitButton.disabled = "";
+        });
     },
     onProfileInboxClick: function(event) {
         CURRENT_PANEL = INBOX_PANEL;
@@ -47,6 +66,47 @@ var MePanel = React.createClass({
     },
     onProfileSettingsClick: function(event) {
         CURRENT_PANEL = SETTINGS_PANEL;
+        var universities = [];
+        var selected = [];
+        for (var i = 0; i < this.state.universitySimpleList.length; i++) {
+            var data = this.state.universitySimpleList[i];
+            var u = {
+                id: data.id,
+                title: data.name,
+                search: data.shorthand + data.name,
+            };
+            universities.push(u);
+        }
+        // Check if user already set up university
+        if (current_user.university_id) {
+            selected = [current_user.university_id];
+        }
+        $("#" + PROFILE_UNIVERSITY_SELECT).selectize({
+            items : selected,
+            maxItems: 1,
+            valueField: 'id',
+            labelField: 'title',
+            searchField: 'search',
+            options: universities,
+            create: false,
+            onBlur: function() {
+                // Hack! Selectize not work well with Bootstrap
+                var new_value = $("#" + PROFILE_UNIVERSITY_SELECT).val().trim();
+                if (new_value !== current_user.university_id) {
+                    var submitButton = document.getElementById(PROFILE_UPDATE_BUTTON);
+                    submitButton.disabled = "";
+                }
+            },
+        });
+
+        $('#profile-birthday-input-div').datetimepicker({
+            format: 'MM/DD/YYYY',
+            // defaultDate: new Date(1990, 0, 1, 0, 0, 0, 0),
+            useCurrent: false,
+        });
+
+        $("#" + PROFILE_GENDER_SELECT).val(current_user.gender);
+        $('.selectpicker').selectpicker('refresh');
     },
     getProfileInboxList: function() {
         return (
@@ -68,8 +128,9 @@ var MePanel = React.createClass({
                             key={i}
                             feed={feed}
                             onSubmit={this.handlePickUpSubmit}
+                            onUpdate={this.handlePickRequestUpdate}
                             onCancel={this.handlePickRequestCancel}
-                            cancelCallback={this.loadProfileRequestFromServer}
+                            mutateCallback={this.loadProfileRequestFromServer}
                             universitySimpleList={this.state.universitySimpleList} />
                     );
                     break;
@@ -79,8 +140,9 @@ var MePanel = React.createClass({
                             key={i}
                             feed={feed}
                             onSubmit={this.handleFlightPickUpSubmit}
+                            onUpdate={this.handleFlightPickRequestUpdate}
                             onCancel={this.handleFlightPickRequestCancel}
-                            cancelCallback={this.loadProfileRequestFromServer}
+                            mutateCallback={this.loadProfileRequestFromServer}
                             universitySimpleList={this.state.universitySimpleList} />
                     );
                     break;
@@ -90,7 +152,7 @@ var MePanel = React.createClass({
                             key={i}
                             feed={feed}
                             onReject={this.handlePickUpReject}
-                            rejectCallback={this.loadProfileRequestFromServer} />
+                            mutateCallback={this.loadProfileRequestFromServer} />
                     );
                     break;
                 case FLIGHT_PICK_UP:
@@ -99,7 +161,7 @@ var MePanel = React.createClass({
                             key={i}
                             feed={feed}
                             onReject={this.handleFlightPickUpReject}
-                            rejectCallback={this.loadProfileRequestFromServer} />
+                            mutateCallback={this.loadProfileRequestFromServer} />
                     );
                 default:
                     break;
@@ -138,7 +200,7 @@ var MePanel = React.createClass({
                             key={i}
                             feed={feed}
                             onCancel={this.handlePickUpCancel}
-                            cancelCallback={this.loadProfileOfferFromServer} />
+                            mutateCallback={this.loadProfileOfferFromServer} />
                     );
                     break;
                 case FLIGHT_PICK_UP:
@@ -147,7 +209,7 @@ var MePanel = React.createClass({
                             key={i}
                             feed={feed}
                             onCancel={this.handleFlightPickUpCancel}
-                            cancelCallback={this.loadProfileOfferFromServer} />
+                            mutateCallback={this.loadProfileOfferFromServer} />
                     );
                 default:
                     break;
@@ -260,12 +322,178 @@ var MePanel = React.createClass({
             </div>
         );
     },
+    handleProfileUpdate: function() {
+        event.preventDefault();
+        // $("#" + PROFILE_UPDATE_BUTTON).button('loading');
+        var submitButton = document.getElementById(PROFILE_UPDATE_BUTTON);
+        submitButton.disabled = "disabled";
+
+        var update_data = {
+            first_name   : $("#" + PROFILE_FIRST_NAME_INPUT).val().trim(),
+            last_name    : $("#" + PROFILE_LAST_NAME_INPUT).val().trim(),
+            university   : $("#" + PROFILE_UNIVERSITY_SELECT).val().trim(),
+            gender       : $("#" + PROFILE_GENDER_SELECT).val().trim(),
+            birthday     : moment(new Date($("#" + PROFILE_BIRTHDAY_INPUT).val().trim())).format("YYYY-MM-DD"),
+            introduction : $("#" + PROFILE_INTRO_TEXTAREA).val().trim(),
+            phone        : $("#" + PROFILE_PHONE_INPUT).val().trim(),
+            qq           : $("#" + PROFILE_QQ_INPUT).val().trim(),
+            wechat       : $("#" + PROFILE_WECHAT_INPUT).val().trim(),
+        };
+
+        this.handleProfileInfoUpdate(update_data);
+    },
+    onRequiredInputFocusLose: function(id, value) {
+        // Check input error
+        var element = $('#' + id);
+        var new_value = element.val().trim();
+        var inputError = new_value == "";
+        if (inputError) {
+            element.parent().addClass("has-error");
+        } else {
+            element.parent().removeClass("has-error");
+        }
+
+        var submitButton = document.getElementById(PROFILE_UPDATE_BUTTON);
+        if (inputError) {
+            submitButton.disabled = "disabled";
+        } else {
+            this.onInputFocusLose(id, value);
+        }
+    },
+    onInputFocusLose: function(id, value) {
+        var new_value = $('#' + id).val().trim();
+        if (id === PROFILE_BIRTHDAY_INPUT) {
+            value = moment(new Date(current_user.birthday)).format('MM/DD/YYYY');
+        }
+        if (value !== new_value) {
+            var submitButton = document.getElementById(PROFILE_UPDATE_BUTTON);
+            submitButton.disabled = "";
+        }
+    },
     getProfileSettings: function() {
         return (
-            <div className="col-sm-12 home-feed-card-div">
-                <div className="col-sm-9 col-md-10 home-feed-card-div">
-                    <PusheenGangnamStyleCard key={0} />
-                </div>
+            <div className="col-sm-12">
+                <form className="form-horizontal" onSubmit={this.handleProfileUpdate}>
+                    <h5 className="text-center">Basic Infomation</h5>
+                    <hr />
+                    <div className="form-group">
+                        <label className="col-sm-2 control-label">First Name</label>
+                        <div className="col-sm-4">
+                            <input
+                                id={PROFILE_FIRST_NAME_INPUT}
+                                type="text"
+                                defaultValue={current_user.first_name}
+                                onBlur={this.onRequiredInputFocusLose.bind(this, PROFILE_FIRST_NAME_INPUT, current_user.first_name)}
+                                className="form-control" />
+                        </div>
+                        <label className="col-sm-2 control-label">Last Name</label>
+                        <div className="col-sm-4">
+                            <input
+                                id={PROFILE_LAST_NAME_INPUT}
+                                type="text"
+                                defaultValue={current_user.last_name}
+                                onBlur={this.onRequiredInputFocusLose.bind(this, PROFILE_LAST_NAME_INPUT, current_user.last_name)}
+                                className="form-control" />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="col-sm-2 control-label">University</label>
+                        <div className="col-sm-10">
+                            <select
+                                id={PROFILE_UNIVERSITY_SELECT}/>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="col-sm-2 control-label">Birthday</label>
+                        <div className="col-sm-4">
+                            <div className='input-group date' id='profile-birthday-input-div'>
+                                <input
+                                    id={PROFILE_BIRTHDAY_INPUT}
+                                    type='text'
+                                    defaultValue={moment(new Date(current_user.birthday)).format('MM/DD/YYYY')}
+                                    onBlur={this.onInputFocusLose.bind(this, PROFILE_BIRTHDAY_INPUT, current_user.birthday)}
+                                    className="form-control" />
+                                <span className="input-group-addon"><span className="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>
+                        <label className="col-sm-2 control-label">Gender</label>
+                        <div className="col-sm-4">
+                            <select
+                                id={PROFILE_GENDER_SELECT}
+                                className="selectpicker"
+                                data-style="btn-default"
+                                style={{display: "none"}}>
+                                <option ></option>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="col-sm-2 control-label">Introduction</label>
+                        <div className="col-sm-10">
+                            <textarea
+                                id={PROFILE_INTRO_TEXTAREA}
+                                className="form-control"
+                                rows="3"
+                                defaultValue={current_user.introduction}
+                                onBlur={this.onInputFocusLose.bind(this, PROFILE_INTRO_TEXTAREA, current_user.introduction)}
+                                placeholder="Tell about yourself, let others know you better :)">
+                            </textarea>
+                        </div>
+                    </div>
+                    <hr />
+                    <h5 className="text-center">Contact Infomation</h5>
+                    <p className="text-center" style={{color: "#e51c23"}}>(your contact infomation will not be public)</p>
+                    <hr />
+                    <div className="form-group">
+                        <label className="col-sm-2 control-label">Phone</label>
+                        <div className="col-sm-4">
+                            <div className="input-group">
+                                <input 
+                                    id={PROFILE_PHONE_INPUT}
+                                    type="text"
+                                    defaultValue={current_user.phone}
+                                    onBlur={this.onInputFocusLose.bind(this, PROFILE_PHONE_INPUT, current_user.phone)}
+                                    className="form-control" />
+                                <span className="input-group-btn">
+                                    <button className="btn btn-success" type="button">Verify</button>
+                                </span>
+                            </div>
+                        </div>
+                        <label className="col-sm-2 control-label">QQ</label>
+                        <div className="col-sm-4">
+                            <input
+                                id={PROFILE_QQ_INPUT}
+                                type="text"
+                                defaultValue={current_user.qq}
+                                onBlur={this.onInputFocusLose.bind(this, PROFILE_QQ_INPUT, current_user.qq)}
+                                className="form-control" />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="col-sm-2 control-label">Wechat</label>
+                        <div className="col-sm-4">
+                            <input
+                                id={PROFILE_WECHAT_INPUT}
+                                type="text"
+                                defaultValue={current_user.wechat}
+                                onBlur={this.onInputFocusLose.bind(this, PROFILE_WECHAT_INPUT, current_user.wechat)}
+                                className="form-control" />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-sm-offset-2 col-sm-10">
+                            <button
+                                id={PROFILE_UPDATE_BUTTON}
+                                type="submit"
+                                disabled="disabled"
+                                className="btn btn-primary">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         );
     },
@@ -288,6 +516,7 @@ var MePanel = React.createClass({
                             <span className="glyphicon glyphicon-heart"></span>&nbsp; Your Offers
                         </a>
                     </li>
+                    {/*
                     <li>
                         <a href="#profile-calendar" onClick={this.onProfileCalendarClick} data-toggle="tab" aria-expanded="false">
                             <span className="glyphicon glyphicon-calendar"></span>&nbsp; Calendar
@@ -298,9 +527,10 @@ var MePanel = React.createClass({
                             <span className="glyphicon glyphicon-picture"></span>&nbsp; Your Photos
                         </a>
                     </li>
+                    */}
                     <li>
                         <a href="#profile-settings" onClick={this.onProfileSettingsClick} data-toggle="tab" aria-expanded="false">
-                            <span className="glyphicon glyphicon-cog"></span>&nbsp; Account Settings
+                            <span className="glyphicon glyphicon-cog"></span>&nbsp; Profile Settings
                         </a>
                     </li>
                 </ul>
@@ -332,7 +562,7 @@ var MePanel = React.createClass({
 
 React.render(
     <MePanel 
-        homeFeedActionMixinLoadProfileRequestFeed={true}
+        feedActionMixinLoadProfileRequestFeed={true}
         universityActionMinxinLoadSimpleList={true} />,
     document.getElementById('content')
 );

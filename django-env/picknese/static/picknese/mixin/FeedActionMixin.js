@@ -5,14 +5,14 @@
  *
  * React Parameters
  * --------------------------------------------------
- * @homeFeedActionMixinLoadHomeFeedInterval
- * @homeFeedActionMixinLoadProfileRequestFeed
+ * @feedActionMixinLoadHomeFeedInterval
+ * @feedActionMixinLoadProfileRequestFeed
  * @pollInterval
  */
 var CURRENT_FEED_TYPE = ALL_POST;
 var ERROR_MESSAGE = "Oops, some errors happen, please try again later.";
 
-var HomeFeedActionMixin = {
+var FeedActionMixin = {
     loadHomeFeedFromServer: function() {
         // load home feed for home.jsx
         $.ajax({
@@ -38,11 +38,11 @@ var HomeFeedActionMixin = {
         };
     },
     componentDidMount: function() {
-        if (this.props.homeFeedActionMixinLoadHomeFeedInterval) {
+        if (this.props.feedActionMixinLoadHomeFeedInterval) {
             this.loadHomeFeedFromServer();
             setInterval(this.loadHomeFeedFromServer, this.props.pollInterval);
         }
-        if (this.props.homeFeedActionMixinLoadProfileRequestFeed) {
+        if (this.props.feedActionMixinLoadProfileRequestFeed) {
             this.loadProfileRequestFromServer();
         }
     },
@@ -64,6 +64,29 @@ var HomeFeedActionMixin = {
             }.bind(this)
         });
     },
+    handleFlightPickRequestUpdate: function(data, callback) {
+        // requester update flight pick request
+        var id = data.id;
+        var feed_type = data.feed_type;
+        $.ajax({
+            url: getFlightPickRequestMutateAPI(id),
+            dataType: 'json',
+            type: 'PUT',
+            data: data,
+            success: function(data) {
+                $("#update-modal-" + feed_type + "-" + id).modal('hide');
+                preparePopupMessage("You have successfully update your request.", "success");
+                popupMessage();
+                callback();
+            }.bind(this),
+            error: function(xhr, status, err) {
+                $("#update-modal-" + feed_type + "-" + id).modal('hide');
+                console.error(getFlightPickRequestMutateAPI(id), status, err.toString());
+                preparePopupMessage(ERROR_MESSAGE, "danger");
+                popupMessage();
+            }.bind(this)
+        });
+    },
     handleFlightPickRequestCancel: function(data, callback) {
         // requester cancel flight pick request
         var id = data.id;
@@ -79,7 +102,7 @@ var HomeFeedActionMixin = {
             }.bind(this),
             error: function(xhr, status, err) {
                 $("#feed-" + id).modal('hide');
-                console.error(getFlightPickRequestMutateAPI(), status, err.toString());
+                console.error(getFlightPickRequestMutateAPI(id), status, err.toString());
                 preparePopupMessage(ERROR_MESSAGE, "danger");
                 popupMessage();
             }.bind(this)
@@ -164,6 +187,29 @@ var HomeFeedActionMixin = {
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(getPickRequestCreateAPI(), status, err.toString());
+                preparePopupMessage(ERROR_MESSAGE, "danger");
+                popupMessage();
+            }.bind(this)
+        });
+    },
+    handlePickRequestUpdate: function(data, callback) {
+        // requester update pick request
+        var id = data.id;
+        var feed_type = data.feed_type;
+        $.ajax({
+            url: getPickRequestMutateAPI(id),
+            dataType: 'json',
+            type: 'PUT',
+            data: data,
+            success: function(data) {
+                $("#update-modal-" + feed_type + "-" + id).modal('hide');
+                preparePopupMessage("You have successfully update your request.", "success");
+                popupMessage();
+                callback();
+            }.bind(this),
+            error: function(xhr, status, err) {
+                $("#update-modal-" + feed_type + "-" + id).modal('hide');
+                console.error(getPickRequestMutateAPI(id), status, err.toString());
                 preparePopupMessage(ERROR_MESSAGE, "danger");
                 popupMessage();
             }.bind(this)

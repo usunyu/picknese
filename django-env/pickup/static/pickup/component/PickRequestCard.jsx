@@ -17,7 +17,7 @@ var PickRequestCard = React.createClass({
             layoutMap['heading']['user'] = feed.requester.first_name + " " + feed.requester.last_name;
             layoutMap['heading']['verb'] = "is looking for";
         }
-        layoutMap['heading']['action'] = "carpool";
+        layoutMap['heading']['action'] = " Carpool";
         layoutMap['heading']['icon'] = "fontello-icon icon-cab";
 
         layoutMap['body'] = {}
@@ -64,11 +64,32 @@ var PickRequestCard = React.createClass({
             description         : $("#pick-up-desc-textarea").val().trim(),
         });
     },
+    handleRequestUpdate: function(event) {
+        event.preventDefault();
+        var feed = this.props.feed;
+        var additional_id = feed.feed_type + "-" + feed.id;
+        $("#" + REQUEST_SUBMIT_BUTTON_ID + additional_id).button('loading');
+
+        var update_data = {
+            id          : feed.id,
+            requester   : current_user.id,
+            university  : $("#" + UNIVERSITY_SELECT_ID + additional_id).val().trim(),
+            price       : $("#" + TIP_INPUT_ID + additional_id).val().trim(),
+            date_time   : moment($("#" + TIME_INPUT_ID + additional_id).val().trim(), 'MM/DD/YYYY hh:mm A').format(),
+            start       : $("#" + START_INPUT_ID + additional_id).val().trim(),
+            destination : $("#" + DEST_INPUT_ID + additional_id).val().trim(),
+            feed_type   : PICK_REQUEST,
+            description : $("#" + DESC_TEXT_ID + additional_id).val().trim(),
+        };
+
+        this.props.onUpdate(update_data, this.props.mutateCallback);
+        $("#" + REQUEST_SUBMIT_BUTTON_ID + additional_id).button('reset');
+    },
     getRequestUpdateForm: function() {
         var feed = this.props.feed;
         var additional_id = feed.feed_type + "-" + feed.id;
         return (
-            <form className="form-horizontal" onSubmit={this.handlePostRequestSubmit}>
+            <form className="form-horizontal" onSubmit={this.handleRequestUpdate}>
                 {/* University Select */}
                 <UniversitySelectInput
                     id={additional_id}
@@ -98,7 +119,7 @@ var PickRequestCard = React.createClass({
                 <div className="form-group">
                     <div className="col-sm-offset-2 col-sm-10">
                         <button
-                            id={"post-request-submit-button" + additional_id}
+                            id={REQUEST_SUBMIT_BUTTON_ID + additional_id}
                             type="submit"
                             disabled="disabled"
                             className="btn btn-primary">
@@ -118,7 +139,7 @@ var PickRequestCard = React.createClass({
                 updateForm={this.getRequestUpdateForm()}
                 onSubmit={this.onSubmit}
                 onCancel={this.props.onCancel}
-                cancelCallback={this.props.cancelCallback}
+                mutateCallback={this.props.mutateCallback}
                 layout={layout} />
         );
     }

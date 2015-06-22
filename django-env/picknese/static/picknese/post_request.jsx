@@ -7,13 +7,13 @@
  * Required Mixin
  * --------------------------------------------------
  * UniversityActionMixin
- * HomeFeedActionMixin
+ * FeedActionMixin
  */
 var CURRENT_REQUEST = PICK_REQUEST;
 
 var PostRequestForm = React.createClass({
     mixins: [UniversityActionMixin,
-             HomeFeedActionMixin],
+             FeedActionMixin],
     componentWillMount: function() {
         CURRENT_PAGE = POST_REQUEST_PAGE;
     },
@@ -49,7 +49,7 @@ var PostRequestForm = React.createClass({
     },
     handlePostRequestSubmit: function(event) {
         event.preventDefault();
-        $("#post-request-submit-button").button('loading');
+        $("#" + REQUEST_SUBMIT_BUTTON_ID).button('loading');
         switch(CURRENT_REQUEST) {
             case PICK_REQUEST:
                 request_data = {
@@ -63,18 +63,18 @@ var PostRequestForm = React.createClass({
                 };
                 if (jQuery.isEmptyObject(current_user)) {
                     // need login to complete the request
-                    $("#post-request-submit-button").button('reset');
+                    $("#" + REQUEST_SUBMIT_BUTTON_ID).button('reset');
                     $("#login-modal").modal('show');
                     return;
                 }
                 request_data.requester = current_user.id;
                 this.handlePickRequestSubmit(request_data);
-                $("#post-request-submit-button").button('reset');
+                $("#" + REQUEST_SUBMIT_BUTTON_ID).button('reset');
                 break;
             case FLIGHT_PICK_REQUEST:
-                var flight = $("#flight-pick-request-flight-input").val().trim().toUpperCase();
+                var flight = $("#" + FLIGHT_INPUT_ID).val().trim().toUpperCase();
                 // month is 0 indexed, http://momentjs.com/docs/#/get-set/month/
-                var momentDate = moment($("#flight-pick-request-date-input").val().trim(), 'MM/DD/YYYY');
+                var momentDate = moment($("#" + DATE_INPUT_ID).val().trim(), 'MM/DD/YYYY');
                 // load scheduled flight
                 $.ajax({
                     url: getFlightStatusScheduledFlightAPI(flight, momentDate.year(), momentDate.month() + 1, momentDate.date()),
@@ -89,24 +89,24 @@ var PostRequestForm = React.createClass({
                                 flight      : flight,
                                 date_time   : getScheduledArrivalTimeFromResult(data),
                                 destination : $("#" + DEST_INPUT_ID).val().trim(),
-                                bags        : $("#pick-request-baggages-input").val().trim(),
+                                bags        : $("#" + BAGS_INPUT_ID).val().trim(),
                                 feed_type   : FLIGHT_PICK_REQUEST,
                                 description : $("#" + DESC_TEXT_ID).val().trim(),
                             }
                             if (jQuery.isEmptyObject(current_user)) {
                                 // need login to complete the request
-                                $("#post-request-submit-button").button('reset');
+                                $("#" + REQUEST_SUBMIT_BUTTON_ID).button('reset');
                                 $("#login-modal").modal('show');
                                 return;
                             }
                             request_data.requester = current_user.id;
 
                             this.handleFlightPickRequestSubmit(request_data);
-                            $("#post-request-submit-button").button('reset');
+                            $("#" + REQUEST_SUBMIT_BUTTON_ID).button('reset');
                         } else {
                             $('#flight-pick-request-error-modal-title').text("Cannot Find Flight Schedule For " + flight);
                             $('#flight-pick-request-error-modal').modal('show');
-                            $("#post-request-submit-button").button('reset');
+                            $("#" + REQUEST_SUBMIT_BUTTON_ID).button('reset');
                         }
                     }.bind(this),
                     error: function(xhr, status, err) {
@@ -180,7 +180,7 @@ var PostRequestForm = React.createClass({
                 <div className="form-group">
                     <div className="col-sm-offset-2 col-sm-10">
                         <button
-                            id="post-request-submit-button"
+                            id={REQUEST_SUBMIT_BUTTON_ID}
                             type="submit"
                             disabled="disabled"
                             className="btn btn-primary">

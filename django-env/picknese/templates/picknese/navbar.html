@@ -11,7 +11,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{% url 'picknese.views.index' %}"><b>Pickub.me</b></a>
+            <a class="navbar-brand" href="{% url 'picknese.views.index' %}"><b>pickub.me</b></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <form class="navbar-form navbar-left" role="search">
@@ -47,18 +47,19 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="{% url 'userprofile.views.me' %}">
+                                <i class="fontello-icon icon-user"></i>&nbsp; My pickub.me
+                            </a>
+                        </li>
                         {% if user.profile.university %}
                         <li>
                             <a href="{% url 'picknese.views.home' user.profile.university.id %}">
-                                <i class="fontello-icon icon-bank"></i>&nbsp; {{user.profile.university.shorthand|upper }}
+                                <!-- <i class="fontello-icon icon-bank"></i>&nbsp; {{user.profile.university.shorthand|upper }} -->
+                                <i class="fontello-icon icon-bank"></i>&nbsp; {{user.profile.university.name }}
                             </a>
                         </li>
                         {% endif %}
-                        <li>
-                            <a href="{% url 'userprofile.views.me' %}">
-                                <i class="fontello-icon icon-user"></i>&nbsp; Profile
-                            </a>
-                        </li>
                         <li class="divider"></li>
                         <li>
                             <a href="{% url 'picknese.views.logout' %}">
@@ -80,7 +81,7 @@
                     <ul class="dropdown-menu" role="menu">
                         <li>
                             <a href="#">
-                                <i class="glyphicon glyphicon-plane"></i>&nbsp; How it works
+                                <i class="fontello-icon icon-help"></i>&nbsp; How it works
                             </a>
                         </li>
                     </ul>

@@ -1,9 +1,9 @@
 var BasePickUpCard = React.createClass({displayName: 'BasePickUpCard',
     handlePickUpReject: function() {
-        this.props.onReject(this.props.feed, this.props.rejectCallback);
+        this.props.onReject(this.props.feed, this.props.mutateCallback);
     },
     handlePickUpCancel: function() {
-        this.props.onCancel(this.props.feed, this.props.cancelCallback);
+        this.props.onCancel(this.props.feed, this.props.mutateCallback);
     },
     getSubCard: function() {
         var feed = this.props.feed;
@@ -84,10 +84,9 @@ var BasePickUpCard = React.createClass({displayName: 'BasePickUpCard',
                             
                             style: {width: '40px', height: '40px'}})
                     ), 
-                    React.createElement("b", {className: "home-feed-title"}, layout.heading.user, " ", layout.heading.verb, " ", React.createElement("span", {className: "label label-success", style: {fontSize: "95%"}}, layout.heading.action)), 
+                    React.createElement("span", {className: "home-feed-title"}, layout.heading.user, " ", layout.heading.verb, " ", React.createElement("b", {style: {color: "#3d8b40"}}, React.createElement("i", {className: layout.heading.icon}), layout.heading.action)), 
                     React.createElement("div", {style: {float: "right"}}, 
-                        React.createElement("span", {style: {fontSize: "80%", marginRight: "8px", marginTop: "3px"}}, moment(feed.created).format("YYYY-MM-DD HH:mm")), 
-                        React.createElement("i", {className: layout.heading.icon, style: {marginTop: "3px"}})
+                        React.createElement("span", {style: {fontSize: "80%", marginRight: "8px", marginTop: "3px"}}, moment(feed.created).format("YYYY-MM-DD HH:mm"))
                     )
                 ), 
                 React.createElement("hr", {style: {marginTop: "0px", marginBottom: "0px"}}), 

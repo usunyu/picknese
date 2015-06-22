@@ -11,7 +11,7 @@ Me |
 <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-select/bootstrap-select.css' %}" />
 <script type="text/javascript" src="{% static 'js/bootstrap-select/bootstrap-select.min.js' %}"></script>
 
-<script type="text/javascript" src="{% static 'picknese/mixin/HomeFeedActionMixin.js' %}"></script>
+<script type="text/javascript" src="{% static 'picknese/mixin/FeedActionMixin.js' %}"></script>
 <script type="text/javascript" src="{% static 'picknese/component/DummyCard.js' %}"></script>
 <script type="text/javascript" src="{% static 'picknese/component/ConfirmationModal.js' %}"></script>
 <script type="text/javascript" src="{% static 'picknese/component/PostRequestInput.js' %}"></script>
@@ -23,6 +23,8 @@ Me |
 <script type="text/javascript" src="{% static 'pickup/component/BasePickUpCard.js' %}"></script>
 <script type="text/javascript" src="{% static 'pickup/component/FlightPickUpCard.js' %}"></script>
 <script type="text/javascript" src="{% static 'pickup/component/PickUpCard.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'userprofile/mixin/ProfileActionMixin.js' %}"></script>
 
 <script type="text/javascript" src="{% static 'university/mixin/UniversityActionMixin.js' %}"></script>
 {% endblock %}
@@ -98,41 +100,44 @@ Me |
                 </div>
             </div>
 
-            {% if current_user.profile.gender or current_user.profile.phone or current_user.profile.qq or current_user.profile.wechat %}
             <p><b>Information</b></p>
             <div class="thumbnail">
                 <div class="caption">
                     <div>
                         {% if current_user.profile.gender %}
-                        <span class="fontello-icon icon-male" data-toggle="tooltip" data-placement="left" title="Gender"></span>
-                            {% if current_user.profile.gender == "M" %}
-                            Male
-                            {% else %}
-                            Female
-                            {% endif %}
+                        {% if current_user.profile.gender == "M" %}
+                        <span class="fontello-icon icon-male" data-toggle="tooltip" data-placement="left" title="Gender"></span> Male
+                        {% else %}
+                        <span class="fontello-icon icon-female" data-toggle="tooltip" data-placement="left" title="Gender"></span> Female
+                        {% endif %}
                         {% endif %}
                     </div>
                     <div>
-                        {% if current_user.profile.phone %}
-                        <span class="fontello-icon icon-mobile" data-toggle="tooltip" data-placement="left" title="Phone"></span>
-                        {{current_user.profile.phone}}
+                        {% if current_user.profile.birthday %}
+                        <span class="fontello-icon icon-birthday" data-toggle="tooltip" data-placement="left" title="Birthday"></span>
+                            {{current_user.profile.birthday}}
                         {% endif %}
                     </div>
                     <div>
-                        {% if current_user.profile.qq %}
-                        <span class="fontello-icon icon-qq" data-toggle="tooltip" data-placement="left" title="QQ"></span>
-                        {{current_user.profile.qq}}
+                        {% if not current_user.profile.gender and not current_user.profile.introduction %}
+                        You haven't wrote anything yet...
                         {% endif %}
+
                     </div>
+                </div>
+            </div>
+            <p><b>About Me</b></p>
+            <div class="thumbnail">
+                <div class="caption">
                     <div>
-                        {% if current_user.profile.wechat %}
-                        <span class="fontello-icon icon-wechat" data-toggle="tooltip" data-placement="left" title="Wechat"></span>
-                        {{current_user.profile.wechat}}
+                        {% if current_user.profile.introduction %}
+                        {{current_user.profile.introduction}}
+                        {% else %}
+                        You haven't said anything yet...
                         {% endif %}
                     </div>
                 </div>
             </div>
-            {% endif %}
         </div>
         <div id="content" class="col-sm-12 col-md-9 no-left-padding no-right-padding"></div>
     </div>
@@ -145,9 +150,16 @@ var current_user = {};
 if ("{{current_user.is_authenticated}}" == "True") {
     current_user = {
         id: "{{current_user.id}}",
-        first_name: "{{current_user.first_name}}",
-        last_name: "{{current_user.last_name}}",
-        avatar: "{{current_user.profile.avatar}}",
+        first_name: trueValue("{{current_user.first_name}}"),
+        last_name: trueValue("{{current_user.last_name}}"),
+        avatar: trueValue("{{current_user.profile.avatar}}"),
+        gender: trueValue("{{current_user.profile.gender}}"),
+        birthday: trueValue("{{current_user.profile.birthday}}"),
+        phone: trueValue("{{current_user.profile.phone}}"),
+        qq: trueValue("{{current_user.profile.qq}}"),
+        wechat: trueValue("{{current_user.profile.wechat}}"),
+        introduction: trueValue("{{current_user.profile.introduction}}"),
+        university_id: trueValue("{{current_user.profile.university.id}}"),
     };
 }
 

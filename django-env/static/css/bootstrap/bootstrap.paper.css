@@ -4783,6 +4783,9 @@ a.label:focus {
 .label-danger[href]:focus {
     background-color: #b9151b;
 }
+.label-red {
+    background-color: #d83c3c;
+}
 .badge {
     display: inline-block;
     min-width: 10px;

@@ -36,9 +36,8 @@ var PickUpCard = React.createClass({
             <BasePickUpCard
                 feed={this.props.feed}
                 onCancel={this.props.onCancel}
-                cancelCallback={this.props.cancelCallback}
                 onReject={this.props.onReject}
-                rejectCallback={this.props.rejectCallback}
+                mutateCallback={this.props.mutateCallback}
                 layout={this.getCustomLayout()} />
         );
     }

@@ -50,5 +50,5 @@ function arrayDiff(arr1, arr2) {
 }
 
 function trueValue(v) {
-    return typeof v !== 'undefined' ? v : '';
+    return typeof v !== 'undefined' && v !== 'None' ? v : '';
 }
