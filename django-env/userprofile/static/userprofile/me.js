@@ -362,8 +362,6 @@ var MePanel = React.createClass({displayName: 'MePanel',
     },
     onInputFocusLose: function(id, value) {
         var new_value = $('#' + id).val().trim();
-        console.log(new_value);
-        console.log(value);
         if (id === PROFILE_BIRTHDAY_INPUT) {
             value = moment(new Date(current_user.birthday)).format('MM/DD/YYYY');
         }

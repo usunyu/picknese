@@ -52,6 +52,7 @@ INSTALLED_APPS = (
     'userprofile',
     'university',
     'pickup',
+    'message',
 )
 
 MIDDLEWARE_CLASSES = (
