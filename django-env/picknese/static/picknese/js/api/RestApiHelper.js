@@ -83,24 +83,12 @@ function getCurrentUserAllPickCountAPI() {
     return "/pickup/api/mylist/count/all/";
 }
 
-function getPickRequesterListAPI(u_id) {
-    return "/pickup/api/requesters/" + u_id + "/";
-}
-
 function getMyPickRequestListAPI(u_id) {
     return "/pickup/api/requesters/mylist/" + u_id + "/";
 }
 
 function getMyAllPickRequestListAPI() {
     return "/pickup/api/requesters/mylist/all/";
-}
-// @deprecated
-function getPickRequesterCreateAPI() {
-    return "/pickup/api/requesters/create/";
-}
-// @deprecated
-function getPickRequesterMutateAPI(r_id) {
-    return "/pickup/api/requesters/mutate/" + r_id + "/";
 }
 
 function getPickUpListAPI(u_id) {

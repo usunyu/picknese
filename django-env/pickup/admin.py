@@ -1,7 +1,5 @@
 from django.contrib import admin
-from pickup.models import PickRequester, FlightPickRequest, FlightPickUp, PickRequest, PickUp
-
-admin.site.register(PickRequester)
+from pickup.models import FlightPickRequest, FlightPickUp, PickRequest, PickUp
 
 admin.site.register(FlightPickRequest)
 admin.site.register(FlightPickUp)
