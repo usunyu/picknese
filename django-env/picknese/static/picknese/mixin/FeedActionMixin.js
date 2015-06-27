@@ -30,20 +30,14 @@ var FeedActionMixin = {
     },
     getInitialState: function() {
         return {
-            feedType: ALL_POST, // home
-            feeds: [],          // home
-            messages: [],       // profile
-            requests: [],       // profile
-            offers: [],         // profile
+            feedType: ALL_POST,
+            feeds: [],
         };
     },
     componentDidMount: function() {
         if (this.props.feedActionMixinLoadHomeFeedInterval) {
             this.loadHomeFeedFromServer();
             setInterval(this.loadHomeFeedFromServer, this.props.pollInterval);
-        }
-        if (this.props.feedActionMixinLoadProfileRequestFeed) {
-            this.loadProfileRequestFromServer();
         }
     },
     handleFlightPickRequestSubmit: function(data) {
@@ -299,34 +293,6 @@ var FeedActionMixin = {
                 console.error(getPickUpMutateAPI(id), status, err.toString());
                 preparePopupMessage(ERROR_MESSAGE, "danger");
                 popupMessage();
-            }.bind(this)
-        });
-    },
-    loadProfileRequestFromServer: function() {
-        // load profile request feed for me.jsx
-        $.ajax({
-            url: getProfileRequestAPI(profile_user.id, CURRENT_FEED_TYPE),
-            dataType: 'json',
-            success: function(data) {
-                FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH = true;
-                this.setState({requests: data});
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(getProfileRequestAPI(profile_user.id, CURRENT_FEED_TYPE), status, err.toString());
-            }.bind(this)
-        });
-    },
-    loadProfileOfferFromServer: function() {
-        // load profile offer feed for me.jsx
-        $.ajax({
-            url: getProfileOfferAPI(profile_user.id, CURRENT_FEED_TYPE),
-            dataType: 'json',
-            success: function(data) {
-                FIRST_LOAD_PROFILE_OFFER_FEED_FINISH = true;
-                this.setState({offers: data});
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(getProfileOfferAPI(profile_user.id, CURRENT_FEED_TYPE), status, err.toString());
             }.bind(this)
         });
     },

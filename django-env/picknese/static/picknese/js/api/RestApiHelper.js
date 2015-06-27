@@ -59,11 +59,19 @@ function getProfileOfferAPI(id, type) {
 }
 
 function getProfileInfoUpdateAPI() {
-    return "/profile/api/updateprofile/"
+    return "/profile/api/updateprofile/";
 }
 
 function getProfileImageUploadAPI() {
-    return "/profile/api/uploadimage/"
+    return "/profile/api/uploadimage/";
+}
+
+/*
+ * Message Module
+ * --------------------------------------------------
+ */
+function getMessageListAPI() {
+    return "/message/api/list/";
 }
 
 /*

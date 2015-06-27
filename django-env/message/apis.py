@@ -20,13 +20,13 @@ class MessageAndReplyList(APIView):
         user = request.user
         # retrieve all the messages the user send or receive
         result = []
-        messages = Message.objects.filter(Q(receiver=user) | Q(sender=user))
+        messages = Message.objects.filter(Q(receiver=user) | Q(sender=user)).order_by('-created')
 
         for message in messages:
             sender_serializer = UserSerializer(message.sender)
             receiver_serializer = UserSerializer(message.receiver)
             # retrieve all the reply for the messages
-            replies = MessageReply.objects.filter(message_target=message)
+            replies = MessageReply.objects.filter(message_target=message).order_by('-created')
             replies_json = []
             for reply in replies:
                 replies.append({

@@ -31,6 +31,7 @@ var PROFILE_UPDATE_BUTTON = "profile-update-button";
 var MePanel = React.createClass({
     mixins: [FeedActionMixin,
              ProfileActionMixin,
+             MessageActionMixin,
              UniversityActionMixin],
     componentWillMount: function() {
         CURRENT_PAGE = UPDATE_REQUEST_PAGE;
@@ -47,6 +48,7 @@ var MePanel = React.createClass({
     },
     onProfileInboxClick: function(event) {
         CURRENT_PANEL = INBOX_PANEL;
+        this.loadMessageListFromServer();
     },
     onProfileRequestClick: function(event) {
         if (CURRENT_PANEL == REQUEST_PANEL) {return;}
@@ -109,10 +111,20 @@ var MePanel = React.createClass({
         $('.selectpicker').selectpicker('refresh');
     },
     getProfileInboxList: function() {
+        var messageList = [];
+        for (var i = 0; i < this.state.messages.length; i++) {
+
+        }
         return (
             <div className="col-sm-12 home-feed-card-div">
+                <div className="feed-type-select-xs-div hidden-sm hidden-md hidden-lg col-sm-12">
+
+                </div>
                 <div className="col-sm-9 col-md-10 home-feed-card-div">
-                    <PusheenGangnamStyleCard key={0} />
+                    {messageList}
+                </div>
+                <div className="hidden-xs col-sm-2 col-md-2">
+
                 </div>
             </div>
         );
