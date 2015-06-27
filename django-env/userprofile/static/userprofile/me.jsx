@@ -11,7 +11,7 @@ var CALENDAR_PANEL  = 4;
 var PHOTO_PANEL     = 5;
 var SETTINGS_PANEL  = 6;
 
-var CURRENT_PANEL = REQUEST_PANEL;
+var CURRENT_PANEL = INBOX_PANEL;
 
 var FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH = false;
 var FIRST_LOAD_PROFILE_OFFER_FEED_FINISH = false;
@@ -34,6 +34,7 @@ var MePanel = React.createClass({
              MessageActionMixin,
              UniversityActionMixin],
     componentWillMount: function() {
+        // set for PostRequestInput
         CURRENT_PAGE = UPDATE_REQUEST_PAGE;
     },
     componentDidMount: function() {
@@ -47,6 +48,7 @@ var MePanel = React.createClass({
         });
     },
     onProfileInboxClick: function(event) {
+        if (CURRENT_PANEL == INBOX_PANEL) {return;}
         CURRENT_PANEL = INBOX_PANEL;
         this.loadMessageListFromServer();
     },
@@ -113,7 +115,12 @@ var MePanel = React.createClass({
     getProfileInboxList: function() {
         var messageList = [];
         for (var i = 0; i < this.state.messages.length; i++) {
-
+            messageList.push(
+                <MessageCard
+                    key={i}
+                    message={this.state.messages[i]}
+                    onReply={null} />
+            );
         }
         return (
             <div className="col-sm-12 home-feed-card-div">
@@ -179,13 +186,14 @@ var MePanel = React.createClass({
                     break;
             }
         }
-        if (profileFeedList.length == 0 && FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH) {
-            // add a dummy post if we have no feed
-            profileFeedList.push(<PusheenHappyCard key={0} />);
-        }
-        if (profileFeedList.length == 0 && !FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH) {
-            // add a loading panel if we havn't finish the request
-            profileFeedList.push(<LoadingCard key={0} />);
+        if (profileFeedList.length == 0) {
+            if (FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH) {
+                // add a dummy post if we have no feed
+                profileFeedList.push(<PusheenHappyCard key={0} />);
+            } else {
+                // add a loading panel if we havn't finish the request
+                profileFeedList.push(<LoadingCard key={0} />);
+            }
         }
         return (
             <div className="col-sm-12 home-feed-card-div">
@@ -227,13 +235,14 @@ var MePanel = React.createClass({
                     break;
             }
         }
-        if (profileFeedList.length == 0 && FIRST_LOAD_PROFILE_OFFER_FEED_FINISH) {
-            // add a dummy post if we have no feed
-            profileFeedList.push(<PusheenLazyCard key={0} />);
-        }
-        if (profileFeedList.length == 0 && !FIRST_LOAD_PROFILE_OFFER_FEED_FINISH) {
-            // add a loading panel if we havn't finish the request
-            profileFeedList.push(<LoadingCard key={0} />);
+        if (profileFeedList.length == 0) {
+            if (FIRST_LOAD_PROFILE_OFFER_FEED_FINISH) {
+                // add a dummy post if we have no feed
+                profileFeedList.push(<PusheenLazyCard key={0} />);
+            } else {
+                // add a loading panel if we havn't finish the request
+                profileFeedList.push(<LoadingCard key={0} />);
+            }
         }
         return (
             <div className="col-sm-12 home-feed-card-div">
@@ -509,17 +518,22 @@ var MePanel = React.createClass({
             </div>
         );
     },
+    getUnreadMessageCount: function() {
+        // todo
+        return 5;
+    },
     render: function() {
         return (
             <div>
                 <ul className="nav nav-tabs nav-justified">
-                    <li>
-                        <a href="#profile-inbox" onClick={this.onProfileInboxClick} data-toggle="tab" aria-expanded="false">
-                            <span className="glyphicon glyphicon-envelope"></span>&nbsp; Inbox &nbsp;<span className="badge">7</span>
+                    <li className="active">
+                        <a href="#profile-inbox" onClick={this.onProfileInboxClick} data-toggle="tab" aria-expanded="true">
+                            <span className="glyphicon glyphicon-envelope"></span>&nbsp; Inbox &nbsp;
+                            <span className="badge">{this.getUnreadMessageCount()}</span>
                         </a>
                     </li>
-                    <li className="active">
-                        <a href="#profile-request" onClick={this.onProfileRequestClick} data-toggle="tab" aria-expanded="true">
+                    <li>
+                        <a href="#profile-request" onClick={this.onProfileRequestClick} data-toggle="tab" aria-expanded="false">
                             <span className="glyphicon glyphicon-list-alt"></span>&nbsp; Your Requests
                         </a>
                     </li>
@@ -548,10 +562,10 @@ var MePanel = React.createClass({
                 </ul>
 
                 <div id="profile-tab-content" className="tab-content" style={{marginTop: "15px"}}>
-                    <div className="tab-pane fade" id="profile-inbox">
+                    <div className="tab-pane fade active in" id="profile-inbox">
                         {this.getProfileInboxList()}
                     </div>
-                    <div className="tab-pane fade active in" id="profile-request">
+                    <div className="tab-pane fade" id="profile-request">
                         {this.getProfileRequestFeedList()}
                     </div>
                     <div className="tab-pane fade" id="profile-offer">
@@ -574,7 +588,7 @@ var MePanel = React.createClass({
 
 React.render(
     <MePanel 
-        feedActionMixinLoadProfileRequestFeed={true}
+        messageActionMixinLoadMessageList={true}
         universityActionMinxinLoadSimpleList={true} />,
     document.getElementById('content')
 );

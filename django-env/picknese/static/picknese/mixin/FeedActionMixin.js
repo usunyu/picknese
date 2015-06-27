@@ -6,7 +6,6 @@
  * React Parameters
  * --------------------------------------------------
  * @feedActionMixinLoadHomeFeedInterval
- * @feedActionMixinLoadProfileRequestFeed
  * @pollInterval
  */
 var CURRENT_FEED_TYPE = ALL_POST;

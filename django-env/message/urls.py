@@ -3,5 +3,5 @@ from message import apis
 
 urlpatterns = patterns('',
     # api
-    url(r'^api/list/$', apis.MessageAndReplyList.as_view()),
+    url(r'^api/list/$', apis.MessageList.as_view()),
 )

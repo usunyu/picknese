@@ -11,7 +11,7 @@ var CALENDAR_PANEL  = 4;
 var PHOTO_PANEL     = 5;
 var SETTINGS_PANEL  = 6;
 
-var CURRENT_PANEL = REQUEST_PANEL;
+var CURRENT_PANEL = INBOX_PANEL;
 
 var FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH = false;
 var FIRST_LOAD_PROFILE_OFFER_FEED_FINISH = false;
@@ -34,6 +34,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
              MessageActionMixin,
              UniversityActionMixin],
     componentWillMount: function() {
+        // set for PostRequestInput
         CURRENT_PAGE = UPDATE_REQUEST_PAGE;
     },
     componentDidMount: function() {
@@ -47,6 +48,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
         });
     },
     onProfileInboxClick: function(event) {
+        if (CURRENT_PANEL == INBOX_PANEL) {return;}
         CURRENT_PANEL = INBOX_PANEL;
         this.loadMessageListFromServer();
     },
@@ -113,7 +115,12 @@ var MePanel = React.createClass({displayName: 'MePanel',
     getProfileInboxList: function() {
         var messageList = [];
         for (var i = 0; i < this.state.messages.length; i++) {
-
+            messageList.push(
+                React.createElement(MessageCard, {
+                    key: i, 
+                    message: this.state.messages[i], 
+                    onReply: null})
+            );
         }
         return (
             React.createElement("div", {className: "col-sm-12 home-feed-card-div"}, 
@@ -179,13 +186,14 @@ var MePanel = React.createClass({displayName: 'MePanel',
                     break;
             }
         }
-        if (profileFeedList.length == 0 && FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH) {
-            // add a dummy post if we have no feed
-            profileFeedList.push(React.createElement(PusheenHappyCard, {key: 0}));
-        }
-        if (profileFeedList.length == 0 && !FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH) {
-            // add a loading panel if we havn't finish the request
-            profileFeedList.push(React.createElement(LoadingCard, {key: 0}));
+        if (profileFeedList.length == 0) {
+            if (FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH) {
+                // add a dummy post if we have no feed
+                profileFeedList.push(React.createElement(PusheenHappyCard, {key: 0}));
+            } else {
+                // add a loading panel if we havn't finish the request
+                profileFeedList.push(React.createElement(LoadingCard, {key: 0}));
+            }
         }
         return (
             React.createElement("div", {className: "col-sm-12 home-feed-card-div"}, 
@@ -227,13 +235,14 @@ var MePanel = React.createClass({displayName: 'MePanel',
                     break;
             }
         }
-        if (profileFeedList.length == 0 && FIRST_LOAD_PROFILE_OFFER_FEED_FINISH) {
-            // add a dummy post if we have no feed
-            profileFeedList.push(React.createElement(PusheenLazyCard, {key: 0}));
-        }
-        if (profileFeedList.length == 0 && !FIRST_LOAD_PROFILE_OFFER_FEED_FINISH) {
-            // add a loading panel if we havn't finish the request
-            profileFeedList.push(React.createElement(LoadingCard, {key: 0}));
+        if (profileFeedList.length == 0) {
+            if (FIRST_LOAD_PROFILE_OFFER_FEED_FINISH) {
+                // add a dummy post if we have no feed
+                profileFeedList.push(React.createElement(PusheenLazyCard, {key: 0}));
+            } else {
+                // add a loading panel if we havn't finish the request
+                profileFeedList.push(React.createElement(LoadingCard, {key: 0}));
+            }
         }
         return (
             React.createElement("div", {className: "col-sm-12 home-feed-card-div"}, 
@@ -509,17 +518,22 @@ var MePanel = React.createClass({displayName: 'MePanel',
             )
         );
     },
+    getUnreadMessageCount: function() {
+        // todo
+        return 5;
+    },
     render: function() {
         return (
             React.createElement("div", null, 
                 React.createElement("ul", {className: "nav nav-tabs nav-justified"}, 
-                    React.createElement("li", null, 
-                        React.createElement("a", {href: "#profile-inbox", onClick: this.onProfileInboxClick, 'data-toggle': "tab", 'aria-expanded': "false"}, 
-                            React.createElement("span", {className: "glyphicon glyphicon-envelope"}), "  Inbox  ", React.createElement("span", {className: "badge"}, "7")
+                    React.createElement("li", {className: "active"}, 
+                        React.createElement("a", {href: "#profile-inbox", onClick: this.onProfileInboxClick, 'data-toggle': "tab", 'aria-expanded': "true"}, 
+                            React.createElement("span", {className: "glyphicon glyphicon-envelope"}), "  Inbox  ", 
+                            React.createElement("span", {className: "badge"}, this.getUnreadMessageCount())
                         )
                     ), 
-                    React.createElement("li", {className: "active"}, 
-                        React.createElement("a", {href: "#profile-request", onClick: this.onProfileRequestClick, 'data-toggle': "tab", 'aria-expanded': "true"}, 
+                    React.createElement("li", null, 
+                        React.createElement("a", {href: "#profile-request", onClick: this.onProfileRequestClick, 'data-toggle': "tab", 'aria-expanded': "false"}, 
                             React.createElement("span", {className: "glyphicon glyphicon-list-alt"}), "  Your Requests"
                         )
                     ), 
@@ -548,10 +562,10 @@ var MePanel = React.createClass({displayName: 'MePanel',
                 ), 
 
                 React.createElement("div", {id: "profile-tab-content", className: "tab-content", style: {marginTop: "15px"}}, 
-                    React.createElement("div", {className: "tab-pane fade", id: "profile-inbox"}, 
+                    React.createElement("div", {className: "tab-pane fade active in", id: "profile-inbox"}, 
                         this.getProfileInboxList()
                     ), 
-                    React.createElement("div", {className: "tab-pane fade active in", id: "profile-request"}, 
+                    React.createElement("div", {className: "tab-pane fade", id: "profile-request"}, 
                         this.getProfileRequestFeedList()
                     ), 
                     React.createElement("div", {className: "tab-pane fade", id: "profile-offer"}, 
@@ -574,7 +588,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
 
 React.render(
     React.createElement(MePanel, {
-        feedActionMixinLoadProfileRequestFeed: true, 
+        messageActionMixinLoadMessageList: true, 
         universityActionMinxinLoadSimpleList: true}),
     document.getElementById('content')
 );

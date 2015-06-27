@@ -4,6 +4,7 @@
  *
  * React Parameters
  * --------------------------------------------------
+ * @messageActionMixinLoadMessageList
  */
 var MessageActionMixin = {
 	loadMessageListFromServer: function() {
@@ -17,6 +18,11 @@ var MessageActionMixin = {
                 console.error(getMessageListAPI(), status, err.toString());
             }.bind(this)
         });
+    },
+    componentDidMount: function() {
+        if (this.props.messageActionMixinLoadMessageList) {
+            this.loadMessageListFromServer();
+        }
     },
     getInitialState: function() {
         return {

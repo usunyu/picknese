@@ -24,11 +24,6 @@ var ProfileActionMixin = {
             }.bind(this)
         });
     },
-    componentDidMount: function() {
-        if (this.props.feedActionMixinLoadProfileRequestFeed) {
-            this.loadProfileRequestFromServer();
-        }
-    },
     getInitialState: function() {
         return {
             requests: [],

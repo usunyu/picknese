@@ -10,6 +10,7 @@ var HomePanel = React.createClass({
     mixins: [FeedActionMixin,
              UniversityActionMixin],
     componentWillMount: function() {
+        // set for PostRequestInput
         CURRENT_PAGE = UPDATE_REQUEST_PAGE;
     },
     componentDidMount: function() {
