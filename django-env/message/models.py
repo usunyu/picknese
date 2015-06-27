@@ -30,10 +30,13 @@ class MessageReply(models.Model):
     def __str__(self):  # __unicode__ on Python 2
         return 'Reply to %s' % (self.message_target.username)
 
-class MessageRead(models.Model):
+class MessageUnread(models.Model):
     """
-    MessageRead Model
+    MessageUnread Model
     Check if the user read the updated message
     """
     message_target = models.ForeignKey(Message)
     reader = models.ForeignKey(User)
+
+    def __str__(self):  # __unicode__ on Python 2
+        return "%s didn't read %s" % (self.reader, self.message_target)

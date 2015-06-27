@@ -4,7 +4,7 @@ from rest_framework import permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from message.models import Message, MessageReply
+from message.models import Message, MessageReply, MessageUnread
 
 from userprofile.serializers import UserSerializer
 
@@ -20,8 +20,13 @@ class MessageList(APIView):
         user = request.user
         # retrieve all the messages the user send or receive
         result = []
-        messages = Message.objects.filter(Q(receiver=user) | Q(sender=user)).order_by('-created')
 
+        unread_messages = MessageUnread.objects.filter(reader=user)
+        unread_message_set = set()
+        for unread_message in unread_messages:
+            unread_message_set.add(unread_message.message_target.id)
+
+        messages = Message.objects.filter(Q(receiver=user) | Q(sender=user)).order_by('-created')
         for message in messages:
             sender_serializer = UserSerializer(message.sender)
             receiver_serializer = UserSerializer(message.receiver)
@@ -37,12 +42,13 @@ class MessageList(APIView):
             #         'unread'    : reply.unread,
             #         'created'   : reply.created,
             #     })
+            unread = message.id in unread_message_set;
             result.append({
                 'id'        : message.id,
                 'sender'    : sender_serializer.data,
                 'receiver'  : receiver_serializer.data,
                 'message'   : message.message,
-                'unread'    : False,
+                'unread'    : unread,
                 'created'   : message.created,
             })
 

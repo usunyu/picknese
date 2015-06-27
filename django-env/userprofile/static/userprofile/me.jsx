@@ -520,7 +520,12 @@ var MePanel = React.createClass({
     },
     getUnreadMessageCount: function() {
         // todo
-        return 5;
+        var unread_count = 0;
+        for (var i = 0; i < this.state.messages.length; i++) {
+            var message = this.state.messages[i];
+            if (message.unread) { unread_count++; }
+        }
+        return unread_count;
     },
     render: function() {
         return (
