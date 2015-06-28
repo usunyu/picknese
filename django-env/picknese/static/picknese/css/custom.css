@@ -953,20 +953,15 @@ div.show-image button.btn-on-image {
 }
 
 /*
- * Navbar
- * --------------------------------------------------
- */
-@media (max-width: 768px ) {
-    .post-request-btn-div {
-        padding-left: 13px;
-        padding-right: 13px;
-    }
-}
-
-/*
  * Profile Page
  * --------------------------------------------------
  */
+.message-card-div {
+    margin-bottom: 0px;
+    border-radius: 0px;
+    cursor: pointer;
+}
+
 .profile-jumbotron {
     background-color: #222222;
 }
@@ -983,6 +978,17 @@ div.show-image button.btn-on-image {
 @media (max-width: 768px ) {
     .profile-info {
         padding-top: 15px;
+    }
+}
+
+/*
+ * Navbar
+ * --------------------------------------------------
+ */
+@media (max-width: 768px ) {
+    .post-request-btn-div {
+        padding-left: 13px;
+        padding-right: 13px;
     }
 }
 

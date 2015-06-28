@@ -46,6 +46,35 @@ var MePanel = React.createClass({displayName: 'MePanel',
             var submitButton = document.getElementById(PROFILE_UPDATE_BUTTON);
             submitButton.disabled = "";
         });
+
+        // enable inbox message accordion
+        $('#message-accordion').on('show.bs.collapse', function () {
+            $('#message-accordion .in')
+                .parent()
+                .animate({
+                    marginTop: '0px',
+                    marginBottom: '0px',
+                }, "fast");
+            $('#message-accordion .in').collapse('hide');
+        });
+        $('#message-accordion').on('shown.bs.collapse', function () {
+            var first = $('#message-accordion .in').parent().hasClass('first');
+            var marginTop = first ? '0px' : '15px';
+            $('#message-accordion .in')
+                .parent()
+                .animate({
+                    marginTop: marginTop,
+                    marginBottom: '15px',
+                }, "fast");
+        });
+        $('#message-accordion').on('hide.bs.collapse', function () {
+            $('#message-accordion .in')
+                .parent()
+                .animate({
+                    marginTop: '0px',
+                    marginBottom: '0px',
+                }, "fast");
+        });
     },
     onProfileInboxClick: function(event) {
         if (CURRENT_PANEL == INBOX_PANEL) {return;}
@@ -119,6 +148,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
                 React.createElement(MessageCard, {
                     key: i, 
                     message: this.state.messages[i], 
+                    first: i == 0, 
                     onReply: null})
             );
         }
@@ -127,7 +157,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
                 React.createElement("div", {className: "feed-type-select-xs-div hidden-sm hidden-md hidden-lg col-sm-12"}
 
                 ), 
-                React.createElement("div", {className: "col-sm-9 col-md-10 home-feed-card-div"}, 
+                React.createElement("div", {className: "col-sm-9 col-md-10 home-feed-card-div", id: "message-accordion"}, 
                     messageList
                 ), 
                 React.createElement("div", {className: "hidden-xs col-sm-2 col-md-2"}
