@@ -19,6 +19,18 @@ var MessageActionMixin = {
             }.bind(this)
         });
     },
+    loadMessageReplyListFromServer: function(message_id) {
+        $.ajax({
+            url: getMessageReplyListAPI(message_id),
+            dataType: 'json',
+            success: function(data) {
+                this.setState({replies: data});
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(getMessageReplyListAPI(message_id), status, err.toString());
+            }.bind(this)
+        });
+    },
     componentDidMount: function() {
         if (this.props.messageActionMixinLoadMessageList) {
             this.loadMessageListFromServer();
@@ -27,6 +39,8 @@ var MessageActionMixin = {
     getInitialState: function() {
         return {
             messages: [],
+            replies: [],
+            replies_requested: false,
         };
     },
 }

@@ -28,7 +28,7 @@ class MessageReply(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):  # __unicode__ on Python 2
-        return 'Reply to %s' % (self.message_target.username)
+        return 'Reply to %s' % (self.message_target)
 
 class MessageUnread(models.Model):
     """

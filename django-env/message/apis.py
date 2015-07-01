@@ -54,5 +54,26 @@ class MessageList(APIView):
 
         return Response(result, status=status.HTTP_200_OK)
 
-# retrive all the replies based on message
+class MessageReplyList(APIView):
+    """
+    MessageReplyList APIView\n
+    Retrieve Message Reply based on Message\n
+    message/api/replylist/1/ => MessageReplyList.as_view() 
+    """
+    permission_classes = (permissions.IsAuthenticated,)
 
+    def get(self, request, message_id, format=None):
+        result = []
+
+        replies = MessageReply.objects.filter(message_target_id=message_id).order_by('-created')
+        print replies
+        for reply in replies:
+            result.append({
+                'id'        : reply.id,
+                'sender'    : reply.sender.id,
+                'receiver'  : reply.receiver.id,
+                'message'   : reply.message,
+                'created'   : reply.created,
+            })
+
+        return Response(result, status=status.HTTP_200_OK)

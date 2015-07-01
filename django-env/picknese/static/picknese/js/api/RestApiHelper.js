@@ -74,6 +74,10 @@ function getMessageListAPI() {
     return "/message/api/list/";
 }
 
+function getMessageReplyListAPI(m_id) {
+    return "/message/api/replylist/" + m_id + "/";
+}
+
 /*
  * Legacy
  * --------------------------------------------------

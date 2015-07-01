@@ -57,6 +57,14 @@ var MePanel = React.createClass({
                 }, "fast");
             $('#message-accordion .in').collapse('hide');
         });
+        $('#message-accordion').on('hide.bs.collapse', function () {
+            $('#message-accordion .in')
+                .parent()
+                .animate({
+                    marginTop: '0px',
+                    marginBottom: '0px',
+                }, "fast");
+        });
         $('#message-accordion').on('shown.bs.collapse', function () {
             var first = $('#message-accordion .in').parent().hasClass('first');
             var marginTop = first ? '0px' : '15px';
@@ -65,14 +73,6 @@ var MePanel = React.createClass({
                 .animate({
                     marginTop: marginTop,
                     marginBottom: '15px',
-                }, "fast");
-        });
-        $('#message-accordion').on('hide.bs.collapse', function () {
-            $('#message-accordion .in')
-                .parent()
-                .animate({
-                    marginTop: '0px',
-                    marginBottom: '0px',
                 }, "fast");
         });
     },
@@ -549,7 +549,6 @@ var MePanel = React.createClass({
         );
     },
     getUnreadMessageCount: function() {
-        // todo
         var unread_count = 0;
         for (var i = 0; i < this.state.messages.length; i++) {
             var message = this.state.messages[i];
