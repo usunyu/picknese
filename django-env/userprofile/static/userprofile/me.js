@@ -11,7 +11,7 @@ var CALENDAR_PANEL  = 4;
 var PHOTO_PANEL     = 5;
 var SETTINGS_PANEL  = 6;
 
-var CURRENT_PANEL = REQUEST_PANEL;
+var CURRENT_PANEL = INBOX_PANEL;
 
 var FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH = false;
 var FIRST_LOAD_PROFILE_OFFER_FEED_FINISH = false;
@@ -31,8 +31,10 @@ var PROFILE_UPDATE_BUTTON = "profile-update-button";
 var MePanel = React.createClass({displayName: 'MePanel',
     mixins: [FeedActionMixin,
              ProfileActionMixin,
+             MessageActionMixin,
              UniversityActionMixin],
     componentWillMount: function() {
+        // set for PostRequestInput
         CURRENT_PAGE = UPDATE_REQUEST_PAGE;
     },
     componentDidMount: function() {
@@ -44,9 +46,40 @@ var MePanel = React.createClass({displayName: 'MePanel',
             var submitButton = document.getElementById(PROFILE_UPDATE_BUTTON);
             submitButton.disabled = "";
         });
+
+        // enable inbox message accordion
+        $('#message-accordion').on('show.bs.collapse', function () {
+            $('#message-accordion .in')
+                .parent()
+                .animate({
+                    marginTop: '0px',
+                    marginBottom: '0px',
+                }, "fast");
+            $('#message-accordion .in').collapse('hide');
+        });
+        $('#message-accordion').on('hide.bs.collapse', function () {
+            $('#message-accordion .in')
+                .parent()
+                .animate({
+                    marginTop: '0px',
+                    marginBottom: '0px',
+                }, "fast");
+        });
+        $('#message-accordion').on('shown.bs.collapse', function () {
+            var first = $('#message-accordion .in').parent().hasClass('first');
+            var marginTop = first ? '0px' : '15px';
+            $('#message-accordion .in')
+                .parent()
+                .animate({
+                    marginTop: marginTop,
+                    marginBottom: '15px',
+                }, "fast");
+        });
     },
     onProfileInboxClick: function(event) {
+        if (CURRENT_PANEL == INBOX_PANEL) {return;}
         CURRENT_PANEL = INBOX_PANEL;
+        this.loadMessageListFromServer();
     },
     onProfileRequestClick: function(event) {
         if (CURRENT_PANEL == REQUEST_PANEL) {return;}
@@ -109,10 +142,26 @@ var MePanel = React.createClass({displayName: 'MePanel',
         $('.selectpicker').selectpicker('refresh');
     },
     getProfileInboxList: function() {
+        var messageList = [];
+        for (var i = 0; i < this.state.messages.length; i++) {
+            messageList.push(
+                React.createElement(MessageCard, {
+                    key: i, 
+                    message: this.state.messages[i], 
+                    first: i == 0, 
+                    onReply: null})
+            );
+        }
         return (
             React.createElement("div", {className: "col-sm-12 home-feed-card-div"}, 
-                React.createElement("div", {className: "col-sm-9 col-md-10 home-feed-card-div"}, 
-                    React.createElement(PusheenGangnamStyleCard, {key: 0})
+                React.createElement("div", {className: "feed-type-select-xs-div hidden-sm hidden-md hidden-lg col-sm-12"}
+
+                ), 
+                React.createElement("div", {className: "col-sm-9 col-md-10 home-feed-card-div", id: "message-accordion"}, 
+                    messageList
+                ), 
+                React.createElement("div", {className: "hidden-xs col-sm-2 col-md-2"}
+
                 )
             )
         );
@@ -167,13 +216,14 @@ var MePanel = React.createClass({displayName: 'MePanel',
                     break;
             }
         }
-        if (profileFeedList.length == 0 && FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH) {
-            // add a dummy post if we have no feed
-            profileFeedList.push(React.createElement(PusheenHappyCard, {key: 0}));
-        }
-        if (profileFeedList.length == 0 && !FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH) {
-            // add a loading panel if we havn't finish the request
-            profileFeedList.push(React.createElement(LoadingCard, {key: 0}));
+        if (profileFeedList.length == 0) {
+            if (FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH) {
+                // add a dummy post if we have no feed
+                profileFeedList.push(React.createElement(PusheenHappyCard, {key: 0}));
+            } else {
+                // add a loading panel if we havn't finish the request
+                profileFeedList.push(React.createElement(LoadingCard, {key: 0}));
+            }
         }
         return (
             React.createElement("div", {className: "col-sm-12 home-feed-card-div"}, 
@@ -215,13 +265,14 @@ var MePanel = React.createClass({displayName: 'MePanel',
                     break;
             }
         }
-        if (profileFeedList.length == 0 && FIRST_LOAD_PROFILE_OFFER_FEED_FINISH) {
-            // add a dummy post if we have no feed
-            profileFeedList.push(React.createElement(PusheenLazyCard, {key: 0}));
-        }
-        if (profileFeedList.length == 0 && !FIRST_LOAD_PROFILE_OFFER_FEED_FINISH) {
-            // add a loading panel if we havn't finish the request
-            profileFeedList.push(React.createElement(LoadingCard, {key: 0}));
+        if (profileFeedList.length == 0) {
+            if (FIRST_LOAD_PROFILE_OFFER_FEED_FINISH) {
+                // add a dummy post if we have no feed
+                profileFeedList.push(React.createElement(PusheenLazyCard, {key: 0}));
+            } else {
+                // add a loading panel if we havn't finish the request
+                profileFeedList.push(React.createElement(LoadingCard, {key: 0}));
+            }
         }
         return (
             React.createElement("div", {className: "col-sm-12 home-feed-card-div"}, 
@@ -362,8 +413,6 @@ var MePanel = React.createClass({displayName: 'MePanel',
     },
     onInputFocusLose: function(id, value) {
         var new_value = $('#' + id).val().trim();
-        console.log(new_value);
-        console.log(value);
         if (id === PROFILE_BIRTHDAY_INPUT) {
             value = moment(new Date(current_user.birthday)).format('MM/DD/YYYY');
         }
@@ -499,17 +548,26 @@ var MePanel = React.createClass({displayName: 'MePanel',
             )
         );
     },
+    getUnreadMessageCount: function() {
+        var unread_count = 0;
+        for (var i = 0; i < this.state.messages.length; i++) {
+            var message = this.state.messages[i];
+            if (message.unread) { unread_count++; }
+        }
+        return unread_count;
+    },
     render: function() {
         return (
             React.createElement("div", null, 
                 React.createElement("ul", {className: "nav nav-tabs nav-justified"}, 
-                    React.createElement("li", null, 
-                        React.createElement("a", {href: "#profile-inbox", onClick: this.onProfileInboxClick, 'data-toggle': "tab", 'aria-expanded': "false"}, 
-                            React.createElement("span", {className: "glyphicon glyphicon-envelope"}), "  Inbox  ", React.createElement("span", {className: "badge"}, "7")
+                    React.createElement("li", {className: "active"}, 
+                        React.createElement("a", {href: "#profile-inbox", onClick: this.onProfileInboxClick, 'data-toggle': "tab", 'aria-expanded': "true"}, 
+                            React.createElement("span", {className: "glyphicon glyphicon-envelope"}), "  Inbox  ", 
+                            React.createElement("span", {className: "badge"}, this.getUnreadMessageCount())
                         )
                     ), 
-                    React.createElement("li", {className: "active"}, 
-                        React.createElement("a", {href: "#profile-request", onClick: this.onProfileRequestClick, 'data-toggle': "tab", 'aria-expanded': "true"}, 
+                    React.createElement("li", null, 
+                        React.createElement("a", {href: "#profile-request", onClick: this.onProfileRequestClick, 'data-toggle': "tab", 'aria-expanded': "false"}, 
                             React.createElement("span", {className: "glyphicon glyphicon-list-alt"}), "  Your Requests"
                         )
                     ), 
@@ -538,10 +596,10 @@ var MePanel = React.createClass({displayName: 'MePanel',
                 ), 
 
                 React.createElement("div", {id: "profile-tab-content", className: "tab-content", style: {marginTop: "15px"}}, 
-                    React.createElement("div", {className: "tab-pane fade", id: "profile-inbox"}, 
+                    React.createElement("div", {className: "tab-pane fade active in", id: "profile-inbox"}, 
                         this.getProfileInboxList()
                     ), 
-                    React.createElement("div", {className: "tab-pane fade active in", id: "profile-request"}, 
+                    React.createElement("div", {className: "tab-pane fade", id: "profile-request"}, 
                         this.getProfileRequestFeedList()
                     ), 
                     React.createElement("div", {className: "tab-pane fade", id: "profile-offer"}, 
@@ -564,7 +622,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
 
 React.render(
     React.createElement(MePanel, {
-        feedActionMixinLoadProfileRequestFeed: true, 
+        messageActionMixinLoadMessageList: true, 
         universityActionMinxinLoadSimpleList: true}),
     document.getElementById('content')
 );

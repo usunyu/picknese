@@ -64,3 +64,4 @@ local_settings.py
 **/pickup/migrations/*
 **/university/migrations/*
 **/userprofile/migrations/*
+**/message/migrations/*

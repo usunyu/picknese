@@ -31,6 +31,9 @@ class HomeFeedSerializer(serializers.Serializer):
     created = serializers.DateTimeField(required=False)
 
 class AuthSerializer(serializers.Serializer):
+    """
+    Auth process response
+    """
     success = serializers.BooleanField()
     redirect_url = serializers.CharField(required=False)
     request_type = serializers.IntegerField(required=False)

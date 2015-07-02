@@ -49,14 +49,13 @@
                     <ul class="dropdown-menu" role="menu">
                         <li>
                             <a href="{% url 'userprofile.views.me' %}">
-                                <i class="fontello-icon icon-user"></i>&nbsp; My pickub.me
+                                <i class="fontello-icon icon-gauge"></i>&nbsp; Dashboard
                             </a>
                         </li>
                         {% if user.profile.university %}
                         <li>
                             <a href="{% url 'picknese.views.home' user.profile.university.id %}">
-                                <!-- <i class="fontello-icon icon-bank"></i>&nbsp; {{user.profile.university.shorthand|upper }} -->
-                                <i class="fontello-icon icon-bank"></i>&nbsp; {{user.profile.university.name }}
+                                <i class="fontello-icon icon-bank"></i>&nbsp; {{user.profile.university.shorthand|upper }}
                             </a>
                         </li>
                         {% endif %}

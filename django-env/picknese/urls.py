@@ -21,6 +21,8 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     # university urls
     url(r'^universities/', include('university.urls')),
+    # message urls
+    url(r'^message/', include('message.urls')),
     # user auth urls
     url(r'^accounts/login/$', 'picknese.views.login'),
     url(r'^accounts/auth/$', 'picknese.views.auth_view'),
