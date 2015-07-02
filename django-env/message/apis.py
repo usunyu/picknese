@@ -30,18 +30,6 @@ class MessageList(APIView):
         for message in messages:
             sender_serializer = UserSerializer(message.sender)
             receiver_serializer = UserSerializer(message.receiver)
-            # # retrieve all the reply for the messages
-            # replies = MessageReply.objects.filter(message_target=message).order_by('-created')
-            # replies_json = []
-            # for reply in replies:
-            #     replies.append({
-            #         'id'        : reply.id,
-            #         'sender'    : reply.sender.id,
-            #         'receiver'  : reply.receiver.id,
-            #         'message'   : reply.message,
-            #         'unread'    : reply.unread,
-            #         'created'   : reply.created,
-            #     })
             unread = message.id in unread_message_set;
             result.append({
                 'id'        : message.id,
@@ -66,12 +54,14 @@ class MessageReplyList(APIView):
         result = []
 
         replies = MessageReply.objects.filter(message_target_id=message_id).order_by('-created')
-        print replies
         for reply in replies:
+            # TODO: this can be optimized, sender & receiver always those two guys
+            sender_serializer = UserSerializer(reply.sender)
+            receiver_serializer = UserSerializer(reply.receiver)
             result.append({
                 'id'        : reply.id,
-                'sender'    : reply.sender.id,
-                'receiver'  : reply.receiver.id,
+                'sender'    : sender_serializer.data,
+                'receiver'  : receiver_serializer.data,
                 'message'   : reply.message,
                 'created'   : reply.created,
             })

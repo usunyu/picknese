@@ -39,8 +39,8 @@ var MessageActionMixin = {
     getInitialState: function() {
         return {
             messages: [],
-            replies: [],
-            replies_requested: false,
+            replies: [],    // replies for each message card
+            replies_requested: false, 
         };
     },
 }
