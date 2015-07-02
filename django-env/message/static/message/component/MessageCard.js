@@ -13,7 +13,8 @@ var MessageCard = React.createClass({displayName: 'MessageCard',
         for (var i = 0; i < this.state.replies.length; i++) {
             var reply = this.state.replies[i];
             replyList.push(
-                React.createElement("div", {className: "media"}, 
+                React.createElement("div", {className: "media", 
+                     key: i}, 
                     React.createElement("hr", null), 
                     React.createElement("div", {className: "media-left"}, 
                         React.createElement("img", {
@@ -31,9 +32,6 @@ var MessageCard = React.createClass({displayName: 'MessageCard',
                         React.createElement("div", {className: "col-md-10"}, 
                             reply.message
                         )
-                    ), 
-                    React.createElement("div", {className: "media-right"}
-                        
                     )
                 )
             );
@@ -70,7 +68,7 @@ var MessageCard = React.createClass({displayName: 'MessageCard',
                     )
                 ), 
                 React.createElement("div", {id: "message-" + message.id, className: "panel-collapse collapse"}, 
-                    React.createElement("div", {className: "panel-body"}, 
+                    React.createElement("div", {className: "panel-body no-top-padding"}, 
                         replyList
                     )
                 )

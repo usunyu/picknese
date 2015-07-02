@@ -13,7 +13,8 @@ var MessageCard = React.createClass({
         for (var i = 0; i < this.state.replies.length; i++) {
             var reply = this.state.replies[i];
             replyList.push(
-                <div className="media">
+                <div className="media"
+                     key={i}>
                     <hr />
                     <div className="media-left">
                         <img
@@ -31,9 +32,6 @@ var MessageCard = React.createClass({
                         <div className="col-md-10">
                             {reply.message}
                         </div>
-                    </div>
-                    <div className="media-right">
-                        
                     </div>
                 </div>
             );
@@ -70,7 +68,7 @@ var MessageCard = React.createClass({
                     </div>
                 </div>
                 <div id={"message-" + message.id} className="panel-collapse collapse">
-                    <div className="panel-body">
+                    <div className="panel-body no-top-padding">
                         {replyList}
                     </div>
                 </div>
