@@ -25,13 +25,16 @@ var MessageCard = React.createClass({
                             }
                             style={{width: '30px', height: '30px'}} />
                     </div>
-                    <div className="media-body" style={{width: '100%'}}>
+                    <div className="media-body" style={{width: '80%'}}>
                         <div className="col-md-2">
                             {reply.sender.first_name} {reply.sender.last_name}
                         </div>
                         <div className="col-md-10">
                             {reply.message}
                         </div>
+                    </div>
+                    <div className="media-right" style={{fontSize: '70%'}}>
+                        {moment(reply.created).format("YYYY-MM-DD hh:mm A")}
                     </div>
                 </div>
             );
@@ -54,16 +57,16 @@ var MessageCard = React.createClass({
                                 }
                                 style={{width: '30px', height: '30px'}} />
                         </div>
-                        <div className="media-body" style={{width: '100%'}}>
-                            <div className="col-md-2">
+                        <div className="media-body" style={{width: '80%'}}>
+                            <div className="col-md-3">
                                 {message.sender.first_name} {message.sender.last_name}
                             </div>
-                            <div className="col-md-10">
+                            <div className="col-md-9">
                                 {message.message}
                             </div>
                         </div>
-                        <div className="media-right">
-                            
+                        <div className="media-right" style={{fontSize: '70%'}}>
+                            {moment(message.created).format("YYYY-MM-DD hh:mm A")}
                         </div>
                     </div>
                 </div>

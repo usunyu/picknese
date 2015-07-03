@@ -25,13 +25,16 @@ var MessageCard = React.createClass({displayName: 'MessageCard',
                             
                             style: {width: '30px', height: '30px'}})
                     ), 
-                    React.createElement("div", {className: "media-body", style: {width: '100%'}}, 
+                    React.createElement("div", {className: "media-body", style: {width: '80%'}}, 
                         React.createElement("div", {className: "col-md-2"}, 
                             reply.sender.first_name, " ", reply.sender.last_name
                         ), 
                         React.createElement("div", {className: "col-md-10"}, 
                             reply.message
                         )
+                    ), 
+                    React.createElement("div", {className: "media-right", style: {fontSize: '70%'}}, 
+                        moment(reply.created).format("YYYY-MM-DD hh:mm A")
                     )
                 )
             );
@@ -54,16 +57,16 @@ var MessageCard = React.createClass({displayName: 'MessageCard',
                                 
                                 style: {width: '30px', height: '30px'}})
                         ), 
-                        React.createElement("div", {className: "media-body", style: {width: '100%'}}, 
-                            React.createElement("div", {className: "col-md-2"}, 
+                        React.createElement("div", {className: "media-body", style: {width: '80%'}}, 
+                            React.createElement("div", {className: "col-md-3"}, 
                                 message.sender.first_name, " ", message.sender.last_name
                             ), 
-                            React.createElement("div", {className: "col-md-10"}, 
+                            React.createElement("div", {className: "col-md-9"}, 
                                 message.message
                             )
                         ), 
-                        React.createElement("div", {className: "media-right"}
-                            
+                        React.createElement("div", {className: "media-right", style: {fontSize: '70%'}}, 
+                            moment(message.created).format("YYYY-MM-DD hh:mm A")
                         )
                     )
                 ), 
