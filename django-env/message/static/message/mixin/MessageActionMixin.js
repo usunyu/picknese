@@ -6,16 +6,21 @@
  * --------------------------------------------------
  * @messageActionMixinLoadMessageList
  */
+var RECEIVED_MESSAGE    = 1;
+var SENT_MESSAGE        = 2;
+
+var CURRENT_MESSAGE_TYPE = RECEIVED_MESSAGE;
+
 var MessageActionMixin = {
 	loadMessageListFromServer: function() {
         $.ajax({
-            url: getMessageListAPI(),
+            url: getMessageListAPI(CURRENT_MESSAGE_TYPE),
             dataType: 'json',
             success: function(data) {
                 this.setState({messages: data});
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(getMessageListAPI(), status, err.toString());
+                console.error(getMessageListAPI(CURRENT_MESSAGE_TYPE), status, err.toString());
             }.bind(this)
         });
     },

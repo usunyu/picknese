@@ -155,13 +155,13 @@ var MePanel = React.createClass({
         return (
             <div className="col-sm-12 home-feed-card-div">
                 <div className="feed-type-select-xs-div hidden-sm hidden-md hidden-lg col-sm-12">
-
+                    {this.getMessageTypeSelect()}
                 </div>
                 <div className="col-sm-9 col-md-10 home-feed-card-div" id="message-accordion">
                     {messageList}
                 </div>
                 <div className="hidden-xs col-sm-2 col-md-2">
-
+                    {this.getMessageTypeSelect()}
                 </div>
             </div>
         );
@@ -286,6 +286,31 @@ var MePanel = React.createClass({
                     {this.getFeedOfferTypeSelect()}
                 </div>
             </div>
+        );
+    },
+    onMessageTypeChange: function(event) {
+        CURRENT_MESSAGE_TYPE = event.target.value;
+        this.loadMessageListFromServer();
+    },
+    getMessageTypeSelect: function() {
+        return (
+            <select
+                className="selectpicker"
+                data-style="btn-primary"
+                onChange={this.onMessageTypeChange}>
+                <option
+                    data-icon="icon-mail-alt"
+                    key={RECEIVED_MESSAGE}
+                    value={RECEIVED_MESSAGE}>
+                    Received
+                </option>
+                <option
+                    data-icon="icon-paper-plane"
+                    key={SENT_MESSAGE}
+                    value={SENT_MESSAGE}>
+                    Sent
+                </option>
+            </select>
         );
     },
     onFeedTypeChange: function(event) {

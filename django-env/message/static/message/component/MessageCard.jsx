@@ -27,7 +27,7 @@ var MessageCard = React.createClass({
                     </div>
                     <div className="media-body" style={{width: '80%'}}>
                         <div className="col-md-2">
-                            {reply.sender.first_name} {reply.sender.last_name}
+                            {reply.sender.first_name}
                         </div>
                         <div className="col-md-10">
                             {reply.message}
@@ -58,10 +58,10 @@ var MessageCard = React.createClass({
                                 style={{width: '30px', height: '30px'}} />
                         </div>
                         <div className="media-body" style={{width: '80%'}}>
-                            <div className="col-md-3">
-                                {message.sender.first_name} {message.sender.last_name}
+                            <div className="col-md-2">
+                                {message.sender.first_name}
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
                                 {message.message}
                             </div>
                         </div>

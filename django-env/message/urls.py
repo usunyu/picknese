@@ -3,6 +3,6 @@ from message import apis
 
 urlpatterns = patterns('',
     # api
-    url(r'^api/list/$', apis.MessageList.as_view()),
+    url(r'^api/list/(?P<message_type>\d+)/$', apis.MessageList.as_view()),
     url(r'^api/replylist/(?P<message_id>\d+)/$', apis.MessageReplyList.as_view()),
 )

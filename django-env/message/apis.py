@@ -8,16 +8,20 @@ from message.models import Message, MessageReply, MessageUnread
 
 from userprofile.serializers import UserSerializer
 
+RECEIVED_MESSAGE            = 1;
+SENT_MESSAGE                = 2;
+
 class MessageList(APIView):
     """
     MessageList APIView\n
     Retrieve Message based on Request User\n
-    message/api/list/ => MessageList.as_view() 
+    message/api/list/ => MessageList.as_view()
     """
     permission_classes = (permissions.IsAuthenticated,)
 
-    def get(self, request, format=None):
+    def get(self, request, message_type, format=None):
         user = request.user
+        message_type = int(message_type)
         # retrieve all the messages the user send or receive
         result = []
 
@@ -26,7 +30,12 @@ class MessageList(APIView):
         for unread_message in unread_messages:
             unread_message_set.add(unread_message.message_target.id)
 
-        messages = Message.objects.filter(Q(receiver=user) | Q(sender=user)).order_by('-created')
+        messages = [];
+        if message_type == RECEIVED_MESSAGE:
+            messages = Message.objects.filter(receiver=user).order_by('-created')
+        if message_type == SENT_MESSAGE:
+            messages = Message.objects.filter(sender=user).order_by('-created')
+
         for message in messages:
             sender_serializer = UserSerializer(message.sender)
             receiver_serializer = UserSerializer(message.receiver)

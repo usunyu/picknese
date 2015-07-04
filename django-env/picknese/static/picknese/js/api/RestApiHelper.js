@@ -70,8 +70,8 @@ function getProfileImageUploadAPI() {
  * Message Module
  * --------------------------------------------------
  */
-function getMessageListAPI() {
-    return "/message/api/list/";
+function getMessageListAPI(type) {
+    return "/message/api/list/" + type + "/";
 }
 
 function getMessageReplyListAPI(m_id) {
