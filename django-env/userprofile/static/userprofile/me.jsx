@@ -575,6 +575,7 @@ var MePanel = React.createClass({
     },
     getUnreadMessageCount: function() {
         var unread_count = 0;
+        // TODO: using unread table
         for (var i = 0; i < this.state.messages.length; i++) {
             var message = this.state.messages[i];
             if (message.unread) { unread_count++; }

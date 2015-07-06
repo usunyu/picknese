@@ -3,12 +3,43 @@ var BaseRequestCard = React.createClass({
     handleRequestCancel: function() {
         this.props.onCancel(this.props.feed, this.props.mutateCallback);
     },
+    handleContactMessageSubmit: function() {
+        var feed = this.props.feed;
+        var message = $("#contact-textarea").val().trim();
+        var submitButton = document.getElementById(this.getActionButtonModalID('submit-feed-contact-'));
+        if (message == '') {
+            submitButton.disabled = "disabled";
+            return;
+        }
+        this.handleMessageSubmit({
+            sender      : current_user.id,
+            receiver    : feed.requester.id,
+            message     : $("#contact-textarea").val().trim(),
+        }, this.handleContactMessageCallback);
+        $("#contact-textarea").val("");
+    },
+    handleContactMessageCallback: function() {
+        $("#" + this.getActionButtonModalID("feed-contact-")).modal('hide');
+    },
+    onContactMessageModalFocus: function() {
+        var submitButton = document.getElementById(this.getActionButtonModalID('submit-feed-contact-'));
+        submitButton.disabled = "disabled";
+    },
+    onContactMessageInputChange: function() {
+        var message = $("#contact-textarea").val().trim();
+        var submitButton = document.getElementById(this.getActionButtonModalID('submit-feed-contact-'));
+        if (message == '') {
+            submitButton.disabled = "disabled";
+        } else {
+            submitButton.disabled = "";
+        }
+    },
     getActionButtonModalID: function(prefix) {
         if (jQuery.isEmptyObject(current_user)) {
-            return "#login-modal";
+            return "login-modal";
         } else {
             var feed = this.props.feed;
-            return "#" + prefix + feed.id;
+            return prefix + feed.id;
         }
     },
     getActionButton: function() {
@@ -81,7 +112,7 @@ var BaseRequestCard = React.createClass({
                         className="btn btn-success"
                         style={{float: 'right'}}
                         data-toggle="modal"
-                        data-target={this.getActionButtonModalID('feed-offer-')}>
+                        data-target={"#" + this.getActionButtonModalID('feed-offer-')}>
                         <i className="glyphicon glyphicon-heart"></i>&nbsp;
                         Offer Help
                     </button>
@@ -90,7 +121,7 @@ var BaseRequestCard = React.createClass({
                         className="btn btn-primary"
                         style={{float: 'right', marginRight: '10px'}}
                         data-toggle="modal"
-                        data-target={this.getActionButtonModalID('feed-contact-')}>
+                        data-target={"#" + this.getActionButtonModalID('feed-contact-')}>
                         <i className="glyphicon glyphicon-envelope"></i>&nbsp;
                         Contact
                     </button>
@@ -112,8 +143,9 @@ var BaseRequestCard = React.createClass({
                         title={"Send Message"}
                         input_id={"contact-textarea"}
                         placeholder={"Anything you want to say?"}
-                        onSubmit={null}
-                        submit_text={"Send"} />
+                        onSubmit={this.handleContactMessageSubmit}
+                        submit_text={"Send"}
+                        onInputChange={this.onContactMessageInputChange} />
                 </div>
             );
         }

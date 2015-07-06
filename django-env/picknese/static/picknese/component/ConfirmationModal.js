@@ -28,6 +28,7 @@ var InputConfirmationModal = React.createClass({displayName: 'InputConfirmationM
                                     id: this.props.input_id, 
                                     className: "form-control", 
                                     rows: "3", 
+                                    onChange: this.props.onInputChange, 
                                     placeholder: this.props.placeholder}
                                 )
                             )
@@ -35,10 +36,11 @@ var InputConfirmationModal = React.createClass({displayName: 'InputConfirmationM
                         React.createElement("div", {className: "modal-footer"}, 
                             React.createElement("button", {type: "button", className: "btn btn-default", 'data-dismiss': "modal"}, "Cancel"), 
                             React.createElement("button", {
+                                id: "submit-" + this.props.id_prefix + this.props.feed.id, 
                                 type: "button", 
                                 className: "btn btn-primary", 
                                 onClick: this.props.onSubmit}, 
-                                "Confirm"
+                                this.props.submit_text
                             )
                         )
                     )

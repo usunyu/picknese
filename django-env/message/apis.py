@@ -1,11 +1,12 @@
 from django.db.models import Q
 
-from rest_framework import permissions, status
+from rest_framework import permissions, status, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from message.models import Message, MessageReply, MessageUnread
 
+from message.serializers import MessageMutateSerializer
 from userprofile.serializers import UserSerializer
 
 RECEIVED_MESSAGE            = 1;
@@ -76,3 +77,11 @@ class MessageReplyList(APIView):
             })
 
         return Response(result, status=status.HTTP_200_OK)
+
+class MessageCreate(generics.CreateAPIView):
+    """
+    Create Message
+    MessageCreate.as_view() => message/api/create/
+    """
+    serializer_class = MessageMutateSerializer
+    permission_classes = (permissions.IsAuthenticated,)

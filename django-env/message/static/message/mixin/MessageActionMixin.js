@@ -38,19 +38,21 @@ var MessageActionMixin = {
             }.bind(this)
         });
     },
-    handleContactMessageSubmit: function(data) {
+    handleMessageSubmit: function(data, callback) {
         // requester post flight pick request
         $.ajax({
-            url: getFlightPickRequestCreateAPI(),
+            url: getMessageCreateAPI(),
             dataType: 'json',
             type: 'POST',
             data: data,
             success: function(data) {
-                window.location = getHomeFeedURL(data.university);
-                preparePopupMessage("You have successfully post your request. Please waiting for your picker to contact you!", "success");
+                callback();
+                preparePopupMessage("Your message sent successfully!", "success");
+                popupMessage();
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(getFlightPickRequestCreateAPI(), status, err.toString());
+                callback();
+                console.error(getMessageCreateAPI(), status, err.toString());
                 preparePopupMessage(ERROR_MESSAGE, "danger");
                 popupMessage();
             }.bind(this)
