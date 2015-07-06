@@ -8,7 +8,6 @@ var FIRST_LOAD_HOME_FEED_FINISH = false;
 
 var HomePanel = React.createClass({
     mixins: [FeedActionMixin,
-             MessageActionMixin,
              UniversityActionMixin],
     componentWillMount: function() {
         // set for PostRequestInput

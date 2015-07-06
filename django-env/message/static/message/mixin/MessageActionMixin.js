@@ -11,6 +11,8 @@ var SENT_MESSAGE        = 2;
 
 var CURRENT_MESSAGE_TYPE = RECEIVED_MESSAGE;
 
+var ERROR_MESSAGE = "Oops, some errors happen, please try again later.";
+
 var MessageActionMixin = {
 	loadMessageListFromServer: function() {
         $.ajax({
@@ -33,6 +35,24 @@ var MessageActionMixin = {
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(getMessageReplyListAPI(message_id), status, err.toString());
+            }.bind(this)
+        });
+    },
+    handleContactMessageSubmit: function(data) {
+        // requester post flight pick request
+        $.ajax({
+            url: getFlightPickRequestCreateAPI(),
+            dataType: 'json',
+            type: 'POST',
+            data: data,
+            success: function(data) {
+                window.location = getHomeFeedURL(data.university);
+                preparePopupMessage("You have successfully post your request. Please waiting for your picker to contact you!", "success");
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(getFlightPickRequestCreateAPI(), status, err.toString());
+                preparePopupMessage(ERROR_MESSAGE, "danger");
+                popupMessage();
             }.bind(this)
         });
     },

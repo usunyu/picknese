@@ -1,4 +1,5 @@
 var BaseRequestCard = React.createClass({displayName: 'BaseRequestCard',
+    mixins: [MessageActionMixin],
     handleRequestCancel: function() {
         this.props.onCancel(this.props.feed, this.props.mutateCallback);
     },

@@ -8,10 +8,14 @@ Me |
 {% endblock %}
 
 {% block extra_head %}
+<script type="text/javascript" src="{% static 'picknese/mixin/FeedActionMixin.js' %}"></script>
+<script type="text/javascript" src="{% static 'message/mixin/MessageActionMixin.js' %}"></script>
+<script type="text/javascript" src="{% static 'userprofile/mixin/ProfileActionMixin.js' %}"></script>
+<script type="text/javascript" src="{% static 'university/mixin/UniversityActionMixin.js' %}"></script>
+
 <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-select/bootstrap-select.css' %}" />
 <script type="text/javascript" src="{% static 'js/bootstrap-select/bootstrap-select.min.js' %}"></script>
 
-<script type="text/javascript" src="{% static 'picknese/mixin/FeedActionMixin.js' %}"></script>
 <script type="text/javascript" src="{% static 'picknese/component/DummyCard.js' %}"></script>
 <script type="text/javascript" src="{% static 'picknese/component/ConfirmationModal.js' %}"></script>
 <script type="text/javascript" src="{% static 'picknese/component/PostRequestInput.js' %}"></script>
@@ -24,12 +28,7 @@ Me |
 <script type="text/javascript" src="{% static 'pickup/component/FlightPickUpCard.js' %}"></script>
 <script type="text/javascript" src="{% static 'pickup/component/PickUpCard.js' %}"></script>
 
-<script type="text/javascript" src="{% static 'message/mixin/MessageActionMixin.js' %}"></script>
 <script type="text/javascript" src="{% static 'message/component/MessageCard.js' %}"></script>
-
-<script type="text/javascript" src="{% static 'userprofile/mixin/ProfileActionMixin.js' %}"></script>
-
-<script type="text/javascript" src="{% static 'university/mixin/UniversityActionMixin.js' %}"></script>
 {% endblock %}
 
 {% block content %}
