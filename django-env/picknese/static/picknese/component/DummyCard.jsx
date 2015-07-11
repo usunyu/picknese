@@ -89,7 +89,50 @@ var PusheenGangnamStyleCard = React.createClass({
     }
 });
 
+var DummyCustomizedCard = React.createClass({
+    onRedirectButtonClick: function() {
+        location.href = this.props.redirect_url;
+    },
+    render: function() {
+        return (
+            <div className="panel clearfix fadein-effect home-feed-panel-div">
+                <div className="panel-heading" style={{overflow: "auto"}}>
+                    <b>{this.props.title}</b>
+                </div>
+                <hr style={{marginTop: "0px", marginBottom: "0px"}}/>
+                <div className="panel-body">
+                    <div className="text-center" style={{marginBottom: "10px"}} >
+                        <i className={this.props.icon_class} style={{fontSize: "5em"}}></i>
+                    </div>
+                    <button
+                        type="button"
+                        className="btn btn-red col-xs-12"
+                        onClick={this.onRedirectButtonClick} >
+                        {this.props.button_text}
+                    </button>
+                </div>
+            </div>
+        );
+    }
+});
+
 var LoadingCard = React.createClass({
+    render: function() {
+        return (
+            <div className="panel clearfix home-feed-panel-div" key='loading card'>
+                <div className="panel-body">
+                    <div className="media">
+                        <div className="media-body col-md-12" style={{textAlign: "center"}}>
+                            <div className="spinner"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+});
+
+var LoadingFeedCard = React.createClass({
     render: function() {
         return (
             <div className="panel clearfix home-feed-panel-div" key='loading card'>

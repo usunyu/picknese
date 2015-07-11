@@ -13,9 +13,6 @@ var SETTINGS_PANEL  = 6;
 
 var CURRENT_PANEL = INBOX_PANEL;
 
-var FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH = false;
-var FIRST_LOAD_PROFILE_OFFER_FEED_FINISH = false;
-
 var PROFILE_FIRST_NAME_INPUT    = "profile-first-name-input";
 var PROFILE_LAST_NAME_INPUT     = "profile-last-name-input";
 var PROFILE_UNIVERSITY_SELECT   = "profile-univsersity-select";
@@ -152,6 +149,26 @@ var MePanel = React.createClass({
                     onReply={null} />
             );
         }
+        if (messageList.length == 0) {
+            if (FIRST_LOAD_MESSAGE_FINISH) {
+                // add a dummy post if we have no feed
+                var redirect_url = getIndexURL();
+                if (current_user.university_id) {
+                    redirect_url = getHomeFeedURL(current_user.university_id);
+                }
+                messageList.push(
+                    <DummyCustomizedCard 
+                        key={0}
+                        title={"You dont have message yet, try contact someone in your school!"}
+                        redirect_url={redirect_url}
+                        icon_class={"glyphicon glyphicon-envelope"}
+                        button_text={"Go to your school"} />
+                );
+            } else {
+                // add a loading panel if we havn't finish the request
+                messageList.push(<LoadingCard key={0} />);
+            }
+        }
         return (
             <div className="col-sm-12 home-feed-card-div">
                 <div className="feed-type-select-xs-div hidden-sm hidden-md hidden-lg col-sm-12">
@@ -217,12 +234,19 @@ var MePanel = React.createClass({
             }
         }
         if (profileFeedList.length == 0) {
-            if (FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH) {
+            if (FIRST_LOAD_PROFILE_REQUESTS_FINISH) {
                 // add a dummy post if we have no feed
-                profileFeedList.push(<PusheenHappyCard key={0} />);
+                profileFeedList.push(
+                    <DummyCustomizedCard 
+                        key={0}
+                        title={"You dont have request yet, try post one to your school!"}
+                        redirect_url={getPostRequestURL(0)}
+                        icon_class={"glyphicon glyphicon-list-alt"}
+                        button_text={"Post Your Request"} />
+                );
             } else {
                 // add a loading panel if we havn't finish the request
-                profileFeedList.push(<LoadingCard key={0} />);
+                profileFeedList.push(<LoadingFeedCard key={0} />);
             }
         }
         return (
@@ -266,12 +290,23 @@ var MePanel = React.createClass({
             }
         }
         if (profileFeedList.length == 0) {
-            if (FIRST_LOAD_PROFILE_OFFER_FEED_FINISH) {
+            if (FIRST_LOAD_PROFILE_OFFERS_FINISH) {
                 // add a dummy post if we have no feed
-                profileFeedList.push(<PusheenLazyCard key={0} />);
+                var redirect_url = getIndexURL();
+                if (current_user.university_id) {
+                    redirect_url = getHomeFeedURL(current_user.university_id);
+                }
+                profileFeedList.push(
+                    <DummyCustomizedCard 
+                        key={0}
+                        title={"You dont have offer yet, try to help someone in your school!"}
+                        redirect_url={redirect_url}
+                        icon_class={"glyphicon glyphicon-heart"}
+                        button_text={"Go to your school"} />
+                );
             } else {
                 // add a loading panel if we havn't finish the request
-                profileFeedList.push(<LoadingCard key={0} />);
+                profileFeedList.push(<LoadingFeedCard key={0} />);
             }
         }
         return (

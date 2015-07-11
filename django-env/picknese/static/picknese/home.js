@@ -90,7 +90,7 @@ var HomePanel = React.createClass({displayName: 'HomePanel',
         }
         if (homeFeedList.length == 0 && !FIRST_LOAD_HOME_FEED_FINISH) {
             // add a loading panel if we havn't finish the request
-            homeFeedList.push(React.createElement(LoadingCard, {key: 0}));
+            homeFeedList.push(React.createElement(LoadingFeedCard, {key: 0}));
         }
         return (
             React.createElement("div", {className: "col-sm-12 col-md-9 home-feed-card-div"}, 
