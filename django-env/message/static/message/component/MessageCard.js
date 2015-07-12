@@ -13,8 +13,7 @@ var MessageCard = React.createClass({displayName: 'MessageCard',
         for (var i = 0; i < this.state.replies.length; i++) {
             var reply = this.state.replies[i];
             replyList.push(
-                React.createElement("div", {className: "media", 
-                     key: i}, 
+                React.createElement("div", {className: "media", key: i}, 
                     React.createElement("hr", null), 
                     React.createElement("div", {className: "media-left"}, 
                         React.createElement("img", {
@@ -39,9 +38,16 @@ var MessageCard = React.createClass({displayName: 'MessageCard',
                 )
             );
         }
+        var css_class = "panel clearfix fadein-effect message-card-div";
+        if (this.props.first) {
+            css_class = css_class.concat(" first");
+        }
+        if (message.unread) {
+            css_class = css_class.concat(" font-bold");
+        }
         return (
             React.createElement("div", {
-                className: "panel clearfix fadein-effect message-card-div".concat(this.props.first ? " first" : ""), 
+                className: css_class, 
                 onClick: this.onMessageCardClick}, 
                 React.createElement("div", {
                     className: "panel-body", 

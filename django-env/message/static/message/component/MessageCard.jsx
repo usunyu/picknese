@@ -13,8 +13,7 @@ var MessageCard = React.createClass({
         for (var i = 0; i < this.state.replies.length; i++) {
             var reply = this.state.replies[i];
             replyList.push(
-                <div className="media"
-                     key={i}>
+                <div className="media" key={i}>
                     <hr />
                     <div className="media-left">
                         <img
@@ -39,9 +38,16 @@ var MessageCard = React.createClass({
                 </div>
             );
         }
+        var css_class = "panel clearfix fadein-effect message-card-div";
+        if (this.props.first) {
+            css_class = css_class.concat(" first");
+        }
+        if (message.unread) {
+            css_class = css_class.concat(" font-bold");
+        }
         return (
             <div
-                className={"panel clearfix fadein-effect message-card-div".concat(this.props.first ? " first" : "")}
+                className={css_class}
                 onClick={this.onMessageCardClick}>
                 <div
                     className="panel-body"

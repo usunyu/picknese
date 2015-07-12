@@ -38,6 +38,10 @@
     height: 230px;
 }
 
+.font-bold {
+    font-weight: bold;
+}
+
 .text-shadow {
     text-shadow: 0 0 0.2em black;
 }

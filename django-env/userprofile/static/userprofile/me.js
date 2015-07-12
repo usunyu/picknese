@@ -70,7 +70,8 @@ var MePanel = React.createClass({displayName: 'MePanel',
                 .animate({
                     marginTop: marginTop,
                     marginBottom: '15px',
-                }, "fast");
+                }, "fast")
+                .removeClass('font-bold');
         });
     },
     onProfileInboxClick: function(event) {
