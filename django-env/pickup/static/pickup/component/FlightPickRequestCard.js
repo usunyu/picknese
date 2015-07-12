@@ -67,7 +67,7 @@ var FlightPickRequestCard = React.createClass({displayName: 'FlightPickRequestCa
             flight_pick_request : feed.id,
             picker              : current_user.id,
             requester           : feed.requester.id,
-            description         : $("#pick-up-desc-textarea").val().trim(),
+            description         : $("#textarea-feed-offer-" + feed.id).val().trim(),
         });
     },
     handleRequestUpdate: function(event) {

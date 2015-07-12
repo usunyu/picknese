@@ -2,7 +2,7 @@ var InputConfirmationModal = React.createClass({displayName: 'InputConfirmationM
     render: function() {
         return (
             React.createElement("div", {
-                id: this.props.id_prefix + this.props.feed.id, 
+                id: this.props.id_prefix + "-" + this.props.feed.id, 
                 className: "modal fade", 
                 tabIndex: "-1", 
                 role: "dialog", 
@@ -25,7 +25,7 @@ var InputConfirmationModal = React.createClass({displayName: 'InputConfirmationM
                         React.createElement("div", {className: "modal-body"}, 
                             React.createElement("div", {className: "form-group"}, 
                                 React.createElement("textarea", {
-                                    id: this.props.input_id, 
+                                    id: "textarea-" + this.props.id_prefix + "-" + this.props.feed.id, 
                                     className: "form-control", 
                                     rows: "3", 
                                     onChange: this.props.onInputChange, 
@@ -36,7 +36,7 @@ var InputConfirmationModal = React.createClass({displayName: 'InputConfirmationM
                         React.createElement("div", {className: "modal-footer"}, 
                             React.createElement("button", {type: "button", className: "btn btn-default", 'data-dismiss': "modal"}, "Cancel"), 
                             React.createElement("button", {
-                                id: "submit-" + this.props.id_prefix + this.props.feed.id, 
+                                id: "submit-" + this.props.id_prefix + "-" + this.props.feed.id, 
                                 type: "button", 
                                 className: "btn btn-primary", 
                                 onClick: this.props.onSubmit}, 

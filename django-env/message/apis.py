@@ -87,6 +87,7 @@ class MessageCreate(generics.CreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def perform_create(self, serializer):
+        message = serializer.save()
         # create MessageUnread
-        
-        serializer.save(user=self.request.user)
+        unread = MessageUnread(message_target=message, reader=message.receiver)
+        unread.save()
