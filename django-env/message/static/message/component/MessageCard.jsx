@@ -41,16 +41,18 @@ var MessageCard = React.createClass({
         var replyList = [];
         for (var i = 0; i < this.state.replies.length; i++) {
             var reply = this.state.replies[i];
+            var media_left =
+                <img
+                    className="image-circular"
+                    src={
+                        reply.sender.profile.avatar ? 
+                        reply.sender.profile.avatar : getProfileDefaultPic()
+                    }
+                    style={{width: '30px', height: '30px'}} />;
             replyList.push(
                 <div className="media" key={i}>
                     <div className="media-left">
-                        <img
-                            className="image-circular"
-                            src={
-                                reply.sender.profile.avatar ? 
-                                reply.sender.profile.avatar : getProfileDefaultPic()
-                            }
-                            style={{width: '30px', height: '30px'}} />
+                        {media_left}
                     </div>
                     <div className="media-body" style={{width: '80%'}}>
                         <div className="col-md-2">
@@ -106,6 +108,7 @@ var MessageCard = React.createClass({
                     </div>
                 </div>
                 <div id={"message-" + message.id} className="panel-collapse collapse">
+                    <hr style={{marginTop: "0px"}}/>
                     <div className="panel-body no-top-padding">
                         {replyList}
                     </div>

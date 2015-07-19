@@ -41,16 +41,18 @@ var MessageCard = React.createClass({displayName: 'MessageCard',
         var replyList = [];
         for (var i = 0; i < this.state.replies.length; i++) {
             var reply = this.state.replies[i];
+            media_left =
+                React.createElement("img", {
+                    className: "image-circular", 
+                    src: 
+                        reply.sender.profile.avatar ? 
+                        reply.sender.profile.avatar : getProfileDefaultPic(), 
+                    
+                    style: {width: '30px', height: '30px'}});
             replyList.push(
                 React.createElement("div", {className: "media", key: i}, 
                     React.createElement("div", {className: "media-left"}, 
-                        React.createElement("img", {
-                            className: "image-circular", 
-                            src: 
-                                reply.sender.profile.avatar ? 
-                                reply.sender.profile.avatar : getProfileDefaultPic(), 
-                            
-                            style: {width: '30px', height: '30px'}})
+                        media_left
                     ), 
                     React.createElement("div", {className: "media-body", style: {width: '80%'}}, 
                         React.createElement("div", {className: "col-md-2"}, 
@@ -106,6 +108,7 @@ var MessageCard = React.createClass({displayName: 'MessageCard',
                     )
                 ), 
                 React.createElement("div", {id: "message-" + message.id, className: "panel-collapse collapse"}, 
+                    React.createElement("hr", {style: {marginTop: "0px"}}), 
                     React.createElement("div", {className: "panel-body no-top-padding"}, 
                         replyList
                     ), 
