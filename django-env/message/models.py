@@ -6,14 +6,24 @@ class Message(models.Model):
     Message Model
     Message for user contact each other
     """
-    sender = models.ForeignKey(User, related_name='message_sender')
-    receiver = models.ForeignKey(User, related_name='message_receiver')
+    sender = models.ForeignKey(User)
     message = models.TextField()
-    # unread = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):  # __unicode__ on Python 2
-        return 'Message from Sender: %s to Receiver: %s' % (self.sender.username, self.receiver.username)
+        return 'Message from sender %s' % (self.sender.username)
+
+class MessageReceive(models.Model):
+    """
+    MessageReceive Model
+    Indicate what user receive the message
+    """
+    receiver = models.ForeignKey(User)
+    message_target = models.ForeignKey(Message)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):  # __unicode__ on Python 2
+        return '%s receive message %s' % (self.receiver.username, self.message_target.id)
 
 class MessageReply(models.Model):
     """
@@ -21,14 +31,12 @@ class MessageReply(models.Model):
     Reply message for user to reply contact message
     """
     message_target = models.ForeignKey(Message)
-    sender = models.ForeignKey(User, related_name='messagereply_sender')
-    receiver = models.ForeignKey(User, related_name='messagereply_receiver')
+    sender = models.ForeignKey(User)
     message = models.TextField()
-    # unread = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):  # __unicode__ on Python 2
-        return 'Reply to %s' % (self.message_target)
+        return '%s reply to message %s' % (self.sender.username, self.message_target.id)
 
 class MessageUnread(models.Model):
     """
@@ -39,4 +47,4 @@ class MessageUnread(models.Model):
     reader = models.ForeignKey(User)
 
     def __str__(self):  # __unicode__ on Python 2
-        return "%s didn't read %s" % (self.reader, self.message_target)
+        return "%s didn't read message %s" % (self.reader, self.message_target.id)

@@ -6,4 +6,5 @@ urlpatterns = patterns('',
     url(r'^api/list/(?P<message_type>\d+)/$', apis.MessageList.as_view()),
     url(r'^api/create/$', apis.MessageCreate.as_view()),
     url(r'^api/replylist/(?P<message_id>\d+)/$', apis.MessageReplyList.as_view()),
+    url(r'^api/read/(?P<message_id>\d+)/$', apis.MessageUnreadDelete.as_view()),
 )

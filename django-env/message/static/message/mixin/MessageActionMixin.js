@@ -63,6 +63,19 @@ var MessageActionMixin = {
             }.bind(this)
         });
     },
+    handleReadMssageSubmit: function(data) {
+        var api_url = getMessageUnreadDeleteAPI(data.id);
+        $.ajax({
+            url: api_url,
+            dataType: 'json',
+            type: 'DELETE',
+            success: function(data) {
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(api_url, status, err.toString());
+            }.bind(this)
+        });
+    },
     componentDidMount: function() {
         if (this.props.messageActionMixinLoadMessageList) {
             this.loadMessageListFromServer();

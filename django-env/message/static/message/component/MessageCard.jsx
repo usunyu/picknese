@@ -6,6 +6,12 @@ var MessageCard = React.createClass({
             this.setState({replies_requested: true});
             this.loadMessageReplyListFromServer(message.id);
         }
+        // remove bold for unread message
+        $('#message-card-' + message.id).removeClass('font-bold');
+        // send request to update read state
+        if (message.unread) {
+            this.handleReadMssageSubmit(message);
+        }
     },
     render: function() {
         var message = this.props.message;
@@ -47,6 +53,7 @@ var MessageCard = React.createClass({
         }
         return (
             <div
+                id={"message-card-" + message.id}
                 className={css_class}
                 onClick={this.onMessageCardClick}>
                 <div
