@@ -3,6 +3,9 @@
  * --------------------------------------------------
  * @current_user
  */
+var FIRST_LOAD_PROFILE_REQUESTS_FINISH = false;
+var FIRST_LOAD_PROFILE_OFFERS_FINISH = false;
+
 var ERROR_MESSAGE = "Oops, some errors happen, please try again later.";
 
 var ProfileActionMixin = {
@@ -36,7 +39,7 @@ var ProfileActionMixin = {
             url: getProfileRequestAPI(profile_user.id, CURRENT_FEED_TYPE),
             dataType: 'json',
             success: function(data) {
-                FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH = true;
+                FIRST_LOAD_PROFILE_REQUESTS_FINISH = true;
                 this.setState({requests: data});
             }.bind(this),
             error: function(xhr, status, err) {
@@ -50,7 +53,7 @@ var ProfileActionMixin = {
             url: getProfileOfferAPI(profile_user.id, CURRENT_FEED_TYPE),
             dataType: 'json',
             success: function(data) {
-                FIRST_LOAD_PROFILE_OFFER_FEED_FINISH = true;
+                FIRST_LOAD_PROFILE_OFFERS_FINISH = true;
                 this.setState({offers: data});
             }.bind(this),
             error: function(xhr, status, err) {

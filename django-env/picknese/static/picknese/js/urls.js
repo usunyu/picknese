@@ -24,6 +24,10 @@ function getMediaURL() {
     }
 }
 
+function getIndexURL() {
+    return "/";
+}
+
 function getHomeFeedURL(u_id) {
     return "/home/" + u_id + "/";
 }

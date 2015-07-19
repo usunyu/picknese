@@ -1,22 +1,54 @@
 var BaseRequestCard = React.createClass({
+    mixins: [MessageActionMixin],
     handleRequestCancel: function() {
         this.props.onCancel(this.props.feed, this.props.mutateCallback);
     },
-    getOfferActionButtonModalID: function() {
-        if (jQuery.isEmptyObject(current_user)) {
-            return "#login-modal";
+    handleContactMessageSubmit: function() {
+        var feed = this.props.feed;
+        var message = $("#" + this.getComponentID("textarea-feed-contact")).val().trim();
+        var submitButton = document.getElementById(this.getActionButtonModalID('submit-feed-contact'));
+        if (message == '') {
+            submitButton.disabled = "disabled";
+            return;
+        }
+        this.handleMessageSubmit({
+            sender      : current_user.id,
+            receiver    : feed.requester.id,
+            message     : $("#" + this.getComponentID("textarea-feed-contact")).val().trim(),
+        }, this.handleContactMessageCallback);
+        $("#" + this.getComponentID("textarea-feed-contact")).val("");
+    },
+    handleContactMessageCallback: function() {
+        $("#" + this.getActionButtonModalID("feed-contact")).modal('hide');
+    },
+    onContactMessageModalFocus: function() {
+        var submitButton = document.getElementById(this.getActionButtonModalID('submit-feed-contact'));
+        submitButton.disabled = "disabled";
+    },
+    onContactMessageInputChange: function() {
+        var message = $("#" + this.getComponentID("textarea-feed-contact")).val().trim();
+        var submitButton = document.getElementById(this.getActionButtonModalID('submit-feed-contact'));
+        if (message == '') {
+            submitButton.disabled = "disabled";
         } else {
-            var feed = this.props.feed;
-            return "#feed-" + feed.id;
+            submitButton.disabled = "";
+        }
+    },
+    getComponentID: function(prefix) {
+        var feed = this.props.feed;
+        return prefix + "-" + feed.id;
+    },
+    getActionButtonModalID: function(prefix) {
+        if (jQuery.isEmptyObject(current_user)) {
+            return "login-modal";
+        } else {
+            return this.getComponentID(prefix);
         }
     },
     getActionButton: function() {
         var feed = this.props.feed;
         {/* If it is user's own request */}
         if (current_user.id == feed.requester.id) {
-            if (feed.confirmed) {
-                return (null);
-            }
             return (
                 <div>
                     <hr style={{marginTop: '5px', marginBottom: '15px'}} />
@@ -75,9 +107,6 @@ var BaseRequestCard = React.createClass({
                 </div>
             );
         } else {
-            if (feed.confirmed) {
-                return (null);
-            }
             return (
                 <div>
                     <hr style={{marginTop: '5px', marginBottom: '15px'}} />
@@ -86,61 +115,38 @@ var BaseRequestCard = React.createClass({
                         className="btn btn-success"
                         style={{float: 'right'}}
                         data-toggle="modal"
-                        data-target={this.getOfferActionButtonModalID()}>
+                        data-target={"#" + this.getActionButtonModalID('feed-offer')}>
                         <i className="glyphicon glyphicon-heart"></i>&nbsp;
                         Offer Help
                     </button>
                     <button
                         type="button"
                         className="btn btn-primary"
-                        style={{float: 'right', marginRight: '10px'}} >
+                        style={{float: 'right', marginRight: '10px'}}
+                        data-toggle="modal"
+                        data-target={"#" + this.getActionButtonModalID('feed-contact')}>
                         <i className="glyphicon glyphicon-envelope"></i>&nbsp;
                         Contact
                     </button>
                     {/* Offer Button Modal */}
-                    <div
-                        id={"feed-" + feed.id}
-                        className="modal fade"
-                        tabIndex="-1"
-                        role="dialog"
-                        aria-hidden="true">
-                        <div className="modal-dialog">
-                            <div className="modal-content">
-                                <div className="modal-header" style={{backgroundColor: "#4caf50"}}>
-                                    <button
-                                        type="button"
-                                        className="close"
-                                        data-dismiss="modal"
-                                        aria-label="Close"
-                                        style={{color: "white"}}>
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    <h5 className="modal-title" style={{color: "white"}}>
-                                        Offer Confirmation
-                                    </h5>
-                                </div>
-                                <div className="modal-body">
-                                    <div className="form-group">
-                                        <textarea
-                                            id="pick-up-desc-textarea"
-                                            className="form-control"
-                                            rows="3"
-                                            placeholder="Thanks for taking this request, anything you want to mention?">
-                                        </textarea>
-                                    </div>
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
-                                    <button
-                                        type="button"
-                                        className="btn btn-primary"
-                                        onClick={this.props.onSubmit}>
-                                        Confirm
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <InputConfirmationModal
+                        feed={feed}
+                        id_prefix={"feed-offer"}
+                        background_color={"background-color-success"}
+                        title={"Offer Confirmation"}
+                        placeholder={"Thanks for taking this request, anything you want to mention?"}
+                        onSubmit={this.props.onSubmit}
+                        submit_text={"Confirm"} />
+                    {/* Contact Button Modal */}
+                    <InputConfirmationModal
+                        feed={feed}
+                        id_prefix={"feed-contact"}
+                        background_color={"background-color-primary"}
+                        title={"Send Message"}
+                        placeholder={"Anything you want to say?"}
+                        onSubmit={this.handleContactMessageSubmit}
+                        submit_text={"Send"}
+                        onInputChange={this.onContactMessageInputChange} />
                 </div>
             );
         }

@@ -1,23 +1,27 @@
 from django.db.models import Q
 
-from rest_framework import permissions, status
+from rest_framework import permissions, status, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from message.models import Message, MessageReply, MessageUnread
+from message.models import Message, MessageReceive, MessageReply, MessageUnread
 
+from message.serializers import MessageMutateSerializer, MessageReplyMutateSerializer
 from userprofile.serializers import UserSerializer
+
+RECEIVED_MESSAGE            = 1;
+SENT_MESSAGE                = 2;
 
 class MessageList(APIView):
     """
-    MessageList APIView\n
     Retrieve Message based on Request User\n
-    message/api/list/ => MessageList.as_view() 
+    message/api/list/ => MessageList.as_view()
     """
     permission_classes = (permissions.IsAuthenticated,)
 
-    def get(self, request, format=None):
+    def get(self, request, message_type, format=None):
         user = request.user
+        message_type = int(message_type)
         # retrieve all the messages the user send or receive
         result = []
 
@@ -26,15 +30,20 @@ class MessageList(APIView):
         for unread_message in unread_messages:
             unread_message_set.add(unread_message.message_target.id)
 
-        messages = Message.objects.filter(Q(receiver=user) | Q(sender=user)).order_by('-created')
+        messages = [];
+        if message_type == RECEIVED_MESSAGE:
+            message_receives = MessageReceive.objects.filter(receiver=user).order_by('-created')
+            for receive in message_receives:
+                messages.append(receive.message_target)
+        if message_type == SENT_MESSAGE:
+            messages = Message.objects.filter(sender=user).order_by('-created')
+
         for message in messages:
             sender_serializer = UserSerializer(message.sender)
-            receiver_serializer = UserSerializer(message.receiver)
-            unread = message.id in unread_message_set;
+            unread = message.id in unread_message_set
             result.append({
                 'id'        : message.id,
                 'sender'    : sender_serializer.data,
-                'receiver'  : receiver_serializer.data,
                 'message'   : message.message,
                 'unread'    : unread,
                 'created'   : message.created,
@@ -44,7 +53,6 @@ class MessageList(APIView):
 
 class MessageReplyList(APIView):
     """
-    MessageReplyList APIView\n
     Retrieve Message Reply based on Message\n
     message/api/replylist/1/ => MessageReplyList.as_view() 
     """
@@ -53,17 +61,80 @@ class MessageReplyList(APIView):
     def get(self, request, message_id, format=None):
         result = []
 
-        replies = MessageReply.objects.filter(message_target_id=message_id).order_by('-created')
+        replies = MessageReply.objects.filter(message_target_id=message_id).order_by('created')
         for reply in replies:
-            # TODO: this can be optimized, sender & receiver always those two guys
             sender_serializer = UserSerializer(reply.sender)
-            receiver_serializer = UserSerializer(reply.receiver)
             result.append({
                 'id'        : reply.id,
                 'sender'    : sender_serializer.data,
-                'receiver'  : receiver_serializer.data,
                 'message'   : reply.message,
                 'created'   : reply.created,
             })
 
         return Response(result, status=status.HTTP_200_OK)
+
+class MessageCreate(APIView):
+    """
+    Create Message\n
+    message/api/create/ => MessageCreate.as_view()
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, format=None):
+        receiver = request.data['receiver']
+        serializer = MessageMutateSerializer(data=request.data)
+        # create Message
+        if serializer.is_valid():
+            message = serializer.save()
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # create MessageReceive
+        receive = MessageReceive(message_target=message, receiver_id=receiver)
+        receive.save()
+        # create MessageUnread
+        unread = MessageUnread(message_target=message, reader_id=receiver)
+        unread.save()
+
+        return Response({}, status=status.HTTP_201_CREATED)
+
+class MessageReplyCreate(generics.CreateAPIView):
+    """
+    Create MessageReply\n
+    message/api/reply/create/ => MessageReplyCreate.as_view()
+    """
+    serializer_class = MessageReplyMutateSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def perform_create(self, serializer):
+        receiver = self.request.data['receiver']
+
+        # create MessageReply
+        if serializer.is_valid():
+            reply = serializer.save()
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        message_target = reply.message_target
+        receives = MessageReceive.objects.filter(message_target=message_target, receiver_id=receiver)
+        # create MessageReceive
+        if len(receives) == 0:
+            receive = MessageReceive(message_target=message_target, receiver_id=receiver)
+            receive.save()
+
+        return Response({}, status=status.HTTP_201_CREATED)
+
+class MessageUnreadDelete(APIView):
+    """
+    Indicate the message has been read\n
+    message/api/unread/1/ => MessageUnreadDelete.as_view()
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def delete(self, request, message_id, format=None):
+        user = request.user
+        unreads = MessageUnread.objects.filter(message_target_id=message_id, reader=user)
+        if len(unreads) == 0:
+            # this should not happen
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)
+        unread = unreads[0]
+        unread.delete()
+        return Response({}, status=status.HTTP_200_OK)

@@ -2,8 +2,8 @@
  * REST API helper
  * --------------------------------------------------
  */
-function getHomeFeedListAPI(u_id, type) {
-    return "/home/api/" + u_id + "/" + type + "/";
+function getHomeFeedListAPI(id, type) {
+    return "/home/api/" + id + "/" + type + "/";
 }
 
 function getAuthAPI() {
@@ -70,12 +70,24 @@ function getProfileImageUploadAPI() {
  * Message Module
  * --------------------------------------------------
  */
-function getMessageListAPI() {
-    return "/message/api/list/";
+function getMessageListAPI(type) {
+    return "/message/api/list/" + type + "/";
 }
 
-function getMessageReplyListAPI(m_id) {
-    return "/message/api/replylist/" + m_id + "/";
+function getMessageReplyListAPI(id) {
+    return "/message/api/reply/list/" + id + "/";
+}
+
+function getMessageCreateAPI() {
+    return "/message/api/create/";
+}
+
+function getMessageReplyCreateAPI() {
+    return "/message/api/reply/create/";
+}
+
+function getMessageUnreadDeleteAPI(id) {
+    return "/message/api/read/" + id +"/";
 }
 
 /*

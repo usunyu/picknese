@@ -13,9 +13,6 @@ var SETTINGS_PANEL  = 6;
 
 var CURRENT_PANEL = INBOX_PANEL;
 
-var FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH = false;
-var FIRST_LOAD_PROFILE_OFFER_FEED_FINISH = false;
-
 var PROFILE_FIRST_NAME_INPUT    = "profile-first-name-input";
 var PROFILE_LAST_NAME_INPUT     = "profile-last-name-input";
 var PROFILE_UNIVERSITY_SELECT   = "profile-univsersity-select";
@@ -49,32 +46,32 @@ var MePanel = React.createClass({displayName: 'MePanel',
 
         // enable inbox message accordion
         $('#message-accordion').on('show.bs.collapse', function () {
-            $('#message-accordion .in')
-                .parent()
-                .animate({
-                    marginTop: '0px',
-                    marginBottom: '0px',
-                }, "fast");
+            // $('#message-accordion .in')
+            //     .parent()
+            //     .animate({
+            //         marginTop: '0px',
+            //         marginBottom: '0px',
+            //     }, "fast");
             $('#message-accordion .in').collapse('hide');
         });
-        $('#message-accordion').on('hide.bs.collapse', function () {
-            $('#message-accordion .in')
-                .parent()
-                .animate({
-                    marginTop: '0px',
-                    marginBottom: '0px',
-                }, "fast");
-        });
-        $('#message-accordion').on('shown.bs.collapse', function () {
-            var first = $('#message-accordion .in').parent().hasClass('first');
-            var marginTop = first ? '0px' : '15px';
-            $('#message-accordion .in')
-                .parent()
-                .animate({
-                    marginTop: marginTop,
-                    marginBottom: '15px',
-                }, "fast");
-        });
+        // $('#message-accordion').on('hide.bs.collapse', function () {
+        //     $('#message-accordion .in')
+        //         .parent()
+        //         .animate({
+        //             marginTop: '0px',
+        //             marginBottom: '0px',
+        //         }, "fast");
+        // });
+        // $('#message-accordion').on('shown.bs.collapse', function () {
+        //     var first = $('#message-accordion .in').parent().hasClass('first');
+        //     var marginTop = first ? '0px' : '15px';
+        //     $('#message-accordion .in')
+        //         .parent()
+        //         .animate({
+        //             marginTop: marginTop,
+        //             marginBottom: '15px',
+        //         }, "fast");
+        // });
     },
     onProfileInboxClick: function(event) {
         if (CURRENT_PANEL == INBOX_PANEL) {return;}
@@ -152,16 +149,36 @@ var MePanel = React.createClass({displayName: 'MePanel',
                     onReply: null})
             );
         }
+        if (messageList.length == 0) {
+            if (FIRST_LOAD_MESSAGE_FINISH) {
+                // add a dummy post if we have no feed
+                var redirect_url = getIndexURL();
+                if (current_user.university_id) {
+                    redirect_url = getHomeFeedURL(current_user.university_id);
+                }
+                messageList.push(
+                    React.createElement(DummyCustomizedCard, {
+                        key: 0, 
+                        title: "You dont have message yet, try contact someone in your school!", 
+                        redirect_url: redirect_url, 
+                        icon_class: "glyphicon glyphicon-envelope", 
+                        button_text: "Go to your school"})
+                );
+            } else {
+                // add a loading panel if we havn't finish the request
+                messageList.push(React.createElement(LoadingCard, {key: 0}));
+            }
+        }
         return (
             React.createElement("div", {className: "col-sm-12 home-feed-card-div"}, 
-                React.createElement("div", {className: "feed-type-select-xs-div hidden-sm hidden-md hidden-lg col-sm-12"}
-
+                React.createElement("div", {className: "feed-type-select-xs-div hidden-sm hidden-md hidden-lg col-sm-12"}, 
+                    this.getMessageTypeSelect()
                 ), 
                 React.createElement("div", {className: "col-sm-9 col-md-10 home-feed-card-div", id: "message-accordion"}, 
                     messageList
                 ), 
-                React.createElement("div", {className: "hidden-xs col-sm-2 col-md-2"}
-
+                React.createElement("div", {className: "hidden-xs col-sm-2 col-md-2"}, 
+                    this.getMessageTypeSelect()
                 )
             )
         );
@@ -217,12 +234,19 @@ var MePanel = React.createClass({displayName: 'MePanel',
             }
         }
         if (profileFeedList.length == 0) {
-            if (FIRST_LOAD_PROFILE_REQUEST_FEED_FINISH) {
+            if (FIRST_LOAD_PROFILE_REQUESTS_FINISH) {
                 // add a dummy post if we have no feed
-                profileFeedList.push(React.createElement(PusheenHappyCard, {key: 0}));
+                profileFeedList.push(
+                    React.createElement(DummyCustomizedCard, {
+                        key: 0, 
+                        title: "You dont have request yet, try post one to your school!", 
+                        redirect_url: getPostRequestURL(0), 
+                        icon_class: "glyphicon glyphicon-list-alt", 
+                        button_text: "Post Your Request"})
+                );
             } else {
                 // add a loading panel if we havn't finish the request
-                profileFeedList.push(React.createElement(LoadingCard, {key: 0}));
+                profileFeedList.push(React.createElement(LoadingFeedCard, {key: 0}));
             }
         }
         return (
@@ -266,12 +290,23 @@ var MePanel = React.createClass({displayName: 'MePanel',
             }
         }
         if (profileFeedList.length == 0) {
-            if (FIRST_LOAD_PROFILE_OFFER_FEED_FINISH) {
+            if (FIRST_LOAD_PROFILE_OFFERS_FINISH) {
                 // add a dummy post if we have no feed
-                profileFeedList.push(React.createElement(PusheenLazyCard, {key: 0}));
+                var redirect_url = getIndexURL();
+                if (current_user.university_id) {
+                    redirect_url = getHomeFeedURL(current_user.university_id);
+                }
+                profileFeedList.push(
+                    React.createElement(DummyCustomizedCard, {
+                        key: 0, 
+                        title: "You dont have offer yet, try to help someone in your school!", 
+                        redirect_url: redirect_url, 
+                        icon_class: "glyphicon glyphicon-heart", 
+                        button_text: "Go to your school"})
+                );
             } else {
                 // add a loading panel if we havn't finish the request
-                profileFeedList.push(React.createElement(LoadingCard, {key: 0}));
+                profileFeedList.push(React.createElement(LoadingFeedCard, {key: 0}));
             }
         }
         return (
@@ -284,6 +319,31 @@ var MePanel = React.createClass({displayName: 'MePanel',
                 ), 
                 React.createElement("div", {className: "hidden-xs col-sm-2 col-md-2"}, 
                     this.getFeedOfferTypeSelect()
+                )
+            )
+        );
+    },
+    onMessageTypeChange: function(event) {
+        CURRENT_MESSAGE_TYPE = event.target.value;
+        this.loadMessageListFromServer();
+    },
+    getMessageTypeSelect: function() {
+        return (
+            React.createElement("select", {
+                className: "selectpicker", 
+                'data-style': "btn-primary", 
+                onChange: this.onMessageTypeChange}, 
+                React.createElement("option", {
+                    'data-icon': "icon-mail-alt", 
+                    key: RECEIVED_MESSAGE, 
+                    value: RECEIVED_MESSAGE}, 
+                    "Received"
+                ), 
+                React.createElement("option", {
+                    'data-icon': "icon-paper-plane", 
+                    key: SENT_MESSAGE, 
+                    value: SENT_MESSAGE}, 
+                    "Sent"
                 )
             )
         );
@@ -550,6 +610,7 @@ var MePanel = React.createClass({displayName: 'MePanel',
     },
     getUnreadMessageCount: function() {
         var unread_count = 0;
+        // TODO: using unread table
         for (var i = 0; i < this.state.messages.length; i++) {
             var message = this.state.messages[i];
             if (message.unread) { unread_count++; }

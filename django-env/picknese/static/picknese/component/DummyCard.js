@@ -89,7 +89,50 @@ var PusheenGangnamStyleCard = React.createClass({displayName: 'PusheenGangnamSty
     }
 });
 
+var DummyCustomizedCard = React.createClass({displayName: 'DummyCustomizedCard',
+    onRedirectButtonClick: function() {
+        location.href = this.props.redirect_url;
+    },
+    render: function() {
+        return (
+            React.createElement("div", {className: "panel clearfix fadein-effect home-feed-panel-div"}, 
+                React.createElement("div", {className: "panel-heading", style: {overflow: "auto"}}, 
+                    React.createElement("b", null, this.props.title)
+                ), 
+                React.createElement("hr", {style: {marginTop: "0px", marginBottom: "0px"}}), 
+                React.createElement("div", {className: "panel-body"}, 
+                    React.createElement("div", {className: "text-center", style: {marginBottom: "10px"}}, 
+                        React.createElement("i", {className: this.props.icon_class, style: {fontSize: "5em"}})
+                    ), 
+                    React.createElement("button", {
+                        type: "button", 
+                        className: "btn btn-red col-xs-12", 
+                        onClick: this.onRedirectButtonClick}, 
+                        this.props.button_text
+                    )
+                )
+            )
+        );
+    }
+});
+
 var LoadingCard = React.createClass({displayName: 'LoadingCard',
+    render: function() {
+        return (
+            React.createElement("div", {className: "panel clearfix home-feed-panel-div", key: "loading card"}, 
+                React.createElement("div", {className: "panel-body"}, 
+                    React.createElement("div", {className: "media"}, 
+                        React.createElement("div", {className: "media-body col-md-12", style: {textAlign: "center"}}, 
+                            React.createElement("div", {className: "spinner"})
+                        )
+                    )
+                )
+            )
+        );
+    }
+});
+
+var LoadingFeedCard = React.createClass({displayName: 'LoadingFeedCard',
     render: function() {
         return (
             React.createElement("div", {className: "panel clearfix home-feed-panel-div", key: "loading card"}, 
