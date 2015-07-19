@@ -43,7 +43,6 @@ var MessageCard = React.createClass({
             var reply = this.state.replies[i];
             replyList.push(
                 <div className="media" key={i}>
-                    <hr />
                     <div className="media-left">
                         <img
                             className="image-circular"

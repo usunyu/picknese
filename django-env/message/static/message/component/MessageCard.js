@@ -43,7 +43,6 @@ var MessageCard = React.createClass({displayName: 'MessageCard',
             var reply = this.state.replies[i];
             replyList.push(
                 React.createElement("div", {className: "media", key: i}, 
-                    React.createElement("hr", null), 
                     React.createElement("div", {className: "media-left"}, 
                         React.createElement("img", {
                             className: "image-circular", 
