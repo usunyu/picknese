@@ -63,6 +63,23 @@ var MessageActionMixin = {
             }.bind(this)
         });
     },
+    handleMessageReplySubmit: function(data, callback) {
+        var api_url = getMessageReplyCreateAPI();
+        $.ajax({
+            url: api_url,
+            dataType: 'json',
+            type: 'POST',
+            data: data,
+            success: function(data) {
+                callback();
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(api_url, status, err.toString());
+                preparePopupMessage(ERROR_MESSAGE, "danger");
+                popupMessage();
+            }.bind(this)
+        });
+    },
     handleReadMssageSubmit: function(data) {
         var api_url = getMessageUnreadDeleteAPI(data.id);
         $.ajax({

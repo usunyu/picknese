@@ -46,32 +46,32 @@ var MePanel = React.createClass({displayName: 'MePanel',
 
         // enable inbox message accordion
         $('#message-accordion').on('show.bs.collapse', function () {
-            $('#message-accordion .in')
-                .parent()
-                .animate({
-                    marginTop: '0px',
-                    marginBottom: '0px',
-                }, "fast");
+            // $('#message-accordion .in')
+            //     .parent()
+            //     .animate({
+            //         marginTop: '0px',
+            //         marginBottom: '0px',
+            //     }, "fast");
             $('#message-accordion .in').collapse('hide');
         });
-        $('#message-accordion').on('hide.bs.collapse', function () {
-            $('#message-accordion .in')
-                .parent()
-                .animate({
-                    marginTop: '0px',
-                    marginBottom: '0px',
-                }, "fast");
-        });
-        $('#message-accordion').on('shown.bs.collapse', function () {
-            var first = $('#message-accordion .in').parent().hasClass('first');
-            var marginTop = first ? '0px' : '15px';
-            $('#message-accordion .in')
-                .parent()
-                .animate({
-                    marginTop: marginTop,
-                    marginBottom: '15px',
-                }, "fast");
-        });
+        // $('#message-accordion').on('hide.bs.collapse', function () {
+        //     $('#message-accordion .in')
+        //         .parent()
+        //         .animate({
+        //             marginTop: '0px',
+        //             marginBottom: '0px',
+        //         }, "fast");
+        // });
+        // $('#message-accordion').on('shown.bs.collapse', function () {
+        //     var first = $('#message-accordion .in').parent().hasClass('first');
+        //     var marginTop = first ? '0px' : '15px';
+        //     $('#message-accordion .in')
+        //         .parent()
+        //         .animate({
+        //             marginTop: marginTop,
+        //             marginBottom: '15px',
+        //         }, "fast");
+        // });
     },
     onProfileInboxClick: function(event) {
         if (CURRENT_PANEL == INBOX_PANEL) {return;}

@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 from message.models import Message, MessageReceive, MessageReply, MessageUnread
 
-from message.serializers import MessageMutateSerializer
+from message.serializers import MessageMutateSerializer, MessageReplyMutateSerializer
 from userprofile.serializers import UserSerializer
 
 RECEIVED_MESSAGE            = 1;
@@ -61,7 +61,7 @@ class MessageReplyList(APIView):
     def get(self, request, message_id, format=None):
         result = []
 
-        replies = MessageReply.objects.filter(message_target_id=message_id).order_by('-created')
+        replies = MessageReply.objects.filter(message_target_id=message_id).order_by('created')
         for reply in replies:
             sender_serializer = UserSerializer(reply.sender)
             result.append({
@@ -97,19 +97,30 @@ class MessageCreate(APIView):
 
         return Response({}, status=status.HTTP_201_CREATED)
 
-class MessageReplyMutate():
+class MessageReplyCreate(generics.CreateAPIView):
     """
     Create MessageReply\n
     message/api/reply/create/ => MessageReplyCreate.as_view()
     """
-    serializer_class = MessageMutateSerializer
+    serializer_class = MessageReplyMutateSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
-    # def perform_create(self, serializer):
-    #     message = serializer.save()
-    #     # create MessageUnread
-    #     unread = MessageUnread(message_target=message, reader=message.receiver)
-    #     unread.save()
+    def perform_create(self, serializer):
+        receiver = self.request.data['receiver']
+
+        # create MessageReply
+        if serializer.is_valid():
+            reply = serializer.save()
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        message_target = reply.message_target
+        receives = MessageReceive.objects.filter(message_target=message_target, receiver_id=receiver)
+        # create MessageReceive
+        if len(receives) == 0:
+            receive = MessageReceive(message_target=message_target, receiver_id=receiver)
+            receive.save()
+
+        return Response({}, status=status.HTTP_201_CREATED)
 
 class MessageUnreadDelete(APIView):
     """

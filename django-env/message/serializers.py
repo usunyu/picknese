@@ -9,3 +9,11 @@ class MessageMutateSerializer(ModelSerializer):
     """
     class Meta:
         model = Message
+
+class MessageReplyMutateSerializer(ModelSerializer):
+    """
+    Create, Update, Delete Endpoint for MessageReply
+    Flat Serializer
+    """
+    class Meta:
+        model = MessageReply

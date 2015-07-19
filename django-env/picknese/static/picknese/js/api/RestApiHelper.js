@@ -75,11 +75,15 @@ function getMessageListAPI(type) {
 }
 
 function getMessageReplyListAPI(id) {
-    return "/message/api/replylist/" + id + "/";
+    return "/message/api/reply/list/" + id + "/";
 }
 
 function getMessageCreateAPI() {
     return "/message/api/create/";
+}
+
+function getMessageReplyCreateAPI() {
+    return "/message/api/reply/create/";
 }
 
 function getMessageUnreadDeleteAPI(id) {
