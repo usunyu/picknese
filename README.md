@@ -72,7 +72,7 @@ Social application for student studying abroad to help each other
 
      ```$ python manage.py migrate <app> zero```
 
-2. [Heroku Connect:]
+2. [Heroku Connect:](https://devcenter.heroku.com/articles/heroku-postgresql)
 
      ```$ heroku pg:psql```
 
