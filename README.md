@@ -1,7 +1,9 @@
 Picknese
 ========
 
-I made this web application during I learn Django development, demo link: https://picknese.herokuapp.com/, hope you enjoy :)
+I made this web application during I learn Django development, demo link: https://picknese.herokuapp.com/
+
+Hope you enjoy :)
 
 ##### Setup:
 1. [Setup Django Environments:](http://usunyu.com/note/2014/12/06/setup-django/)
