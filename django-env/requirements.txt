@@ -1,4 +1,4 @@
-Django==1.7.1
+Django==1.8
 Markdown==2.5.2
 Pillow==2.6.1
 PyExecJS==1.1.0
@@ -11,7 +11,7 @@ django-bootstrap3==5.0.3
 django-braces==1.4.0
 django-filter==0.9.1
 django-storages==1.1.8
-djangorestframework==3.0.3
+djangorestframework
 httpie==0.8.0
 httplib2==0.9
 oauth2==1.5.211

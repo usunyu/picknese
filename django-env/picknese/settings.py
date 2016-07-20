@@ -31,7 +31,7 @@ TEMPLATE_DEBUG = True
 # You can set True to manually deploy static and files to S3
 # Don't forget to set correct static & media url of front end
 # python manage.py collectstatic
-PRODUCTION = False
+PRODUCTION = True
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
@@ -47,7 +47,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'rest_framework',
     'picknese',
-    'storages',
+    # 'storages',
     'bootstrap3',
     'userprofile',
     'university',
@@ -71,8 +71,14 @@ WSGI_APPLICATION = 'picknese.wsgi.application'
 
 # Parse database configuration from $DATABASE_URL
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
+# DATABASES = {
+#     'default': dj_database_url.config()
+# }
 DATABASES = {
-    'default': dj_database_url.config()
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'picknese.db',
+    }
 }
 
 # Internationalization
@@ -133,17 +139,17 @@ REST_FRAMEWORK = {
 # Try load local sttings
 if PRODUCTION:
     print "Loading production settings..."
-    AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
-    AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-    AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-    AWS_PRELOAD_METADATA = True
-    AWS_QUERYSTRING_AUTH = False
+    # AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+    # AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+    # AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+    # AWS_PRELOAD_METADATA = True
+    # AWS_QUERYSTRING_AUTH = False
     #Storage on S3 settings are stored as os.environs to keep settings.py clean
-    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-    S3_URL = 'https://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
-    STATIC_URL = S3_URL
-    MEDIA_URL = S3_URL + 'media/'
+    # STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    # S3_URL = 'https://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+    # STATIC_URL = S3_URL
+    # MEDIA_URL = S3_URL + 'media/'
 else:
     try:
         print "Loading local settings..."

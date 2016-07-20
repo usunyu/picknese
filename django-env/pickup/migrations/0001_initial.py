@@ -8,8 +8,8 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('university', '__first__'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('university', '0003_remove_university_system'),
     ]
 
     operations = [
@@ -41,7 +41,8 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(null=True, blank=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('flight_pick_request', models.ForeignKey(to='pickup.FlightPickRequest')),
-                ('picker', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('picker', models.ForeignKey(related_name='flightpickup_picker', to=settings.AUTH_USER_MODEL)),
+                ('requester', models.ForeignKey(related_name='flightpickup_requester', to=settings.AUTH_USER_MODEL)),
             ],
             options={
             },
@@ -67,27 +68,6 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
-            name='PickRequester',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('pick_type', models.IntegerField(default=1, choices=[(1, b'Flight'), (2, b'General')])),
-                ('price', models.IntegerField(default=20)),
-                ('start', models.CharField(max_length=200)),
-                ('destination', models.CharField(max_length=200)),
-                ('bags', models.IntegerField(default=1)),
-                ('round_trip', models.BooleanField(default=False)),
-                ('time_flexible', models.BooleanField(default=False)),
-                ('description', models.TextField(null=True, verbose_name=b'Message', blank=True)),
-                ('date_time', models.DateTimeField()),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('requester', models.ForeignKey(related_name='pick_pequester', to=settings.AUTH_USER_MODEL)),
-                ('university', models.ForeignKey(to='university.University')),
-            ],
-            options={
-            },
-            bases=(models.Model,),
-        ),
-        migrations.CreateModel(
             name='PickUp',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -95,7 +75,8 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(null=True, blank=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('pick_request', models.ForeignKey(to='pickup.PickRequest')),
-                ('picker', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('picker', models.ForeignKey(related_name='pickup_picker', to=settings.AUTH_USER_MODEL)),
+                ('requester', models.ForeignKey(related_name='pickup_requester', to=settings.AUTH_USER_MODEL)),
             ],
             options={
             },

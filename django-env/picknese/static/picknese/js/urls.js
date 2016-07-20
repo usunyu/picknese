@@ -1,4 +1,4 @@
-var PRODUCTION = false;
+var PRODUCTION = true;
 
 /*
  * Static, Media, URL helper
