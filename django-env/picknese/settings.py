@@ -118,7 +118,7 @@ AUTH_PROFILE_MODULE = 'userprofile.UserProfile'
 UPLOAD_FILE_PATTERN = "media/uploaded_files/%s"
 
 # https://docs.djangoproject.com/en/1.7/ref/settings/#media-root
-MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 # https://docs.djangoproject.com/en/1.7/ref/settings/#media-url
 MEDIA_URL = '/media/'
